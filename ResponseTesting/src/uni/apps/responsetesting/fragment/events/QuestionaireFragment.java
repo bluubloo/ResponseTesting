@@ -1,14 +1,22 @@
 package uni.apps.responsetesting.fragment.events;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.adapter.QuestionaireListAdapter;
+import uni.apps.responsetesting.results.Results;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 public class QuestionaireFragment extends Fragment {
 
@@ -32,6 +40,30 @@ public class QuestionaireFragment extends Fragment {
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.questionaire_fragment, container, false);
 		list_view = (ListView) view.findViewById(R.id.questionaire_list);
+		Button submit = (Button) view.findViewById(R.id.questionaire_submit);
+		submit.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				ArrayList<String> results = new ArrayList<String>();
+				
+				for(int i = 0; i < list_view.getCount(); i++){
+					View view = list_view.getChildAt(i);
+					TextView t = (TextView) view.findViewById(R.id.questionaire_text);
+					RatingBar r = (RatingBar) view.findViewById(R.id.questionaire_rating);
+					String s = Integer.toString(i + 1) + "." + t.getText().toString() + ":" +
+							Float.toString(r.getRating()).substring(0, 3);
+					results.add(s);
+				}
+				String finalResult = "";
+				for(String s : results)
+					finalResult += s + " ";
+				Results.insertResult(eventName, finalResult, 
+						Calendar.getInstance().getTimeInMillis(), getActivity());
+			}
+			
+		});
 		return view;
 	}
 

@@ -20,6 +20,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_send_all">Send All Results</string>
     <string name="action_send_recent">Send Recent Results</string>
+    <string name="action_send_results">Show Results</string>
 
     <!-- Finger Tap Test Strings -->
     <string name="tap_title">Finger Tap Test</string>

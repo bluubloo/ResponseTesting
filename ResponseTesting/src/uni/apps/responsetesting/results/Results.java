@@ -2,8 +2,11 @@ package uni.apps.responsetesting.results;
 
 import java.util.Calendar;
 
+import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.res.Resources;
 import android.database.Cursor;
 
 /**
@@ -54,6 +57,16 @@ public class Results {
 	//--------------------------------------------------------------------------------------------
 	//INSERT Results
 	
-	
+	public static void insertResult(String testName, String result, long time, Activity activity){
+		Resources r = activity.getResources();
+		ContentValues values = new ContentValues();
+		values.put(r.getString(R.string.event_name), testName);
+		values.put(r.getString(R.string.event_score), result);
+		values.put(r.getString(R.string.timestamp), time);
+		values.put(r.getString(R.string.notes), "");
+		values.put(r.getString(R.string.sent), 0);
+		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
+		db.insert(values);
+	}
 	
 }

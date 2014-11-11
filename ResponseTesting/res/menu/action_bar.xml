@@ -18,5 +18,12 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_send_recent"/>
+        
+        <item
+        android:id="@+id/action_results"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_send_results"
+        android:icon="@drawable/results_icon"/>
 
 </menu>

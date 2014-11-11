@@ -2,6 +2,8 @@ package uni.apps.responsetesting;
 
 import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
 import uni.apps.responsetesting.fragment.events.QuestionaireFragment;
+import uni.apps.responsetesting.utils.ActivityUtilities;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -17,7 +19,7 @@ import android.view.MenuItem;
  * @author Mathew Andela
  *
  */
-public class EventActivity extends SuperActivity {
+public class EventActivity extends Activity {
 
 	private FragmentManager frag_manager;
 	private static final String EVENT_TAG = "EventFragment";
@@ -50,10 +52,10 @@ public class EventActivity extends SuperActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()){
-		default:
-			return super.onOptionsItemSelected(item);
+		if(ActivityUtilities.actionBarClicks(item, this)){
+			return true;
 		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	@Override

@@ -27,8 +27,10 @@ public final class R {
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
         public static final int layout_border=0x7f020001;
+        public static final int results_icon=0x7f020002;
     }
     public static final class id {
+        public static final int action_results=0x7f090010;
         public static final int action_send_all=0x7f09000e;
         public static final int action_send_recent=0x7f09000f;
         public static final int action_settings=0x7f09000d;
@@ -56,11 +58,11 @@ public final class R {
     }
     public static final class menu {
         public static final int action_bar=0x7f080000;
-        public static final int results_display=0x7f080001;
     }
     public static final class string {
         public static final int action_send_all=0x7f06000d;
         public static final int action_send_recent=0x7f06000e;
+        public static final int action_send_results=0x7f06000f;
         /**  Action Bar Strings 
          */
         public static final int action_settings=0x7f06000c;
@@ -69,8 +71,8 @@ public final class R {
         public static final int event_name=0x7f060007;
         /**  Event Name Strings 
          */
-        public static final int event_name_finger_tap=0x7f060016;
-        public static final int event_name_questionaire=0x7f060017;
+        public static final int event_name_finger_tap=0x7f060017;
+        public static final int event_name_questionaire=0x7f060018;
         public static final int event_score=0x7f060008;
         public static final int main_menu=0x7f060003;
         public static final int notes=0x7f06000a;
@@ -79,15 +81,15 @@ public final class R {
         /**  Database Strings 
          */
         public static final int table_name=0x7f060006;
-        public static final int tap_click_info_1=0x7f060011;
-        public static final int tap_click_info_2=0x7f060012;
-        public static final int tap_click_info_3=0x7f060013;
-        public static final int tap_click_info_count=0x7f060014;
-        public static final int tap_click_info_time=0x7f060015;
-        public static final int tap_info=0x7f060010;
+        public static final int tap_click_info_1=0x7f060012;
+        public static final int tap_click_info_2=0x7f060013;
+        public static final int tap_click_info_3=0x7f060014;
+        public static final int tap_click_info_count=0x7f060015;
+        public static final int tap_click_info_time=0x7f060016;
+        public static final int tap_info=0x7f060011;
         /**  Finger Tap Test Strings 
          */
-        public static final int tap_title=0x7f06000f;
+        public static final int tap_title=0x7f060010;
         public static final int timestamp=0x7f060009;
         public static final int title_activity_event=0x7f060001;
         public static final int title_activity_results_display=0x7f060002;
