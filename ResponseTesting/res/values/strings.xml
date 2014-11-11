@@ -3,8 +3,10 @@
 
     <string name="app_name">ResponseTesting</string>
     <string name="title_activity_event">EventActivity</string>
+    <string name="title_activity_results_display">Results</string>
     <string name="main_menu">Main Menu</string>
     <string name="event">event</string>
+    <string name="submit">Submit</string>
 
     <!-- Database Strings -->
     <string name="table_name">Results</string>
@@ -13,21 +15,23 @@
     <string name="timestamp">Timestamp</string>
     <string name="notes">Notes</string>
     <string name="sent">Sent</string>
-    
+
     <!-- Action Bar Strings -->
     <string name="action_settings">Settings</string>
     <string name="action_send_all">Send All Results</string>
     <string name="action_send_recent">Send Recent Results</string>
-    
+
     <!-- Finger Tap Test Strings -->
     <string name="tap_title">Finger Tap Test</string>
     <string name="tap_info">Tap space above as many times as possible within 5 seconds.</string>
     <string name="tap_click_info_1">Tap to Start</string>
     <string name="tap_click_info_2">Tap to Restart</string>
     <string name="tap_click_info_3">Keep on Tapping</string>
-    
+    <string name="tap_click_info_count">Tap Count: 0</string>
+    <string name="tap_click_info_time">Time Left: 5s</string>
+
     <!-- Event Name Strings -->
-    <string name="event_name_finger_tap">FingerTapTest</string>
-    
-    
+    <string name="event_name_finger_tap">Finger Tap Test</string>
+    <string name="event_name_questionaire">Questionaire</string>
+
 </resources>

@@ -26,16 +26,16 @@ public class MainMenuFragment extends ListFragment {
 	private static final String TAG = "MainMenuFragment";
 	private MainMenuListener listener;
 	private ArrayAdapter<?> adapter;
-	
+
 	public MainMenuFragment(){}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "onCreate");
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		Log.d(TAG, "onActivityCreated()");
@@ -43,29 +43,30 @@ public class MainMenuFragment extends ListFragment {
 		//set up list adapter
 		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, createList());
 	}
-	
+
 	private ArrayList<String> createList(){
 		ArrayList<String> list = new ArrayList<String>();
 		Resources r = this.getActivity().getResources();
+		//TODO For each change to main menu list do here
 		list.add(r.getString(R.string.event_name_finger_tap));
-		
+		list.add(r.getString(R.string.event_name_questionaire));
 		return list;
 	}
-	
+
 	@Override
 	public void onResume() {
 		Log.d(TAG, "onResume()");
 		super.onResume();
-//set list adpater
+		//set list adpater
 		getListView().setAdapter(adapter);
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		setIsLoading(false);
 	}
-	
+
 	public void setIsLoading(boolean is_loading) {
 		setListShown(!is_loading);
 	}
-	
+
 	@Override
 	public void onAttach(Activity activity) {
 		Log.d(TAG, "onAttach()");
@@ -77,7 +78,7 @@ public class MainMenuFragment extends ListFragment {
 		}
 
 	}
-	
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		//on click navigate to new activity

@@ -3,13 +3,14 @@ package uni.apps.responsetesting.fragment.events;
 import java.util.Calendar;
 
 import uni.apps.responsetesting.R;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /***
@@ -19,7 +20,7 @@ import android.widget.TextView;
  * @author Mathew Andela
  *
  */
-public class FingerTapTestFragment extends SuperEventFragment {
+public class FingerTapTestFragment extends Fragment {
 
 	private static final String TAG = "FingerTapTestFragment";
 	private static final String eventName = "Finger Tap Test";
@@ -31,6 +32,7 @@ public class FingerTapTestFragment extends SuperEventFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
 		clickCount = 0;
 	}
 
@@ -45,7 +47,7 @@ public class FingerTapTestFragment extends SuperEventFragment {
 	}
 
 	private void setupTest(View view) {
-		FrameLayout clickable = (FrameLayout) view.findViewById(R.id.tap_container);
+		RelativeLayout clickable = (RelativeLayout) view.findViewById(R.id.tap_container);
 		infoTextView = (TextView) clickable.findViewById(R.id.tap_click_info);
 		clickable.setOnClickListener(new OnClickListener(){
 

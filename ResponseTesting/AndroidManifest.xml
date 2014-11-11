@@ -30,6 +30,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uni.apps.responsetesting.MainMenuActivity" />
         </activity>
+        <activity
+            android:name=".ResultsDisplayActivity"
+            android:label="@string/title_activity_results_display"
+            android:parentActivityName=".MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uni.apps.responsetesting.MainMenuActivity" />
+        </activity>
     </application>
 
 </manifest>
