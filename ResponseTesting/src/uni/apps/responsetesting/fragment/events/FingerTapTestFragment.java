@@ -1,12 +1,14 @@
 package uni.apps.responsetesting.fragment.events;
 
 import java.util.Calendar;
+
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.results.Results;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /***
- * TODO Time Left + add in Timer
+ * This fragment performs the Finger Tap Test
  * 
  * 
  * @author Mathew Andela
@@ -29,9 +31,32 @@ public class FingerTapTestFragment extends Fragment {
 	private static final int seconds = 5; 
 	private TextView infoTextView;
 	private TextView clickCountTextView;
+	private TextView timeLeftTextView;
 	private boolean running = false;
 	private int clickCount = 0;
 	private long startTime = 0;	
+	private Handler timerHandler = new Handler();
+
+	//-----------------------------------------------------------------------------
+	//RUNNABLES
+
+	private Runnable timerRunnable = new Runnable() {
+
+		@Override
+		public void run(){
+			long millis = Calendar.getInstance().getTimeInMillis();
+			double seconds = (double) 5 - (double) (millis - startTime) / 1000;
+			String value = Double.toString(seconds).substring(0, 3);
+			timeLeftTextView.setText("Time Left: " + value + "s");
+			if(running && (millis - startTime) < 5000)
+				timerHandler.postDelayed(this, 100);
+			else{
+				endTest();
+			}
+		}
+	};
+
+	//-----------------------------------------------------------------------------
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +79,7 @@ public class FingerTapTestFragment extends Fragment {
 		RelativeLayout clickable = (RelativeLayout) view.findViewById(R.id.tap_container);
 		infoTextView = (TextView) clickable.findViewById(R.id.tap_click_info);
 		clickCountTextView = (TextView) clickable.findViewById(R.id.tap_click_count);
+		timeLeftTextView = (TextView) clickable.findViewById(R.id.tap_click_time);
 		clickable.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -63,10 +89,11 @@ public class FingerTapTestFragment extends Fragment {
 					clickCount = 0;
 					startTime = Calendar.getInstance().getTimeInMillis();
 					infoTextView.setText(getResources().getString(R.string.tap_click_info_3));
+					timerHandler.postDelayed(timerRunnable, 0);
+					clickCount ++;
+					clickCountTextView.setText("Tap Count: " + Integer.toString(clickCount));
 				} else if (running && (Calendar.getInstance().getTimeInMillis() - startTime) > (seconds * 1000)){
-					//	running = !running;
-					infoTextView.setText(getResources().getString(R.string.tap_click_info_2));
-					endTest();
+					//do nothing
 				} else {
 					clickCount ++;
 					clickCountTextView.setText("Tap Count: " + Integer.toString(clickCount));
@@ -76,20 +103,25 @@ public class FingerTapTestFragment extends Fragment {
 		});
 	}
 
-	private void endTest() {
-		new AlertDialog.Builder(getActivity())
-		.setTitle("Tap Test Complete")
-		.setMessage("Your score was " + Integer.toString(clickCount) + " taps in 5s. With an average of " +
-		Double.toString((double) clickCount / (double) seconds) + " taps per second.")
-		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) { 
-				clickCountTextView.setText(getResources().getString(R.string.tap_click_info_count));
-				running = !running;
-				Results.insertResult(eventName, Integer.toString(clickCount),
-						Calendar.getInstance().getTimeInMillis(), getActivity());
-			}
-		})
-		.setIcon(android.R.drawable.ic_dialog_alert)
-		.show();
+	private void endTest() {		
+		if(running){
+			timerHandler.removeCallbacks(timerRunnable);
+			infoTextView.setText(getResources().getString(R.string.restart_square));
+			clickCountTextView.setText(getResources().getString(R.string.tap_click_info_count));
+			running = !running;
+			Results.insertResult(eventName, Integer.toString(clickCount),
+					Calendar.getInstance().getTimeInMillis(), getActivity());
+			new AlertDialog.Builder(getActivity())
+			.setTitle("Tap Test Complete")
+			.setMessage("Your score was " + Integer.toString(clickCount) + " taps in 5s. With an average of " +
+					Double.toString((double) clickCount / (double) seconds) + " taps per second.")
+					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) { 
+
+						}
+					})
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.show();
+		}
 	}
 }

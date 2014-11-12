@@ -10,6 +10,7 @@
     
     <string-array name="event_name_array">
         <item>Finger Tap Test</item>
+        <item>Appearing Object</item>
         <item>Questionaire</item>
     </string-array>
     

@@ -7,6 +7,7 @@
     <string name="main_menu">Main Menu</string>
     <string name="event">event</string>
     <string name="submit">Submit</string>
+    <string name="image_descript">Image</string>
 
     <!-- Database Strings -->
     <string name="table_name">Results</string>
@@ -25,21 +26,28 @@
     <!-- Finger Tap Test Strings -->
     <string name="tap_title">Finger Tap Test</string>
     <string name="tap_info">Tap space above as many times as possible within 5 seconds.</string>
-    <string name="tap_click_info_1">Tap to Start</string>
-    <string name="tap_click_info_2">Tap to Restart</string>
     <string name="tap_click_info_3">Keep on Tapping</string>
     <string name="tap_click_info_count">Tap Count: 0</string>
     <string name="tap_click_info_time">Time Left: 5s</string>
+
+    <!-- Appearing Object Strings -->
+    <string name="appear_obj_title">The Appearing Object</string>
+    <string name="appear_obj_info">Click on the object when it appears.</string>
     
+    <!-- Questionaire Strings -->
+    <string name="questionaire_info">Give the question a rating from 0 to 5. With 5 Being the highest.</string>
+
     <!-- Result Display Strings -->
     <string name="results_dis_title">Test Results</string>
-    
-    <!-- Piano Tiles Strings -->
-    <string name="piano_title">Piano Tiles</string>
-    <string name="piano_info">Tap the black square in the bottom most row. Tapping on a white square will end the test.</string>
 
     <!-- Event Name Strings -->
     <string name="event_name_finger_tap">Finger Tap Test</string>
+    <string name="event_name_appear_obj">Appearing Object</string>
     <string name="event_name_questionaire">Questionaire</string>
+    
+    <!-- Start Strings -->
+	<string name="start_square">Tap in the Square to Start</string>
+    <string name="restart_square">Tap in the Square to Restart</string>
+
 
 </resources>

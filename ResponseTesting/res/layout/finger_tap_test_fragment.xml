@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/tap_click_info_1"
+            android:text="@string/start_square"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -36,6 +36,16 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="@string/tap_click_info_count"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tap_click_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tap_click_count"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/tap_click_info_time"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </RelativeLayout>

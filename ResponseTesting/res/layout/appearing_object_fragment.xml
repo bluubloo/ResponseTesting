@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/appear_obj_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="@string/appear_obj_title"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RelativeLayout
+        android:id="@+id/appear_obj_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:background="@drawable/layout_border" >
+
+        <ImageView
+            android:id="@+id/appear_obj_image_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/image_descript"
+            android:src="@drawable/ic_launcher"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/appear_obj_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/start_square"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/appear_obj_image_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/appear_obj_start"
+            android:layout_marginLeft="41dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="51dp"
+            android:contentDescription="@string/image_descript"
+            android:src="@drawable/ic_launcher"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/appear_obj_image_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/appear_obj_start"
+            android:layout_alignRight="@+id/appear_obj_start"
+            android:layout_alignTop="@+id/appear_obj_image_4"
+            android:contentDescription="@string/image_descript"
+            android:src="@drawable/ic_launcher"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/appear_obj_image_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/appear_obj_start"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/appear_obj_start"
+            android:layout_marginBottom="49dp"
+            android:contentDescription="@string/image_descript"
+            android:src="@drawable/ic_launcher"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/appear_obj_image_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/appear_obj_image_3"
+            android:layout_alignStart="@+id/appear_obj_image_3"
+            android:layout_alignTop="@+id/appear_obj_image_2"
+            android:contentDescription="@string/image_descript"
+            android:src="@drawable/ic_launcher"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/appear_obj_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/appear_obj_info"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>

@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
-    
     <item
         android:id="@+id/action_send_all"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_send_all"/>
-    
-        <item
+    <item
         android:id="@+id/action_send_recent"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_send_recent"/>
-        
-        <item
-        android:id="@+id/action_results"
+    <item
+        android:id="@+id/action_info"
+        android:icon="@android:drawable/ic_menu_info_details"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="@string/action_send_results"
-        android:icon="@drawable/results_icon"/>
+        android:visible="false"
+        android:title="@string/action_send_results"/>
+    <item
+        android:id="@+id/action_results"
+        android:icon="@drawable/results_icon"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_send_results"/>
 
 </menu>

@@ -1,7 +1,6 @@
 package uni.apps.responsetesting.fragment;
 
 import java.util.ArrayList;
-
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.interfaces.listener.MainMenuListener;
 import android.app.Activity;
@@ -45,11 +44,12 @@ public class MainMenuFragment extends ListFragment {
 	}
 
 	private ArrayList<String> createList(){
-		ArrayList<String> list = new ArrayList<String>();
 		Resources r = this.getActivity().getResources();
-		//TODO For each change to main menu list do here
-		list.add(r.getString(R.string.event_name_finger_tap));
-		list.add(r.getString(R.string.event_name_questionaire));
+		String[] tmp = r.getStringArray(R.array.event_name_array);
+		ArrayList<String> list = new ArrayList<String>();
+		for(String s: tmp){
+			list.add(s);
+		}
 		return list;
 	}
 
