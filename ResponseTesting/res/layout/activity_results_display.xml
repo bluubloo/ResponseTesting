@@ -8,5 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="uni.apps.responsetesting.ResultsDisplayActivity" >
 
+    <FrameLayout
+        android:id="@+id/results_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
+    </FrameLayout>
 
 </RelativeLayout>

@@ -6,7 +6,9 @@ import java.util.Calendar;
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.adapter.QuestionaireListAdapter;
 import uni.apps.responsetesting.results.Results;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,6 +63,16 @@ public class QuestionaireFragment extends Fragment {
 					finalResult += s + " ";
 				Results.insertResult(eventName, finalResult, 
 						Calendar.getInstance().getTimeInMillis(), getActivity());
+				new AlertDialog.Builder(getActivity())
+	    		.setTitle("Questionaire Submitted")
+	    		.setMessage("You will now be returned to the Main Menu.")
+	    		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	    			public void onClick(DialogInterface dialog, int which) { 
+	    				getActivity().onBackPressed();
+	    			}
+	    		})
+	    		.setIcon(android.R.drawable.ic_dialog_alert)
+	    		.show();
 			}
 			
 		});

@@ -8,4 +8,13 @@
         <item>Test5</item>        
     </string-array>
     
+    <string-array name="event_name_array">
+        <item>FingerTapTest</item>
+        <item>Questionaire</item>
+    </string-array>
+    
+    <string-array name="non_numeric_events">
+        <item>Questionaire</item>
+    </string-array>
+    
 </resources>

@@ -30,9 +30,12 @@
     <string name="tap_click_info_3">Keep on Tapping</string>
     <string name="tap_click_info_count">Tap Count: 0</string>
     <string name="tap_click_info_time">Time Left: 5s</string>
+    
+    <!-- Result Display Strings -->
+    <string name="results_dis_title">Test Results</string>
 
     <!-- Event Name Strings -->
-    <string name="event_name_finger_tap">Finger Tap Test</string>
+    <string name="event_name_finger_tap">FingerTapTest</string>
     <string name="event_name_questionaire">Questionaire</string>
 
 </resources>

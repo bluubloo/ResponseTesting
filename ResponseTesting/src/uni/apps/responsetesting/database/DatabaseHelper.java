@@ -117,16 +117,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 	//All rows for single Event
 	public Cursor getSingle(String testName) {
-		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " +
-				resources.getString(R.string.event_name) + "=" + testName + " ORDER BY " + 
-				resources.getString(R.string.timestamp);
-		return this.getReadableDatabase().rawQuery(sql, null);
+		return this.getReadableDatabase().query(resources.getString(R.string.table_name), null, 
+				resources.getString(R.string.event_name) + "=?", new String[] {testName}, null, 
+				null, resources.getString(R.string.timestamp));
+	}	
+	
+	//All rows for single Event ordered by score
+	public Cursor getSingleBest(String testName) {
+		return this.getReadableDatabase().query(resources.getString(R.string.table_name), null, 
+				resources.getString(R.string.event_name) + "=?", new String[] {testName}, null, 
+				null, resources.getString(R.string.event_score));
 	}
 
 	//All Rows not yet sent
 	public Cursor getMostRecent() {
 		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " +
-				resources.getString(R.string.sent) + "=0" + " GROUP BY" +
+				resources.getString(R.string.sent) + "=0" + " GROUP BY " +
 				resources.getString(R.string.event_name) + " ORDER BY " + resources.getString(R.string.timestamp);
 		Cursor cursor =  this.getReadableDatabase().rawQuery(sql, null);
 		updateMostRecent();
@@ -135,10 +141,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//All Rows
 	public Cursor getAllResults() {
-		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " GROUP BY" +
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " GROUP BY " +
 				resources.getString(R.string.event_name) + " ORDER BY " + resources.getString(R.string.timestamp);
 		return this.getReadableDatabase().rawQuery(sql, null);
 	}
+
+
 
 
 }

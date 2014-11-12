@@ -1,7 +1,9 @@
 package uni.apps.responsetesting;
 
+import uni.apps.responsetesting.fragment.results.ResultsDisplayFragment;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +11,8 @@ import android.view.MenuItem;
 public class ResultsDisplayActivity extends Activity {
 
 	private FragmentManager frag_manager;
+	private ResultsDisplayFragment fragment;
+	private static final String RESULTS_FRAG_TAG = "ResultsDisplayFragment";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +23,17 @@ public class ResultsDisplayActivity extends Activity {
 	}
 
 	private void addFragments() {
-		// TODO Auto-generated method stub
+		fragment = (ResultsDisplayFragment) frag_manager.findFragmentByTag(RESULTS_FRAG_TAG);
 		
+		FragmentTransaction ft = frag_manager.beginTransaction();
+		
+		if(fragment == null){
+			fragment = new ResultsDisplayFragment();
+			ft.add(R.id.results_container, fragment, RESULTS_FRAG_TAG);
+		}
+		
+		ft.commit();
+		frag_manager.executePendingTransactions();
 	}
 
 	@Override
