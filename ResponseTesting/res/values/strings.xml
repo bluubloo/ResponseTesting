@@ -33,9 +33,13 @@
     
     <!-- Result Display Strings -->
     <string name="results_dis_title">Test Results</string>
+    
+    <!-- Piano Tiles Strings -->
+    <string name="piano_title">Piano Tiles</string>
+    <string name="piano_info">Tap the black square in the bottom most row. Tapping on a white square will end the test.</string>
 
     <!-- Event Name Strings -->
-    <string name="event_name_finger_tap">FingerTapTest</string>
+    <string name="event_name_finger_tap">Finger Tap Test</string>
     <string name="event_name_questionaire">Questionaire</string>
 
 </resources>

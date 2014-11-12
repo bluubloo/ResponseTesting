@@ -37,6 +37,7 @@ public class Results {
 			Cursor results = db.getSingle(s);
 			tmp2.addAll(getInAppResultList(results));
 
+			//TODO RESULTS FIX
 			if(!nonBestList.contains(s)){
 				tmp2.add("Best:");
 				results = db.getSingleBest(s);
