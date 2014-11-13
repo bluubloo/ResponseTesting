@@ -107,8 +107,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//Delete All Rows
 	public int deleteAll() {
-		this.getWritableDatabase().delete(resources.getString(R.string.table_name), 
-				"1=?", new String[] {"1"});
+		String query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name);
+		this.getWritableDatabase().execSQL(query);
+		onCreate(this.getWritableDatabase());
 		return 0;
 	}
 	

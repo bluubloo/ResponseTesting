@@ -54,4 +54,8 @@ public class ResultsDisplayFragment extends Fragment {
 		list_view.setChildDivider(null);
 		list_view.setDividerHeight(0);
 	}
+	
+	public void update(){
+		adapter.update(Results.getResultsForInApp(getActivity()));
+	}
 }

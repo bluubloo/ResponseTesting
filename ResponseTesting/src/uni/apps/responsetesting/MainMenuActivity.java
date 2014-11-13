@@ -2,7 +2,6 @@ package uni.apps.responsetesting;
 
 import uni.apps.responsetesting.fragment.MainMenuFragment;
 import uni.apps.responsetesting.interfaces.listener.MainMenuListener;
-import uni.apps.responsetesting.results.Email;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
 import android.app.FragmentManager;

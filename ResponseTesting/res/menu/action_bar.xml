@@ -17,12 +17,19 @@
         android:showAsAction="never"
         android:title="@string/action_send_recent"/>
     <item
+        android:id="@+id/action_delete_all"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_delete_all"
+        android:visible="false"/>
+    <item
         android:id="@+id/action_info"
         android:icon="@android:drawable/ic_menu_info_details"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:visible="false"
-        android:title="@string/action_send_results"/>
+        android:title="@string/action_event_info"
+        android:visible="false"/>
     <item
         android:id="@+id/action_results"
         android:icon="@drawable/results_icon"

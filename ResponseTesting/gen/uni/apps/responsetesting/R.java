@@ -36,11 +36,12 @@ public final class R {
         public static final int results_icon=0x7f020002;
     }
     public static final class id {
-        public static final int action_info=0x7f0a001c;
-        public static final int action_results=0x7f0a001d;
-        public static final int action_send_all=0x7f0a001a;
-        public static final int action_send_recent=0x7f0a001b;
-        public static final int action_settings=0x7f0a0019;
+        public static final int action_delete_all=0x7f0a001f;
+        public static final int action_info=0x7f0a0020;
+        public static final int action_results=0x7f0a0021;
+        public static final int action_send_all=0x7f0a001d;
+        public static final int action_send_recent=0x7f0a001e;
+        public static final int action_settings=0x7f0a001c;
         public static final int appear_obj_container=0x7f0a0005;
         public static final int appear_obj_image_1=0x7f0a0006;
         public static final int appear_obj_image_2=0x7f0a000a;
@@ -59,6 +60,9 @@ public final class R {
         public static final int results_container=0x7f0a0003;
         public static final int results_dis_expand_list=0x7f0a0018;
         public static final int results_dis_title=0x7f0a0017;
+        public static final int stroop_button=0x7f0a001b;
+        public static final int stroop_grid=0x7f0a001a;
+        public static final int stroop_title=0x7f0a0019;
         public static final int tap_click_count=0x7f0a0010;
         public static final int tap_click_info=0x7f0a000f;
         public static final int tap_click_time=0x7f0a0011;
@@ -76,11 +80,14 @@ public final class R {
         public static final int questionaire_fragment=0x7f030005;
         public static final int questionaire_item=0x7f030006;
         public static final int results_display_fragment=0x7f030007;
+        public static final int stroop_test_fragment=0x7f030008;
     }
     public static final class menu {
         public static final int action_bar=0x7f090000;
     }
     public static final class string {
+        public static final int action_delete_all=0x7f070012;
+        public static final int action_event_info=0x7f070011;
         public static final int action_send_all=0x7f07000e;
         public static final int action_send_recent=0x7f07000f;
         public static final int action_send_results=0x7f070010;
@@ -88,43 +95,50 @@ public final class R {
          */
         public static final int action_settings=0x7f07000d;
         public static final int app_name=0x7f070000;
-        public static final int appear_obj_info=0x7f070017;
+        public static final int appear_obj_info=0x7f070019;
         /**  Appearing Object Strings 
          */
-        public static final int appear_obj_title=0x7f070016;
+        public static final int appear_obj_title=0x7f070018;
+        public static final int done=0x7f070024;
         public static final int event=0x7f070004;
         public static final int event_name=0x7f070008;
-        public static final int event_name_appear_obj=0x7f07001b;
+        public static final int event_name_appear_obj=0x7f07001f;
         /**  Event Name Strings 
          */
-        public static final int event_name_finger_tap=0x7f07001a;
-        public static final int event_name_questionaire=0x7f07001c;
+        public static final int event_name_finger_tap=0x7f07001e;
+        public static final int event_name_questionaire=0x7f070021;
+        public static final int event_name_stroop=0x7f070020;
         public static final int event_score=0x7f070009;
         public static final int image_descript=0x7f070006;
         public static final int main_menu=0x7f070003;
         public static final int notes=0x7f07000b;
         /**  Questionaire Strings 
          */
-        public static final int questionaire_info=0x7f070018;
-        public static final int restart_square=0x7f07001e;
+        public static final int questionaire_info=0x7f07001a;
+        public static final int restart_square=0x7f070023;
         /**  Result Display Strings 
          */
-        public static final int results_dis_title=0x7f070019;
+        public static final int results_dis_title=0x7f07001d;
         public static final int sent=0x7f07000c;
-        /**  Start Strings 
+        public static final int start=0x7f070025;
+        /**  Start/Done Strings 
          */
-        public static final int start_square=0x7f07001d;
+        public static final int start_square=0x7f070022;
+        public static final int stroop_info=0x7f07001c;
+        /**  Stroop Test Strings 
+         */
+        public static final int stroop_title=0x7f07001b;
         public static final int submit=0x7f070005;
         /**  Database Strings 
          */
         public static final int table_name=0x7f070007;
-        public static final int tap_click_info_3=0x7f070013;
-        public static final int tap_click_info_count=0x7f070014;
-        public static final int tap_click_info_time=0x7f070015;
-        public static final int tap_info=0x7f070012;
+        public static final int tap_click_info_3=0x7f070015;
+        public static final int tap_click_info_count=0x7f070016;
+        public static final int tap_click_info_time=0x7f070017;
+        public static final int tap_info=0x7f070014;
         /**  Finger Tap Test Strings 
          */
-        public static final int tap_title=0x7f070011;
+        public static final int tap_title=0x7f070013;
         public static final int timestamp=0x7f07000a;
         public static final int title_activity_event=0x7f070001;
         public static final int title_activity_results_display=0x7f070002;

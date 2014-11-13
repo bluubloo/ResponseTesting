@@ -86,8 +86,15 @@ public class ResultsListExpandableAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
-		//TODO check what this does
 		return false;
 	}
 
+	public void update(String[][] contents){
+		if(mTitles.length != contents.length){
+			throw new IllegalArgumentException("Titles and arguments must be the same size");
+		}
+		mContents = contents;
+		//TODO Fix
+		notifyDataSetChanged();
+	}
 }

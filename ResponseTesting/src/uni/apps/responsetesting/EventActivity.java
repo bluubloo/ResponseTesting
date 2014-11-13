@@ -3,6 +3,7 @@ package uni.apps.responsetesting;
 import uni.apps.responsetesting.fragment.events.AppearingObjectFragment;
 import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
 import uni.apps.responsetesting.fragment.events.QuestionaireFragment;
+import uni.apps.responsetesting.fragment.events.StroopTestFragment;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
 import android.app.Fragment;
@@ -25,7 +26,7 @@ public class EventActivity extends Activity {
 
 	private FragmentManager frag_manager;
 	private static final String EVENT_TAG = "EventFragment";
-	private static final String TAG = null;
+	private static final String TAG = "EventActivity";
 	private String eventName = "";
 	private Fragment fragment;
 
@@ -50,6 +51,8 @@ public class EventActivity extends Activity {
 			fragment = new QuestionaireFragment();
 		else if(eventName.equals(r.getString(R.string.event_name_appear_obj)))
 			fragment = new AppearingObjectFragment();
+		else if(eventName.equals(r.getString(R.string.event_name_stroop)))
+			fragment = new StroopTestFragment();
 
 		ft.replace(R.id.event_container, fragment, EVENT_TAG);
 		ft.commit();

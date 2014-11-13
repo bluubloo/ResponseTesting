@@ -5,9 +5,9 @@ import java.util.Random;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.interfaces.listener.AppearingObjectImageClickListener;
-import uni.apps.responsetesting.interfaces.listener.MainMenuListener;
 import uni.apps.responsetesting.models.AppearingObjectInfo;
 import uni.apps.responsetesting.results.Results;
+import uni.apps.responsetesting.utils.Conversion;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -105,6 +105,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 					running = !running;
 					for(ImageView i: clickableImageView)
 						i.setVisibility(View.INVISIBLE);
+					startTextView.setVisibility(View.INVISIBLE);
 					timerHandler.postDelayed(timerRunnableImageAppear, delay);
 				}
 			}
@@ -115,7 +116,6 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 
 
 	private void setUpImageClickEvents(View view) {
-		// TODO Auto-generated method stub
 		clickableImageView[0] = (ImageView) view.findViewById(R.id.appear_obj_image_1);
 		clickableImageView[0].setOnClickListener(new OnClickListener(){
 
@@ -168,11 +168,14 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 			counter = 0;
 			running = !running;
 			double average = getAverage();
-			Results.insertResult(eventName, Double.toString(average),
+			String avg =  Conversion.milliToStringSeconds(average, 5);
+			Results.insertResult(eventName,avg,
 					Calendar.getInstance().getTimeInMillis(), getActivity());
+			startTextView.setText(getResources().getString(R.string.restart_square));
+			startTextView.setVisibility(View.VISIBLE);
 			new AlertDialog.Builder(getActivity())
 			.setTitle(eventName + " Test Complete")
-			.setMessage("Average Time to Click Image = " + Double.toString(average) + "s")
+			.setMessage("Average Time to Click Image = " + avg + "s")
 			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) { 
 				}
@@ -186,7 +189,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		double tmp = 0;
 		for(AppearingObjectInfo a: data)
 			tmp += a.getDuration();
-		return tmp / data.length / 1000;
+		return tmp / data.length;
 	}
 
 	@Override

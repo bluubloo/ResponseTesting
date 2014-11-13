@@ -52,6 +52,8 @@ public class ActivityUtilities {
 			return r.getString(R.string.tap_info);
 		if(eventName.equals(r.getString(R.string.event_name_questionaire)))
 			return r.getString(R.string.questionaire_info);
+		if(eventName.equals(r.getString(R.string.event_name_stroop)))
+			return r.getString(R.string.stroop_info);
 		return "";
 	}
 	

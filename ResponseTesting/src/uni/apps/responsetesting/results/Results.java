@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.util.Log;
 
 /**
  * This class will handle anything related to the results of the taken tests.
@@ -127,6 +126,14 @@ public class Results {
 		values.put(r.getString(R.string.sent), 0);
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
 		db.insert(values);
+	}
+	
+	//--------------------------------------------------------------------------------------------
+	//DELETE Results
+	
+	public static void deleteAllResults(Activity activity){
+		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
+		db.deleteAll();
 	}
 	
 }

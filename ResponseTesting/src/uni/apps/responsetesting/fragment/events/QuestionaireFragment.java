@@ -47,7 +47,7 @@ public class QuestionaireFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+
 				ArrayList<String> results = new ArrayList<String>();
 				
 				for(int i = 0; i < list_view.getCount(); i++){
