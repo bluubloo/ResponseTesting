@@ -26,7 +26,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:contentDescription="@string/image_descript"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/target_icon"
             android:visibility="invisible" />
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_marginStart="41dp"
             android:layout_marginTop="51dp"
             android:contentDescription="@string/image_descript"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/target_icon"
             android:visibility="invisible" />
 
         <ImageView
@@ -60,7 +60,7 @@
             android:layout_alignRight="@+id/appear_obj_start"
             android:layout_alignTop="@+id/appear_obj_image_4"
             android:contentDescription="@string/image_descript"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/target_icon"
             android:visibility="invisible" />
 
         <ImageView
@@ -72,7 +72,7 @@
             android:layout_alignStart="@+id/appear_obj_start"
             android:layout_marginBottom="49dp"
             android:contentDescription="@string/image_descript"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/target_icon"
             android:visibility="invisible" />
 
         <ImageView
@@ -83,7 +83,7 @@
             android:layout_alignStart="@+id/appear_obj_image_3"
             android:layout_alignTop="@+id/appear_obj_image_2"
             android:contentDescription="@string/image_descript"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/target_icon"
             android:visibility="invisible" />
     </RelativeLayout>
 

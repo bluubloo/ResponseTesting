@@ -3,6 +3,7 @@ package uni.apps.responsetesting;
 import uni.apps.responsetesting.fragment.MainMenuFragment;
 import uni.apps.responsetesting.interfaces.listener.MainMenuListener;
 import uni.apps.responsetesting.utils.ActivityUtilities;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -58,6 +59,8 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.action_bar, menu);
+		ActionBar a = getActionBar();
+		a.setSubtitle(getResources().getString(R.string.main_menu));
 		return true;
 	}
 

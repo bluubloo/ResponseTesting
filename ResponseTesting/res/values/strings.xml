@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ResponseTesting</string>
-    <string name="title_activity_event">EventActivity</string>
+    <string name="app_name">Response Testing</string>
+    <string name="title_activity_event">Event</string>
     <string name="title_activity_results_display">Results</string>
     <string name="main_menu">Main Menu</string>
     <string name="event">event</string>
@@ -51,7 +51,7 @@
     <string name="event_name_appear_obj">Appearing Object</string>
     <string name="event_name_stroop">Stroop Test</string>
     <string name="event_name_questionaire">Questionaire</string>
-
+    
     <!-- Start/Done Strings -->
     <string name="start_square">Tap in the Square to Start</string>
     <string name="restart_square">Tap in the Square to Restart</string>

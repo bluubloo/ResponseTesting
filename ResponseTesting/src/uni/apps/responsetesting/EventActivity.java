@@ -5,6 +5,7 @@ import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
 import uni.apps.responsetesting.fragment.events.QuestionaireFragment;
 import uni.apps.responsetesting.fragment.events.StroopTestFragment;
 import uni.apps.responsetesting.utils.ActivityUtilities;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -75,6 +76,8 @@ public class EventActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.action_bar, menu);
+		ActionBar a = getActionBar();
+		a.setSubtitle(eventName);
 		return true;
 	}
 	
