@@ -22,7 +22,7 @@ public class Results {
 
 	//--------------------------------------------------------------------------------------------
 	//Get Results
-	
+
 	public static String[][] getResultsForInApp(Activity activity){
 		Resources r = activity.getResources();
 		ArrayList<String> nonBestList = new ArrayList<String>();
@@ -48,8 +48,8 @@ public class Results {
 		String[][] list = listToArray(tmp);
 		return list;
 	}
-	
-	private static String[][] listToArray(ArrayList<ArrayList<String>> list){
+
+	/*	private static String[][] listToArray(ArrayList<ArrayList<String>> list){
 		int i = 0;
 		String[][] newList = new String[list.size()][10];
 		for(ArrayList<String> a : list){
@@ -61,8 +61,24 @@ public class Results {
 			i ++;
 		}
 		return newList;
+	}*/
+
+	private static String[][] listToArray(ArrayList<ArrayList<String>> list){
+		int i = 0;
+		String[][] newList = new String[list.size()][8];
+		for(ArrayList<String> a : list){
+			String[] tmp = new String[a.size()];
+			int j = 0; 
+			for(String s : a){
+				tmp[j] = s;
+				j++;
+			}
+			newList[i] = tmp;
+			i ++;
+		}
+		return newList;
 	}
-	
+
 	private static ArrayList<String> getInAppResultList(Cursor results){
 		ArrayList<String> tmp = new ArrayList<String>();
 		int i = 1;
@@ -72,32 +88,32 @@ public class Results {
 				Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(results.getLong(2));
 				s1 += ". Time = " + c.getTime().toString() + ". Extra notes = " +
-						results.getString(3);
+						results.getString(4);
 				tmp.add(s1);
 				i++;
 			} while (results.moveToNext() && i < 4);
 		}
 		return tmp;
 	}
-	
+
 	public static String getRecentResults(Activity activity){
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		Cursor results = db.getMostRecent();
 		return retrieveString(results);
 	}
-	
+
 	public static String getAllResults(Activity activity){
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		Cursor results = db.getAllResults();
 		return retrieveString(results);
 	}
-	
+
 	public static String getSingleResults(Activity activity, String testName) {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		Cursor results = db.getSingle(testName);
 		return retrieveString(results);
 	}
-	
+
 	private static String retrieveString(Cursor results){
 		if(results.moveToFirst()){
 			String total = "Results: \n";
@@ -106,7 +122,7 @@ public class Results {
 				Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(results.getLong(2));
 				total += ". Time = " + c.getTime().toString() + ". Extra notes = " +
-						results.getString(3) + ".\n";
+						results.getString(4) + ".\n";
 			} while (results.moveToNext());
 			return total;
 		}
@@ -115,7 +131,7 @@ public class Results {
 
 	//--------------------------------------------------------------------------------------------
 	//INSERT Results
-	
+
 	public static void insertResult(String testName, String result, long time, Activity activity){
 		Resources r = activity.getResources();
 		ContentValues values = new ContentValues();
@@ -127,13 +143,26 @@ public class Results {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
 		db.insert(values);
 	}
-	
+
 	//--------------------------------------------------------------------------------------------
 	//DELETE Results
-	
+
 	public static void deleteAllResults(Activity activity){
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		db.deleteAll();
 	}
+
+	//--------------------------------------------------------------------------------------------
+	//UPDATE Results
 	
+	public static void updateNotes(String eventName, String notes, Activity activity) {
+		Resources r = activity.getResources();
+		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
+		ContentValues values = new ContentValues();
+		values.put(r.getString(R.string.notes), notes);
+		String selection = r.getString(R.string.event_name) + "=? AND " 
+				+ r.getString(R.string.timestamp) + "=?";
+		db.updateSingle(selection,new String[] {eventName}, values);
+	}
+
 }

@@ -83,8 +83,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	//Update Single Row
 	public int updateSingle(String selection, String[] selectionArgs,
 			ContentValues values) {
+		
+		String get = "SELECT " + resources.getString(R.string.timestamp) + " FROM " + resources.getString(R.string.table_name) + " WHERE " + 
+				resources.getString(R.string.event_name) + "=? ORDER BY " + resources.getString(R.string.timestamp);
+		
+		Cursor cursor = this.getReadableDatabase().rawQuery(get, new String[] {selectionArgs[0]});
+		long time = 0;
+		if(cursor.moveToFirst()){
+			time = cursor.getLong(0);
+		}
+
 		return this.getWritableDatabase().update(resources.getString(R.string.table_name),
-				values, selection, selectionArgs);
+				values, selection, new String[] {selectionArgs[0], Long.toString(time)});
+
 	}
 	
 	//Update All Unsent to Sent

@@ -167,6 +167,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		if(running){
 			counter = 0;
 			running = !running;
+			clickableImageView[imageCounter].setVisibility(View.INVISIBLE);
 			double average = getAverage();
 			String avg =  Conversion.milliToStringSeconds(average, 5);
 			Results.insertResult(eventName,avg,

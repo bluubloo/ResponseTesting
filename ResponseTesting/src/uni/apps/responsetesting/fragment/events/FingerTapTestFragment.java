@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,10 +30,11 @@ public class FingerTapTestFragment extends Fragment {
 	private static final String TAG = "FingerTapTestFragment";
 	private static final String eventName = "Finger Tap Test";
 	private static final int seconds = 5; 
+	private Button startButton;
 	private TextView infoTextView;
 	private TextView clickCountTextView;
 	private TextView timeLeftTextView;
-	private boolean running = false;
+	private boolean running = true;
 	private int clickCount = 0;
 	private long startTime = 0;	
 	private Handler timerHandler = new Handler();
@@ -74,9 +76,16 @@ public class FingerTapTestFragment extends Fragment {
 		setupTest(view);
 		return view;
 	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		timerHandler.removeCallbacks(timerRunnable);
+	}
 
 	private void setupTest(View view) {
 		RelativeLayout clickable = (RelativeLayout) view.findViewById(R.id.tap_container);
+		startButton = (Button) view.findViewById(R.id.tap_click_start_button);
 		infoTextView = (TextView) clickable.findViewById(R.id.tap_click_info);
 		clickCountTextView = (TextView) clickable.findViewById(R.id.tap_click_count);
 		timeLeftTextView = (TextView) clickable.findViewById(R.id.tap_click_time);
@@ -88,27 +97,42 @@ public class FingerTapTestFragment extends Fragment {
 					running = !running;
 					clickCount = 0;
 					startTime = Calendar.getInstance().getTimeInMillis();
+					startButton.setText(getResources().getString(R.string.tap_click_info_3));
 					infoTextView.setText(getResources().getString(R.string.tap_click_info_3));
 					timerHandler.postDelayed(timerRunnable, 0);
 					clickCount ++;
 					clickCountTextView.setText("Tap Count: " + Integer.toString(clickCount));
 				} else if (running && (Calendar.getInstance().getTimeInMillis() - startTime) > (seconds * 1000)){
 					//do nothing
-				} else {
+				} else if (running && startTime != 0) {
 					clickCount ++;
 					clickCountTextView.setText("Tap Count: " + Integer.toString(clickCount));
 				}
 			}
 
 		});
+		
+		startButton.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				if(running && startTime == 0){
+					running = !running;
+					infoTextView.setVisibility(View.VISIBLE);
+				}
+			}
+			
+		});
 	}
 
 	private void endTest() {		
 		if(running){
 			timerHandler.removeCallbacks(timerRunnable);
-			infoTextView.setText(getResources().getString(R.string.restart_square));
+			startButton.setText(getResources().getString(R.string.restart));
+			infoTextView.setVisibility(View.INVISIBLE);
+			infoTextView.setText(getResources().getString(R.string.start_square));
 			clickCountTextView.setText(getResources().getString(R.string.tap_click_info_count));
-			running = !running;
+			startTime = 0;
 			Results.insertResult(eventName, Integer.toString(clickCount),
 					Calendar.getInstance().getTimeInMillis(), getActivity());
 			new AlertDialog.Builder(getActivity())

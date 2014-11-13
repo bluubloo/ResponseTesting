@@ -20,15 +20,6 @@
         android:background="@drawable/layout_border" >
 
         <TextView
-            android:id="@+id/tap_click_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/start_square"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
             android:id="@+id/tap_click_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,13 +39,23 @@
             android:text="@string/tap_click_info_time"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <TextView
+            android:id="@+id/tap_click_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="@string/start_square"
+            android:visibility="invisible"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tap_info"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/tap_click_start_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tap_info"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/start" />
 
 </LinearLayout>

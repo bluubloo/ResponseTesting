@@ -45,6 +45,7 @@
 
     <!-- Result Display Strings -->
     <string name="results_dis_title">Test Results</string>
+    <string name="results_dis_notes">Add Note</string>
 
     <!-- Event Name Strings -->
     <string name="event_name_finger_tap">Finger Tap Test</string>
@@ -57,5 +58,6 @@
     <string name="restart_square">Tap in the Square to Restart</string>
     <string name="done">Done</string>
     <string name="start">Start</string>
+    <string name="restart">Restart</string>
 
 </resources>
