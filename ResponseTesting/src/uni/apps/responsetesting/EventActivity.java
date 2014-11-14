@@ -26,6 +26,7 @@ import android.view.MenuItem;
  */
 public class EventActivity extends Activity {
 
+	//Needed Variables
 	private FragmentManager frag_manager;
 	private static final String EVENT_TAG = "EventFragment";
 	private static final String TAG = "EventActivity";
@@ -36,13 +37,18 @@ public class EventActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event);
+		//gets fragment manager
 		frag_manager = this.getFragmentManager();
+		//gets eventname from intent extras
+		//then adds fragment to activity
 		eventName = getIntent().getExtras().getString(
 				this.getResources().getString(R.string.event));
 		addFragments();
 	}
 
+	//adds a fragment to the activity
 	private void addFragments() {
+		//transaction and resources
 		FragmentTransaction ft = frag_manager.beginTransaction();
 		Resources r = getResources();
 
@@ -58,6 +64,7 @@ public class EventActivity extends Activity {
 		else if(eventName.equals(r.getString(R.string.event_name_one_card)))
 			fragment = new OneCardLearningFragment();
 
+		//adds fragment to activity
 		ft.replace(R.id.event_container, fragment, EVENT_TAG);
 		ft.commit();
 		frag_manager.executePendingTransactions();
@@ -65,10 +72,12 @@ public class EventActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		//checks if info button on action bar is clicked
 		if(item.getItemId() == R.id.action_info){
 			ActivityUtilities.eventInfo(eventName, this);
 			return true;
 		}
+		//else calls the defaults
 		else if(ActivityUtilities.actionBarClicks(item, this)){
 			return true;
 		}
@@ -79,6 +88,7 @@ public class EventActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.action_bar, menu);
+		//adds event name to actionbar subtitle
 		ActionBar a = getActionBar();
 		a.setSubtitle(eventName);
 		return true;

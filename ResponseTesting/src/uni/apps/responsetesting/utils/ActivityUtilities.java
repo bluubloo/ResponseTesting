@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 public class ActivityUtilities {
 
+	//Does the action bar events for items common accross all activities
 	public static boolean actionBarClicks(MenuItem item, Activity activity){
 		switch(item.getItemId()){
 		case R.id.action_settings:
@@ -31,7 +32,9 @@ public class ActivityUtilities {
 		}
 	}
 
+	//Gets the event info and displays it in a dialog
 	public static void eventInfo(String eventName, Activity activity) {
+		//gets info
 		String eventInfo = getEventInfo(eventName, activity.getResources());
 		new AlertDialog.Builder(activity)
 		.setTitle(eventName)
@@ -44,6 +47,7 @@ public class ActivityUtilities {
 				.show();
 	}
 
+	//Gets the events info from application resources
 	private static String getEventInfo(String eventName, Resources r) {
 		//TODO add event info strings here
 		if(eventName.equals(r.getString(R.string.event_name_appear_obj)))
@@ -59,6 +63,7 @@ public class ActivityUtilities {
 		return "";
 	}
 	
+	//displays results for all events that do not require extra actions on closing the dialog
 	public static void displayResults(Activity activity, String eventName, String message){
 		new AlertDialog.Builder(activity)
 		.setTitle(eventName + " Complete")

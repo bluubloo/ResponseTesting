@@ -7,12 +7,21 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+/**
+ * This class is the adapter for the stroop test grid
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class StroopTestGridAdapter extends BaseAdapter {
 
+	//variables
 	private String[] data;
 	private int[] colour;
 	private Activity activity;
 
+	//sets the variables
 	public StroopTestGridAdapter(String[] data, int[] colour, Activity activity){
 		this.data = data;
 		this.colour = colour;
@@ -39,9 +48,11 @@ public class StroopTestGridAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		//creates the view
 		TextView view = (TextView) convertView;
 		if(view == null)
 			view = new TextView(activity);
+		//sets the view values
 		view.setText(data[position]);
 		view.setTextSize(30);
 		view.setTypeface(Typeface.DEFAULT_BOLD);
@@ -49,11 +60,13 @@ public class StroopTestGridAdapter extends BaseAdapter {
 		return view;
 	}
 
+	//clears the data arrays
 	public void clear(){
 		data = new String[] {"","","","",""};
 		colour = new int[] {0,0,0,0,0};
 	}
 
+	//updates the data arrays
 	public void update(String[] data, int[] colour){
 		this.data = data;
 		this.colour = colour;
