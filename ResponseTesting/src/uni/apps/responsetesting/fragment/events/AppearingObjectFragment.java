@@ -7,11 +7,10 @@ import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.interfaces.listener.AppearingObjectImageClickListener;
 import uni.apps.responsetesting.models.AppearingObjectInfo;
 import uni.apps.responsetesting.results.Results;
+import uni.apps.responsetesting.utils.ActivityUtilities;
 import uni.apps.responsetesting.utils.Conversion;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -174,15 +173,8 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 					Calendar.getInstance().getTimeInMillis(), getActivity());
 			startTextView.setText(getResources().getString(R.string.restart_square));
 			startTextView.setVisibility(View.VISIBLE);
-			new AlertDialog.Builder(getActivity())
-			.setTitle(eventName + " Test Complete")
-			.setMessage("Average Time to Click Image = " + avg + "s")
-			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) { 
-				}
-			})
-			.setIcon(android.R.drawable.ic_dialog_alert)
-			.show();
+			ActivityUtilities.displayResults(getActivity(), eventName + " Test", 
+					"Average Time to Click Image = " + avg + "s");
 		}
 	}
 

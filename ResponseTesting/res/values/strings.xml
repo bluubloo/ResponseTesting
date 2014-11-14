@@ -43,6 +43,10 @@
     <string name="stroop_title">Stroop Test</string>
     <string name="stroop_info">Say out loud the colour of the word. (Not the what the word says). Once you have read all colours click on "Done". There are two sets of colours in this test.</string>
 
+    <!-- One Card Learning Test Strings -->
+    <string name="one_card_title">One Card Learning Test</string>
+    <string name="one_card_info">Press yes if the card has been shown before, no if it has not. There will twenty cards</string>
+
     <!-- Result Display Strings -->
     <string name="results_dis_title">Test Results</string>
     <string name="results_dis_notes">Add Note</string>
@@ -52,12 +56,17 @@
     <string name="event_name_appear_obj">Appearing Object</string>
     <string name="event_name_stroop">Stroop Test</string>
     <string name="event_name_questionaire">Questionaire</string>
-    
+    <string name="event_name_one_card">One Card Learning Test</string>
+
     <!-- Start/Done Strings -->
     <string name="start_square">Tap in the Square to Start</string>
     <string name="restart_square">Tap in the Square to Restart</string>
     <string name="done">Done</string>
     <string name="start">Start</string>
     <string name="restart">Restart</string>
+    
+    <!-- Yes/No Strings -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

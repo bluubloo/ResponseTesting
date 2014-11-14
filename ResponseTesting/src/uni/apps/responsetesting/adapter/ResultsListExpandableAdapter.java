@@ -107,7 +107,7 @@ public class ResultsListExpandableAdapter extends BaseExpandableListAdapter {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			holder.text.setText(mContents[groupPosition][childPosition]);
-			if(childPosition != 1){
+			if(childPosition != 1 || mContents[groupPosition][childPosition].equals("Best:")){
 				holder.button.setVisibility(View.GONE);
 			} else {
 				holder.button.setVisibility(View.VISIBLE);

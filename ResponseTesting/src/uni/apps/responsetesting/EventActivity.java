@@ -2,6 +2,7 @@ package uni.apps.responsetesting;
 
 import uni.apps.responsetesting.fragment.events.AppearingObjectFragment;
 import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
+import uni.apps.responsetesting.fragment.events.OneCardLearningFragment;
 import uni.apps.responsetesting.fragment.events.QuestionaireFragment;
 import uni.apps.responsetesting.fragment.events.StroopTestFragment;
 import uni.apps.responsetesting.utils.ActivityUtilities;
@@ -54,6 +55,8 @@ public class EventActivity extends Activity {
 			fragment = new AppearingObjectFragment();
 		else if(eventName.equals(r.getString(R.string.event_name_stroop)))
 			fragment = new StroopTestFragment();
+		else if(eventName.equals(r.getString(R.string.event_name_one_card)))
+			fragment = new OneCardLearningFragment();
 
 		ft.replace(R.id.event_container, fragment, EVENT_TAG);
 		ft.commit();

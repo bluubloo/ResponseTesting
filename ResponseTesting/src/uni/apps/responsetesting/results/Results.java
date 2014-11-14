@@ -143,6 +143,11 @@ public class Results {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
 		db.insert(values);
 	}
+	
+	public static void insertResult(String eventName, int result,
+			long time, Activity activity) {
+		insertResult(eventName, Integer.toString(result), time, activity);		
+	}
 
 	//--------------------------------------------------------------------------------------------
 	//DELETE Results
@@ -164,5 +169,7 @@ public class Results {
 				+ r.getString(R.string.timestamp) + "=?";
 		db.updateSingle(selection,new String[] {eventName}, values);
 	}
+
+	
 
 }

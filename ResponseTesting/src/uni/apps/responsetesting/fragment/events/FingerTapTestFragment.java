@@ -4,9 +4,8 @@ import java.util.Calendar;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.results.Results;
-import android.app.AlertDialog;
+import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -135,17 +134,9 @@ public class FingerTapTestFragment extends Fragment {
 			startTime = 0;
 			Results.insertResult(eventName, Integer.toString(clickCount),
 					Calendar.getInstance().getTimeInMillis(), getActivity());
-			new AlertDialog.Builder(getActivity())
-			.setTitle("Tap Test Complete")
-			.setMessage("Your score was " + Integer.toString(clickCount) + " taps in 5s. With an average of " +
-					Double.toString((double) clickCount / (double) seconds) + " taps per second.")
-					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) { 
-
-						}
-					})
-					.setIcon(android.R.drawable.ic_dialog_alert)
-					.show();
+			ActivityUtilities.displayResults(getActivity(), eventName, 
+					"Your score was " + Integer.toString(clickCount) + " taps in 5s. With an average of " +
+							Double.toString((double) clickCount / (double) seconds) + " taps per second.");
 		}
 	}
 }

@@ -54,7 +54,22 @@ public class ActivityUtilities {
 			return r.getString(R.string.questionaire_info);
 		if(eventName.equals(r.getString(R.string.event_name_stroop)))
 			return r.getString(R.string.stroop_info);
+		if(eventName.equals(r.getString(R.string.event_name_one_card)))
+			return r.getString(R.string.one_card_info);
 		return "";
+	}
+	
+	public static void displayResults(Activity activity, String eventName, String message){
+		new AlertDialog.Builder(activity)
+		.setTitle(eventName + " Complete")
+		.setMessage(message)
+				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) { 
+
+					}
+				})
+				.setIcon(android.R.drawable.ic_dialog_alert)
+				.show();
 	}
 	
 }
