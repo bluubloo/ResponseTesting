@@ -8,8 +8,11 @@
         android:id="@+id/tap_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:text="@string/tap_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/event_name_finger_tap"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <RelativeLayout

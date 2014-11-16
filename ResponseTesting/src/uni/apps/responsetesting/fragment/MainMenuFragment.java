@@ -43,9 +43,12 @@ public class MainMenuFragment extends ListFragment {
 		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, createList());
 	}
 
+	//Creates main menu list
 	private ArrayList<String> createList(){
+		//gets string array from rescoures
 		Resources r = this.getActivity().getResources();
 		String[] tmp = r.getStringArray(R.array.event_name_array);
+		//adds from array to list
 		ArrayList<String> list = new ArrayList<String>();
 		for(String s: tmp){
 			list.add(s);
@@ -67,6 +70,7 @@ public class MainMenuFragment extends ListFragment {
 		setListShown(!is_loading);
 	}
 
+	//attachs listener to activity
 	@Override
 	public void onAttach(Activity activity) {
 		Log.d(TAG, "onAttach()");

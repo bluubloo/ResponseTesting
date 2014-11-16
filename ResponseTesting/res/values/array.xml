@@ -15,6 +15,14 @@
         <item>Stroop Test</item>
         <item>Questionaire</item>
     </string-array>
+    <!-- The below array of event info needs to be in the same order as the above event names -->
+    <string-array name="event_info_array">
+        <item>Click on the object when it appears.</item>
+        <item>Tap space above as many times as possible within 5 seconds.</item>
+        <item>Press yes if the card has been shown before, no if it has not. \nThere will twenty cards</item>
+        <item>Say out loud the colour of the word. (Not the what the word says). \nOnce you have read all colours click on "Done".</item>
+        <item>Give the question a rating from 0 to 5.\n With 5 Being the highest.</item>
+    </string-array>
     <string-array name="non_numeric_events">
         <item>Questionaire</item>
     </string-array>

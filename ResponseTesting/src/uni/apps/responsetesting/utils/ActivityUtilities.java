@@ -2,6 +2,7 @@ package uni.apps.responsetesting.utils;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.ResultsDisplayActivity;
+import uni.apps.responsetesting.SettingsActivity;
 import uni.apps.responsetesting.results.Email;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +17,7 @@ public class ActivityUtilities {
 	public static boolean actionBarClicks(MenuItem item, Activity activity){
 		switch(item.getItemId()){
 		case R.id.action_settings:
+			activity.startActivity(new Intent(activity, SettingsActivity.class));
 			return true;
 		case R.id.action_send_all:
 			Email.sendResults(activity, true);
@@ -48,18 +50,12 @@ public class ActivityUtilities {
 	}
 
 	//Gets the events info from application resources
-	private static String getEventInfo(String eventName, Resources r) {
-		//TODO add event info strings here
-		if(eventName.equals(r.getString(R.string.event_name_appear_obj)))
-			return r.getString(R.string.appear_obj_info);
-		if(eventName.equals(r.getString(R.string.event_name_finger_tap)))
-			return r.getString(R.string.tap_info);
-		if(eventName.equals(r.getString(R.string.event_name_questionaire)))
-			return r.getString(R.string.questionaire_info);
-		if(eventName.equals(r.getString(R.string.event_name_stroop)))
-			return r.getString(R.string.stroop_info);
-		if(eventName.equals(r.getString(R.string.event_name_one_card)))
-			return r.getString(R.string.one_card_info);
+	public static String getEventInfo(String eventName, Resources r) {
+		String[] info = r.getStringArray(R.array.event_info_array);
+		String[] names = r.getStringArray(R.array.event_name_array);
+		for(int i = 0; i < names.length; i++)
+			if(names[i].equals(eventName))
+				return info[i];
 		return "";
 	}
 	

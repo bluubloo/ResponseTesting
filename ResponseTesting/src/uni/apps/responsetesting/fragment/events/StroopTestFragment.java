@@ -37,10 +37,10 @@ public class StroopTestFragment extends Fragment {
 	private static final String eventName = "Stroop Test";
 	private StroopTestGridAdapter adapter;
 	private GridView grid_view;
-	private long startTime1 = 0;
-	private long endTime1 = 0;
+//	private long startTime1 = 0;
+//	private long endTime1 = 0;
 	private long startTime2 = 0;
-	private int run = 1;
+//	private int run = 1;
 	private boolean firstTime = true;
 	
 	
@@ -76,16 +76,18 @@ public class StroopTestFragment extends Fragment {
 				String text = button.getText().toString();
 				if(text.equals(r.getString(R.string.start))){
 					button.setText(r.getString(R.string.done));
-					startTime1 = Calendar.getInstance().getTimeInMillis();
-					run = 1;
+					//startTime1 = Calendar.getInstance().getTimeInMillis();
+					startTime2 = Calendar.getInstance().getTimeInMillis();
+				//	run = 1;
 					if(firstTime){
 						grid_view.setAdapter(adapter);
+						setUpGrid();
 						firstTime = !firstTime;
 					} else {
 						grid_view.setVisibility(View.VISIBLE);
 					}					
 				} else if(text.equals(r.getString(R.string.done))){
-					if(run == 1){
+					/*if(run == 1){
 						endTime1 = Calendar.getInstance().getTimeInMillis();
 						startTime2 = Calendar.getInstance().getTimeInMillis();
 						setUpGrid();
@@ -96,7 +98,12 @@ public class StroopTestFragment extends Fragment {
 						button.setText(r.getString(R.string.start));
 						grid_view.setVisibility(View.INVISIBLE);
 						endTest(endTime2);
-					}
+					}*/
+					long endTime2 = Calendar.getInstance().getTimeInMillis();
+					setUpGrid();
+					button.setText(r.getString(R.string.start));
+					grid_view.setVisibility(View.INVISIBLE);
+					endTest(endTime2);
 				}
 			}
 
@@ -122,11 +129,11 @@ public class StroopTestFragment extends Fragment {
 	
 	private void setUpGrid() {
 		adapter.clear();
-		if(run == 1){
+		//if(run == 1){
 			adapter.update(shuffleNames(), shuffleValues());
-		} else {
-			adapter.update(colourNames1, colourValues1);
-		}
+		//} else {
+		//	adapter.update(colourNames1, colourValues1);
+		//}
 	}
 	
 	private String[] shuffleNames(){
@@ -158,18 +165,21 @@ public class StroopTestFragment extends Fragment {
 	}
 	
 	private void endTest(long endTime2) {
-		long duration1 = endTime1 - startTime1;
+	//	long duration1 = endTime1 - startTime1;
 		long duration2 = endTime2 - startTime2;
-		long difference = duration2 - duration1;
-		String timeDiff = Conversion.milliToStringSeconds(difference, 5);
-		String timeDur1 = Conversion.milliToStringSeconds(duration1, 3);
+		//long difference = duration2 - duration1;
+	//	String timeDiff = Conversion.milliToStringSeconds(difference, 5);
+	//	String timeDur1 = Conversion.milliToStringSeconds(duration1, 3);
 		String timeDur2 = Conversion.milliToStringSeconds(duration2, 3);
-		Results.insertResult(eventName, timeDiff,
-				Calendar.getInstance().getTimeInMillis(), getActivity());
+	//	Results.insertResult(eventName, timeDiff,
+	//			Calendar.getInstance().getTimeInMillis(), getActivity());
+		Results.insertResult(eventName, timeDur2,
+							Calendar.getInstance().getTimeInMillis(), getActivity());
 		new AlertDialog.Builder(getActivity())
 		.setTitle("Stroop Test Complete")
-		.setMessage("First Run: " + timeDur1 + "s\nSecond Run: " + timeDur2 + 
-				"s\nRun Difference: " + timeDiff + "s")
+	//	.setMessage("First Run: " + timeDur1 + "s\nSecond Run: " + timeDur2 + 
+	//			"s\nRun Difference: " + timeDiff + "s")
+		.setMessage("Run Time: " + timeDur2 + "s")
 				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) { 
 

@@ -1,18 +1,22 @@
 package uni.apps.responsetesting;
 
 import uni.apps.responsetesting.fragment.events.AppearingObjectFragment;
+import uni.apps.responsetesting.fragment.events.EventInstructionsFragment;
 import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
 import uni.apps.responsetesting.fragment.events.OneCardLearningFragment;
 import uni.apps.responsetesting.fragment.events.QuestionaireFragment;
 import uni.apps.responsetesting.fragment.events.StroopTestFragment;
+import uni.apps.responsetesting.interfaces.listener.EventInstructionsListener;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +28,7 @@ import android.view.MenuItem;
  * @author Mathew Andela
  *
  */
-public class EventActivity extends Activity {
+public class EventActivity extends Activity implements EventInstructionsListener {
 
 	//Needed Variables
 	private FragmentManager frag_manager;
@@ -32,6 +36,7 @@ public class EventActivity extends Activity {
 	private static final String TAG = "EventActivity";
 	private String eventName = "";
 	private Fragment fragment;
+	private EventInstructionsFragment instructFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +55,23 @@ public class EventActivity extends Activity {
 	private void addFragments() {
 		//transaction and resources
 		FragmentTransaction ft = frag_manager.beginTransaction();
-		Resources r = getResources();
+		//gets preference for showing instruction page or not
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean instruct = prefs.getBoolean("pref_event_show_instruct", true);
 
+		instructFragment = EventInstructionsFragment.getInstance(eventName, getResources());
+		setFragment();
+		//adds fragment to activity
+		if(instruct)
+			ft.replace(R.id.event_container, instructFragment, EVENT_TAG);
+		else
+			ft.replace(R.id.event_container, fragment, EVENT_TAG);
+		ft.commit();
+		frag_manager.executePendingTransactions();
+	}
+
+	public void setFragment(){
+		Resources r = getResources();
 		//TODO add new Event fragments here
 		if(eventName.equals(r.getString(R.string.event_name_finger_tap)))
 			fragment = new FingerTapTestFragment();
@@ -63,11 +83,6 @@ public class EventActivity extends Activity {
 			fragment = new StroopTestFragment();
 		else if(eventName.equals(r.getString(R.string.event_name_one_card)))
 			fragment = new OneCardLearningFragment();
-
-		//adds fragment to activity
-		ft.replace(R.id.event_container, fragment, EVENT_TAG);
-		ft.commit();
-		frag_manager.executePendingTransactions();
 	}
 
 	@Override
@@ -83,7 +98,7 @@ public class EventActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -93,12 +108,32 @@ public class EventActivity extends Activity {
 		a.setSubtitle(eventName);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		Log.d(TAG, "onPrepareOptionsMenu()");
 		//alters action bar
 		menu.findItem(R.id.action_info).setVisible(true);
 		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public void switchFragments() {
+		//switches from instruction fragment to event fragment
+		if(instructFragment.isVisible() && instructFragment.isResumed() &&
+				!instructFragment.isRemoving()){
+			if(fragment == null)
+				setFragment();
+			FragmentTransaction ft = frag_manager.beginTransaction();
+			ft.replace(R.id.event_container, fragment, EVENT_TAG);
+			ft.commit();
+			frag_manager.executePendingTransactions();
+		}		
+	}
+
+	@Override
+	public void goBack() {
+		//goes back to main menu
+		onBackPressed();
 	}
 }

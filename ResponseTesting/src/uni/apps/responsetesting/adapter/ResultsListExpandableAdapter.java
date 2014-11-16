@@ -93,6 +93,7 @@ public class ResultsListExpandableAdapter extends BaseExpandableListAdapter {
 		title.setTypeface(Typeface.DEFAULT_BOLD);
 		title.setTextSize(20);
 		title.setText(mTitles[groupPosition]);
+		title.setPadding(100, 0, 0, 0);
 		return title;
 	}
 

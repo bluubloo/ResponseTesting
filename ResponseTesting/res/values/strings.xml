@@ -4,6 +4,7 @@
     <string name="app_name">Response Testing</string>
     <string name="title_activity_event">Event</string>
     <string name="title_activity_results_display">Results</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="main_menu">Main Menu</string>
     <string name="event">event</string>
     <string name="submit">Submit</string>
@@ -26,30 +27,16 @@
     <string name="action_delete_all">Delete All Events</string>
 
     <!-- Finger Tap Test Strings -->
-    <string name="tap_title">Finger Tap Test</string>
-    <string name="tap_info">Tap space above as many times as possible within 5 seconds.</string>
     <string name="tap_click_info_3">Keep on Tapping</string>
     <string name="tap_click_info_count">Tap Count: 0</string>
     <string name="tap_click_info_time">Time Left: 5s</string>
 
-    <!-- Appearing Object Strings -->
-    <string name="appear_obj_title">The Appearing Object</string>
-    <string name="appear_obj_info">Click on the object when it appears.</string>
-
-    <!-- Questionaire Strings -->
-    <string name="questionaire_info">Give the question a rating from 0 to 5. With 5 Being the highest.</string>
-
-    <!-- Stroop Test Strings -->
-    <string name="stroop_title">Stroop Test</string>
-    <string name="stroop_info">Say out loud the colour of the word. (Not the what the word says). Once you have read all colours click on "Done". There are two sets of colours in this test.</string>
-
-    <!-- One Card Learning Test Strings -->
-    <string name="one_card_title">One Card Learning Test</string>
-    <string name="one_card_info">Press yes if the card has been shown before, no if it has not. There will twenty cards</string>
-
     <!-- Result Display Strings -->
-    <string name="results_dis_title">Test Results</string>
+    <string name="results_dis_title">Results</string>
     <string name="results_dis_notes">Add Note</string>
+
+    <!-- Event Instructions Strings -->
+    <string name="instructions">Instructions</string>
 
     <!-- Event Name Strings -->
     <string name="event_name_finger_tap">Finger Tap Test</string>
@@ -64,9 +51,19 @@
     <string name="done">Done</string>
     <string name="start">Start</string>
     <string name="restart">Restart</string>
-    
+
     <!-- Yes/No Strings -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <!-- Next/Back Strings -->
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    
+    
+    <!-- Preference Strings -->
+    <string name="settings_cat_event">Event Settings</string>
+    <string name="settings_title_instruct">Show Instructions Page</string>
+    <string name="settings_sum_instruct">Enable/Disable the event instructions page</string>
 
 </resources>

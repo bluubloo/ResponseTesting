@@ -9,6 +9,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -31,6 +32,7 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		super.onCreate(savedInstanceState);
 		//set layout, fragment manager and fragment
 		setContentView(R.layout.activity_main_menu);
+		PreferenceManager.setDefaultValues(this, R.xml.all_settings, true);
 		frag_manager = this.getFragmentManager();
 		addFragments();
 	}
