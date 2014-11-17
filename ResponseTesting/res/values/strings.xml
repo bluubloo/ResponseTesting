@@ -9,6 +9,7 @@
     <string name="event">event</string>
     <string name="submit">Submit</string>
     <string name="image_descript">Image</string>
+    <string name="equal">=</string>
 
     <!-- Database Strings -->
     <string name="table_name">Results</string>
@@ -55,7 +56,9 @@
     <!-- Yes/No Strings -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
+    <string name="match">Match</string>
+    <string name="no_match">No Match</string>
+    
     <!-- Next/Back Strings -->
     <string name="next">Next</string>
     <string name="back">Back</string>

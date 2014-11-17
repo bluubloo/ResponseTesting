@@ -96,12 +96,12 @@ public final class R {
         public static final int uni_logo=0x7f02003b;
     }
     public static final class id {
-        public static final int action_delete_all=0x7f0b002b;
-        public static final int action_info=0x7f0b002c;
-        public static final int action_results=0x7f0b002d;
-        public static final int action_send_all=0x7f0b0029;
-        public static final int action_send_recent=0x7f0b002a;
-        public static final int action_settings=0x7f0b0028;
+        public static final int action_delete_all=0x7f0b0030;
+        public static final int action_info=0x7f0b0031;
+        public static final int action_results=0x7f0b0032;
+        public static final int action_send_all=0x7f0b002e;
+        public static final int action_send_recent=0x7f0b002f;
+        public static final int action_settings=0x7f0b002d;
         public static final int appear_obj_container=0x7f0b0006;
         public static final int appear_obj_image_1=0x7f0b0007;
         public static final int appear_obj_image_2=0x7f0b000b;
@@ -117,6 +117,7 @@ public final class R {
         public static final int instruct_next=0x7f0b0017;
         public static final int instruct_title=0x7f0b0013;
         public static final int instuct_info=0x7f0b0016;
+        public static final int linearLayout1=0x7f0b0026;
         public static final int main_menu_container=0x7f0b0002;
         public static final int one_card_container=0x7f0b001a;
         public static final int one_card_no=0x7f0b001c;
@@ -132,9 +133,13 @@ public final class R {
         public static final int results_display_button=0x7f0b0023;
         public static final int results_display_text=0x7f0b0024;
         public static final int settings_container=0x7f0b0004;
-        public static final int stroop_button=0x7f0b0027;
-        public static final int stroop_grid=0x7f0b0026;
+        public static final int stroop_button=0x7f0b002c;
+        public static final int stroop_colour=0x7f0b002a;
+        public static final int stroop_grid=0x7f0b002b;
+        public static final int stroop_match=0x7f0b0027;
+        public static final int stroop_no_match=0x7f0b0028;
         public static final int stroop_title=0x7f0b0025;
+        public static final int stroop_word=0x7f0b0029;
         public static final int tap_click_count=0x7f0b000f;
         public static final int tap_click_info=0x7f0b0011;
         public static final int tap_click_start_button=0x7f0b0012;
@@ -157,82 +162,86 @@ public final class R {
         public static final int questionaire_item=0x7f03000a;
         public static final int results_display_fragment=0x7f03000b;
         public static final int results_display_item=0x7f03000c;
-        public static final int stroop_test_fragment=0x7f03000d;
+        public static final int stroop_test2_fragment=0x7f03000d;
+        public static final int stroop_test_fragment=0x7f03000e;
     }
     public static final class menu {
         public static final int action_bar=0x7f0a0000;
     }
     public static final class string {
-        public static final int action_delete_all=0x7f080013;
-        public static final int action_event_info=0x7f080012;
-        public static final int action_send_all=0x7f08000f;
-        public static final int action_send_recent=0x7f080010;
-        public static final int action_send_results=0x7f080011;
+        public static final int action_delete_all=0x7f080014;
+        public static final int action_event_info=0x7f080013;
+        public static final int action_send_all=0x7f080010;
+        public static final int action_send_recent=0x7f080011;
+        public static final int action_send_results=0x7f080012;
         /**  Action Bar Strings 
          */
-        public static final int action_settings=0x7f08000e;
+        public static final int action_settings=0x7f08000f;
         public static final int app_name=0x7f080000;
-        public static final int back=0x7f080027;
-        public static final int done=0x7f080021;
+        public static final int back=0x7f08002a;
+        public static final int done=0x7f080022;
+        public static final int equal=0x7f080008;
         public static final int event=0x7f080005;
-        public static final int event_name=0x7f080009;
-        public static final int event_name_appear_obj=0x7f08001b;
+        public static final int event_name=0x7f08000a;
+        public static final int event_name_appear_obj=0x7f08001c;
         /**  Event Name Strings 
          */
-        public static final int event_name_finger_tap=0x7f08001a;
-        public static final int event_name_one_card=0x7f08001e;
-        public static final int event_name_questionaire=0x7f08001d;
-        public static final int event_name_stroop=0x7f08001c;
-        public static final int event_score=0x7f08000a;
+        public static final int event_name_finger_tap=0x7f08001b;
+        public static final int event_name_one_card=0x7f08001f;
+        public static final int event_name_questionaire=0x7f08001e;
+        public static final int event_name_stroop=0x7f08001d;
+        public static final int event_score=0x7f08000b;
         public static final int image_descript=0x7f080007;
         /**  Event Instructions Strings 
          */
-        public static final int instructions=0x7f080019;
+        public static final int instructions=0x7f08001a;
         public static final int main_menu=0x7f080004;
+        public static final int match=0x7f080027;
         /**  Next/Back Strings 
          */
-        public static final int next=0x7f080026;
-        public static final int no=0x7f080025;
-        public static final int notes=0x7f08000c;
+        public static final int next=0x7f080029;
+        public static final int no=0x7f080026;
+        public static final int no_match=0x7f080028;
+        public static final int notes=0x7f08000d;
         /**  Preference Key Strings 
          */
-        public static final int pref_key_instruct=0x7f08002b;
-        public static final int restart=0x7f080023;
-        public static final int restart_square=0x7f080020;
-        public static final int results_dis_notes=0x7f080018;
+        public static final int pref_key_instruct=0x7f08002e;
+        public static final int restart=0x7f080024;
+        public static final int restart_square=0x7f080021;
+        public static final int results_dis_notes=0x7f080019;
         /**  Result Display Strings 
          */
-        public static final int results_dis_title=0x7f080017;
-        public static final int sent=0x7f08000d;
+        public static final int results_dis_title=0x7f080018;
+        public static final int sent=0x7f08000e;
         /**  Preference Catageroy Strings 
          */
-        public static final int settings_cat_event=0x7f080028;
+        public static final int settings_cat_event=0x7f08002b;
         /**  Preference Summary Strings 
          */
-        public static final int settings_sum_instruct=0x7f08002a;
+        public static final int settings_sum_instruct=0x7f08002d;
         /**  Preference Title Strings 
          */
-        public static final int settings_title_instruct=0x7f080029;
-        public static final int start=0x7f080022;
+        public static final int settings_title_instruct=0x7f08002c;
+        public static final int start=0x7f080023;
         /**  Start/Done Strings 
          */
-        public static final int start_square=0x7f08001f;
+        public static final int start_square=0x7f080020;
         public static final int submit=0x7f080006;
         /**  Database Strings 
          */
-        public static final int table_name=0x7f080008;
+        public static final int table_name=0x7f080009;
         /**  Finger Tap Test Strings 
          */
-        public static final int tap_click_info_3=0x7f080014;
-        public static final int tap_click_info_count=0x7f080015;
-        public static final int tap_click_info_time=0x7f080016;
-        public static final int timestamp=0x7f08000b;
+        public static final int tap_click_info_3=0x7f080015;
+        public static final int tap_click_info_count=0x7f080016;
+        public static final int tap_click_info_time=0x7f080017;
+        public static final int timestamp=0x7f08000c;
         public static final int title_activity_event=0x7f080001;
         public static final int title_activity_results_display=0x7f080002;
         public static final int title_activity_settings=0x7f080003;
         /**  Yes/No Strings 
          */
-        public static final int yes=0x7f080024;
+        public static final int yes=0x7f080025;
     }
     public static final class style {
         /** 

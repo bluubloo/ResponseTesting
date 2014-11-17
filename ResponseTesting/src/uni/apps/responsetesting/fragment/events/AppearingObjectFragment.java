@@ -5,7 +5,7 @@ import java.util.Random;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.interfaces.listener.AppearingObjectImageClickListener;
-import uni.apps.responsetesting.models.AppearingObjectInfo;
+import uni.apps.responsetesting.models.DurationInfo;
 import uni.apps.responsetesting.results.Results;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import uni.apps.responsetesting.utils.Conversion;
@@ -39,7 +39,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	private TextView startTextView;
 	private Handler timerHandler = new Handler();
 	private ImageView[] clickableImageView = new ImageView[5];
-	private AppearingObjectInfo[] data = new AppearingObjectInfo[5];
+	private DurationInfo[] data = new DurationInfo[5];
 	private int counter = 0;
 	private int imageCounter = 0;
 	private boolean running = false;
@@ -55,7 +55,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 			imageCounter = (random.nextInt(5) % 5);
 			if(running &&counter < 5){
 				clickableImageView[imageCounter].setVisibility(View.VISIBLE);
-				data[counter] = new AppearingObjectInfo(Calendar.getInstance().getTimeInMillis());
+				data[counter] = new DurationInfo(Calendar.getInstance().getTimeInMillis());
 			} else {
 				endTest();
 			}
@@ -180,7 +180,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 
 	private double getAverage() {
 		double tmp = 0;
-		for(AppearingObjectInfo a: data)
+		for(DurationInfo a: data)
 			tmp += a.getDuration();
 		return tmp / data.length;
 	}

@@ -5,7 +5,7 @@ import uni.apps.responsetesting.fragment.events.EventInstructionsFragment;
 import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
 import uni.apps.responsetesting.fragment.events.OneCardLearningFragment;
 import uni.apps.responsetesting.fragment.events.QuestionaireFragment;
-import uni.apps.responsetesting.fragment.events.StroopTestFragment;
+import uni.apps.responsetesting.fragment.events.StroopTest2Fragment;
 import uni.apps.responsetesting.interfaces.listener.EventInstructionsListener;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.ActionBar;
@@ -80,7 +80,7 @@ public class EventActivity extends Activity implements EventInstructionsListener
 		else if(eventName.equals(r.getString(R.string.event_name_appear_obj)))
 			fragment = new AppearingObjectFragment();
 		else if(eventName.equals(r.getString(R.string.event_name_stroop)))
-			fragment = new StroopTestFragment();
+			fragment = new StroopTest2Fragment();
 		else if(eventName.equals(r.getString(R.string.event_name_one_card)))
 			fragment = new OneCardLearningFragment();
 	}
