@@ -1,6 +1,7 @@
 package uni.apps.responsetesting;
 
 import uni.apps.responsetesting.fragment.events.AppearingObjectFragment;
+import uni.apps.responsetesting.fragment.events.ChangingDirectionsFragment;
 import uni.apps.responsetesting.fragment.events.EventInstructionsFragment;
 import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
 import uni.apps.responsetesting.fragment.events.OneCardLearningFragment;
@@ -83,6 +84,8 @@ public class EventActivity extends Activity implements EventInstructionsListener
 			fragment = new StroopTest2Fragment();
 		else if(eventName.equals(r.getString(R.string.event_name_one_card)))
 			fragment = new OneCardLearningFragment();
+		else if(eventName.equals(r.getString(R.string.event_name_change_direct)))
+			fragment = new ChangingDirectionsFragment();
 	}
 
 	@Override

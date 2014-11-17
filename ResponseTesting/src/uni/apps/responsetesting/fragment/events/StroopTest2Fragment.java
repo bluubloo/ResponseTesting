@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 import uni.apps.responsetesting.R;
-import uni.apps.responsetesting.models.StroopDurationInfo;
+import uni.apps.responsetesting.models.CorrectDurationInfo;
 import uni.apps.responsetesting.results.Results;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import uni.apps.responsetesting.utils.Conversion;
@@ -24,7 +24,7 @@ public class StroopTest2Fragment extends Fragment {
 
 	private static final String TAG = "StroopTest2Fragment";
 	private static final String eventName = "Stroop Test";
-	private static StroopDurationInfo[] results;
+	private static CorrectDurationInfo[] results;
 	private int counter = 0;
 	private int maxChanges = 10;
 	private int colour = 0;
@@ -57,7 +57,6 @@ public class StroopTest2Fragment extends Fragment {
 	}
 
 	private void setUpButtons(View view) {
-		// TODO Auto-generated method stub
 		final Button match = (Button) view.findViewById(R.id.stroop_match);
 		final Button noMatch = (Button) view.findViewById(R.id.stroop_no_match);
 		final Resources r = getResources();
@@ -65,15 +64,14 @@ public class StroopTest2Fragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if(match.getText().toString().equals(r.getString(R.string.start))){
 					match.setText(r.getString(R.string.match));
 					noMatch.setText(r.getString(R.string.no_match));
 					noMatch.setEnabled(true);
 					setTextViews();
-					results = new StroopDurationInfo[maxChanges];
+					results = new CorrectDurationInfo[maxChanges];
 					counter = 0;
-					results[counter] = new StroopDurationInfo(Calendar.getInstance().getTimeInMillis());
+					results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
 				} else if(counter < maxChanges - 1){
 					setResultsTrue();
 					setTextViews();
@@ -119,7 +117,7 @@ public class StroopTest2Fragment extends Fragment {
 	private double[] getResults() {
 		double correct = 0;
 		double time = 0;
-		for(StroopDurationInfo s: results){
+		for(CorrectDurationInfo s: results){
 			if(s.getResult())
 				correct ++;
 			time += s.getDuration();
@@ -143,7 +141,7 @@ public class StroopTest2Fragment extends Fragment {
 	private void moveToNext(){
 		counter ++;
 		if(counter < maxChanges)
-			results[counter] = new StroopDurationInfo(Calendar.getInstance().getTimeInMillis());
+			results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
 	}
 
 	private void setTextViews() {
