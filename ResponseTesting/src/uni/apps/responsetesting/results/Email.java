@@ -1,7 +1,13 @@
 package uni.apps.responsetesting.results;
 
+import java.net.URLEncoder;
+
+import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -14,27 +20,46 @@ import android.widget.Toast;
 public class Email {
 
 	public static void sendResults(Activity activity, boolean all){
-		if(all)
-			sendEmail(activity, Results.getAllResults(activity), "All");
-		else
-			sendEmail(activity, Results.getRecentResults(activity), "Recent");
+		String body = "Hi\n\nAttached is the Test Results\n\nCheers\nResponse Testing";
+		if(all){
+			Results.resultsToCSV(activity);
+			sendEmail(activity, body, "All");
+		}
+		else{
+			boolean recent = Results.resultsRecentToCSV(activity);
+			if(recent)
+				sendEmail(activity, body, "Recent");
+			else
+				ActivityUtilities.displayResults(activity, "Email Attempt", "All recent results have already been sent.\n" +
+			"Please select 'Send All Results' if you still wish to send them.");
+		}
 	}
 
 	public static void sendResults(Activity activity, String testName){
 		sendEmail(activity, Results.getSingleResults(activity, testName), testName);	
 	}
 
-	private static void sendEmail(Activity activity, String body, String testName){
-		Intent i = new Intent(Intent.ACTION_SEND);
-		i.setType("message/rfc822");
-		//TODO Recipient mail address
-		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-		i.putExtra(Intent.EXTRA_SUBJECT, "Test " + testName + " - Results");
-		i.putExtra(Intent.EXTRA_TEXT   , body);
-		try {
-			activity.startActivity(Intent.createChooser(i, "Send mail..."));
-		} catch (android.content.ActivityNotFoundException ex) {
-			Toast.makeText(activity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+	public static void sendEmail(Activity activity, String body, String testName)
+	{
+		try{
+			Intent i = new Intent(Intent.ACTION_SEND);
+			i.setType("message/rfc822");
+			String fileName = URLEncoder.encode("Results.csv", "UTF-8");
+			String PATH =  Environment.getExternalStorageDirectory()+"/"+fileName.trim().toString();
+			Uri uri = Uri.parse("file://"+PATH);
+			//TODO Recipient mail address
+			i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"matcour@windowslive.com"});
+			i.putExtra(Intent.EXTRA_SUBJECT, "Test " + testName + " - Results");
+			i.putExtra(Intent.EXTRA_TEXT   , body);
+			i.putExtra(Intent.EXTRA_STREAM, uri);
+			
+			try {
+				activity.startActivity(Intent.createChooser(i, "Send mail..."));
+			} catch (android.content.ActivityNotFoundException ex) {
+				Toast.makeText(activity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+			}
+		} catch(Exception e){
+			Log.e("ERROR", e.getMessage());
 		}
 	}
 }

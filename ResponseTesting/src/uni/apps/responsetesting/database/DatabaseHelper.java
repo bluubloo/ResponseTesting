@@ -143,9 +143,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//All Rows not yet sent
 	public Cursor getMostRecent() {
-		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " +
-				resources.getString(R.string.sent) + "=0" + " GROUP BY " +
-				resources.getString(R.string.event_name) + " ORDER BY " + resources.getString(R.string.timestamp);
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) +
+				" WHERE " + resources.getString(R.string.sent) + "=0 ORDER BY " + resources.getString(R.string.timestamp);
 		Cursor cursor =  this.getReadableDatabase().rawQuery(sql, null);
 		updateMostRecent();
 		return cursor;
@@ -153,9 +152,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//All Rows
 	public Cursor getAllResults() {
-		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " GROUP BY " +
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name);/* + " GROUP BY " +
 				resources.getString(R.string.event_name) + " ORDER BY " + resources.getString(R.string.timestamp);
-		return this.getReadableDatabase().rawQuery(sql, null);
+		*/return this.getReadableDatabase().rawQuery(sql, null);
 	}
 
 

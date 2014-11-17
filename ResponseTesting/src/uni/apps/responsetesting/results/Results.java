@@ -1,5 +1,7 @@
 package uni.apps.responsetesting.results;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -10,6 +12,8 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.os.Environment;
+import android.util.Log;
 
 /**
  * This class will handle anything related to the results of the taken tests.
@@ -19,6 +23,8 @@ import android.database.Cursor;
  *
  */
 public class Results {
+
+	private static final String TAG = "Results";
 
 	//--------------------------------------------------------------------------------------------
 	//Get Results
@@ -49,19 +55,6 @@ public class Results {
 		return list;
 	}
 
-	/*	private static String[][] listToArray(ArrayList<ArrayList<String>> list){
-		int i = 0;
-		String[][] newList = new String[list.size()][10];
-		for(ArrayList<String> a : list){
-			int j = 0;
-			for(String s : a){
-				newList[i][j] = s;
-				j++;
-			}
-			i ++;
-		}
-		return newList;
-	}*/
 
 	private static String[][] listToArray(ArrayList<ArrayList<String>> list){
 		int i = 0;
@@ -96,7 +89,7 @@ public class Results {
 		return tmp;
 	}
 
-	public static String getRecentResults(Activity activity){
+	/*public static String getRecentResults(Activity activity){
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		Cursor results = db.getMostRecent();
 		return retrieveString(results);
@@ -106,7 +99,7 @@ public class Results {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		Cursor results = db.getAllResults();
 		return retrieveString(results);
-	}
+	}*/
 
 	public static String getSingleResults(Activity activity, String testName) {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
@@ -143,7 +136,7 @@ public class Results {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
 		db.insert(values);
 	}
-	
+
 	public static void insertResult(String eventName, int result,
 			long time, Activity activity) {
 		insertResult(eventName, Integer.toString(result), time, activity);		
@@ -159,7 +152,7 @@ public class Results {
 
 	//--------------------------------------------------------------------------------------------
 	//UPDATE Results
-	
+
 	public static void updateNotes(String eventName, String notes, Activity activity) {
 		Resources r = activity.getResources();
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
@@ -170,6 +163,61 @@ public class Results {
 		db.updateSingle(selection,new String[] {eventName}, values);
 	}
 
-	
+	//--------------------------------------------------------------------------------------------
+	//Results to CSV
 
+	public static void resultsToCSV(Activity activity){
+		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
+		Cursor results = db.getAllResults();
+		resultsToCSV(results, activity);
+	}
+	
+	public static boolean resultsRecentToCSV(Activity activity) {
+		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
+		Cursor results = db.getMostRecent();
+		return resultsToCSV(results, activity);
+	}
+
+	public static boolean resultsToCSV(final Cursor results, Activity activity){
+
+		File root = Environment.getExternalStorageDirectory();
+		File file = new File(root, "Results.csv");
+		try {
+
+			FileWriter fw = new FileWriter(file);
+
+			fw.append("Event Name");
+			fw.append(',');
+			fw.append("Score");
+			fw.append(',');
+			fw.append("Time");
+			fw.append(',');
+			fw.append("Extra Notes");
+			fw.append("\n");
+			Log.d(TAG, Integer.toString(results.getCount()));
+			if(results.moveToFirst()){
+				do{
+
+					fw.append(results.getString(0));
+					fw.append(',');
+					fw.append(results.getString(1));
+					fw.append(',');
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(results.getLong(2));
+					fw.append(c.getTime().toString());
+					fw.append(',');
+					fw.append(results.getString(4));
+					fw.append("\n");
+				} while(results.moveToNext());
+			} else{
+				fw.close();
+				return false;
+			}
+			fw.flush();
+			fw.close();
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
+		}
+		return true;
+	}
 }

@@ -29,9 +29,6 @@ public class SettingsActivity extends Activity {
 		setContentView(R.layout.activity_settings);
 		//sets up settings fragment
 		fragment = new SettingsFragment();		
-		Bundle args = new Bundle();
-		args.putString("settings_group", "all_settings");
-		fragment.setArguments(args);
 		getFragmentManager().beginTransaction().replace(R.id.settings_container, fragment, 
 				FRAG_TAG).commit();
 	}

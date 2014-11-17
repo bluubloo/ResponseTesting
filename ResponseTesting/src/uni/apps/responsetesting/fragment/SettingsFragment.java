@@ -14,15 +14,13 @@ import android.preference.PreferenceFragment;
  */
 public class SettingsFragment extends PreferenceFragment {
 
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//check for settings values
-		String settings = this.getArguments().getString("settings_group");
+
 		//sets up settings ui
-		if("all_settings".equals(settings)){
-			addPreferencesFromResource(R.xml.all_settings);
-		}
+		addPreferencesFromResource(R.xml.all_settings);
+
 	}
 }

@@ -60,10 +60,13 @@
     <string name="next">Next</string>
     <string name="back">Back</string>
     
-    
-    <!-- Preference Strings -->
+    <!-- Preference Catageroy Strings -->
     <string name="settings_cat_event">Event Settings</string>
+    <!-- Preference Title Strings -->
     <string name="settings_title_instruct">Show Instructions Page</string>
+    <!-- Preference Summary Strings -->
     <string name="settings_sum_instruct">Enable/Disable the event instructions page</string>
+    <!-- Preference Key Strings -->
+    <string name="pref_key_instruct">pref_event_show_instruct</string>
 
 </resources>

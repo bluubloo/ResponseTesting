@@ -57,7 +57,7 @@ public class EventActivity extends Activity implements EventInstructionsListener
 		FragmentTransaction ft = frag_manager.beginTransaction();
 		//gets preference for showing instruction page or not
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean instruct = prefs.getBoolean("pref_event_show_instruct", true);
+		boolean instruct = prefs.getBoolean(getResources().getString(R.string.pref_key_instruct), true);
 
 		instructFragment = EventInstructionsFragment.getInstance(eventName, getResources());
 		setFragment();

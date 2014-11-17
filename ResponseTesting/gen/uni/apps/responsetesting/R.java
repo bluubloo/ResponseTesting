@@ -149,14 +149,15 @@ public final class R {
         public static final int activity_results_display=0x7f030002;
         public static final int activity_settings=0x7f030003;
         public static final int appearing_object_fragment=0x7f030004;
-        public static final int finger_tap_test_fragment=0x7f030005;
-        public static final int instructions_fragment=0x7f030006;
-        public static final int one_card_learning_fragment=0x7f030007;
-        public static final int questionaire_fragment=0x7f030008;
-        public static final int questionaire_item=0x7f030009;
-        public static final int results_display_fragment=0x7f03000a;
-        public static final int results_display_item=0x7f03000b;
-        public static final int stroop_test_fragment=0x7f03000c;
+        public static final int changing_directions_fragment=0x7f030005;
+        public static final int finger_tap_test_fragment=0x7f030006;
+        public static final int instructions_fragment=0x7f030007;
+        public static final int one_card_learning_fragment=0x7f030008;
+        public static final int questionaire_fragment=0x7f030009;
+        public static final int questionaire_item=0x7f03000a;
+        public static final int results_display_fragment=0x7f03000b;
+        public static final int results_display_item=0x7f03000c;
+        public static final int stroop_test_fragment=0x7f03000d;
     }
     public static final class menu {
         public static final int action_bar=0x7f0a0000;
@@ -193,6 +194,9 @@ public final class R {
         public static final int next=0x7f080026;
         public static final int no=0x7f080025;
         public static final int notes=0x7f08000c;
+        /**  Preference Key Strings 
+         */
+        public static final int pref_key_instruct=0x7f08002b;
         public static final int restart=0x7f080023;
         public static final int restart_square=0x7f080020;
         public static final int results_dis_notes=0x7f080018;
@@ -200,10 +204,14 @@ public final class R {
          */
         public static final int results_dis_title=0x7f080017;
         public static final int sent=0x7f08000d;
-        /**  Preference Strings 
+        /**  Preference Catageroy Strings 
          */
         public static final int settings_cat_event=0x7f080028;
+        /**  Preference Summary Strings 
+         */
         public static final int settings_sum_instruct=0x7f08002a;
+        /**  Preference Title Strings 
+         */
         public static final int settings_title_instruct=0x7f080029;
         public static final int start=0x7f080022;
         /**  Start/Done Strings 
