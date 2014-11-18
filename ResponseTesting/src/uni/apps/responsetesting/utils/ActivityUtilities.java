@@ -3,7 +3,7 @@ package uni.apps.responsetesting.utils;
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.ResultsDisplayActivity;
 import uni.apps.responsetesting.SettingsActivity;
-import uni.apps.responsetesting.results.Email;
+import uni.apps.responsetesting.mail.Email;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

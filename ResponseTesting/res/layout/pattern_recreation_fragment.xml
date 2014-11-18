@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    
+    <TextView
+        android:id="@+id/pattern_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/event_name_pattern_recreate"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pattern_title"
+        android:layout_above="@+id/pattern_start"
+        android:background="@drawable/layout_border" >
+
+        <GridView
+            android:id="@+id/pattern_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:background="@color/Black"
+            android:layout_centerInParent="true"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/pattern_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/start" />
+</RelativeLayout>

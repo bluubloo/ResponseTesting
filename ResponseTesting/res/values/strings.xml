@@ -46,7 +46,8 @@
     <string name="event_name_questionaire">Questionaire</string>
     <string name="event_name_one_card">One Card Learning Test</string>
     <string name="event_name_change_direct">Changing Directions</string>
-
+	<string name="event_name_pattern_recreate">Pattern Recreation</string>
+    
     <!-- Start/Done Strings -->
     <string name="start_square">Tap in the Square to Start</string>
     <string name="restart_square">Tap in the Square to Restart</string>

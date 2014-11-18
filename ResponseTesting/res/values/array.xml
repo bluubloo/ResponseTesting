@@ -13,6 +13,7 @@
         <item>Changing Directions</item>
         <item>Finger Tap Test</item>
         <item>One Card Learning Test</item>
+        <item>Pattern Recreation</item>
         <item>Stroop Test</item>
         <item>Questionaire</item>
     </string-array>
@@ -22,6 +23,7 @@
         <item>Click on the outer arrow pointing in the same direction as the center arrow.</item>
         <item>Tap space above as many times as possible within 5 seconds.</item>
         <item>Press yes if the card has been shown before, no if it has not. \nThere will twenty cards</item>
+        <item>Recreate the shown pattern as fast as you can.\nFor each pattern you can make 3 errors. </item>
         <item>If the text colour of the top word matches the word colour below, press Match.\nIf not press No Match.</item>
         <item>Give the question a rating from 0 to 5.\n With 5 Being the highest.</item>
     </string-array>

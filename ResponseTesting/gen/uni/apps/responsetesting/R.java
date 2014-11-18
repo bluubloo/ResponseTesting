@@ -104,12 +104,12 @@ public final class R {
         public static final int uni_logo=0x7f020043;
     }
     public static final class id {
-        public static final int action_delete_all=0x7f0b0036;
-        public static final int action_info=0x7f0b0037;
-        public static final int action_results=0x7f0b0038;
-        public static final int action_send_all=0x7f0b0034;
-        public static final int action_send_recent=0x7f0b0035;
-        public static final int action_settings=0x7f0b0033;
+        public static final int action_delete_all=0x7f0b0039;
+        public static final int action_info=0x7f0b003a;
+        public static final int action_results=0x7f0b003b;
+        public static final int action_send_all=0x7f0b0037;
+        public static final int action_send_recent=0x7f0b0038;
+        public static final int action_settings=0x7f0b0036;
         public static final int appear_obj_container=0x7f0b0006;
         public static final int appear_obj_image_1=0x7f0b0007;
         public static final int appear_obj_image_2=0x7f0b000b;
@@ -131,29 +131,32 @@ public final class R {
         public static final int instruct_next=0x7f0b001d;
         public static final int instruct_title=0x7f0b0019;
         public static final int instuct_info=0x7f0b001c;
-        public static final int linearLayout1=0x7f0b002c;
+        public static final int linearLayout1=0x7f0b002f;
         public static final int main_menu_container=0x7f0b0002;
         public static final int one_card_container=0x7f0b0020;
         public static final int one_card_no=0x7f0b0022;
         public static final int one_card_title=0x7f0b001f;
         public static final int one_card_yes=0x7f0b0021;
-        public static final int questionaire_list=0x7f0b0023;
-        public static final int questionaire_rating=0x7f0b0026;
-        public static final int questionaire_submit=0x7f0b0024;
-        public static final int questionaire_text=0x7f0b0025;
+        public static final int pattern_grid=0x7f0b0025;
+        public static final int pattern_start=0x7f0b0024;
+        public static final int pattern_title=0x7f0b0023;
+        public static final int questionaire_list=0x7f0b0026;
+        public static final int questionaire_rating=0x7f0b0029;
+        public static final int questionaire_submit=0x7f0b0027;
+        public static final int questionaire_text=0x7f0b0028;
         public static final int results_container=0x7f0b0003;
-        public static final int results_dis_expand_list=0x7f0b0028;
-        public static final int results_dis_title=0x7f0b0027;
-        public static final int results_display_button=0x7f0b0029;
-        public static final int results_display_text=0x7f0b002a;
+        public static final int results_dis_expand_list=0x7f0b002b;
+        public static final int results_dis_title=0x7f0b002a;
+        public static final int results_display_button=0x7f0b002c;
+        public static final int results_display_text=0x7f0b002d;
         public static final int settings_container=0x7f0b0004;
-        public static final int stroop_button=0x7f0b0032;
-        public static final int stroop_colour=0x7f0b0030;
-        public static final int stroop_grid=0x7f0b0031;
-        public static final int stroop_match=0x7f0b002d;
-        public static final int stroop_no_match=0x7f0b002e;
-        public static final int stroop_title=0x7f0b002b;
-        public static final int stroop_word=0x7f0b002f;
+        public static final int stroop_button=0x7f0b0035;
+        public static final int stroop_colour=0x7f0b0033;
+        public static final int stroop_grid=0x7f0b0034;
+        public static final int stroop_match=0x7f0b0030;
+        public static final int stroop_no_match=0x7f0b0031;
+        public static final int stroop_title=0x7f0b002e;
+        public static final int stroop_word=0x7f0b0032;
         public static final int tap_click_count=0x7f0b0015;
         public static final int tap_click_info=0x7f0b0017;
         public static final int tap_click_start_button=0x7f0b0018;
@@ -172,12 +175,13 @@ public final class R {
         public static final int finger_tap_test_fragment=0x7f030006;
         public static final int instructions_fragment=0x7f030007;
         public static final int one_card_learning_fragment=0x7f030008;
-        public static final int questionaire_fragment=0x7f030009;
-        public static final int questionaire_item=0x7f03000a;
-        public static final int results_display_fragment=0x7f03000b;
-        public static final int results_display_item=0x7f03000c;
-        public static final int stroop_test2_fragment=0x7f03000d;
-        public static final int stroop_test_fragment=0x7f03000e;
+        public static final int pattern_recreation_fragment=0x7f030009;
+        public static final int questionaire_fragment=0x7f03000a;
+        public static final int questionaire_item=0x7f03000b;
+        public static final int results_display_fragment=0x7f03000c;
+        public static final int results_display_item=0x7f03000d;
+        public static final int stroop_test2_fragment=0x7f03000e;
+        public static final int stroop_test_fragment=0x7f03000f;
     }
     public static final class menu {
         public static final int action_bar=0x7f0a0000;
@@ -192,8 +196,8 @@ public final class R {
          */
         public static final int action_settings=0x7f08000f;
         public static final int app_name=0x7f080000;
-        public static final int back=0x7f08002b;
-        public static final int done=0x7f080023;
+        public static final int back=0x7f08002c;
+        public static final int done=0x7f080024;
         public static final int equal=0x7f080008;
         public static final int event=0x7f080005;
         public static final int event_name=0x7f08000a;
@@ -203,6 +207,7 @@ public final class R {
          */
         public static final int event_name_finger_tap=0x7f08001b;
         public static final int event_name_one_card=0x7f08001f;
+        public static final int event_name_pattern_recreate=0x7f080021;
         public static final int event_name_questionaire=0x7f08001e;
         public static final int event_name_stroop=0x7f08001d;
         public static final int event_score=0x7f08000b;
@@ -211,18 +216,18 @@ public final class R {
          */
         public static final int instructions=0x7f08001a;
         public static final int main_menu=0x7f080004;
-        public static final int match=0x7f080028;
+        public static final int match=0x7f080029;
         /**  Next/Back Strings 
          */
-        public static final int next=0x7f08002a;
-        public static final int no=0x7f080027;
-        public static final int no_match=0x7f080029;
+        public static final int next=0x7f08002b;
+        public static final int no=0x7f080028;
+        public static final int no_match=0x7f08002a;
         public static final int notes=0x7f08000d;
         /**  Preference Key Strings 
          */
-        public static final int pref_key_instruct=0x7f08002f;
-        public static final int restart=0x7f080025;
-        public static final int restart_square=0x7f080022;
+        public static final int pref_key_instruct=0x7f080030;
+        public static final int restart=0x7f080026;
+        public static final int restart_square=0x7f080023;
         public static final int results_dis_notes=0x7f080019;
         /**  Result Display Strings 
          */
@@ -230,17 +235,17 @@ public final class R {
         public static final int sent=0x7f08000e;
         /**  Preference Catageroy Strings 
          */
-        public static final int settings_cat_event=0x7f08002c;
+        public static final int settings_cat_event=0x7f08002d;
         /**  Preference Summary Strings 
          */
-        public static final int settings_sum_instruct=0x7f08002e;
+        public static final int settings_sum_instruct=0x7f08002f;
         /**  Preference Title Strings 
          */
-        public static final int settings_title_instruct=0x7f08002d;
-        public static final int start=0x7f080024;
+        public static final int settings_title_instruct=0x7f08002e;
+        public static final int start=0x7f080025;
         /**  Start/Done Strings 
          */
-        public static final int start_square=0x7f080021;
+        public static final int start_square=0x7f080022;
         public static final int submit=0x7f080006;
         /**  Database Strings 
          */
@@ -256,7 +261,7 @@ public final class R {
         public static final int title_activity_settings=0x7f080003;
         /**  Yes/No Strings 
          */
-        public static final int yes=0x7f080026;
+        public static final int yes=0x7f080027;
     }
     public static final class style {
         /** 
