@@ -52,6 +52,26 @@ public class Email {
 			i.putExtra(Intent.EXTRA_SUBJECT, "Test " + testName + " - Results");
 			i.putExtra(Intent.EXTRA_TEXT   , body);
 			i.putExtra(Intent.EXTRA_STREAM, uri);
+/*		
+ * TODO Get info for mail client
+ * TODO Test mail client	
+			String from = "";
+			String to = "";
+			MailClient mail = new MailClient(from, "");
+			mail.setTo(new String[] {to});
+			mail.setFrom(from);
+			mail.setBody(body);
+			mail.setSubject("Test " + testName + " - Results");
+			try{
+				mail.addAttachment(PATH);
+				if(mail.send())
+					Toast.makeText(activity, "Email sent successfully", Toast.LENGTH_LONG).show();
+				else
+					Toast.makeText(activity, "Email was not sent", Toast.LENGTH_LONG).show();
+				
+			}catch(Exception e){
+				Log.e("EMAIL ATTEMPT", e.getLocalizedMessage());
+			}*/
 			
 			try {
 				activity.startActivity(Intent.createChooser(i, "Send mail..."));
