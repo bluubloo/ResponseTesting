@@ -13,11 +13,17 @@
 
     <!-- Database Strings -->
     <string name="table_name">Results</string>
+    <string name="table_name_questionaire">ResultsQuestionaire</string>
     <string name="event_name">EventName</string>
     <string name="event_score">EventScore</string>
     <string name="timestamp">Timestamp</string>
     <string name="notes">Notes</string>
     <string name="sent">Sent</string>
+    <string name="total_sleep">TotalSleep</string>
+    <string name="light_sleep">LightSleep</string>
+    <string name="sound_sleep">SoundSleep</string>
+    <string name="ratings">Ratings</string>
+    <string name="other">Other</string>
 
     <!-- Action Bar Strings -->
     <string name="action_settings">Settings</string>
@@ -31,6 +37,10 @@
     <string name="tap_click_info_3">Keep on Tapping</string>
     <string name="tap_click_info_count">Tap Count: 0</string>
     <string name="tap_click_info_time">Time Left: 5s</string>
+    
+    <!-- Even or Vowel Test Strings -->
+    <string name="ev_even">Even</string>
+    <string name="ev_vowel">Vowel</string>
 
     <!-- Result Display Strings -->
     <string name="results_dis_title">Results</string>
@@ -47,6 +57,7 @@
     <string name="event_name_one_card">One Card Learning Test</string>
     <string name="event_name_change_direct">Changing Directions</string>
 	<string name="event_name_pattern_recreate">Pattern Recreation</string>
+	<string name="event_name_even_vowel">Even or Vowel</string>
     
     <!-- Start/Done Strings -->
     <string name="start_square">Tap in the Square to Start</string>

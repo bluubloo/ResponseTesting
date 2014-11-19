@@ -2,6 +2,7 @@ package uni.apps.responsetesting;
 
 import uni.apps.responsetesting.fragment.events.AppearingObjectFragment;
 import uni.apps.responsetesting.fragment.events.ChangingDirectionsFragment;
+import uni.apps.responsetesting.fragment.events.EvenVowelFragment;
 import uni.apps.responsetesting.fragment.events.EventInstructionsFragment;
 import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
 import uni.apps.responsetesting.fragment.events.OneCardLearningFragment;
@@ -89,6 +90,8 @@ public class EventActivity extends Activity implements EventInstructionsListener
 			fragment = new ChangingDirectionsFragment();
 		else if(eventName.equals(r.getString(R.string.event_name_pattern_recreate)))
 			fragment = new PatternRecreationFragment();
+		else if(eventName.equals(r.getString(R.string.event_name_even_vowel)))
+			fragment = new EvenVowelFragment();
 	}
 
 	@Override

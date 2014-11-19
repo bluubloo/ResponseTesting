@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
+import uni.apps.responsetesting.models.CorrectDurationInfo;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.res.Resources;
@@ -219,5 +220,19 @@ public class Results {
 			Log.e(TAG, e.getMessage());
 		}
 		return true;
+	}
+	
+	//--------------------------------------------------------------------------------------------
+	//Auxiliary Methods
+	
+	public static double[] getResults(CorrectDurationInfo[] results) {
+		double time = 0;
+		double correct = 0;
+		for(CorrectDurationInfo c: results){
+			if(c.getResult())
+				correct++;
+			time += c.getDuration();
+		}
+		return new double[] {correct, time / results.length};
 	}
 }

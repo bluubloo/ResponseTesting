@@ -49,6 +49,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					" TEXT, PRIMARY KEY(" + resources.getString(R.string.event_name) + 
 					", " + resources.getString(R.string.timestamp) + "))";
 			db.execSQL(create);
+			create = "CREATE TABLE " + resources.getString(R.string.table_name_questionaire) +
+					"(" + resources.getString(R.string.timestamp) + " INTEGER PRIMARY KEY, " + 
+					resources.getString(R.string.total_sleep) + " TEXT, " + 
+					resources.getString(R.string.light_sleep) + " TEXT, " + 
+					resources.getString(R.string.sound_sleep) + " TEXT, " + 
+					resources.getString(R.string.ratings) + " TEXT, " + 
+					resources.getString(R.string.other) + " TEXT, " +
+					resources.getString(R.string.sent) + " INTEGER)"; 
+			db.execSQL(create);
 			db.setTransactionSuccessful();
 		} finally{
 			db.endTransaction();
@@ -62,6 +71,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			db.beginTransaction();
 			String query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name);
 			db.execSQL(query);
+			query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name_questionaire);
+			db.execSQL(query);
 			db.setTransactionSuccessful();
 		} finally {
 			db.endTransaction();
@@ -74,6 +85,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public void insert(ContentValues values){
 		this.getWritableDatabase().insert(resources.getString(R.string.table_name), 
+				null, values);
+	}
+	
+	public void insertQuestionarie(ContentValues values){
+		this.getWritableDatabase().insert(resources.getString(R.string.table_name_questionaire), 
 				null, values);
 	}
 	
@@ -120,6 +136,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public int deleteAll() {
 		String query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name);
 		this.getWritableDatabase().execSQL(query);
+		query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name_questionaire);
+		this.getWritableDatabase().execSQL(query);
 		onCreate(this.getWritableDatabase());
 		return 0;
 	}
@@ -157,6 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		*/return this.getReadableDatabase().rawQuery(sql, null);
 	}
 
+	
 
 
 

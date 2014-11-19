@@ -106,7 +106,7 @@ public class StroopTest2Fragment extends Fragment {
 		noMatch.setEnabled(false);
 		colourTextView.setText("");
 		wordTextView.setText("");
-		double[] tmp = getResults();
+		double[] tmp = Results.getResults(results);
 		String value = tmp[0] + " correct. " + Conversion.milliToStringSeconds(tmp[1], 3) +
 				" average time (s)"; 
 		Results.insertResult(eventName, value, Calendar.getInstance().getTimeInMillis(),
@@ -114,17 +114,6 @@ public class StroopTest2Fragment extends Fragment {
 		ActivityUtilities.displayResults(getActivity(), eventName, value);
 	}
 
-	private double[] getResults() {
-		double correct = 0;
-		double time = 0;
-		for(CorrectDurationInfo s: results){
-			if(s.getResult())
-				correct ++;
-			time += s.getDuration();
-		}
-		time /= results.length;
-		return new double[] {correct, time};
-	}
 
 	private void setResultsTrue(){
 		results[counter].addEndTime(Calendar.getInstance().getTimeInMillis());

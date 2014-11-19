@@ -201,7 +201,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		button.setText(getResources().getString(R.string.start));
 		button.setEnabled(true);
 		clearImageViews();
-		double[] results = getResults();
+		double[] results = Results.getResults(this.results);
 		String resultString = results[0] + " correct. " + 
 		Conversion.milliToStringSeconds(results[1], 3) + " average time (s).";
 		Results.insertResult(eventName, resultString,
@@ -213,17 +213,6 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		center.setImageDrawable(null);
 		for(ImageView iv: clickable)
 			iv.setImageDrawable(null);
-	}
-
-	private double[] getResults() {
-		double correct = 0;
-		double time = 0;
-		for(CorrectDurationInfo result : results){
-			if(result.getResult())
-				correct++;
-			time += result.getDuration();
-		}
-		return new double[] {correct, time / results.length};
 	}
 
 	private void changeImageViews() {
