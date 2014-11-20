@@ -32,7 +32,8 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_event"
             android:parentActivityName=".MainMenuActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustPan|adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uni.apps.responsetesting.MainMenuActivity" />

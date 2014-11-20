@@ -21,12 +21,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final int SCHEMA_VERSION = 1;
 	private static DatabaseHelper singleton = null;
 	private static Resources resources = null;
-		
+
 	//constructor
 	private DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, SCHEMA_VERSION);
 	}
-	
+
 	//create new object or return existing
 	synchronized public static DatabaseHelper getInstance(Context context, Resources res){
 		if(singleton == null){
@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		return singleton;
 	}
-	
+
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		try{
@@ -79,30 +79,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		onCreate(db);	
 	}
-	
+
 	//--------------------------------------------------------------------------------------------
 	//INSERT
-	
+
 	public void insert(ContentValues values){
 		this.getWritableDatabase().insert(resources.getString(R.string.table_name), 
 				null, values);
 	}
-	
+
 	public void insertQuestionarie(ContentValues values){
 		this.getWritableDatabase().insert(resources.getString(R.string.table_name_questionaire), 
 				null, values);
 	}
-	
+
 	//--------------------------------------------------------------------------------------------
 	//UPDATE
-	
+
 	//Update Single Row
 	public int updateSingle(String selection, String[] selectionArgs,
 			ContentValues values) {
-		
+
 		String get = "SELECT " + resources.getString(R.string.timestamp) + " FROM " + resources.getString(R.string.table_name) + " WHERE " + 
 				resources.getString(R.string.event_name) + "=? ORDER BY " + resources.getString(R.string.timestamp);
-		
+
 		Cursor cursor = this.getReadableDatabase().rawQuery(get, new String[] {selectionArgs[0]});
 		long time = 0;
 		if(cursor.moveToFirst()){
@@ -113,19 +113,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				values, selection, new String[] {selectionArgs[0], Long.toString(time)});
 
 	}
-	
+
 	//Update All Unsent to Sent
 	private void updateMostRecent() {
 		ContentValues values =  new ContentValues();
 		values.put(resources.getString(R.string.sent), 1);
 		this.getWritableDatabase().update(resources.getString(R.string.table_name), values,
 				resources.getString(R.string.sent) + "=?", new String[] {"0"});
-		
+
 	}
-	
+
 	//--------------------------------------------------------------------------------------------
 	//DELETE
-	
+
 	//Delete Single Row/Event
 	public int deleteSingle(String selection, String[] selectionArgs) {
 		return this.getWritableDatabase().delete(resources.getString(R.string.table_name),
@@ -141,17 +141,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		onCreate(this.getWritableDatabase());
 		return 0;
 	}
-	
+
 	//--------------------------------------------------------------------------------------------
 	//QUERY
-		
+
 	//All rows for single Event
 	public Cursor getSingle(String testName) {
 		return this.getReadableDatabase().query(resources.getString(R.string.table_name), null, 
 				resources.getString(R.string.event_name) + "=?", new String[] {testName}, null, 
 				null, resources.getString(R.string.timestamp));
 	}	
-	
+
 	//All rows for single Event ordered by score
 	public Cursor getSingleBest(String testName) {
 		return this.getReadableDatabase().query(resources.getString(R.string.table_name), null, 
@@ -170,13 +170,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//All Rows
 	public Cursor getAllResults() {
-		String sql = "SELECT * FROM " + resources.getString(R.string.table_name);/* + " GROUP BY " +
-				resources.getString(R.string.event_name) + " ORDER BY " + resources.getString(R.string.timestamp);
-		*/return this.getReadableDatabase().rawQuery(sql, null);
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name);
+		return this.getReadableDatabase().rawQuery(sql, null);
 	}
 
-	
 
+	//All Questionaire Rows
+	public Cursor getAllQuestionaireResults() {
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name_questionaire);
+		return this.getReadableDatabase().rawQuery(sql, null);
+	}
 
 
 }

@@ -27,7 +27,8 @@
         <item>Press yes if the card has been shown before, no if it has not. \nThere will twenty cards</item>
         <item>Recreate the shown pattern as fast as you can.\nFor each pattern you can make 3 errors. </item>
         <item>If the text colour of the top word matches the word colour below, press Match.\nIf not press No Match.</item>
-        <item>Give the question a rating from 0 to 5.\n With 5 Being the highest.</item>
+        <item>Answer the questions as truthfully as possible.\n\nFor the sleep durations please answer in the format HH:mm or HH.mm.\n\n
+           For the remaining questions give a rating from 0 to 5. With 5 Being the highest.</item>
     </string-array>
     <string-array name="non_numeric_events">
         <item>Questionaire</item>

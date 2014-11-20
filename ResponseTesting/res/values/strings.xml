@@ -42,6 +42,13 @@
     <string name="ev_even">Even</string>
     <string name="ev_vowel">Vowel</string>
 
+     <!-- Questionaire Strings -->
+    <string name="quest_total">Total Sleep:</string>
+    <string name="quest_light">Light Sleep:</string>
+    <string name="quest_sound">Sound Sleep:</string>
+    <string name="quest_if_known">(If Known)</string>
+    
+    
     <!-- Result Display Strings -->
     <string name="results_dis_title">Results</string>
     <string name="results_dis_notes">Add Note</string>

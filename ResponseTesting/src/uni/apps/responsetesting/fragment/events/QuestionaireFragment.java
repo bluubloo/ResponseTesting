@@ -16,9 +16,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
-import android.widget.TextView;
 
 public class QuestionaireFragment extends Fragment {
 
@@ -32,9 +32,9 @@ public class QuestionaireFragment extends Fragment {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
-		
+
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
@@ -42,41 +42,115 @@ public class QuestionaireFragment extends Fragment {
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.questionaire_fragment, container, false);
 		list_view = (ListView) view.findViewById(R.id.questionaire_list);
-		Button submit = (Button) view.findViewById(R.id.questionaire_submit);
+
+		final EditText totalSleep = (EditText) view.findViewById(R.id.questionaire_total);
+		final EditText lightSleep = (EditText) view.findViewById(R.id.questionaire_light);
+		final EditText soundSleep = (EditText) view.findViewById(R.id.questionaire_sound);
+
+		Button submit = (Button) view.findViewById(R.id.questionaire_submit);		
 		submit.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 
 				ArrayList<String> results = new ArrayList<String>();
-				
-				for(int i = 0; i < list_view.getCount(); i++){
-					View view = list_view.getChildAt(i);
-					TextView t = (TextView) view.findViewById(R.id.questionaire_text);
-					RatingBar r = (RatingBar) view.findViewById(R.id.questionaire_rating);
-					String s = Integer.toString(i + 1) + "." + t.getText().toString() + ":" +
-							Float.toString(r.getRating()).substring(0, 3);
-					results.add(s);
+
+				String sleep = totalSleep.getText().toString();
+				String light = lightSleep.getText().toString();
+				String sound = soundSleep.getText().toString();
+
+				if(!checkSleepFormat(sleep, light, sound)){
+					new AlertDialog.Builder(getActivity())
+					.setTitle("Time Duration Error")
+					.setMessage("Please the sleep duration formats. It needs to be in the form of:\n"
+							+ "HH:mm or HH.mm")
+							.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) { 
+									//do nothing
+								}
+							})
+							.setIcon(android.R.drawable.ic_dialog_alert)
+							.show();
+				}else{
+
+					for(int i = 0; i < list_view.getCount(); i++){
+						View view = list_view.getChildAt(i);
+						if(view != null){
+							RatingBar r = (RatingBar) view.findViewById(R.id.questionaire_rating);
+							String s = Float.toString(r.getRating()).substring(0, 3);
+							results.add(s);
+						}
+					}
+					
+					String finalResult = "";
+					for(String s : results)
+						finalResult += s + "|";
+					
+					Results.insertQuestionaireResult(eventName, new String[] {sleep, light, sound}, 
+							finalResult, "", Calendar.getInstance().getTimeInMillis(), getActivity());
+
+					new AlertDialog.Builder(getActivity())
+					.setTitle("Questionaire Submitted")
+					.setMessage("You will now be returned to the Main Menu.")
+					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) { 
+							getActivity().onBackPressed();
+						}
+					})
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.show();
 				}
-				String finalResult = "";
-				for(String s : results)
-					finalResult += s + " ";
-				Results.insertResult(eventName, finalResult, 
-						Calendar.getInstance().getTimeInMillis(), getActivity());
-				new AlertDialog.Builder(getActivity())
-	    		.setTitle("Questionaire Submitted")
-	    		.setMessage("You will now be returned to the Main Menu.")
-	    		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-	    			public void onClick(DialogInterface dialog, int which) { 
-	    				getActivity().onBackPressed();
-	    			}
-	    		})
-	    		.setIcon(android.R.drawable.ic_dialog_alert)
-	    		.show();
 			}
-			
 		});
 		return view;
+	}
+
+	private boolean checkSleepFormat(String sleep, String light, String sound) {
+		if(checkStringFormat(sleep) && checkStringFormat(light) && checkStringFormat(sound))
+			return true;		
+		return false;
+	}
+
+	private boolean checkStringFormat(String s){
+		//check if the input hasn't been changed
+		if(s.equals("") || s.equals(getResources().getString(R.string.quest_if_known)))
+			return true;
+		//remove spaces
+		String[] tmpArray = s.split(" ");
+		String noSpaces = "";
+		for(String s1: tmpArray)
+			noSpaces += s1;
+		//check for : and .
+		if(noSpaces.contains(":") || noSpaces.contains(".")){
+			//get substrings
+			if(noSpaces.contains(":"))
+				tmpArray = noSpaces.split(":");
+			else{
+				int index = noSpaces.indexOf(".");
+				tmpArray = new String[] {noSpaces.substring(0, index),
+						noSpaces.substring(index + 1)};
+				for(String s2 : tmpArray)
+					Log.d(TAG, s2);
+			}
+				
+			//check array size
+			if(tmpArray.length != 2)
+				return false;
+			else{
+				//check string size
+				for(String s1: tmpArray){
+					if(s1.length() < 1 || s1.length() >= 3)
+						return false;
+					//check if chars are digits
+					for(char c: s1.toCharArray()){
+						if(!Character.isDigit(c))
+							return false;
+					}
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

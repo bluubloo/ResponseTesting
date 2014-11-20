@@ -142,6 +142,21 @@ public class Results {
 			long time, Activity activity) {
 		insertResult(eventName, Integer.toString(result), time, activity);		
 	}
+	
+	public static void insertQuestionaireResult(String eventName, String[] durations, String ratings, 
+			String other, long time, Activity activity){
+		Resources r = activity.getResources();
+		ContentValues values = new ContentValues();
+		values.put(r.getString(R.string.timestamp), time);
+		values.put(r.getString(R.string.total_sleep), durations[0]);
+		values.put(r.getString(R.string.light_sleep), durations[1]);
+		values.put(r.getString(R.string.sound_sleep), durations[2]);
+		values.put(r.getString(R.string.ratings), ratings);
+		values.put(r.getString(R.string.other), other);
+		values.put(r.getString(R.string.sent), 0);
+		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
+		db.insertQuestionarie(values);
+	}
 
 	//--------------------------------------------------------------------------------------------
 	//DELETE Results
