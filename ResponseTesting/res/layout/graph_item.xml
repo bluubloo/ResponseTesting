@@ -7,7 +7,7 @@
     <com.androidplot.xy.XYPlot
       android:id="@+id/results_plot"
       android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
+      android:layout_height="300dp"
       androidPlot.title="Results - Event"
       androidPlot.domainLabel="Domain"
       androidPlot.rangeLabel="Range"
@@ -16,7 +16,7 @@
       androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_font_size"
       androidPlot.graphWidget.marginTop="20dp"
       androidPlot.graphWidget.marginLeft="15dp"
-      androidPlot.graphWidget.marginBottom="35dp"
+      androidPlot.graphWidget.marginBottom="30dp"
       androidPlot.graphWidget.marginRight="10dp"
       androidPlot.graphWidget.domainLabelPaint.textSize="@dimen/domain_tick_font_size"
       androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_font_size"
