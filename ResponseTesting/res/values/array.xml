@@ -17,6 +17,7 @@
         <item>Pattern Recreation</item>
         <item>Stroop Test</item>
         <item>Questionaire</item>
+        <item>Graph Test</item>
     </string-array>
     <!-- The below array of event info needs to be in the same order as the above event names -->
     <string-array name="event_info_array">
@@ -29,6 +30,7 @@
         <item>If the text colour of the top word matches the word colour below, press Match.\nIf not press No Match.</item>
         <item>Answer the questions as truthfully as possible.\n\nFor the sleep durations please answer in the format HH:mm or HH.mm.\n\n
            For the remaining questions give a rating from 0 to 5. With 5 Being the highest.</item>
+        <item>Test</item>
     </string-array>
     <string-array name="non_numeric_events">
         <item>Questionaire</item>
