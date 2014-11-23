@@ -32,6 +32,7 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f070000;
         public static final int activity_vertical_margin=0x7f070001;
+        public static final int appear_object_image_size=0x7f070008;
         public static final int domain_font_size=0x7f070003;
         public static final int domain_tick_font_size=0x7f070005;
         public static final int legend_font_size=0x7f070007;

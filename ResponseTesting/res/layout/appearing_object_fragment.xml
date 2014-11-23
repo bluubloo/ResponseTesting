@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/appear_obj_image_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/appear_object_image_size"
+            android:layout_height="@dimen/appear_object_image_size"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:contentDescription="@string/image_descript"
@@ -43,8 +43,8 @@
 
         <ImageView
             android:id="@+id/appear_obj_image_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/appear_object_image_size"
+            android:layout_height="@dimen/appear_object_image_size"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/appear_obj_start"
@@ -57,8 +57,8 @@
 
         <ImageView
             android:id="@+id/appear_obj_image_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/appear_object_image_size"
+            android:layout_height="@dimen/appear_object_image_size"
             android:layout_alignEnd="@+id/appear_obj_start"
             android:layout_alignRight="@+id/appear_obj_start"
             android:layout_alignTop="@+id/appear_obj_image_4"
@@ -68,8 +68,8 @@
 
         <ImageView
             android:id="@+id/appear_obj_image_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/appear_object_image_size"
+            android:layout_height="@dimen/appear_object_image_size"
             android:layout_alignLeft="@+id/appear_obj_start"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/appear_obj_start"
@@ -80,8 +80,8 @@
 
         <ImageView
             android:id="@+id/appear_obj_image_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/appear_object_image_size"
+            android:layout_height="@dimen/appear_object_image_size"
             android:layout_alignLeft="@+id/appear_obj_image_3"
             android:layout_alignStart="@+id/appear_obj_image_3"
             android:layout_alignTop="@+id/appear_obj_image_2"

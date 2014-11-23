@@ -10,6 +10,9 @@ package uni.apps.responsetesting.utils;
  */
 public class Conversion {
 
+	//--------------------------------------------------------------------------------------
+	//Millisecond Conversions
+
 	//casts long to double
 	public static String milliToStringSeconds(long value, int dp){
 		return milliToStringSeconds((double) value, dp);
@@ -38,5 +41,30 @@ public class Conversion {
 			return s.substring(0, index + dp);
 		else
 			return s;
+	}
+
+	//--------------------------------------------------------------------------------------
+	//Sleep Duration Conversions
+
+	public static Number sleepDurationStringToNumber(String duration){
+		String[] tmp;
+		//Get two parts of the time
+		if(duration.contains(":")){
+			tmp = duration.split(":");
+		} else{
+			int i = duration.indexOf('.');
+			tmp = new String[] {duration.substring(0, i), duration.substring(i + 1)};
+		}
+		try{
+			//parse into double
+			//get minutes as decimal value
+			double hours = Double.parseDouble(tmp[0]);
+			double minutes = Double.parseDouble(tmp[1]) / 60;
+			//get total time
+			return hours + minutes;
+		} catch (Exception e){
+			e.printStackTrace();
+			return 0;
+		}
 	}
 }
