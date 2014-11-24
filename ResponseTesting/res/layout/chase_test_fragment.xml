@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/event_name_chase"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/layout_border" >
+
+        <GridView
+            android:id="@+id/chase_grid"
+            style="@style/title_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="7"
+            android:background="@color/Black"
+            android:layout_centerInParent="true"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp" >
+        </GridView>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/chase_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp" />
+
+</LinearLayout>

@@ -8,10 +8,7 @@
         android:id="@+id/tap_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
+        style="@style/title_style"
         android:text="@string/event_name_finger_tap"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -27,7 +24,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="@string/tap_click_info_count"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -37,7 +33,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/tap_click_count"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="@string/tap_click_info_time"
             android:textAppearance="?android:attr/textAppearanceMedium" />

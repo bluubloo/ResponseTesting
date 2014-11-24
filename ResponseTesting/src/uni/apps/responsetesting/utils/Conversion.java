@@ -35,7 +35,7 @@ public class Conversion {
 	}
 
 	//Formats String to specified decimal place
-	private static String formatString(String s, int dp){
+	public static String formatString(String s, int dp){
 		int index = s.indexOf(".");
 		if(index + dp < s.length())
 			return s.substring(0, index + dp);

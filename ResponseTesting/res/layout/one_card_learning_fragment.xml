@@ -6,49 +6,42 @@
 
     <TextView
         android:id="@+id/one_card_title"
+        style="@style/title_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:text="@string/event_name_one_card"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <FrameLayout
         android:id="@+id/one_card_container"
+        style="@style/title_style"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-		android:layout_marginBottom="10dp" >
-
+        android:layout_weight="7" >
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-		android:layout_marginTop="10dp"
-		android:layout_marginBottom="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <Button
             android:id="@+id/one_card_yes"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/start"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="@string/start" />
 
         <Button
             android:id="@+id/one_card_no"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:enabled="false"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:enabled="false" />
     </LinearLayout>
 
 </LinearLayout>

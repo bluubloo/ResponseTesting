@@ -11,6 +11,7 @@
     <string-array name="event_name_array">
         <item>Appearing Object</item>
         <item>Changing Directions</item>
+        <item>Chase Test</item>
         <item>Even or Vowel</item>
         <item>Finger Tap Test</item>
         <item>One Card Learning Test</item>
@@ -23,6 +24,8 @@
     <string-array name="event_info_array">
         <item>Click on the object when it appears.</item>
         <item>Click on the outer arrow pointing in the same direction as the center arrow.</item>
+        <item>You are the blue square.\n\nYou can move 1 square at time vertically or horizontally. (You cannot move diagonally)\n\n
+            The goal is to chase after the red square for 30s or till you catch them. </item>
         <item>Click on yes if:\n - The top boxes number is even.\n - The bottom boxes letter is a vowel.\n\nOtherwise click no. </item>
         <item>Tap space above as many times as possible within 5 seconds.</item>
         <item>Press yes if the card has been shown before, no if it has not. \nThere will twenty cards</item>

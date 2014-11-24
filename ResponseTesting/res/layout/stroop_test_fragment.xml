@@ -6,12 +6,10 @@
 
     <TextView
         android:id="@+id/stroop_title"
+        style="@style/title_style"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
         android:text="@string/event_name_stroop"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -19,8 +17,8 @@
         android:id="@+id/stroop_grid"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:numColumns="3"
-        android:layout_weight="7" >
+        android:layout_weight="7"
+        android:numColumns="3" >
     </GridView>
 
     <Button
@@ -28,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
-        android:text="@string/start"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:text="@string/start" />
 
 </LinearLayout>

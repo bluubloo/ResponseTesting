@@ -48,7 +48,6 @@
     <string name="quest_sound">Sound Sleep:</string>
     <string name="quest_if_known">(If Known)</string>
     
-    
     <!-- Result Display Strings -->
     <string name="results_dis_title">Results</string>
     <string name="results_dis_notes">Add Note</string>
@@ -65,6 +64,7 @@
     <string name="event_name_change_direct">Changing Directions</string>
 	<string name="event_name_pattern_recreate">Pattern Recreation</string>
 	<string name="event_name_even_vowel">Even or Vowel</string>
+	<string name="event_name_chase">Chase Test</string>
     
     <!-- Start/Done Strings -->
     <string name="start_square">Tap in the Square to Start</string>

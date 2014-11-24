@@ -143,6 +143,11 @@ public class Results {
 		insertResult(eventName, Integer.toString(result), time, activity);		
 	}
 	
+	public static void insertResult(String eventName, double result,
+			long time, Activity activity) {
+		insertResult(eventName, Double.toString(result), time, activity);	
+	}
+	
 	public static void insertQuestionaireResult(String eventName, String[] durations, String ratings, 
 			String other, long time, Activity activity){
 		Resources r = activity.getResources();

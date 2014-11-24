@@ -2,6 +2,7 @@ package uni.apps.responsetesting;
 
 import uni.apps.responsetesting.fragment.events.AppearingObjectFragment;
 import uni.apps.responsetesting.fragment.events.ChangingDirectionsFragment;
+import uni.apps.responsetesting.fragment.events.ChaseTestFragment;
 import uni.apps.responsetesting.fragment.events.EvenVowelFragment;
 import uni.apps.responsetesting.fragment.events.EventInstructionsFragment;
 import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
@@ -93,6 +94,9 @@ public class EventActivity extends Activity implements EventInstructionsListener
 			fragment = new PatternRecreationFragment();
 		else if(eventName.equals(r.getString(R.string.event_name_even_vowel)))
 			fragment = new EvenVowelFragment();
+		else if(eventName.equals(r.getString(R.string.event_name_chase)))
+			fragment = new ChaseTestFragment();
+		//TODO Remove
 		else if(eventName.equals("Graph Test"))
 			fragment = new GraphTestFragment();
 	}
