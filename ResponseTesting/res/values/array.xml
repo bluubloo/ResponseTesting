@@ -10,6 +10,7 @@
     </string-array>
     <string-array name="event_name_array">
         <item>Appearing Object</item>
+        <item>Arrow Ignoring Test</item>
         <item>Changing Directions</item>
         <item>Chase Test</item>
         <item>Even or Vowel</item>
@@ -23,6 +24,7 @@
     <!-- The below array of event info needs to be in the same order as the above event names -->
     <string-array name="event_info_array">
         <item>Click on the object when it appears.</item>
+        <item>Click on the arrow pointing in the same direction as the center arrow.\nIgnore all the others.</item>
         <item>Click on the outer arrow pointing in the same direction as the center arrow.</item>
         <item>You are the blue square.\n\nYou can move 1 square at time vertically or horizontally. (You cannot move diagonally)\n\n
             The goal is to chase after the red square for 30s or till you catch them. </item>
