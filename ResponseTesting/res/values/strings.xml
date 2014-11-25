@@ -66,6 +66,7 @@
 	<string name="event_name_even_vowel">Even or Vowel</string>
 	<string name="event_name_chase">Chase Test</string>
 	<string name="event_name_center_arrow">Arrow Ignoring Test</string>
+	<string name="event_name_monkey">Monkey Ladder</string>
     
     <!-- Start/Done Strings -->
     <string name="start_square">Tap in the Square to Start</string>
