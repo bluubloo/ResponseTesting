@@ -3,6 +3,7 @@ package uni.apps.responsetesting.utils;
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.ResultsDisplayActivity;
 import uni.apps.responsetesting.SettingsActivity;
+import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.mail.Email;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -71,6 +72,12 @@ public class ActivityUtilities {
 				})
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.show();
+	}
+	
+	//checks if the test is replayable
+	public static boolean checkPlayable(String eventName, int times, Activity activity){
+		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
+		return times < 3 && db.checkRecent(eventName);
 	}
 	
 }

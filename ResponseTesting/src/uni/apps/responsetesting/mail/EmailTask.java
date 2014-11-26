@@ -23,7 +23,7 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 		Activity activity = params[0].activity;
 		
 		//TODO
-		String from = "";
+		String from = "activitytrackers@gmail.com";
 		String to = "";
 		//set up email
 		MailClient mail = new MailClient(from, "");

@@ -37,6 +37,7 @@ public class MonkeyLadderFragment extends Fragment {
 	private GridView grid;
 	private Button button;
 
+	private int playTimes = 0;
 	private int tiles = 3;
 	private int clickedTiles = 0;
 	private int errorCount = 0;
@@ -75,8 +76,16 @@ public class MonkeyLadderFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
 		setUpTiles();
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("playTime", playTimes);
 	}
 
 	@Override
@@ -88,6 +97,7 @@ public class MonkeyLadderFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
+		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.monkey_ladder_fragment, container, false);
 		grid = (GridView) view.findViewById(R.id.monkey_grid);
@@ -140,21 +150,27 @@ public class MonkeyLadderFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				if(button.isEnabled()){
-					button.setEnabled(false);
-					counter = 0;
-					currentMax = 0;
-					tiles = 3;
-					clickedTiles = 0;
-					errorCount = 0;
-					clickable = false;
-					results = new DurationInfo[maxTurns];
-					results[counter] = new DurationInfo(Calendar.getInstance().getTimeInMillis());
-					alterTiles(false);
-					grid.setVisibility(View.VISIBLE);
-					timerHandler.postDelayed(timerRunnableTextDisappear, tiles * 500);
+				if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+					if(button.isEnabled()){
+						button.setEnabled(false);
+						playTimes++;
+						counter = 0;
+						currentMax = 0;
+						tiles = 3;
+						clickedTiles = 0;
+						errorCount = 0;
+						clickable = false;
+						results = new DurationInfo[maxTurns];
+						results[counter] = new DurationInfo(Calendar.getInstance().getTimeInMillis());
+						alterTiles(false);
+						grid.setVisibility(View.VISIBLE);
+						timerHandler.postDelayed(timerRunnableTextDisappear, tiles * 500);
+					}
+				}else{
+					ActivityUtilities.displayResults(getActivity(), eventName,
+							"You have completed you daily 3 tries, please try a different test");
 				}
-			}
+			} 
 
 		});
 	}

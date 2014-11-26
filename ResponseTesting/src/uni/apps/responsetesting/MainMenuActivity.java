@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -36,8 +37,13 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		frag_manager = this.getFragmentManager();
 		addFragments();
 	}
-
-
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		invalidateOptionsMenu();
+	}
+	
 	//adds fragment to activity
 	private void addFragments() {
 		//checks if fragment exists
@@ -71,6 +77,7 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		//sets action bar subtitle
 		ActionBar a = getActionBar();
 		a.setSubtitle(getResources().getString(R.string.main_menu));
+
 		return true;
 	}
 
@@ -80,5 +87,14 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		Intent i = new Intent(this, EventActivity.class);
 		i.putExtra(getResources().getString(R.string.event), value);
 		startActivity(i);
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		//alters action bar
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean results = prefs.getBoolean(getResources().getString(R.string.pref_key_results), true);
+		menu.findItem(R.id.action_results).setVisible(results);
+		return super.onPrepareOptionsMenu(menu);
 	}
 }

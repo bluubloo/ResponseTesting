@@ -42,9 +42,10 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 	private int maxTurns = 10;
 	private int totalTime = 1000 * 20;
 	private int timeElapsed = 0;
+	private int playTimes = 0;
 	private Handler timerHandler = new Handler();
 	private CorrectDurationInfo[] results;
-	
+
 	//drawable ids
 	//NOTE: keep these in the same order i.e. arrow_right in position as blue_arrow_right 
 	private static final int[] buttonArrows = new int[] {R.drawable.arrow_down, R.drawable.arrow_left,
@@ -65,7 +66,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 			} else{
 				timerHandler.postDelayed(this, 100);
 			}
-			
+
 		}
 	};
 
@@ -77,22 +78,30 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 			center.setVisibility(View.VISIBLE);
 		}
 	};
-	
+
 	//-----------------------------------------------------------------------------
-	
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
 	}
-	
+
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("playTime", playTimes);
+	}
+
 	@Override
 	public void onStop(){
 		super.onStop();
 		removeTimerCallbacks();
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
@@ -144,7 +153,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 			}
 
 		});
-		
+
 		clickable[2].setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -153,7 +162,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 			}
 
 		});
-		
+
 		clickable[3].setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -162,7 +171,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 			}
 
 		});
-		
+
 		//Add elements to order list
 		order.add(0);
 		order.add(1);
@@ -185,17 +194,22 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 	@Override
 	public void onButtonClick() {
 		if(button.getText().toString().equals(getResources().getString(R.string.start))){
-			results = new CorrectDurationInfo[maxTurns];
-			button.setText("");
-			button.setEnabled(false);
-			counter = 0;
-			results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
-			timeElapsed = 0;
-			changeImageViews();
-			timerHandler.postDelayed(timerRunnable, 100);
+			if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+				results = new CorrectDurationInfo[maxTurns];
+				button.setText("");
+				button.setEnabled(false);
+				counter = 0;
+				results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
+				timeElapsed = 0;
+				changeImageViews();
+				timerHandler.postDelayed(timerRunnable, 100);
+			} else{
+				ActivityUtilities.displayResults(getActivity(), eventName,
+						"You have completed you daily 3 tries, please try a different test");
+			}
 		}
 	}
-	
+
 	private void endTest() {
 		removeTimerCallbacks();
 		button.setText(getResources().getString(R.string.start));
@@ -203,7 +217,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		clearImageViews();
 		double[] results = Results.getResults(this.results);
 		String resultString = results[0] + " correct. " + 
-		Conversion.milliToStringSeconds(results[1], 3) + " average time (s).";
+				Conversion.milliToStringSeconds(results[1], 3) + " average time (s).";
 		Results.insertResult(eventName, resultString,
 				Calendar.getInstance().getTimeInMillis(), getActivity());
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);
@@ -224,7 +238,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		}
 		center.setImageDrawable(getResources().getDrawable(centerArrows[centerIndex]));
 	}
-	
+
 	private boolean toShuffle(){
 		int[] shuffle = new int[] {3,5,6,8,9};
 		for(int i: shuffle)
@@ -256,13 +270,13 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		moveToNext(time);
 		timerHandler.postDelayed(centerImageAppear, 200);
 	}
-	
+
 	private void moveToNext(long time){
 		counter++;
 		if(counter < results.length)
 			results[counter] = new CorrectDurationInfo(time);
 	}
-	
+
 	private void removeTimerCallbacks(){
 		timerHandler.removeCallbacks(timerRunnable);
 		timerHandler.removeCallbacks(centerImageAppear);

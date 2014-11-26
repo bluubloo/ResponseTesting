@@ -87,11 +87,15 @@
     
     <!-- Preference Catageroy Strings -->
     <string name="settings_cat_event">Event Settings</string>
+    <string name="settings_cat_results">Results Settings</string>
     <!-- Preference Title Strings -->
     <string name="settings_title_instruct">Show Instructions Page</string>
+    <string name="settings_title_results">Show Results Page</string>
     <!-- Preference Summary Strings -->
     <string name="settings_sum_instruct">Enable/Disable the event instructions page</string>
+    <string name="settings_sum_results">Enable/Disable the results page</string>
     <!-- Preference Key Strings -->
     <string name="pref_key_instruct">pref_event_show_instruct</string>
+    <string name="pref_key_results">pref_event_show_results</string>
 
 </resources>

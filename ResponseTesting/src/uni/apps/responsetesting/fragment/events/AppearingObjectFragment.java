@@ -42,6 +42,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	private DurationInfo[] data = new DurationInfo[5];
 	private int counter = 0;
 	private int imageCounter = 0;
+	private int playTimes = 0;
 	private boolean running = false;
 	private Random random = new Random();
 
@@ -67,7 +68,15 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("playTime", playTimes);
 	}
 	
 	@Override
@@ -100,12 +109,18 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 			public void onClick(View v) {
 				int delay = (random.nextInt(3) + 1) * 1000;
 				if(!running){
+					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 					counter = 0;
 					running = !running;
 					for(ImageView i: clickableImageView)
 						i.setVisibility(View.INVISIBLE);
 					startTextView.setVisibility(View.INVISIBLE);
+					playTimes++;
 					timerHandler.postDelayed(timerRunnableImageAppear, delay);
+					} else{
+						ActivityUtilities.displayResults(getActivity(), eventName,
+								"You have completed you daily 3 tries, please try a different test");
+					}
 				}
 			}
 

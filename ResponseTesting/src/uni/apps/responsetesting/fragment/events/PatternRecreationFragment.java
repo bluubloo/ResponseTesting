@@ -32,7 +32,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 	private static final String TAG = "PatternRecreationFragment";
 	private static final String eventName = "Pattern Recreation";
 	private static final int maxTurns = 10;
-	
+
 	private int turns = 1;
 	private int tiles = 3;
 	private int maxTilesReached = tiles;
@@ -41,7 +41,8 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 	private int clickCount = 0;
 	private int errorClickCount = 3;
 	private int counter = 0;
-	
+	private int playTimes = 0;
+
 	private boolean canClick = false;
 
 	private PatternRecreationData[] data;
@@ -145,24 +146,29 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 
 			@Override
 			public void onClick(View v) {
-				if(start.isEnabled()){
-					start.setEnabled(false);
-					tiles = 3;
-					canClick = false;
-					clickCount = 0;
-					errorClickCount = 3;
-					turns = 1;
-					maxTilesReached = tiles;
-					counter = 0;
-					results = new DurationInfo[maxTurns];
-					setUpGridData(3, 3);
-					adapter.clear();
-					adapter.update(data);
-					startGame();
+				if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+					if(start.isEnabled()){
+						start.setEnabled(false);
+						tiles = 3;
+						canClick = false;
+						clickCount = 0;
+						errorClickCount = 3;
+						turns = 1;
+						maxTilesReached = tiles;
+						counter = 0;
+						results = new DurationInfo[maxTurns];
+						setUpGridData(3, 3);
+						adapter.clear();
+						adapter.update(data);
+						playTimes++;
+						startGame();
+					}
+				}else{
+					ActivityUtilities.displayResults(getActivity(), eventName,
+							"You have completed you daily 3 tries, please try a different test");
 				}
 			}
 		});
-
 	}
 
 

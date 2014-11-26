@@ -25,6 +25,7 @@ public class OneCardLearningFragment extends Fragment {
 	private static final String eventName = "One Card Learning Test";
 	private int counter = 0;
 	private int maxCards = 20;
+	private int playTimes = 0;
 	private boolean[] results = new boolean[maxCards];
 	private boolean running = false;
 	private FrameLayout card;
@@ -50,9 +51,11 @@ public class OneCardLearningFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
 	}
-	
+
 	@Override
 	public void onStop(){
 		super.onStop();
@@ -80,14 +83,20 @@ public class OneCardLearningFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if(counter == 0 && !running){
-					deck = CardOperations.setUpCards(maxCards);
-					seen = new ArrayList<Integer>();
-					running = !running;
-					noButton.setText(r.getString(R.string.no));
-					noButton.setEnabled(true);
-					yesButton.setText(r.getString(R.string.yes));
-					resetResults();
-					changeToNextCard();				
+					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+						deck = CardOperations.setUpCards(maxCards);
+						seen = new ArrayList<Integer>();
+						running = !running;
+						playTimes++;
+						noButton.setText(r.getString(R.string.no));
+						noButton.setEnabled(true);
+						yesButton.setText(r.getString(R.string.yes));
+						resetResults();
+						changeToNextCard();			
+					} else{
+						ActivityUtilities.displayResults(getActivity(), eventName,
+								"You have completed you daily 3 tries, please try a different test");
+					}
 				} else if(counter < maxCards - 1){
 					counterLess(true);
 				} else if(counter == maxCards - 1){
@@ -128,7 +137,7 @@ public class OneCardLearningFragment extends Fragment {
 	private void changeToNextCard() {
 		card.setBackground(getResources().getDrawable(deck.get(counter)));
 	}
-	
+
 	private void changeToBlankBackground(){
 		card.setBackground(null);
 	}
@@ -161,6 +170,11 @@ public class OneCardLearningFragment extends Fragment {
 		results = new boolean[maxCards];
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("playTime", playTimes);
+	}
 
 
 }

@@ -35,6 +35,7 @@
         android:icon="@drawable/results_icon"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="@string/action_send_results"/>
+        android:title="@string/action_send_results"
+        android:visible="false"/>
 
 </menu>

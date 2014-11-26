@@ -34,6 +34,7 @@ public class ChaseTestFragment extends Fragment {
 	private int targetPos = 42;
 	private int userPos = 6;
 	private int counter = 0;
+	private int playTimes = 0;
 	private ArrayList<Integer> results;
 	private Handler timerHandler = new Handler();
 
@@ -63,7 +64,15 @@ public class ChaseTestFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("playTime", playTimes);
 	}
 
 	@Override
@@ -96,6 +105,7 @@ public class ChaseTestFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if(button.getText().toString().equals(r.getString(R.string.start))){
+					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 					button.setEnabled(false);
 					grid.setVisibility(View.VISIBLE);
 					running = true;
@@ -105,6 +115,10 @@ public class ChaseTestFragment extends Fragment {
 					results = new ArrayList<Integer>();
 					timerHandler.postDelayed(timerRunnable, 30 * 1000);
 					timerHandler.postDelayed(timerClicks, 1000);
+					} else{
+						ActivityUtilities.displayResults(getActivity(), eventName,
+								"You have completed you daily 3 tries, please try a different test");
+					}
 				}
 			}
 

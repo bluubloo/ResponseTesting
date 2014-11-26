@@ -1,5 +1,7 @@
 package uni.apps.responsetesting.database;
 
+import java.util.Calendar;
+
 import uni.apps.responsetesting.R;
 import android.content.ContentValues;
 import android.content.Context;
@@ -181,5 +183,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return this.getReadableDatabase().rawQuery(sql, null);
 	}
 
+	public boolean checkRecent(String eventName) {
+		String sql = "SELECT max(" +  resources.getString(R.string.timestamp) + ") FROM " + 
+				resources.getString(R.string.table_name) + " WHERE " + 
+				resources.getString(R.string.event_name) + "=?";
+		Cursor cursor = this.getWritableDatabase().rawQuery(sql, new String[] {eventName});
+		if(cursor.getCount() == 0)
+			return true;		
+		if(cursor.moveToFirst()){
+			long i = cursor.getLong(0);
+			long fiveMin = 5 * 60000; 
+			Calendar current = Calendar.getInstance();
+			if(current.getTimeInMillis() - i < fiveMin)
+				return true;
+			Calendar c1 = Calendar.getInstance();
+			c1.setTimeInMillis(i);
+			if(c1.get(Calendar.DATE) != current.get(Calendar.DATE))
+				return true;
+
+			if(c1.get(Calendar.MONTH) !=  current.get(Calendar.MONTH))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean checkQuestionaire(String eventName){
+		String sql = "SELECT max(" +  resources.getString(R.string.timestamp) + ") FROM " + 
+				resources.getString(R.string.table_name_questionaire);
+		Cursor cursor = this.getWritableDatabase().rawQuery(sql, null);
+		if(cursor.moveToFirst()){
+			long i = cursor.getLong(0);
+			long current = Calendar.getInstance().getTimeInMillis();
+			Calendar c1 = Calendar.getInstance();
+			Calendar c2 = Calendar.getInstance();
+			c1.setTimeInMillis(i);
+			c2.setTimeInMillis(current);
+			if(c1.get(Calendar.DATE) != c2.get(Calendar.DATE))
+				return true;
+
+			if(c1.get(Calendar.MONTH) !=  c2.get(Calendar.MONTH))
+				return true;
+		}
+		return false;
+	}
 
 }

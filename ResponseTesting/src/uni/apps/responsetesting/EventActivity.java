@@ -57,6 +57,12 @@ public class EventActivity extends Activity implements EventInstructionsListener
 				this.getResources().getString(R.string.event));
 		addFragments();
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		invalidateOptionsMenu();
+	}
 
 	//adds a fragment to the activity
 	private void addFragments() {
@@ -136,6 +142,9 @@ public class EventActivity extends Activity implements EventInstructionsListener
 		Log.d(TAG, "onPrepareOptionsMenu()");
 		//alters action bar
 		menu.findItem(R.id.action_info).setVisible(true);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean results = prefs.getBoolean(getResources().getString(R.string.pref_key_results), true);
+		menu.findItem(R.id.action_results).setVisible(results);
 		return super.onPrepareOptionsMenu(menu);
 	}
 

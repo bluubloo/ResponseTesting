@@ -35,6 +35,7 @@ public class FingerTapTestFragment extends Fragment {
 	private TextView timeLeftTextView;
 	private boolean running = true;
 	private int clickCount = 0;
+	private int playTimes = 0;
 	private long startTime = 0;	
 	private Handler timerHandler = new Handler();
 
@@ -62,10 +63,18 @@ public class FingerTapTestFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
 		clickCount = 0;
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("playTime", playTimes);
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
@@ -75,7 +84,7 @@ public class FingerTapTestFragment extends Fragment {
 		setupTest(view);
 		return view;
 	}
-	
+
 	@Override
 	public void onStop(){
 		super.onStop();
@@ -110,17 +119,23 @@ public class FingerTapTestFragment extends Fragment {
 			}
 
 		});
-		
+
 		startButton.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				if(running && startTime == 0){
-					running = !running;
-					infoTextView.setVisibility(View.VISIBLE);
+					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+						running = !running;
+						infoTextView.setVisibility(View.VISIBLE);
+						playTimes++;
+					} else{
+						ActivityUtilities.displayResults(getActivity(), eventName,
+								"You have completed you daily 3 tries, please try a different test");
+					}
 				}
 			}
-			
+
 		});
 	}
 

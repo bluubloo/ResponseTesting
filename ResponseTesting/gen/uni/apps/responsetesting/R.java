@@ -273,7 +273,8 @@ public final class R {
         public static final int other=0x7f080014;
         /**  Preference Key Strings 
          */
-        public static final int pref_key_instruct=0x7f080040;
+        public static final int pref_key_instruct=0x7f080043;
+        public static final int pref_key_results=0x7f080044;
         public static final int quest_if_known=0x7f080023;
         public static final int quest_light=0x7f080021;
         public static final int quest_sound=0x7f080022;
@@ -291,12 +292,15 @@ public final class R {
         /**  Preference Catageroy Strings 
          */
         public static final int settings_cat_event=0x7f08003d;
+        public static final int settings_cat_results=0x7f08003e;
         /**  Preference Summary Strings 
          */
-        public static final int settings_sum_instruct=0x7f08003f;
+        public static final int settings_sum_instruct=0x7f080041;
+        public static final int settings_sum_results=0x7f080042;
         /**  Preference Title Strings 
          */
-        public static final int settings_title_instruct=0x7f08003e;
+        public static final int settings_title_instruct=0x7f08003f;
+        public static final int settings_title_results=0x7f080040;
         public static final int sound_sleep=0x7f080012;
         public static final int start=0x7f080035;
         /**  Start/Done Strings 

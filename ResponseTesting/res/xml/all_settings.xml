@@ -7,7 +7,14 @@
             android:key="@string/pref_key_instruct"
             android:summary="@string/settings_sum_instruct"
             android:title="@string/settings_title_instruct" />
-        
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/settings_cat_results">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_results"
+            android:summary="@string/settings_sum_results"
+            android:title="@string/settings_title_results" />
     </PreferenceCategory>
 
 </PreferenceScreen>

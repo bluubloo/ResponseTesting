@@ -24,9 +24,10 @@ public class EvenVowelFragment extends Fragment {
 	private static final String TAG = "EvenVowelFragment";
 	private static final String eventName = "Even or Vowel";
 	private String testText = "";
-	
+
 	private static final int maxTurns = 10;
 	private int counter = 0;
+	private int playTimes = 0;
 
 	private CorrectDurationInfo[] results;
 
@@ -38,7 +39,15 @@ public class EvenVowelFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("playTime", playTimes);
 	}
 
 	@Override
@@ -62,7 +71,13 @@ public class EvenVowelFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if(yesButton.getText().equals(getResources().getString(R.string.start)))
-					startTest();
+					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+						startTest();
+						playTimes++;
+					} else{
+						ActivityUtilities.displayResults(getActivity(), eventName,
+								"You have completed you daily 3 tries, please try a different test");
+					}
 				else
 					checkAnswer(true);				
 			}
@@ -104,15 +119,15 @@ public class EvenVowelFragment extends Fragment {
 			else
 				results[counter].addResult(false);
 		}
-		
+
 		if(counter != maxTurns - 1){
 			switchText();
 			moveToNext();
 		} else 
 			endTest();
-		
+
 	}
-	
+
 	private void endTest() {
 		double[] result = Results.getResults(results);
 		String resultString = result[0] + " correct. " + 
@@ -166,7 +181,7 @@ public class EvenVowelFragment extends Fragment {
 			evenTextView.setVisibility(View.INVISIBLE);
 		}
 	}
-	
+
 	private void moveToNext(){
 		counter ++;
 		if(counter < results.length)

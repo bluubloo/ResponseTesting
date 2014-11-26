@@ -44,6 +44,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	private boolean running = false;
 	private boolean clickable = false;
 	private int counter = 0;
+	private int playTimes = 0;
 
 	private CorrectDurationInfo[] results;
 
@@ -69,8 +70,16 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
 		setUpArrowInfo();
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("playTime", playTimes);
 	}
 
 	@Override
@@ -169,15 +178,21 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	@Override
 	public void containerClick() {
 		if(!running &&  textView.getVisibility() == View.VISIBLE){
-			running = true;
-			textView.setVisibility(View.INVISIBLE);
-			grid.setVisibility(View.VISIBLE);
-			counter = 0;
-			clickable = true;
-			results = new CorrectDurationInfo[maxTurns];
-			results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
-			center = null;
-			alterArrowSetup();
+			if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+				running = true;
+				textView.setVisibility(View.INVISIBLE);
+				grid.setVisibility(View.VISIBLE);
+				counter = 0;
+				clickable = true;
+				results = new CorrectDurationInfo[maxTurns];
+				results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
+				center = null;
+				playTimes ++;
+				alterArrowSetup();
+			} else{
+				ActivityUtilities.displayResults(getActivity(), eventName,
+						"You have completed you daily 3 tries, please try a different test");
+			}
 		}
 	}
 

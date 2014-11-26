@@ -2,6 +2,7 @@ package uni.apps.responsetesting.fragment;
 
 import java.util.ArrayList;
 import uni.apps.responsetesting.R;
+import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.interfaces.listener.MainMenuListener;
 import android.app.Activity;
 import android.app.ListFragment;
@@ -32,7 +33,7 @@ public class MainMenuFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
+		//setRetainInstance(true);
 	}
 
 	@Override
@@ -41,6 +42,9 @@ public class MainMenuFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		//set up list adapter
 		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, createList());
+		getListView().setAdapter(adapter);
+		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		setIsLoading(false);
 	}
 
 	//Creates main menu list
@@ -50,8 +54,15 @@ public class MainMenuFragment extends ListFragment {
 		String[] tmp = r.getStringArray(R.array.event_name_array);
 		//adds from array to list
 		ArrayList<String> list = new ArrayList<String>();
+		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 		for(String s: tmp){
-			list.add(s);
+			boolean addable = true;
+			if(s.equals(r.getString(R.string.event_name_questionaire)))
+				addable = db.checkQuestionaire(s);
+			else
+				addable = db.checkRecent(s);
+			if(addable)
+				list.add(s);
 		}
 		return list;
 	}
@@ -61,9 +72,8 @@ public class MainMenuFragment extends ListFragment {
 		Log.d(TAG, "onResume()");
 		super.onResume();
 		//set list adpater
+		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, createList());
 		getListView().setAdapter(adapter);
-		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		setIsLoading(false);
 	}
 
 	public void setIsLoading(boolean is_loading) {

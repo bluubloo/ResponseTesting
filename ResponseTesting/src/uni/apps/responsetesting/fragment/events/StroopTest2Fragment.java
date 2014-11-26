@@ -30,6 +30,7 @@ public class StroopTest2Fragment extends Fragment {
 	private int colour = 0;
 	private int word1 = 0;
 	private int word2 = 0;
+	private int playTimes = 0;
 	private TextView colourTextView;
 	private TextView wordTextView;
 	private String[] colourNames = new String[] {"Black","Red","Blue","Green", "Yellow","Orange", "Pink"};
@@ -41,7 +42,15 @@ public class StroopTest2Fragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null)
+			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("playTime", playTimes);
 	}
 
 	@Override
@@ -65,13 +74,19 @@ public class StroopTest2Fragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if(match.getText().toString().equals(r.getString(R.string.start))){
+					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 					match.setText(r.getString(R.string.match));
 					noMatch.setText(r.getString(R.string.no_match));
 					noMatch.setEnabled(true);
 					setTextViews();
 					results = new CorrectDurationInfo[maxChanges];
 					counter = 0;
+					playTimes++;
 					results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
+					} else{
+						ActivityUtilities.displayResults(getActivity(), eventName,
+								"You have completed you daily 3 tries, please try a different test");
+					}
 				} else if(counter < maxChanges - 1){
 					setResultsTrue();
 					setTextViews();
