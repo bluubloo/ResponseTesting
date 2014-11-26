@@ -184,7 +184,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public boolean checkRecent(String eventName) {
-		String sql = "SELECT max(" +  resources.getString(R.string.timestamp) + ") FROM " + 
+		/*String sql = "SELECT max(" +  resources.getString(R.string.timestamp) + ") FROM " + 
 				resources.getString(R.string.table_name) + " WHERE " + 
 				resources.getString(R.string.event_name) + "=?";
 		Cursor cursor = this.getWritableDatabase().rawQuery(sql, new String[] {eventName});
@@ -204,6 +204,73 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			if(c1.get(Calendar.MONTH) !=  current.get(Calendar.MONTH))
 				return true;
 		}
+		return false;*/
+
+
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
+				resources.getString(R.string.event_name) + "=?" + " ORDER BY " + 
+				resources.getString(R.string.timestamp) + " LIMIT 3";
+
+		Cursor cursor = this.getWritableDatabase().rawQuery(sql, new String[] {eventName});
+		if(cursor.getCount() == 0)
+			return true;
+		if(cursor.getCount() < 3){
+			Calendar c1 = Calendar.getInstance();
+			long t1 = 0;
+			if(cursor.moveToLast()){
+				t1 = cursor.getLong(2);
+
+				Calendar c2 = Calendar.getInstance();
+				c2.setTimeInMillis(t1);
+
+				if(checkDate(c1, c2))
+					return true;
+			}
+			return c1.getTimeInMillis() - t1 < 5 * 60000;
+		} else	{		
+			Calendar c1 = Calendar.getInstance();
+			long t1 = 0;
+			if(cursor.moveToLast()){
+				t1 = cursor.getLong(2);
+
+				Calendar c2 = Calendar.getInstance();
+				c2.setTimeInMillis(t1);
+
+				if(checkDate(c1, c2))
+					return true;
+
+				if(c1.getTimeInMillis() - t1 < 5 * 60000){
+					if(cursor.moveToPrevious()){
+						t1 = cursor.getLong(2);
+						c1.setTimeInMillis(t1);
+
+						if(checkDate(c1, c2))
+							return true;
+
+						if(c2.getTimeInMillis() - t1 < 5 * 60000){
+							if(cursor.moveToPrevious()){
+								t1 = cursor.getLong(2);
+								c2.setTimeInMillis(t1);
+
+								if(checkDate(c1, c2))
+									return true;
+								if(c1.getTimeInMillis() - t1 < 5 * 60000){
+									return false;
+								}
+							}
+						}					
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean checkDate(Calendar c1, Calendar c2){
+		if(c1.get(Calendar.DATE) != c2.get(Calendar.DATE))
+			return true;
+		if(c1.get(Calendar.MONTH) !=  c2.get(Calendar.MONTH))
+			return true;
 		return false;
 	}
 
