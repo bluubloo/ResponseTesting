@@ -181,7 +181,7 @@ public class MonkeyLadderFragment extends Fragment {
 		grid.setVisibility(View.INVISIBLE);
 		String time = getResult();
 		String resultString = Integer.toString(currentMax) + " reached. " + time + " average time (s).";
-		Results.insertResult(eventName, resultString,
+		Results.insertResult(eventName, Integer.toString(currentMax) + "|" + time,
 				Calendar.getInstance().getTimeInMillis(), getActivity());
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);
 	}

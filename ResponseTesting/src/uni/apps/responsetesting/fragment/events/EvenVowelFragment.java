@@ -130,10 +130,10 @@ public class EvenVowelFragment extends Fragment {
 
 	private void endTest() {
 		double[] result = Results.getResults(results);
-		String resultString = result[0] + " correct. " + 
-				Conversion.milliToStringSeconds(result[1], 3) + " average time (s).";
-		Results.insertResult(eventName, resultString, Calendar.getInstance().getTimeInMillis(),
-				getActivity());
+		String tmp = Conversion.milliToStringSeconds(result[1], 3);
+		String resultString = result[0] + " correct. " + tmp + " average time (s).";
+		Results.insertResult(eventName, result[0] + "|" + tmp, 
+				Calendar.getInstance().getTimeInMillis(), getActivity());
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);
 		Resources r = getResources();
 		yesButton.setText(r.getString(R.string.start));

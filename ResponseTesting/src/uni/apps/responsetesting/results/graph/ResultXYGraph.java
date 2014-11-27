@@ -1,7 +1,6 @@
 package uni.apps.responsetesting.results.graph;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,17 +13,16 @@ import com.androidplot.ui.YLayoutStyle;
 import com.androidplot.ui.widget.TextLabelWidget;
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.BoundaryMode;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYLegendWidget;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+import com.androidplot.xy.XYSeriesFormatter;
 import com.androidplot.xy.XYStepMode;
 
 public class ResultXYGraph {
 
-	private XYPlot plot;
-	private ArrayList<XYSeries> series;
+	protected XYPlot plot;
+	protected ArrayList<XYSeries> series;
 	
 	public ResultXYGraph(XYPlot plot, String yLabel, String xLabel, String eventName){
 		this.plot = plot;
@@ -72,29 +70,16 @@ public class ResultXYGraph {
 		plot.setDomainBoundaries(min, max, BoundaryMode.FIXED);
 	}
 	
-	public void addSeries(XYSeries data, LineAndPointFormatter formatter){
+	@SuppressWarnings("rawtypes")
+	public void addSeries(XYSeries data, XYSeriesFormatter formatter){
 		series.add(data);
 		plot.addSeries(data, formatter);
-	}
-	
-	public void addSeries(Number[] data, String name, SimpleXYSeries.ArrayFormat format, LineAndPointFormatter formatter){
-		XYSeries s = new SimpleXYSeries(Arrays.asList(data), format, name);
-		addSeries(s, formatter);
-	}
-	
-	public void addSeries(Number[] data, String name, SimpleXYSeries.ArrayFormat format, int c){
-		LineAndPointFormatter formatter = new LineAndPointFormatter(null, c, null, null);
-		addSeries(data, name, format, formatter);
-	}
-	
-	public void addSeries(Number[] data, String name, SimpleXYSeries.ArrayFormat format, int c1, int c2){
-		LineAndPointFormatter formatter = new LineAndPointFormatter(c1, c2, null, null);
-		addSeries(data, name, format, formatter);
 	}
 
 	public void clearGraph(){
 		for(XYSeries s: series)
 			plot.removeSeries(s);
+		series = new ArrayList<XYSeries>();
 		plot.redraw();
 	}
 }

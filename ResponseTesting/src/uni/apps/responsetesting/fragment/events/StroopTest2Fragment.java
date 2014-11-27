@@ -122,10 +122,10 @@ public class StroopTest2Fragment extends Fragment {
 		colourTextView.setText("");
 		wordTextView.setText("");
 		double[] tmp = Results.getResults(results);
-		String value = tmp[0] + " correct. " + Conversion.milliToStringSeconds(tmp[1], 3) +
-				" average time (s)"; 
-		Results.insertResult(eventName, value, Calendar.getInstance().getTimeInMillis(),
-				getActivity());
+		String tmp2 = Conversion.milliToStringSeconds(tmp[1], 3);
+		String value = tmp[0] + " correct. " + tmp2 + " average time (s)"; 
+		Results.insertResult(eventName, tmp[0] + "|" + tmp2,
+				Calendar.getInstance().getTimeInMillis(), getActivity());
 		ActivityUtilities.displayResults(getActivity(), eventName, value);
 	}
 

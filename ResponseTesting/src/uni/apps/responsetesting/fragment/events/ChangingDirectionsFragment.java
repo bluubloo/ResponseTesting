@@ -216,9 +216,9 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		button.setEnabled(true);
 		clearImageViews();
 		double[] results = Results.getResults(this.results);
-		String resultString = results[0] + " correct. " + 
-				Conversion.milliToStringSeconds(results[1], 3) + " average time (s).";
-		Results.insertResult(eventName, resultString,
+		String tmp = Conversion.milliToStringSeconds(results[1], 3);
+		String resultString = results[0] + " correct. " + tmp + " average time (s).";
+		Results.insertResult(eventName, results[0] + "|" + tmp,
 				Calendar.getInstance().getTimeInMillis(), getActivity());
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);
 	}

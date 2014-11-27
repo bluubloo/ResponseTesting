@@ -262,10 +262,11 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 
 	private void endTest() {
 		double timeMilli =  getResults();
+		String tmp = Conversion.milliToStringSeconds(timeMilli, 3);
 		String result = "Max Tiles: " + Integer.toString(maxTilesReached) + ". " + 
-				Conversion.milliToStringSeconds(timeMilli, 3) + " average time (s)";
-		Results.insertResult(eventName, result, Calendar.getInstance().getTimeInMillis(),
-				getActivity());
+				 tmp + " average time (s)";
+		Results.insertResult(eventName, Integer.toString(maxTilesReached) + "|" + tmp,
+				Calendar.getInstance().getTimeInMillis(), getActivity());
 		ActivityUtilities.displayResults(getActivity(), eventName, result);		
 		start.setEnabled(true);
 		setUpGridData(3,3);
