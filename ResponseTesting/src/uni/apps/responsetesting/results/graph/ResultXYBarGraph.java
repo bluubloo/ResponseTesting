@@ -8,15 +8,18 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 
 import com.androidplot.ui.SeriesRenderer;
 import com.androidplot.xy.BarFormatter;
 import com.androidplot.xy.BarRenderer;
+import com.androidplot.xy.BarRenderer.BarRenderStyle;
 import com.androidplot.xy.BarRenderer.BarWidthStyle;
+import com.androidplot.xy.LineAndPointFormatter;
+import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
-import com.androidplot.xy.BarRenderer.BarRenderStyle;
 
 public class ResultXYBarGraph extends ResultXYGraph {
 	
@@ -24,6 +27,7 @@ public class ResultXYBarGraph extends ResultXYGraph {
 			String eventName) {
 		super(plot, yLabel, xLabel, eventName);
 		setDomainSeriesFormat();
+		setDomainLabelsOffset(-45);
 		this.plot.setGridPadding(50, 0, 50, 0);
 	}
 	
@@ -60,21 +64,32 @@ public class ResultXYBarGraph extends ResultXYGraph {
 		});
 	}
 	
+	private void setDomainLabelsOffset(float off){
+		plot.getGraphWidget().setDomainLabelOrientation(off);
+	}
+	
+	public void setEventName(String eventName){
+		plot.getTitleWidget().setText("Results - " + eventName);
+	}
+	
 	public void updatePlot(XYSeries[] series, int[][] colours){
 		super.clearGraph();
 		for(int i = 0; i < series.length; i++){
 			super.addSeries(series[i] , createFormatter(colours[i][0],colours[i][1]));
 		}
-		
 		BarGraphRenderer renderer = (BarGraphRenderer) plot.getRenderer(BarGraphRenderer.class);
 		renderer.setBarRenderStyle(BarRenderStyle.SIDE_BY_SIDE);
-		renderer.setBarWidthStyle(BarWidthStyle.VARIABLE_WIDTH, 10);
+		renderer.setBarWidthStyle(BarWidthStyle.FIXED_WIDTH, 30);
 		renderer.setBarGap(10);
 		plot.redraw();
 	}
 	
 	public void updatePlot(XYSeries[] series, int[] fill, int[] border){
 		updatePlot(series, createColourArray(fill, border));
+	}
+	
+	public void updatePlot(XYSeries[] series, int[] colour){
+		updatePlot(series, createColourArray(colour, colour));
 	}
 	
 	public int[][] createColourArray(int[] fill, int[] border){
@@ -110,5 +125,6 @@ public class ResultXYBarGraph extends ResultXYGraph {
 			super(plot);
 		}
 	}
+
 
 }

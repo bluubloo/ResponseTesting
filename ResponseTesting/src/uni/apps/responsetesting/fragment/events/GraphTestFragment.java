@@ -74,17 +74,21 @@ public class GraphTestFragment extends Fragment {
 		long[] times = new long[] {t,t+1,t+2,t+3,t+4,t+5,t+6,t+7};
 		double[] s1XS = new double[] {7.45, 9.11, 6.42, 7.48, 7.53, 9.3, 8.5, 6.67};
 		double[] s2XS = new double[] {2.98, 3.72, 3.47, 2.88, 3.11, 4.38, 2.72, 3.0};
+		double[] s3XS = new double[] {4.47, 5.4, 2.95, 4.6, 4.42, 4.92, 5.78, 3.67};
 		
-		XYSeries s1 = graph.getXYSeries(GraphUtilities.interweaveValues(times, s1XS), "test1");
-		XYSeries s2 = graph.getXYSeries(GraphUtilities.interweaveValues(times, s2XS), "test2");
+		XYSeries s1 = graph.getXYSeries(GraphUtilities.interweaveValues(times, s1XS), "try 1");
+		XYSeries s2 = graph.getXYSeries(GraphUtilities.interweaveValues(times, s2XS), "try 2");
+		XYSeries s3 = graph.getXYSeries(GraphUtilities.interweaveValues(times, s3XS), "try 3");
 		
-		graph.updatePlot(new XYSeries[] { s1,  s2}, new int[] {Color.BLACK, Color.WHITE}, new int[] { Color.BLUE, Color.GREEN});
+		graph.updatePlot(new XYSeries[] {s1,  s2, s3},
+				new int[] {Color.BLACK, Color.WHITE, Color.YELLOW});
 		ArrayList<double[]> tmp = new ArrayList<double[]>();
 		tmp.add(s1XS);
 		tmp.add(s2XS);
-		double[] minMax = GraphUtilities.getMaxandMin(tmp);
+		tmp.add(s3XS);
+		double[] minMax = GraphUtilities.getMaxandMinDouble(tmp);
 		graph.setMaxMinY(0, Math.ceil(minMax[1]));
-		graph.setRangeAndDomainSteps(1, 1, 2, 2);
+		graph.setRangeAndDomainSteps(1, 1, 2, 1);
 		return view;
 	}
 }

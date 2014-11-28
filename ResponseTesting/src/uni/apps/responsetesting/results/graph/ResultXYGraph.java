@@ -13,6 +13,7 @@ import com.androidplot.ui.YLayoutStyle;
 import com.androidplot.ui.widget.TextLabelWidget;
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.BoundaryMode;
+import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.XYLegendWidget;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
@@ -70,12 +71,16 @@ public class ResultXYGraph {
 		plot.setDomainBoundaries(min, max, BoundaryMode.FIXED);
 	}
 	
+	public void setMaxMinX(long min, long max){
+		plot.setDomainBoundaries(min, max, BoundaryMode.FIXED);
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public void addSeries(XYSeries data, XYSeriesFormatter formatter){
 		series.add(data);
 		plot.addSeries(data, formatter);
 	}
-
+	
 	public void clearGraph(){
 		for(XYSeries s: series)
 			plot.removeSeries(s);

@@ -119,12 +119,12 @@ public final class R {
         public static final int uni_logo=0x7f02004b;
     }
     public static final class id {
-        public static final int action_delete_all=0x7f0b004b;
-        public static final int action_info=0x7f0b004c;
-        public static final int action_results=0x7f0b004d;
-        public static final int action_send_all=0x7f0b0049;
-        public static final int action_send_recent=0x7f0b004a;
-        public static final int action_settings=0x7f0b0048;
+        public static final int action_delete_all=0x7f0b004c;
+        public static final int action_info=0x7f0b004d;
+        public static final int action_results=0x7f0b004e;
+        public static final int action_send_all=0x7f0b004a;
+        public static final int action_send_recent=0x7f0b004b;
+        public static final int action_settings=0x7f0b0049;
         public static final int appear_obj_container=0x7f0b0006;
         public static final int appear_obj_image_1=0x7f0b0007;
         public static final int appear_obj_image_2=0x7f0b000b;
@@ -158,7 +158,7 @@ public final class R {
         public static final int instruct_next=0x7f0b002a;
         public static final int instruct_title=0x7f0b0027;
         public static final int instuct_info=0x7f0b0029;
-        public static final int linearLayout1=0x7f0b0041;
+        public static final int linearLayout1=0x7f0b0042;
         public static final int main_menu_container=0x7f0b0002;
         public static final int monkey_button=0x7f0b002d;
         public static final int monkey_grid=0x7f0b002c;
@@ -176,20 +176,21 @@ public final class R {
         public static final int questionaire_submit=0x7f0b0039;
         public static final int questionaire_text=0x7f0b003a;
         public static final int questionaire_total=0x7f0b0035;
+        public static final int result_dis_spinner=0x7f0b003e;
         public static final int results_container=0x7f0b0003;
         public static final int results_dis_expand_list=0x7f0b003d;
         public static final int results_dis_title=0x7f0b003c;
-        public static final int results_display_button=0x7f0b003e;
-        public static final int results_display_text=0x7f0b003f;
+        public static final int results_display_button=0x7f0b003f;
+        public static final int results_display_text=0x7f0b0040;
         public static final int results_plot=0x7f0b0026;
         public static final int settings_container=0x7f0b0004;
-        public static final int stroop_button=0x7f0b0047;
-        public static final int stroop_colour=0x7f0b0045;
-        public static final int stroop_grid=0x7f0b0046;
-        public static final int stroop_match=0x7f0b0042;
-        public static final int stroop_no_match=0x7f0b0043;
-        public static final int stroop_title=0x7f0b0040;
-        public static final int stroop_word=0x7f0b0044;
+        public static final int stroop_button=0x7f0b0048;
+        public static final int stroop_colour=0x7f0b0046;
+        public static final int stroop_grid=0x7f0b0047;
+        public static final int stroop_match=0x7f0b0043;
+        public static final int stroop_no_match=0x7f0b0044;
+        public static final int stroop_title=0x7f0b0041;
+        public static final int stroop_word=0x7f0b0045;
         public static final int tap_click_count=0x7f0b0022;
         public static final int tap_click_info=0x7f0b0024;
         public static final int tap_click_start_button=0x7f0b0025;
@@ -217,9 +218,10 @@ public final class R {
         public static final int questionaire_fragment=0x7f03000f;
         public static final int questionaire_item=0x7f030010;
         public static final int results_display_fragment=0x7f030011;
-        public static final int results_display_item=0x7f030012;
-        public static final int stroop_test2_fragment=0x7f030013;
-        public static final int stroop_test_fragment=0x7f030014;
+        public static final int results_display_fragment2=0x7f030012;
+        public static final int results_display_item=0x7f030013;
+        public static final int stroop_test2_fragment=0x7f030014;
+        public static final int stroop_test_fragment=0x7f030015;
     }
     public static final class menu {
         public static final int action_bar=0x7f0a0000;

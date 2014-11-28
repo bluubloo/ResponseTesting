@@ -6,7 +6,7 @@
     <dimen name="title_font_size">20sp</dimen>
     <dimen name="domain_font_size">13sp</dimen>
     <dimen name="range_font_size">13sp</dimen>
-    <dimen name="domain_tick_font_size">15sp</dimen>
+    <dimen name="domain_tick_font_size">10sp</dimen>
     <dimen name="range_tick_font_size">15sp</dimen>
     <dimen name="legend_font_size">20sp</dimen>
     <dimen name="appear_object_image_size">60sp</dimen>

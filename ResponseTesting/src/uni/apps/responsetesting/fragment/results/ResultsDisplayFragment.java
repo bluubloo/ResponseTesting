@@ -17,7 +17,9 @@ public class ResultsDisplayFragment extends Fragment {
 	
 	private static final String TAG = "ResultsDisplayFragment";
 	private ExpandableListView list_view;
+//	private ListView list_view;
 	private ResultsListExpandableAdapter adapter;
+	//private ResultsListAdapter adapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,8 @@ public class ResultsDisplayFragment extends Fragment {
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.results_display_fragment, container, false);
-		list_view = (ExpandableListView) view.findViewById(R.id.results_dis_expand_list);		
+		list_view = (ExpandableListView) view.findViewById(R.id.results_dis_expand_list);	
+	//	list_view = (ListView) view.findViewById(R.id.results_dis_list);
 		return view;
 	}
 	
@@ -40,8 +43,12 @@ public class ResultsDisplayFragment extends Fragment {
 		Log.d(TAG, "onActivityCreated()");
 		super.onActivityCreated(savedInstanceState);
 		String[][] contents = Results.getResultsForInApp(getActivity());
+		for(String[] s: contents)
+			for(String s1: s)
+				Log.d(TAG, s1);
 		//set up list adapter
 		adapter = new ResultsListExpandableAdapter(getActivity(), contents);
+		//adapter = new ResultsListAdapter(getActivity());
 	}
 
 	@Override
@@ -57,5 +64,6 @@ public class ResultsDisplayFragment extends Fragment {
 	
 	public void update(){
 		adapter.update(Results.getResultsForInApp(getActivity()));
+		//adapter.update();
 	}
 }

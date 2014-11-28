@@ -42,8 +42,7 @@
             android:name=".ResultsDisplayActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_results_display"
-            android:parentActivityName=".MainMenuActivity"
-            android:screenOrientation="portrait" >
+            android:parentActivityName=".MainMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uni.apps.responsetesting.MainMenuActivity" />

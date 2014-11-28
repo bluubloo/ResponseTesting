@@ -1,6 +1,6 @@
 package uni.apps.responsetesting;
 
-import uni.apps.responsetesting.fragment.results.ResultsDisplayFragment;
+import uni.apps.responsetesting.fragment.results.ResultsFragment;
 import uni.apps.responsetesting.results.Results;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
@@ -17,7 +17,8 @@ public class ResultsDisplayActivity extends Activity {
 
 	//Needed Variables
 	private FragmentManager frag_manager;
-	private ResultsDisplayFragment fragment;
+	private ResultsFragment fragment;
+	//private ResultsDisplayFragment fragment;
 	private static final String RESULTS_FRAG_TAG = "ResultsDisplayFragment";
 	private static final String TAG = "ResultsDisplayActivity";
 	
@@ -33,12 +34,14 @@ public class ResultsDisplayActivity extends Activity {
 	//adds fragment to activity
 	private void addFragments() {
 		//checks if fragment exists
-		fragment = (ResultsDisplayFragment) frag_manager.findFragmentByTag(RESULTS_FRAG_TAG);
+		fragment = (ResultsFragment) frag_manager.findFragmentByTag(RESULTS_FRAG_TAG);
+		//fragment = (ResultsDisplayFragment) frag_manager.findFragmentByTag(RESULTS_FRAG_TAG);
 		//begins transaction
 		FragmentTransaction ft = frag_manager.beginTransaction();
 		//creates a new fragment and adds it to the activity 
 		if(fragment == null){
-			fragment = new ResultsDisplayFragment();
+			fragment = new ResultsFragment();
+			//fragment = new ResultsDisplayFragment();
 			ft.add(R.id.results_container, fragment, RESULTS_FRAG_TAG);
 		}
 		//commits the transaction
