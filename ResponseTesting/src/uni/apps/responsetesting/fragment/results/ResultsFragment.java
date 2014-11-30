@@ -1,7 +1,6 @@
 package uni.apps.responsetesting.fragment.results;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
@@ -20,8 +19,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 
@@ -29,13 +26,13 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 
 	private static final String TAG = "ResultsFragment";
 	private ResultXYBarGraph graph;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
@@ -69,18 +66,57 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 	}
 
 	private void setGraphForQuestionaire() {
-		//TODO
-		graph.clearGraph();
+		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
+		Cursor cursor = db.getAllQuestionaireResults();
+		ArrayList<Number[]> series = GraphUtilities.getDurations(cursor);
+		XYSeries[] finalSeries = new XYSeries[3]; 
+		if(!series.isEmpty()){
+			for(int i = 1; i < series.size(); i++){
+				Number[] tmp = GraphUtilities.interweaveValues(series.get(0), series.get(i));
+				String title = getTitle(i);
+				XYSeries s = graph.getXYSeries(tmp, title);
+				finalSeries[i - 1] = s;
+			}
+			Number[] times = series.get(0);
+			Log.d(TAG, Integer.toString(times.length));
+			series.remove(0);
+			Log.d(TAG, Integer.toString(times.length));
+			double[] minMax = GraphUtilities.getMaxandMin(series);
+			Log.d(TAG, minMax[0] + " " + minMax[1]);
+			graph.setEventName("Sleep Durations");
+			graph.setMaxMinY(0, Math.ceil(minMax[1]));
+			graph.setRangeAndDomainSteps(GraphUtilities.getStep(minMax[0], minMax[1]), 86400000, 10, 1);
+			long[] minMaxX = GraphUtilities.getMinandMaxLong(times);
+			graph.setMaxMinX(minMaxX[0], minMaxX[1]);
+			graph.updatePlot(finalSeries, new int[] {Color.BLACK, Color.WHITE, Color.BLUE});
+		}
+		else
+			graph.clearGraph();
+
+	}
+
+	private String getTitle(int i) {
+		switch(i){
+		case 1:
+			return "Total";
+		case 2: 
+			return "Light";
+		case 3:
+			return "Sound";
+		default:
+			return "Other";
+		}
 	}
 
 	private void setGraphForEvent(String value) {
+		Log.d(TAG, value);
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 		Cursor cursor = db.getSingle(value);
 		if(cursor.getCount() == 0)
 			update();
 		else{
 			long[] longTimes = GraphUtilities.getLongDates(cursor, 2);
-			
+
 			ArrayList<Number[]> series = GraphUtilities.getScores(cursor);
 			XYSeries[] finalSeries = new XYSeries[series.size()];
 			for(int i = 0; i < series.size(); i ++){
@@ -88,18 +124,15 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 				XYSeries s = graph.getXYSeries(tmp, "Try " + Integer.toString(i + 1));
 				finalSeries[i] = s;
 			}
-			
-			//Correct above
-			//TODO check below
+
 			double[] minMax = GraphUtilities.getMaxandMin(series);
-			Log.d(TAG, minMax[0] + " " + minMax[1]);
-			graph.setEventName(value);
 			graph.setMaxMinY(0, Math.ceil(minMax[1]));
-			graph.setRangeAndDomainSteps(GraphUtilities.getStep(minMax[0], minMax[1]), 86400000, 2, 1);
+			graph.setRangeAndDomainSteps(GraphUtilities.getStep(minMax[0], minMax[1]), 86400000, 10, 1);
 			long[] minMaxX = GraphUtilities.getMinandMaxLong(longTimes);
 			graph.setMaxMinX(minMaxX[0], minMaxX[1]);
 			graph.updatePlot(finalSeries, new int[] {Color.BLACK, Color.WHITE, Color.BLUE});
-			
+			graph.setEventName(value);
+
 		}		
 	}
 
@@ -107,7 +140,7 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 	public void onNothingSelected(AdapterView<?> parent) {
 		update();
 	}
-	
+
 	public void update(){
 		graph.clearGraph();
 	}

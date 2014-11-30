@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
     <TextView
         android:id="@+id/results_dis_title"
+        style="@style/title_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/results_dis_title"
-        style="@style/title_style"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Spinner
@@ -17,30 +17,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp" />
-    
+
     <com.androidplot.xy.XYPlot
-      android:id="@+id/results_plot"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      androidPlot.title="Results - Event"
-      androidPlot.domainLabel="Domain"
-      androidPlot.rangeLabel="Range"
-      androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
-      androidPlot.domainLabelWidegt.labelPaint.textSize="@dimen/domain_font_size"
-      androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_font_size"
-      androidPlot.graphWidget.marginTop="20dp"
-      androidPlot.graphWidget.marginLeft="15dp"
-      androidPlot.graphWidget.marginBottom="50dp"
-      androidPlot.graphWidget.marginRight="10dp"
-      androidPlot.graphWidget.domainLabelPaint.textSize="@dimen/domain_tick_font_size"
-      androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_font_size"
-      androidPlot.graphWidget.rangeLabelPaint.textSize="@dimen/range_tick_font_size"
-      androidPlot.graphWidget.rangeOriginLabelPaint.textSize="@dimen/range_tick_font_size"
-      androidPlot.legendWidget.textPaint.textSize="@dimen/legend_font_size"
-      androidPlot.legendWidget.iconSizeMetrics.heightMetric.value="15dp"
-      androidPlot.legendWidget.iconSizeMetrics.widthMetric.value="15dp"
-      androidPlot.legendWidget.heightMetric.value="25dp"
-      androidPlot.legendWidget.positionMetrics.anchor="right_center"
-      androidPlot.graphWidget.gridLinePaint.color="@color/Black" />
+        android:id="@+id/results_plot"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        androidPlot.domainLabel="Domain"
+        androidPlot.domainLabelWidegt.labelPaint.textSize="@dimen/domain_font_size"
+        androidPlot.graphWidget.domainLabelPaint.textSize="@dimen/domain_tick_font_size"
+        androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_font_size"
+        androidPlot.graphWidget.gridLinePaint.color="@color/Black"
+        androidPlot.graphWidget.marginBottom="50dp"
+        androidPlot.graphWidget.marginLeft="15dp"
+        androidPlot.graphWidget.marginRight="10dp"
+        androidPlot.graphWidget.marginTop="20dp"
+        androidPlot.graphWidget.rangeLabelPaint.textSize="@dimen/range_tick_font_size"
+        androidPlot.graphWidget.rangeOriginLabelPaint.textSize="@dimen/range_tick_font_size"
+        androidPlot.legendWidget.heightMetric.value="25dp"
+        androidPlot.legendWidget.iconSizeMetrics.heightMetric.value="15dp"
+        androidPlot.legendWidget.iconSizeMetrics.widthMetric.value="15dp"
+        androidPlot.legendWidget.positionMetrics.anchor="right_center"
+        androidPlot.legendWidget.textPaint.textSize="@dimen/legend_font_size"
+        androidPlot.rangeLabel="Range"
+        androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_font_size"
+        androidPlot.title="Results - Event"
+        androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size" />
 
 </LinearLayout>

@@ -8,15 +8,11 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-
 import com.androidplot.ui.SeriesRenderer;
 import com.androidplot.xy.BarFormatter;
 import com.androidplot.xy.BarRenderer;
 import com.androidplot.xy.BarRenderer.BarRenderStyle;
 import com.androidplot.xy.BarRenderer.BarWidthStyle;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
@@ -66,10 +62,6 @@ public class ResultXYBarGraph extends ResultXYGraph {
 	
 	private void setDomainLabelsOffset(float off){
 		plot.getGraphWidget().setDomainLabelOrientation(off);
-	}
-	
-	public void setEventName(String eventName){
-		plot.getTitleWidget().setText("Results - " + eventName);
 	}
 	
 	public void updatePlot(XYSeries[] series, int[][] colours){

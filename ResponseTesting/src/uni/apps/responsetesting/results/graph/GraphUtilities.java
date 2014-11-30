@@ -2,8 +2,10 @@ package uni.apps.responsetesting.results.graph;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import android.database.Cursor;
+import android.util.Log;
 
 public class GraphUtilities {
 
@@ -51,6 +53,22 @@ public class GraphUtilities {
 		max += 1000;
 		return new long[]{min, max};		
 	}
+	
+	public static long[] getMinandMaxLong(Number[] numbers) {
+		long min = numbers[0].longValue();
+		long max = numbers[0].longValue();
+
+		for(Number l: numbers){
+			if(l.longValue() > max)
+				max = l.longValue();
+			if(l.longValue() < min)
+				min = l.longValue();
+		}
+		min -= 1000;
+		max += 1000;
+		return new long[]{min, max};
+	}
+
 
 	public static double getStep(double min, double max){
 		if(max != min)
@@ -103,6 +121,21 @@ public class GraphUtilities {
 			throw new IllegalArgumentException("X array and Y array lengths need to be the same");
 		}
 	}
+	
+	public static Number[] interweaveValues(Number[] xs, Number[] ys) {
+		if(xs.length == ys.length){
+			Number[] tmp = new Number[xs.length + ys.length];
+			int counter = 0;
+			for(int i = 0; i < xs.length; i ++){
+				tmp[counter] = xs[i];
+				tmp[counter + 1] = ys[i];
+				counter += 2;
+			}
+			return tmp;
+		} else {
+			throw new IllegalArgumentException("X array and Y array lengths need to be the same");
+		}
+	}
 
 	public static String seriesArrayToString(Number[] array){
 		String tmp = "[";
@@ -141,6 +174,17 @@ public class GraphUtilities {
 		return tmp;
 	}
 
+	public static String seriesArrayToStringLong(long[] array){
+		String tmp = "[";
+		for(int i = 0; i < array.length; i++){
+			if(i < array.length - 1)
+				tmp += array[i] + ",";
+			else
+				tmp += array[i] + "]";
+		}
+		return tmp;
+	}
+
 	public static ArrayList<Number[]> getScores(Cursor scores){
 		ArrayList<String> times = getDates(scores, 2);
 		Number[] try1 = new Number[times.size()];
@@ -155,15 +199,18 @@ public class GraphUtilities {
 			do{
 				String score = "";
 				String s1 = scores.getString(1);
-				if(s1.contains("|")){
+				Log.d("SCORE", s1);
+				if(s1.contains("|") || s1.indexOf('|') != -1){
+					int index = s1.indexOf('|');
 					String[] tmp = s1.split("|");
 					if(tmp.length == 1)
 						score = tmp[0];
 					else
 						score = tmp[1];
+					score = s1.substring(index + 1);
 				}else 
 					score = s1;
-
+				Log.d("SCORE", score);
 				Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(scores.getLong(2));
 				String value = Integer.toString(c.get(Calendar.DATE)) + "/"
@@ -187,52 +234,43 @@ public class GraphUtilities {
 		return series;
 	}
 
-	//TODO decide if this needs to be split into 3 arrays
-	public static double[] getScoresAverage(Cursor cursor, Cursor question){
-		double[] scores = new double[cursor.getCount()];
-		String[] allTimes = new String[cursor.getCount()];
-		int i = 0;
-		if(cursor.moveToFirst()){
-			do{
-				Calendar c = Calendar.getInstance();
-				c.setTimeInMillis(cursor.getLong(2));
-				String value = Integer.toString(c.get(Calendar.DATE)) + "/"
-						+ Integer.toString(c.get(Calendar.MONTH));
-				allTimes[i] = value;
-				String[] tmp = cursor.getString(1).split("|");
-				if(tmp.length == 2)
-					scores[i] = Double.parseDouble(tmp[1]);
-				else
-					scores[i] = Double.parseDouble(tmp[0]);
-				i++;
-			} while(cursor.moveToNext());
+	public static ArrayList<Number[]> getDurations(Cursor cursor) {
+		if(cursor.getCount() > 0){
+			Number[] total = new Number[cursor.getCount()];
+			Number[] light = new Number[cursor.getCount()];
+			Number[] sound = new Number[cursor.getCount()];
+			Number[] times = new Number[cursor.getCount()];
+			int counter = 0;
+
+			if(cursor.moveToFirst()){
+				do{
+					times[counter] = cursor.getLong(0);
+					total[counter] = formatDouble(cursor.getString(1));
+					light[counter] = formatDouble(cursor.getString(2));
+					sound[counter] = formatDouble(cursor.getString(3));
+				} while(cursor.moveToNext());
+			}
+
+			ArrayList<Number[]> tmp = new ArrayList<Number[]>();
+			tmp.add(times);
+			tmp.add(total);
+			tmp.add(light);
+			tmp.add(sound);
+			return tmp;
+		} 
+		return new ArrayList<Number[]>();
+	}
+
+	private static Number formatDouble(String string) {
+		int index = string.indexOf('.');
+		if(index == -1)
+			index = string.indexOf(':');
+		if(index != -1){
+			String s1 = string.substring(0, index);
+			String s2 = string.substring(index + 1);
+			return Double.parseDouble(s1) + (Double.parseDouble(s2) / 60);
 		}
-
-		ArrayList<String> times = getDates(question, 2);
-		double[] finalScores = new double[times.size()];
-		int[] count = new int[times.size()];
-		if(times.size() != 0){
-			//initalizes tmp arrays
-			for(int j = 0; j <times.size(); j++){
-				finalScores[j] = 0;
-				count[j] = 0;
-			}
-
-			//For each time check get index in time list
-			//add score to final score
-			//increment counter
-			for(int k = 0; k < allTimes.length; k++){
-				int index = times.indexOf(allTimes[k]);
-				if(index != -1){
-					finalScores[index] += scores[k];
-					count[index] ++;
-				}				
-			}
-			//calculate the average score
-			for(int k = 0; k < finalScores.length; k++)
-				finalScores[k] /= count[k];
-		}	
-		return scores;
+		return null;
 	}
 
 	private static ArrayList<String> getDates(Cursor cursor, int index){
@@ -259,17 +297,37 @@ public class GraphUtilities {
 			do{
 				Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(cursor.getLong(index));
+				c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), 
+						c.get(Calendar.DATE), 0, 0, 0);
+				c.setTimeZone(TimeZone.getTimeZone("GMT+12"));
 				String value = Integer.toString(c.get(Calendar.DATE)) + "/"
 						+ Integer.toString(c.get(Calendar.MONTH));
 				if(times.contains(value) && !doneTimes.contains(value)){
-					tmp[i] = c.getTimeInMillis();
-					i++;
+					if(c.getTimeInMillis() != 0){
+						tmp[i] = c.getTimeInMillis();
+						i++;
+					}	
 					doneTimes.add(value);
 				}
 			} while(cursor.moveToNext());
 		}
+		ArrayList<Long> tmptmp = new ArrayList<Long>();
+		for(int j = 0; j < tmp.length; j ++){
+			if(tmp[j] != 0){
+				tmptmp.add(tmp[j]);
+			}				
+		}
+		tmp = new long[tmptmp.size()];
+		for(int j = 0; j < tmptmp.size(); j++){
+			tmp[j] = tmptmp.get(j);
+		}
 		return tmp;
 	}
+
+
+
+
+
 
 
 

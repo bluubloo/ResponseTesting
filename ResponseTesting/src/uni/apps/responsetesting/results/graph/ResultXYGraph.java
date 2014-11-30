@@ -75,6 +75,10 @@ public class ResultXYGraph {
 		plot.setDomainBoundaries(min, max, BoundaryMode.FIXED);
 	}
 	
+	public void setEventName(String eventName){
+		plot.getTitleWidget().setText("Results - " + eventName);
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public void addSeries(XYSeries data, XYSeriesFormatter formatter){
 		series.add(data);
@@ -82,6 +86,7 @@ public class ResultXYGraph {
 	}
 	
 	public void clearGraph(){
+		setEventName("");
 		for(XYSeries s: series)
 			plot.removeSeries(s);
 		series = new ArrayList<XYSeries>();

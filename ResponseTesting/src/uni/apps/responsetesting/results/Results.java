@@ -90,18 +90,6 @@ public class Results {
 		return tmp;
 	}
 
-	/*public static String getRecentResults(Activity activity){
-		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
-		Cursor results = db.getMostRecent();
-		return retrieveString(results);
-	}
-
-	public static String getAllResults(Activity activity){
-		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
-		Cursor results = db.getAllResults();
-		return retrieveString(results);
-	}*/
-
 	public static String getSingleResults(Activity activity, String testName) {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		Cursor results = db.getSingle(testName);
