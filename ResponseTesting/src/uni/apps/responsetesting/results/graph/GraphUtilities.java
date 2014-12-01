@@ -53,7 +53,7 @@ public class GraphUtilities {
 		max += 1000;
 		return new long[]{min, max};		
 	}
-	
+
 	public static long[] getMinandMaxLong(Number[] numbers) {
 		long min = numbers[0].longValue();
 		long max = numbers[0].longValue();
@@ -72,9 +72,9 @@ public class GraphUtilities {
 
 	public static double getStep(double min, double max){
 		if(max != min)
-			return (max - min) / 10;
+			return (max - min) / 5;
 		else 
-			return max / 10;
+			return max / 5;
 	}
 
 	public static Number[] interweaveValues(double[] xs, double[] ys){
@@ -121,7 +121,7 @@ public class GraphUtilities {
 			throw new IllegalArgumentException("X array and Y array lengths need to be the same");
 		}
 	}
-	
+
 	public static Number[] interweaveValues(Number[] xs, Number[] ys) {
 		if(xs.length == ys.length){
 			Number[] tmp = new Number[xs.length + ys.length];
@@ -199,7 +199,6 @@ public class GraphUtilities {
 			do{
 				String score = "";
 				String s1 = scores.getString(1);
-				Log.d("SCORE", s1);
 				if(s1.contains("|") || s1.indexOf('|') != -1){
 					int index = s1.indexOf('|');
 					String[] tmp = s1.split("|");
@@ -210,7 +209,6 @@ public class GraphUtilities {
 					score = s1.substring(index + 1);
 				}else 
 					score = s1;
-				Log.d("SCORE", score);
 				Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(scores.getLong(2));
 				String value = Integer.toString(c.get(Calendar.DATE)) + "/"
@@ -244,7 +242,12 @@ public class GraphUtilities {
 
 			if(cursor.moveToFirst()){
 				do{
-					times[counter] = cursor.getLong(0);
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(cursor.getLong(0));
+					c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+							c.get(Calendar.DATE), 0, 0, 0);
+					c.setTimeZone(TimeZone.getTimeZone("GMT+12"));
+					times[counter] = c.getTimeInMillis();
 					total[counter] = formatDouble(cursor.getString(1));
 					light[counter] = formatDouble(cursor.getString(2));
 					sound[counter] = formatDouble(cursor.getString(3));
@@ -324,14 +327,31 @@ public class GraphUtilities {
 		return tmp;
 	}
 
-
-
-
-
-
-
-
-
-
-
+	public static double roundUp(double value){
+		String stringValue = Double.toString(value);
+		int index = stringValue.indexOf('.');
+		Log.d("TEST", stringValue);
+		if(index != -1){
+			if(stringValue.charAt(index + 1) != '0'){
+				double tmp = value * 100 + 5;
+				tmp = Math.round(tmp);
+				return tmp /= 100;
+			}
+		}
+		return value + 1;
+	}
+	
+	public static double roundDown(double value){
+		String stringValue = Double.toString(value);
+		int index = stringValue.indexOf('.');
+		Log.d("TEST", stringValue);
+		if(index != -1){
+			if(stringValue.charAt(index + 1) != '0'){
+				double tmp = value * 100 - 5;
+				tmp = Math.round(tmp);
+				return tmp /= 100;
+			}
+		}
+		return value - 1;
+	} 
 }

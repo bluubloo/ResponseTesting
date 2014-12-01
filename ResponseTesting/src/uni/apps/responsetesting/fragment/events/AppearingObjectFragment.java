@@ -34,7 +34,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 
 
 	private static final String TAG = "AppearingObjectFragment";
-	private static final String eventName = "Appearing Object";
+	private static String eventName = "Appearing Object";
 	private AppearingObjectImageClickListener listener;
 	private TextView startTextView;
 	private Handler timerHandler = new Handler();
@@ -44,6 +44,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	private int imageCounter = 0;
 	private int playTimes = 0;
 	private boolean running = false;
+	private boolean fixed = false;
 	private Random random = new Random();
 
 	//-----------------------------------------------------------------------------
@@ -53,7 +54,10 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 
 		@Override
 		public void run() {
-			imageCounter = (random.nextInt(5) % 5);
+			if(!fixed)
+				imageCounter = (random.nextInt(5) % 5);
+			else
+				imageCounter = 0;
 			if(running &&counter < 5){
 				clickableImageView[imageCounter].setVisibility(View.VISIBLE);
 				data[counter] = new DurationInfo(Calendar.getInstance().getTimeInMillis());
@@ -68,15 +72,37 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(savedInstanceState != null)
+		if(savedInstanceState != null){
 			playTimes = savedInstanceState.getInt("playTime");
+			fixed = savedInstanceState.getBoolean("fixed");
+		}
 		setRetainInstance(true);
+		Bundle args = this.getArguments();
+		if(args != null)
+			fixed = args.getBoolean("fixed");
+		checkName();
+	}
+	
+	private void checkName(){
+		if(fixed)
+			eventName = "Appearing Object - Fixed Point";
+		else
+			eventName = "Appearing Object";
+	}
+	
+	public static AppearingObjectFragment getInstance(boolean fixed){
+		AppearingObjectFragment frag = new AppearingObjectFragment();
+		Bundle args = new Bundle();
+		args.putBoolean("fixed", fixed);
+		frag.setArguments(args);
+		return frag;
 	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
 		outState.putInt("playTime", playTimes);
+		outState.putBoolean("fixed", fixed);
 	}
 	
 	@Override

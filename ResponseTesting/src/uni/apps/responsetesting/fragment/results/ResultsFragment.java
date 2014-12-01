@@ -77,35 +77,15 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 				XYSeries s = graph.getXYSeries(tmp, title);
 				finalSeries[i - 1] = s;
 			}
-			Number[] times = series.get(0);
-			Log.d(TAG, Integer.toString(times.length));
+			
+			long[] minMaxX = GraphUtilities.getMinandMaxLong(series.get(0));
 			series.remove(0);
-			Log.d(TAG, Integer.toString(times.length));
-			double[] minMax = GraphUtilities.getMaxandMin(series);
-			Log.d(TAG, minMax[0] + " " + minMax[1]);
-			graph.setEventName("Sleep Durations");
-			graph.setMaxMinY(0, Math.ceil(minMax[1]));
-			graph.setRangeAndDomainSteps(GraphUtilities.getStep(minMax[0], minMax[1]), 86400000, 10, 1);
-			long[] minMaxX = GraphUtilities.getMinandMaxLong(times);
-			graph.setMaxMinX(minMaxX[0], minMaxX[1]);
-			graph.updatePlot(finalSeries, new int[] {Color.BLACK, Color.WHITE, Color.BLUE});
+			double[] minMaxY = GraphUtilities.getMaxandMin(series);			
+			setCommonGraphValues("Sleep Duration", minMaxX, minMaxY, finalSeries);
 		}
 		else
-			graph.clearGraph();
+			update();
 
-	}
-
-	private String getTitle(int i) {
-		switch(i){
-		case 1:
-			return "Total";
-		case 2: 
-			return "Light";
-		case 3:
-			return "Sound";
-		default:
-			return "Other";
-		}
 	}
 
 	private void setGraphForEvent(String value) {
@@ -125,15 +105,33 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 				finalSeries[i] = s;
 			}
 
-			double[] minMax = GraphUtilities.getMaxandMin(series);
-			graph.setMaxMinY(0, Math.ceil(minMax[1]));
-			graph.setRangeAndDomainSteps(GraphUtilities.getStep(minMax[0], minMax[1]), 86400000, 10, 1);
+			double[] minMaxY = GraphUtilities.getMaxandMin(series);
 			long[] minMaxX = GraphUtilities.getMinandMaxLong(longTimes);
-			graph.setMaxMinX(minMaxX[0], minMaxX[1]);
-			graph.updatePlot(finalSeries, new int[] {Color.BLACK, Color.WHITE, Color.BLUE});
-			graph.setEventName(value);
+			setCommonGraphValues(value, minMaxX, minMaxY, finalSeries);
 
 		}		
+	}
+	
+	private void setCommonGraphValues(String eventName, long[] minMaxX, 
+			double[] minMaxY, XYSeries[] finalSeries){
+		graph.updatePlot(finalSeries, new int[] {Color.BLACK, Color.WHITE, Color.BLUE});
+		graph.setEventName(eventName);
+		graph.setMaxMinX(minMaxX[0], minMaxX[1]);
+		graph.setMaxMinY(GraphUtilities.roundDown(minMaxY[0]), GraphUtilities.roundUp(minMaxY[1]));
+		graph.setRangeAndDomainSteps(GraphUtilities.getStep(minMaxY[0], minMaxY[1]), 86400000, 2, 1);
+	}
+	
+	private String getTitle(int i) {
+		switch(i){
+		case 1:
+			return "Total";
+		case 2: 
+			return "Light";
+		case 3:
+			return "Sound";
+		default:
+			return "Other";
+		}
 	}
 
 	@Override

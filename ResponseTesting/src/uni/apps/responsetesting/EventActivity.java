@@ -91,7 +91,9 @@ public class EventActivity extends Activity implements EventInstructionsListener
 		else if(eventName.equals(r.getString(R.string.event_name_questionaire)))
 			fragment = new QuestionaireFragment();
 		else if(eventName.equals(r.getString(R.string.event_name_appear_obj)))
-			fragment = new AppearingObjectFragment();
+			fragment = AppearingObjectFragment.getInstance(false);
+		else if(eventName.equals(r.getString(R.string.event_name_appear_obj_fixed)))
+			fragment = AppearingObjectFragment.getInstance(true);
 		else if(eventName.equals(r.getString(R.string.event_name_stroop)))
 			fragment = new StroopTest2Fragment();
 		else if(eventName.equals(r.getString(R.string.event_name_one_card)))

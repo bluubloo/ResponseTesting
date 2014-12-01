@@ -24,9 +24,9 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 		
 		//TODO
 		String from = "activitytrackers@gmail.com";
-		String to = "";
+		String to = "matcour@windowslive.com";
 		//set up email
-		MailClient mail = new MailClient(from, "");
+		MailClient mail = new MailClient(from, "waikato50");
 		mail.setTo(new String[] {to});
 		mail.setFrom(from);
 		mail.setBody(body);

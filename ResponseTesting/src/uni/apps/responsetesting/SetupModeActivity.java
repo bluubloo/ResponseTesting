@@ -1,34 +1,27 @@
 package uni.apps.responsetesting;
 
-import uni.apps.responsetesting.fragment.settings.SettingsFragment;
+import uni.apps.responsetesting.fragment.settings.SingleUserSettingsFragment;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/**
- * This activity class handles the settings of the application
- * 
- * 
- * @author Mathew Andela
- *
- */
-public class SettingsActivity extends Activity {
+public class SetupModeActivity extends Activity {
 
-	//Variables
-	private static final String TAG = "SettingsActivity";
-	private static final String FRAG_TAG = "SettingsFragment";
-	private SettingsFragment fragment;
+	private static final String TAG = "SetupModeActivity";
+	private static final String FRAG_TAG = "SetupModeFragment";
+	private PreferenceFragment fragment;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings);
-		//sets up settings fragment
-		fragment = new SettingsFragment();		
+		setContentView(R.layout.activity_setup_mode);
+		boolean single = this.getIntent().getBooleanExtra("user", true);
+		if(single)
+			fragment = new SingleUserSettingsFragment();
 		getFragmentManager().beginTransaction().replace(R.id.settings_container, fragment, 
 				FRAG_TAG).commit();
 	}
@@ -48,12 +41,12 @@ public class SettingsActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		Log.d(TAG, "onPrepareOptionsMenu()");
 		//alters action bar
-		menu.findItem(R.id.action_settings).setVisible(false);
+		menu.findItem(R.id.action_setup).setVisible(false);
 		return super.onPrepareOptionsMenu(menu);
 	}
 }

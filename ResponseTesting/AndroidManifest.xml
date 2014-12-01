@@ -10,7 +10,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/uni_logo"
@@ -50,6 +50,22 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uni.apps.responsetesting.MainMenuActivity" />
+        </activity>
+        <activity
+            android:name=".SetupModeActivity"
+            android:label="@string/title_activity_setup_mode"
+            android:parentActivityName=".MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uni.apps.responsetesting.MainMenuActivity" />
+        </activity>
+        <activity
+            android:name=".MultiUserSetupModeActivity"
+            android:label="@string/title_activity_setup_mode"
             android:parentActivityName=".MainMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

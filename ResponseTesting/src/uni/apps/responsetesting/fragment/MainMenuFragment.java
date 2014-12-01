@@ -1,13 +1,16 @@
 package uni.apps.responsetesting.fragment;
 
 import java.util.ArrayList;
+
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.interfaces.listener.MainMenuListener;
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -60,11 +63,55 @@ public class MainMenuFragment extends ListFragment {
 			if(s.equals(r.getString(R.string.event_name_questionaire)))
 				addable = db.checkQuestionaire(s);
 			else
-				addable = db.checkRecent(s);
+				addable = checkPreferences(s) && db.checkRecent(s);
 			if(addable)
 				list.add(s);
 		}
 		return list;
+	}
+
+	private boolean checkPreferences(String name) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);
+		if(single)
+			return checkSinglePrefereneces(prefs, getResources(), name);
+		else
+			return checkMultiUserPrferences(getResources(), name);
+	}
+
+	private boolean checkMultiUserPrferences(Resources resources, String name) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	private boolean checkSinglePrefereneces(SharedPreferences prefs,
+			Resources r, String name) {
+		switch(name){
+		case "Appearing Object":
+			return prefs.getBoolean(r.getString(R.string.pref_key_ao), true);
+		case "Appearing Object - Fixed Point":
+			return prefs.getBoolean(r.getString(R.string.pref_key_aof), true);
+		case "Arrow Ignoring Test":
+			return prefs.getBoolean(r.getString(R.string.pref_key_ai), true);
+		case "Changing Directions":
+			return prefs.getBoolean(r.getString(R.string.pref_key_cd), true);
+		case "Chase Test":
+			return prefs.getBoolean(r.getString(R.string.pref_key_ch), true);
+		case "Even or Vowel":
+			return prefs.getBoolean(r.getString(R.string.pref_key_eov), true);
+		case "Finger Tap Test":
+			return prefs.getBoolean(r.getString(R.string.pref_key_ftt), true);
+		case "Monkey Ladder":
+			return prefs.getBoolean(r.getString(R.string.pref_key_ml), true);
+		case "One Card Learning Test":
+			return prefs.getBoolean(r.getString(R.string.pref_key_oclt), true);
+		case "Pattern Recreation":
+			return prefs.getBoolean(r.getString(R.string.pref_key_pr), true);
+		case "Stroop Test":
+			return prefs.getBoolean(r.getString(R.string.pref_key_s), true);
+		default:
+			return true;
+		}
 	}
 
 	@Override

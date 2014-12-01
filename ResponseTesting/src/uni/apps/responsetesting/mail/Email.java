@@ -63,9 +63,9 @@ public class Email {
 		 * TODO Get info for mail client
 		 * TODO Test mail client	
 			EmailTask task = new EmailTask();
-			task.execute(new EmailTaskData(new String[]{body, "Test " + testName + " - Results",PATH},
+			task.execute(new EmailTaskData(new String[]{body, "Test " + testName + " - Results", PATH},
 					activity));
-		 */
+		*/
 		try {
 			activity.startActivity(Intent.createChooser(i, "Send mail..."));
 		} catch (android.content.ActivityNotFoundException ex) {

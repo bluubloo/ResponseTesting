@@ -33,7 +33,7 @@ public class Results {
 	public static String[][] getResultsForInApp(Activity activity){
 		Resources r = activity.getResources();
 		ArrayList<String> nonBestList = new ArrayList<String>();
-		nonBestList.addAll(Arrays.asList(r.getStringArray(R.array.non_numeric_events)));
+		//nonBestList.addAll(Arrays.asList(r.getStringArray(R.array.non_numeric_events)));
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
 		String[] events = r.getStringArray(R.array.event_name_array);
 		ArrayList<ArrayList<String>> tmp = new ArrayList<ArrayList<String>>();

@@ -1,5 +1,7 @@
 package uni.apps.responsetesting.results.graph;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.FieldPosition;
 import java.text.Format;
 import java.text.ParsePosition;
@@ -8,6 +10,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import android.annotation.SuppressLint;
+
 import com.androidplot.ui.SeriesRenderer;
 import com.androidplot.xy.BarFormatter;
 import com.androidplot.xy.BarRenderer;
@@ -23,6 +26,7 @@ public class ResultXYBarGraph extends ResultXYGraph {
 			String eventName) {
 		super(plot, yLabel, xLabel, eventName);
 		setDomainSeriesFormat();
+		setRangeSeriesFormat();
 		setDomainLabelsOffset(-45);
 		this.plot.setGridPadding(50, 0, 50, 0);
 	}
@@ -58,6 +62,33 @@ public class ResultXYBarGraph extends ResultXYGraph {
 			}
 			
 		});
+	}
+	
+	private void setRangeSeriesFormat(){
+		plot.setRangeValueFormat(new Format(){
+
+			@Override
+			public StringBuffer format(Object object, StringBuffer buffer,
+					FieldPosition field) {
+				double tmp = round(((Number) object).doubleValue(), 2);
+				return new StringBuffer(Double.toString(tmp));
+			}
+
+			@Override
+			public Object parseObject(String string, ParsePosition position) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+		});
+	}
+	
+	private double round(double value, int places){
+		if(places < 0) throw new IllegalArgumentException();
+		
+		BigDecimal bd = new BigDecimal(value);
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		return bd.doubleValue();
 	}
 	
 	private void setDomainLabelsOffset(float off){

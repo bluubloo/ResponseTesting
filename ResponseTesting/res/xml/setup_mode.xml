@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/settings_cat_email" >
+        <EditTextPreference 
+            android:summary="@string/settings_sum_email" 
+            android:key="@string/pref_key_email" 
+            android:title="@string/settings_title_email" 
+            android:defaultValue="@string/setup_mode_default_email"/>"
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_cat_tests" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_ao"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_appear_obj" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_aof"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_appear_obj_fixed" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_ai"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_center_arrow" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_cd"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_change_direct" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_ch"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_chase" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_eov"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_even_vowel" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_ftt"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_finger_tap" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_ml"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_monkey" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_oclt"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_one_card" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_pr"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_pattern_recreate" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_s"
+            android:summary="@string/settings_sum_test"
+            android:title="@string/event_name_stroop" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
