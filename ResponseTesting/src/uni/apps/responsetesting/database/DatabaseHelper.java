@@ -158,6 +158,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		this.getWritableDatabase().execSQL(query);
 		query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name_questionaire);
 		this.getWritableDatabase().execSQL(query);
+		query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name_multi_settings);
+		this.getWritableDatabase().execSQL(query);
 		onCreate(this.getWritableDatabase());
 		return 0;
 	}
@@ -322,6 +324,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				" WHERE " + resources.getString(R.string.user_id) + "=?";
 		return this.getReadableDatabase().rawQuery(sql, new String[] {id});
 	}
+	
+	public String getMultiSettingsString(String id) {
+		Cursor settings = getMultiSettings(id);
+		if(settings.moveToFirst()){
+			return settings.getString(3);
+		}
+		return "";
+	}
 
 	public Cursor getMultiUsers() {
 		String sql = "SELECT " + resources.getString(R.string.user_group) + "," +
@@ -350,6 +360,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		return 1;
 	}
+
+
 
 
 

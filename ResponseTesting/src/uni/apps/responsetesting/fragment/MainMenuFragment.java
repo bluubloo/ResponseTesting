@@ -29,6 +29,9 @@ public class MainMenuFragment extends ListFragment {
 	private static final String TAG = "MainMenuFragment";
 	private MainMenuListener listener;
 	private ArrayAdapter<?> adapter;
+	private String userId = "";
+	private String userName = "";
+	private String multiUserSettings = "";
 
 	public MainMenuFragment(){}
 
@@ -36,7 +39,20 @@ public class MainMenuFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
-		//setRetainInstance(true);
+		if(savedInstanceState != null){
+			userId = savedInstanceState.getString("id"); 
+			userName = savedInstanceState.getString("name");
+			multiUserSettings = savedInstanceState.getString("settings");
+		}
+		setRetainInstance(true);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putString("id", userId);
+		outState.putString("name", userName);
+		outState.putString("settings", multiUserSettings);
 	}
 
 	@Override
@@ -80,8 +96,30 @@ public class MainMenuFragment extends ListFragment {
 	}
 
 	private boolean checkMultiUserPrferences(Resources resources, String name) {
-		// TODO Auto-generated method stub
+		if(multiUserSettings.equals(""))
+			multiUserSettings = DatabaseHelper.getInstance(getActivity(), resources).
+			getMultiSettingsString(userId);
+		if(!multiUserSettings.equals("")){
+			int index = getSettingIndex(name);
+			if(index != -1)
+				return getPreferenceValue(index);
+		}
 		return true;
+	}
+
+	private boolean getPreferenceValue(int index) {
+		int i = index * 2;
+		if(multiUserSettings.length() < i && i >= 0)
+			return multiUserSettings.charAt(i) == '1';
+		return true;
+	}
+
+	private int getSettingIndex(String name) {
+		String[] tmp = getResources().getStringArray(R.array.event_name_array);
+		for(int i = 0; i < tmp.length; i ++)
+			if(tmp[i].equals(name))
+				return i;
+		return -1;
 	}
 
 	private boolean checkSinglePrefereneces(SharedPreferences prefs,

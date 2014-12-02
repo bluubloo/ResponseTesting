@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     
     <PreferenceCategory android:title="@string/settings_cat_event">
-        <CheckBoxPreference
+        <uni.apps.responsetesting.settings.UserModePreference
             android:defaultValue="true"
             android:key="@string/pref_key_user"
             android:summary="@string/settings_sum_user"

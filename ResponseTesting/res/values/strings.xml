@@ -105,6 +105,8 @@
     <string name="setup_mode_user_title">Users</string>
     <string name="setup_mode_add">Add New User</string>
     <string name="setup_mode_remove">Remove User(s)</string>
+     <string name="setup_mode_user_single">Single User</string>
+    <string name="setup_mode_user_multi">Multi User</string>
 
     <!-- Preference Catageroy Strings -->
     <string name="settings_cat_event">Event Settings</string>
@@ -113,12 +115,12 @@
     <string name="settings_cat_email">Email</string>
     <!-- Preference Title Strings -->
     <string name="settings_title_instruct">Show Instructions Page</string>
-    <string name="settings_title_user">Single User</string>
+    <string name="settings_title_user">User Mode</string>
     <string name="settings_title_results">Show Results Page</string>
     <string name="settings_title_email">Set Email Address</string>
     <!-- Preference Summary Strings -->
     <string name="settings_sum_instruct">Enable/Disable the event instructions page</string>
-    <string name="settings_sum_user">Single or Multi User</string>
+    <string name="settings_sum_user">Select User Mode</string>
     <string name="settings_sum_results">Enable/Disable the results page</string>
     <string name="settings_sum_test">Enable/Disable the Test</string>
     <string name="settings_sum_email">Set email address to send results to.</string>

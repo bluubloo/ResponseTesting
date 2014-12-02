@@ -24,8 +24,8 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 	private Activity activity;
 	private MultiUserGroupListener listener = null;
 	private MultiUserSettingsListener listListener;
-	
-	
+
+
 	public MultiUserGroupListAdapter(ArrayList<MultiUserGroupInfo> groups, Activity activity, 
 			MultiUserGroupListener listener, MultiUserSettingsListener listListener){
 		this.groups = groups;
@@ -34,7 +34,7 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 		this.listListener = listListener;
 		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-	
+
 	@Override
 	public int getGroupCount() {
 		return groups.size();
@@ -86,30 +86,30 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 		} else{
 			holder = (GroupViewHolder) convertView.getTag();
 		}
-			
+
 		holder.icon.setImageDrawable(activity.getResources().
 				getDrawable(groups.get(groupPosition).getIconId()));
-		
+
 		holder.name.setText(groups.get(groupPosition).getGroup());
-		
+
 		holder.add.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				listener.onAddUserClick(position);
 			}
-			
+
 		});
-		
+
 		holder.remove.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				listener.onRemoveUsersClick(position);
 			}
-			
+
 		});
-		
+
 		return convertView;
 	}
 
@@ -130,33 +130,34 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 		} else{
 			holder = (ChildViewHolder) convertView.getTag();
 		}
-		
-		holder.name.setText(groups.get(groupPosition).getUser(childPosition).getName());
+
+		holder.name.setText(groups.get(groupPosition).getUser(childPosition).getName() + ", (" + 
+				groups.get(groupPosition).getUser(childPosition).getId() + ")");
 		holder.delete.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				listener.onDeleteUser(pos1, pos2);
 			}
-			
+
 		});
-		
+
 		holder.modify.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				listener.onMoveUser(pos1, pos2);
 			}
-			
+
 		});
-		
+
 		holder.settings.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				listListener.onGroupChildClick(groups.get(pos1).getUser(pos2));
 			}
-			
+
 		});
 		return convertView;
 	}
@@ -165,14 +166,14 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return false;
 	}
-	
+
 	private class GroupViewHolder{
 		TextView name;
 		ImageView icon;
 		Button add;
 		Button remove;
 	}
-	
+
 	private class ChildViewHolder{
 		TextView name;
 		ImageView modify;

@@ -119,14 +119,14 @@ public final class R {
         public static final int uni_logo=0x7f02004b;
     }
     public static final class id {
-        public static final int action_add_group=0x7f0b005e;
-        public static final int action_delete_all=0x7f0b005a;
-        public static final int action_info=0x7f0b005b;
-        public static final int action_results=0x7f0b005c;
-        public static final int action_send_all=0x7f0b0058;
-        public static final int action_send_recent=0x7f0b0059;
-        public static final int action_settings=0x7f0b0057;
-        public static final int action_setup=0x7f0b005d;
+        public static final int action_add_group=0x7f0b0060;
+        public static final int action_delete_all=0x7f0b005c;
+        public static final int action_info=0x7f0b005d;
+        public static final int action_results=0x7f0b005e;
+        public static final int action_send_all=0x7f0b005a;
+        public static final int action_send_recent=0x7f0b005b;
+        public static final int action_settings=0x7f0b0059;
+        public static final int action_setup=0x7f0b005f;
         public static final int appear_obj_container=0x7f0b0006;
         public static final int appear_obj_image_1=0x7f0b0007;
         public static final int appear_obj_image_2=0x7f0b000b;
@@ -160,7 +160,7 @@ public final class R {
         public static final int instruct_next=0x7f0b002a;
         public static final int instruct_title=0x7f0b0027;
         public static final int instuct_info=0x7f0b0029;
-        public static final int linearLayout1=0x7f0b0050;
+        public static final int linearLayout1=0x7f0b0052;
         public static final int main_menu_container=0x7f0b0002;
         public static final int monkey_button=0x7f0b002d;
         public static final int monkey_grid=0x7f0b002c;
@@ -199,13 +199,13 @@ public final class R {
         public static final int results_display_text=0x7f0b004e;
         public static final int results_plot=0x7f0b0026;
         public static final int settings_container=0x7f0b0003;
-        public static final int stroop_button=0x7f0b0056;
-        public static final int stroop_colour=0x7f0b0054;
-        public static final int stroop_grid=0x7f0b0055;
-        public static final int stroop_match=0x7f0b0051;
-        public static final int stroop_no_match=0x7f0b0052;
-        public static final int stroop_title=0x7f0b004f;
-        public static final int stroop_word=0x7f0b0053;
+        public static final int stroop_button=0x7f0b0058;
+        public static final int stroop_colour=0x7f0b0056;
+        public static final int stroop_grid=0x7f0b0057;
+        public static final int stroop_match=0x7f0b0053;
+        public static final int stroop_no_match=0x7f0b0054;
+        public static final int stroop_title=0x7f0b0051;
+        public static final int stroop_word=0x7f0b0055;
         public static final int tap_click_count=0x7f0b0022;
         public static final int tap_click_info=0x7f0b0024;
         public static final int tap_click_start_button=0x7f0b0025;
@@ -214,6 +214,8 @@ public final class R {
         public static final int tap_title=0x7f0b0020;
         public static final int title=0x7f0b0001;
         public static final int title_container=0x7f0b0033;
+        public static final int user_mode_multi=0x7f0b0050;
+        public static final int user_mode_single=0x7f0b004f;
     }
     public static final class layout {
         public static final int activity_event=0x7f030000;
@@ -243,8 +245,9 @@ public final class R {
         public static final int results_display_fragment=0x7f030018;
         public static final int results_display_fragment2=0x7f030019;
         public static final int results_display_item=0x7f03001a;
-        public static final int stroop_test2_fragment=0x7f03001b;
-        public static final int stroop_test_fragment=0x7f03001c;
+        public static final int settings_user_mode=0x7f03001b;
+        public static final int stroop_test2_fragment=0x7f03001c;
+        public static final int stroop_test_fragment=0x7f03001d;
     }
     public static final class menu {
         public static final int action_bar=0x7f0a0000;
@@ -298,24 +301,24 @@ public final class R {
         public static final int no=0x7f080044;
         public static final int no_match=0x7f080046;
         public static final int notes=0x7f080010;
-        public static final int pref_key_ai=0x7f080062;
-        public static final int pref_key_ao=0x7f080060;
-        public static final int pref_key_aof=0x7f080061;
-        public static final int pref_key_cd=0x7f080063;
-        public static final int pref_key_ch=0x7f080064;
-        public static final int pref_key_email=0x7f08005f;
-        public static final int pref_key_eov=0x7f080065;
-        public static final int pref_key_ftt=0x7f080066;
+        public static final int pref_key_ai=0x7f080064;
+        public static final int pref_key_ao=0x7f080062;
+        public static final int pref_key_aof=0x7f080063;
+        public static final int pref_key_cd=0x7f080065;
+        public static final int pref_key_ch=0x7f080066;
+        public static final int pref_key_email=0x7f080061;
+        public static final int pref_key_eov=0x7f080067;
+        public static final int pref_key_ftt=0x7f080068;
         /**  Preference Key Strings 
          */
-        public static final int pref_key_instruct=0x7f08005c;
-        public static final int pref_key_ml=0x7f080067;
-        public static final int pref_key_oclt=0x7f080068;
-        public static final int pref_key_pr=0x7f080069;
-        public static final int pref_key_results=0x7f08005e;
-        public static final int pref_key_s=0x7f08006a;
-        public static final int pref_key_test=0x7f08006b;
-        public static final int pref_key_user=0x7f08005d;
+        public static final int pref_key_instruct=0x7f08005e;
+        public static final int pref_key_ml=0x7f080069;
+        public static final int pref_key_oclt=0x7f08006a;
+        public static final int pref_key_pr=0x7f08006b;
+        public static final int pref_key_results=0x7f080060;
+        public static final int pref_key_s=0x7f08006c;
+        public static final int pref_key_test=0x7f08006d;
+        public static final int pref_key_user=0x7f08005f;
         public static final int quest_avg=0x7f08002e;
         public static final int quest_high=0x7f08002d;
         public static final int quest_if_known=0x7f08002b;
@@ -333,32 +336,36 @@ public final class R {
          */
         public static final int results_dis_title=0x7f08002f;
         public static final int sent=0x7f080011;
-        public static final int settings_cat_email=0x7f080052;
+        public static final int settings_cat_email=0x7f080054;
         /**  Preference Catageroy Strings 
          */
-        public static final int settings_cat_event=0x7f08004f;
-        public static final int settings_cat_results=0x7f080050;
-        public static final int settings_cat_tests=0x7f080051;
-        public static final int settings_sum_email=0x7f08005b;
+        public static final int settings_cat_event=0x7f080051;
+        public static final int settings_cat_results=0x7f080052;
+        public static final int settings_cat_tests=0x7f080053;
+        public static final int settings_sum_email=0x7f08005d;
         /**  Preference Summary Strings 
          */
-        public static final int settings_sum_instruct=0x7f080057;
-        public static final int settings_sum_results=0x7f080059;
-        public static final int settings_sum_test=0x7f08005a;
-        public static final int settings_sum_user=0x7f080058;
-        public static final int settings_title_email=0x7f080056;
+        public static final int settings_sum_instruct=0x7f080059;
+        public static final int settings_sum_results=0x7f08005b;
+        public static final int settings_sum_test=0x7f08005c;
+        public static final int settings_sum_user=0x7f08005a;
+        public static final int settings_title_email=0x7f080058;
         /**  Preference Title Strings 
          */
-        public static final int settings_title_instruct=0x7f080053;
-        public static final int settings_title_results=0x7f080055;
-        public static final int settings_title_user=0x7f080054;
+        public static final int settings_title_instruct=0x7f080055;
+        public static final int settings_title_results=0x7f080057;
+        public static final int settings_title_user=0x7f080056;
         public static final int setup_mode_add=0x7f08004d;
+        /**  <string name="setup_mode_password">entersetupmode</string> 
+         */
         public static final int setup_mode_default_email=0x7f08004a;
         /**  Setup Mode Strings 
          */
         public static final int setup_mode_password=0x7f080049;
         public static final int setup_mode_remove=0x7f08004e;
         public static final int setup_mode_set=0x7f08004b;
+        public static final int setup_mode_user_multi=0x7f080050;
+        public static final int setup_mode_user_single=0x7f08004f;
         public static final int setup_mode_user_title=0x7f08004c;
         public static final int sound_sleep=0x7f080014;
         public static final int start=0x7f080041;
