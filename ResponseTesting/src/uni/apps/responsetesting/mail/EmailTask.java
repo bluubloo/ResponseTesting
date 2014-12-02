@@ -22,11 +22,11 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 		String PATH = params[0].strings[2];
 		Activity activity = params[0].activity;
 		
-		//TODO
 		String from = "activitytrackers@gmail.com";
+		//TODO
 		String to = "matcour@windowslive.com";
 		//set up email
-		MailClient mail = new MailClient(from, "waikato50");
+		MailClient mail = new MailClient(from, "50waikato");
 		mail.setTo(new String[] {to});
 		mail.setFrom(from);
 		mail.setBody(body);

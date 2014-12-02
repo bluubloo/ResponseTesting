@@ -1,21 +1,24 @@
 package uni.apps.responsetesting;
 
+import uni.apps.responsetesting.fragment.settings.MultiUserGroupFragment;
 import uni.apps.responsetesting.fragment.settings.MultiUserSelectionFragment;
+import uni.apps.responsetesting.interfaces.listener.MultiUserSettingsListener;
+import uni.apps.responsetesting.models.MultiUserInfo;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MultiUserSetupModeActivity extends Activity {
+public class MultiUserSetupModeActivity extends Activity implements MultiUserSettingsListener {
 
 	private static final String TAG = "MultiUserSetupModeActivity";
 	private static final String FRAG_TAG = "MultiUserSetupMode";
 	private FragmentManager manager;
-	private Fragment fragment;
+	private MultiUserSelectionFragment selectFragment;
+	private MultiUserGroupFragment groupFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,17 @@ public class MultiUserSetupModeActivity extends Activity {
 	}
 
 	private void addFragments() {
-		fragment = new MultiUserSelectionFragment();
-		manager.beginTransaction().add(R.id.settings_container, fragment, FRAG_TAG).commit();
+		groupFragment = new MultiUserGroupFragment();
+		manager.beginTransaction().add(R.id.settings_container, groupFragment, FRAG_TAG).commit();
+	}
+	
+	private void switchFragments(boolean b, MultiUserInfo user) {
+		if(b){
+			selectFragment = MultiUserSelectionFragment.getInstance(user);
+			manager.beginTransaction().replace(R.id.settings_container, selectFragment, FRAG_TAG).commit();
+		} else {
+			manager.beginTransaction().replace(R.id.settings_container, groupFragment, FRAG_TAG).commit();
+		}
 	}
 
 	@Override
@@ -40,7 +52,11 @@ public class MultiUserSetupModeActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		//calls action bar clicks
-		if(ActivityUtilities.actionBarClicks(item, this)){
+		if(item.getItemId() == R.id.action_add_group){
+			if(groupFragment.isVisible() && groupFragment.isResumed() && !groupFragment.isRemoving())
+				groupFragment.addNewGroup();
+			return true;
+		} else if(ActivityUtilities.actionBarClicks(item, this)){
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -51,6 +67,21 @@ public class MultiUserSetupModeActivity extends Activity {
 		Log.d(TAG, "onPrepareOptionsMenu()");
 		//alters action bar
 		menu.findItem(R.id.action_setup).setVisible(false);
+		menu.findItem(R.id.action_add_group).setVisible(true);
 		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
+	public void onBackPressed(){
+		if(groupFragment.isVisible() && groupFragment.isResumed() && !groupFragment.isRemoving())
+			super.onBackPressed();
+		else
+			switchFragments(false, null);
+	}
+
+	@Override
+	public void onGroupChildClick(MultiUserInfo user) {
+		// TODO Auto-generated method stub
+		switchFragments(true, user);
 	}
 }

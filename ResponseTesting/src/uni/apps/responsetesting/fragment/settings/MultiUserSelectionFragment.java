@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.adapter.MultiUserSelectionAdapter;
+import uni.apps.responsetesting.database.DatabaseHelper;
+import uni.apps.responsetesting.models.MultiUserInfo;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -15,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,11 +31,40 @@ public class MultiUserSelectionFragment extends Fragment {
 	private TextView email;
 	private ListView list;
 	private MultiUserSelectionAdapter adapter;
+	//TODO
+	private String userid = "";
+	private String name = "";
 
+	public static MultiUserSelectionFragment getInstance(MultiUserInfo user) {
+		MultiUserSelectionFragment tmp = new MultiUserSelectionFragment();
+		Bundle args = new Bundle();
+		args.putString("id", user.getId());
+		args.putString("name", user.getName());
+		tmp.setArguments(args);
+		return tmp;
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(savedInstanceState != null){
+			userid = savedInstanceState.getString("id"); 
+			name = savedInstanceState.getString("name");
+		}
 		setRetainInstance(true);
+		Bundle b = getArguments();
+		if(b != null){
+			userid = b.getString("id");	
+			name = b.getString("name");	
+		}
+		getActivity().getActionBar().setSubtitle(name);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putString("id", userid);
+		outState.putString("name", name);
 	}
 
 	@Override
@@ -67,10 +102,25 @@ public class MultiUserSelectionFragment extends Fragment {
 	}
 
 	private int[] getValues(String[] names) {
-		//TODO
 		int[] tmp = new int[names.length];
-		for(int i = 0; i < tmp.length; i ++)
-			tmp[i] = 1;
+		Cursor cursor = DatabaseHelper.getInstance(getActivity(), getResources()).getMultiSettings(userid);
+		if(cursor.getCount() == 0){
+			for(int i = 0; i < tmp.length; i ++)
+				tmp[i] = 1;
+		} else{
+			int j = 0;
+			if(cursor.moveToFirst()){
+				email.setText(cursor.getString(4));
+				String settings = cursor.getString(3);
+				for(int i = 0; i < settings.length(); i += 2){
+					tmp[j] = Integer.parseInt(new String(new char[] {settings.charAt(i)}));
+					j++;
+				}
+			} else{
+				for(int i = 0; i < tmp.length; i ++)
+					tmp[i] = 1;
+			}
+		}
 		return tmp;
 	}
 
@@ -98,9 +148,28 @@ public class MultiUserSelectionFragment extends Fragment {
 	}
 
 	private void updateSettings() {
-		// TODO Auto-generated method stub
 		String emailText = email.getText().toString();
-		
+		String settings = "";
+		for(int i = 0; i < list.getCount(); i++){
+			if(i < list.getCount() - 1)
+				settings += getValue(((CheckBox) list.getChildAt(i).
+						findViewById(R.id.multi_value)).isChecked()) + "|";
+			else
+				settings += getValue(((CheckBox) list.getChildAt(i).
+						findViewById(R.id.multi_value)).isChecked());
+		}
+		Resources r = getResources();
+		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
+		ContentValues values = new ContentValues();
+		values.put(r.getString(R.string.user_email), emailText);
+		values.put(r.getString(R.string.user_settings), settings);
+		db.updateMultiSettings(userid, values);
+	}
+
+	private String getValue(boolean checked) {
+		if(checked)
+			return "1";
+		return "0";
 	}
 
 	private void updateEmail(){
@@ -129,5 +198,7 @@ public class MultiUserSelectionFragment extends Fragment {
 		});
 		builder.show();
 	}
+
+	
 
 }

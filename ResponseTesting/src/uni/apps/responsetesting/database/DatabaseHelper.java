@@ -57,8 +57,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					resources.getString(R.string.light_sleep) + " TEXT, " + 
 					resources.getString(R.string.sound_sleep) + " TEXT, " + 
 					resources.getString(R.string.ratings) + " TEXT, " + 
-					resources.getString(R.string.other) + " TEXT, " +
 					resources.getString(R.string.sent) + " INTEGER)"; 
+			db.execSQL(create);
+			create = "CREATE TABLE " + resources.getString(R.string.table_name_multi_settings) +
+					"(" + resources.getString(R.string.user_id) + " INTEGER PRIMARY KEY, " + 
+					resources.getString(R.string.user_group) + " TEXT, " + 
+					resources.getString(R.string.user_name) + " TEXT, " +
+					resources.getString(R.string.user_settings) + " TEXT, " +
+					resources.getString(R.string.user_email) + " TEXT)";
 			db.execSQL(create);
 			db.setTransactionSuccessful();
 		} finally{
@@ -74,6 +80,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			String query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name);
 			db.execSQL(query);
 			query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name_questionaire);
+			db.execSQL(query);
+			query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name_multi_settings);
 			db.execSQL(query);
 			db.setTransactionSuccessful();
 		} finally {
@@ -92,6 +100,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public void insertQuestionarie(ContentValues values){
 		this.getWritableDatabase().insert(resources.getString(R.string.table_name_questionaire), 
+				null, values);
+	}
+
+	public void insertMultiSettings(ContentValues values){
+		this.getWritableDatabase().insert(resources.getString(R.string.table_name_multi_settings), 
 				null, values);
 	}
 
@@ -125,6 +138,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	}
 
+	public void updateMultiSettings(String id, ContentValues values){
+		this.getWritableDatabase().update(resources.getString(R.string.table_name_multi_settings), values,
+				resources.getString(R.string.user_id) + "=?", new String[] {id});
+	}
+
 	//--------------------------------------------------------------------------------------------
 	//DELETE
 
@@ -142,6 +160,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		this.getWritableDatabase().execSQL(query);
 		onCreate(this.getWritableDatabase());
 		return 0;
+	}
+	
+	public void removeMulitUser(String id) {
+		this.getWritableDatabase().delete(resources.getString(R.string.table_name_multi_settings),
+				resources.getString(R.string.user_id) + "=?", new String[] {id});
 	}
 
 	//--------------------------------------------------------------------------------------------
@@ -293,5 +316,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		return false;
 	}
+
+	public Cursor getMultiSettings(String id){
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name_multi_settings) + 
+				" WHERE " + resources.getString(R.string.user_id) + "=?";
+		return this.getReadableDatabase().rawQuery(sql, new String[] {id});
+	}
+
+	public Cursor getMultiUsers() {
+		String sql = "SELECT " + resources.getString(R.string.user_group) + "," +
+				resources.getString(R.string.user_name) + "," + resources.getString(R.string.user_id) +
+				" FROM " + resources.getString(R.string.table_name_multi_settings) + " GROUP BY " + 
+				resources.getString(R.string.user_group);
+		return this.getReadableDatabase().rawQuery(sql, null);
+	}
+
+	public int checkUserName(String name) {
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name_multi_settings) + 
+				" WHERE " + resources.getString(R.string.user_name) + "=?";
+		Cursor cursor = this.getReadableDatabase().rawQuery(sql, new String[] {name});
+		if(cursor.moveToFirst()){
+			return cursor.getInt(0);
+		}
+		return -1;
+	}
+
+	public int getNewUserId(){
+		String sql = "SELECT max(" + resources.getString(R.string.user_id) + ") FROM " +
+				resources.getString(R.string.table_name_multi_settings);
+		Cursor cursor = this.getReadableDatabase().rawQuery(sql, null);
+		if(cursor.moveToFirst()){
+			return cursor.getInt(0) + 1;
+		}
+		return 1;
+	}
+
+
 
 }

@@ -2,11 +2,10 @@
 <resources>
 
     <string-array name="questionaire_array">
-        <item>Test1</item>
-        <item>Test2</item>
-        <item>Test3</item>
-        <item>Test4</item>
-        <item>Test5</item>
+        <item>How would you rate your current fatigue level?</item>
+        <item>How would you rate your current level of muscle soreness?</item>
+        <item>How would you rate your overall mood?</item>
+        <item>How would you rate your sleep quality last night?</item>
     </string-array>
     <string-array name="event_name_array">
         <item>Questionaire</item>
@@ -40,4 +39,19 @@
         <item>Recreate the shown pattern as fast as you can.\nFor each pattern you can make 3 errors. </item>
         <item>If the text colour of the top word matches the word colour below, press Match.\nIf not press No Match.</item>
     </string-array>
+        <string-array name="event_name_groups">
+        <item>Appearing Object</item>
+        <item>Appearing Object - Fixed Point</item>
+        <item>Arrow Ignoring Test</item>
+        <item>Changing Directions</item>
+        <item>Chase Test</item>
+        <item>Even or Vowel</item>
+        <item>Finger Tap Test</item>
+        <item>Monkey Ladder</item>
+        <item>One Card Learning Test</item>
+        <item>Pattern Recreation</item>
+        <item>Stroop Test</item>
+        <item>Unassigned</item>
+    </string-array>
+    
 </resources>

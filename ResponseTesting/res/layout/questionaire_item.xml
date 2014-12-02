@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content" >
 
     <TextView
         android:id="@+id/questionaire_text"
@@ -15,6 +14,34 @@
         android:id="@+id/questionaire_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/questionaire_text"
+        android:layout_centerHorizontal="true"
+        android:numStars="5"
+        android:stepSize="1"
         style="@style/title_style" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/questionaire_rating"
+        android:layout_centerHorizontal="true"
+        android:text="@string/quest_avg"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/questionaire_rating"
+        android:layout_alignEnd="@+id/questionaire_rating"
+        android:text="@string/quest_high"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/questionaire_rating"
+        android:layout_alignBottom="@+id/questionaire_rating"
+        android:text="@string/quest_low"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

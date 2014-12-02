@@ -87,7 +87,7 @@ public class QuestionaireFragment extends Fragment {
 						finalResult += s + "|";
 					
 					Results.insertQuestionaireResult(eventName, new String[] {sleep, light, sound}, 
-							finalResult, "", Calendar.getInstance().getTimeInMillis(), getActivity());
+							finalResult, Calendar.getInstance().getTimeInMillis(), getActivity());
 
 					new AlertDialog.Builder(getActivity())
 					.setTitle("Questionaire Submitted")
