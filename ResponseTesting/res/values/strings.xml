@@ -107,23 +107,31 @@
     <string name="setup_mode_remove">Remove User(s)</string>
      <string name="setup_mode_user_single">Single User</string>
     <string name="setup_mode_user_multi">Multi User</string>
-
+    
     <!-- Preference Catageroy Strings -->
     <string name="settings_cat_event">Event Settings</string>
     <string name="settings_cat_results">Results Settings</string>
     <string name="settings_cat_tests">Tests</string>
     <string name="settings_cat_email">Email</string>
+    <string name="settings_cat_other">Other</string>
+    
     <!-- Preference Title Strings -->
     <string name="settings_title_instruct">Show Instructions Page</string>
     <string name="settings_title_user">User Mode</string>
     <string name="settings_title_results">Show Results Page</string>
     <string name="settings_title_email">Set Email Address</string>
+    <string name="settings_title_alert">Set Reminder Time</string>
+    <string name="settings_title_remind">Enable Reminders</string>
+    
     <!-- Preference Summary Strings -->
     <string name="settings_sum_instruct">Enable/Disable the event instructions page</string>
     <string name="settings_sum_user">Select User Mode</string>
     <string name="settings_sum_results">Enable/Disable the results page</string>
     <string name="settings_sum_test">Enable/Disable the Test</string>
     <string name="settings_sum_email">Set email address to send results to.</string>
+    <string name="settings_sum_alert">Set Time this App Sends You a Reminder</string>
+    <string name="settings_sum_remind">Enable/Disable Reminders</string>
+    
     <!-- Preference Key Strings -->
     <string name="pref_key_instruct">pref_event_show_instruct</string>
     <string name="pref_key_user">pref_event_user</string>
@@ -141,5 +149,10 @@
     <string name="pref_key_pr">pref_event_show_pr</string>
     <string name="pref_key_s">pref_event_show_s</string>
     <string name="pref_key_test">pref_event_test</string>
+    <string name="pref_key_alert">pref_event_alert</string>
+    <string name="pref_key_remind">pref_event_remind</string>
+    
+    <!-- Other Settings Strings -->
+    <string name="settings_time_default">9:00</string>
 
 </resources>

@@ -1,8 +1,11 @@
 package uni.apps.responsetesting.mail;
 
+import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.models.EmailTaskData;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 /**
@@ -23,8 +26,16 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 		Activity activity = params[0].activity;
 		
 		String from = "activitytrackers@gmail.com";
-		//TODO
-		String to = "matcour@windowslive.com";
+		String to = "";
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		boolean single = prefs.getBoolean(activity.getResources().getString(R.string.pref_key_user), true);
+		if(single)
+			to = prefs.getString(activity.getResources().getString(R.string.pref_key_email), 
+					activity.getResources().getString(R.string.setup_mode_default_email));
+		else
+			to = getMultiUserEmail(params[0].strings[3], activity);
+		
 		//set up email
 		MailClient mail = new MailClient(from, "50waikato");
 		mail.setTo(new String[] {to});
@@ -45,6 +56,11 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 			return false;
 		}
 		return true;
+	}
+
+	private String getMultiUserEmail(String string, Activity activity) {
+		// TODO Auto-generated method stub
+		return activity.getResources().getString(R.string.setup_mode_default_email);
 	}
 
 }
