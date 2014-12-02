@@ -118,7 +118,8 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		graph.setEventName(eventName);
 		graph.setMaxMinX(minMaxX[0], minMaxX[1]);
 		graph.setMaxMinY(GraphUtilities.roundDown(minMaxY[0]), GraphUtilities.roundUp(minMaxY[1]));
-		graph.setRangeAndDomainSteps(GraphUtilities.getStep(minMaxY[0], minMaxY[1]), 86400000, 2, 1);
+		//graph.setRangeAndDomainSteps(GraphUtilities.getStep(minMaxY[0], minMaxY[1]), 86400000, 2, 1);
+		graph.setDomainSteps(86400000, 1);
 	}
 	
 	private String getTitle(int i) {

@@ -11,7 +11,7 @@
     <string name="submit">Submit</string>
     <string name="image_descript">Image</string>
     <string name="equal">=</string>
-    
+
     <!-- Database Strings -->
     <string name="table_name">Results</string>
     <string name="table_name_questionaire">ResultsQuestionaire</string>
@@ -96,9 +96,10 @@
     <!-- Next/Back Strings -->
     <string name="next">Next</string>
     <string name="back">Back</string>
-    
+
     <!-- Setup Mode Strings -->
     <string name="setup_mode_password">123</string>
+    <!-- <string name="setup_mode_password">entersetupmode</string> -->
     <string name="setup_mode_default_email">activitytrackers@gmail.com</string>
     <string name="setup_mode_set">Set</string>
     <string name="setup_mode_user_title">Users</string>
