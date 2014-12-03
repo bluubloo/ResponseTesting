@@ -73,6 +73,8 @@ public class ActivityUtilities {
 				if(text.getText().toString().equals(
 						activity.getResources().getString(R.string.setup_mode_password)))
 					setupMode(activity);
+				else
+					displayMessage(activity, "Incorrect Password", "The entered password was incorrect");
 			}
 		});
 
