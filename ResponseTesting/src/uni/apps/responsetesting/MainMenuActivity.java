@@ -1,8 +1,11 @@
 package uni.apps.responsetesting;
 
+import java.util.Calendar;
+
 import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.fragment.MainMenuFragment;
 import uni.apps.responsetesting.interfaces.listener.MainMenuListener;
+import uni.apps.responsetesting.reminders.AlertClient;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -14,8 +17,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -33,6 +38,22 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 	private FragmentManager frag_manager;
 	private MainMenuFragment main_menu_frag = null;
 	private static final String MAIN_MENU_TAG = "MainMenuFragment";
+	private static final String TAG = "MainMenuActivity";
+	private AlertClient alertClient;
+	private Handler timerHandler = new Handler();
+
+	//-----------------------------------------------------------------------------
+	//RUNNABLES
+
+	private Runnable timerRunnable = new Runnable(){
+
+		@Override
+		public void run() {
+			startNotify();
+		}
+	};
+
+	//-----------------------------------------------------------------------------
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +72,24 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 			editor.commit();
 			addFragments();
 		}
-		//startNotify();
-
+		if(prefs.getBoolean(getResources().getString(R.string.pref_key_remind), false)){
+			bindClient();
+			timerHandler.postDelayed(timerRunnable, 2000);
+		}
 	}
-
-
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		invalidateOptionsMenu();
+	}
+
+	@Override
+	protected void onStop(){
+		if(alertClient != null)
+			alertClient.doUnbindService();
+		timerHandler.removeCallbacks(timerRunnable);
+		super.onStop();
 	}
 
 	@Override
@@ -168,19 +197,53 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		frag_manager.executePendingTransactions();
 	}
 
-	/*	private void startNotify() {
+	private void startNotify() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		//TODO
-		int hour = 9;
-		int min = 0;
-		Intent i = new Intent(this, NotifyService.class);
-		AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		PendingIntent p = PendingIntent.getService(getApplicationContext(), 0, i, 0);
+		String time = prefs.getString(getResources().getString(R.string.pref_key_alert),
+				getResources().getString(R.string.settings_time_default));
+		int hour = getHour(time);
+		int min = getMin(time);
 		Calendar c = Calendar.getInstance();
+		//c.setTimeZone(TimeZone.getTimeZone("GTM+12"));
 		c.set(Calendar.HOUR_OF_DAY, hour);
 		c.set(Calendar.MINUTE, min);
 		c.set(Calendar.SECOND, 0);
-		manager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis() + (24*60*60*1000), p);
-		//manager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 24*60*60*1000, p);
-	}*/
+		c.setTimeInMillis(c.getTimeInMillis() + (24*60*60*1000));
+		long tmp = prefs.getLong(getResources().getString(R.string.pref_key_alert_next), 0);
+		Calendar c2 = Calendar.getInstance();
+		c2.setTimeInMillis(tmp);
+		if(c2.get(Calendar.DATE) != c.get(Calendar.DATE)){
+			Log.d(TAG, "set Alarm");
+			alertClient.setAlarmForNotification(c);
+			Editor editor = prefs.edit();
+			editor.putLong(getResources().getString(R.string.pref_key_alert_next),
+					c.getTimeInMillis());
+			editor.commit();
+		}else{
+			Log.d(TAG, "Alarm already set");
+		}
+	}
+
+	private int getMin(String time) {
+		int index = time.indexOf(':');
+		if(index == -1)
+			return 0;
+		else{
+			return Integer.parseInt(time.substring(index + 1));
+		}
+	}
+
+	private int getHour(String time) {
+		int index = time.indexOf(':');
+		if(index == -1)
+			return 9;
+		else{
+			return Integer.parseInt(time.substring(0, index));
+		}
+	}
+
+	private void bindClient() {
+		alertClient = new AlertClient(this);
+		alertClient.doBindService();
+	}
 }

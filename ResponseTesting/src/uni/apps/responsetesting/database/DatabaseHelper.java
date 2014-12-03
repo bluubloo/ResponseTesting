@@ -65,8 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					"(" + resources.getString(R.string.user_id) + " INTEGER PRIMARY KEY, " + 
 					resources.getString(R.string.user_group) + " TEXT, " + 
 					resources.getString(R.string.user_name) + " TEXT, " +
-					resources.getString(R.string.user_settings) + " TEXT, " +
-					resources.getString(R.string.user_email) + " TEXT)";
+					resources.getString(R.string.user_settings) + " TEXT)";
 			db.execSQL(create);
 			db.setTransactionSuccessful();
 		} finally{
@@ -183,17 +182,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//All rows for single Event and user
 	public Cursor getSingle(String testName, String userId) {
-		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
-				resources.getString(R.string.event_name) + 
-				"=? AND " + resources.getString(R.string.event_name) + "=?";
-		return this.getReadableDatabase().rawQuery(sql, new String[] {testName, userId});
+		/*String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
+				resources.getString(R.string.event_name) + "=? AND " + 
+				resources.getString(R.string.event_name) + "=?";
+		return this.getReadableDatabase().rawQuery(sql, new String[] {testName, userId});*/
 		/*String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
 				resources.getString(R.string.event_name) + 
 				"='" + testName + "' AND " + resources.getString(R.string.event_name) + "='" + userId + "'";
 		return this.getReadableDatabase().rawQuery(sql,null);*/
-		/*return this.getReadableDatabase().query(resources.getString(R.string.table_name), null, 
-				resources.getString(R.string.event_name) + "=? AND " + resources.getString(R.string.event_name) + "=?", 
-				new String[] {testName, userId}, null, null, resources.getString(R.string.timestamp));*/
+		return this.getReadableDatabase().query(resources.getString(R.string.table_name), null, 
+				resources.getString(R.string.event_name) + "=? AND " + resources.getString(R.string.user_id) + "=?", 
+				new String[] {testName, userId}, null, null, resources.getString(R.string.timestamp));
 	}
 
 	//All rows for single Event ordered by score
@@ -225,7 +224,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return this.getReadableDatabase().rawQuery(sql, null);
 	}
 
-	public boolean checkRecent(String eventName) {
+	public boolean checkRecent(String eventName, String id) {
 		/*String sql = "SELECT max(" +  resources.getString(R.string.timestamp) + ") FROM " + 
 				resources.getString(R.string.table_name) + " WHERE " + 
 				resources.getString(R.string.event_name) + "=?";
@@ -250,10 +249,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
-				resources.getString(R.string.event_name) + "=?" + " ORDER BY " + 
+				resources.getString(R.string.event_name) + "=? AND " +
+				resources.getString(R.string.user_id) + "=? ORDER BY " + 
 				resources.getString(R.string.timestamp) + " LIMIT 3";
 
-		Cursor cursor = this.getWritableDatabase().rawQuery(sql, new String[] {eventName});
+		Cursor cursor = this.getWritableDatabase().rawQuery(sql, new String[] {eventName, id});
 		if(cursor.getCount() == 0)
 			return true;
 		if(cursor.getCount() < 3){
@@ -316,10 +316,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return false;
 	}
 
-	public boolean checkQuestionaire(String eventName){
+	public boolean checkQuestionaire(String eventName, String id){
 		String sql = "SELECT max(" +  resources.getString(R.string.timestamp) + ") FROM " + 
-				resources.getString(R.string.table_name_questionaire);
-		Cursor cursor = this.getWritableDatabase().rawQuery(sql, null);
+				resources.getString(R.string.table_name_questionaire) + " WHERE " + 
+				resources.getString(R.string.user_id) + "=?";
+		Cursor cursor = this.getWritableDatabase().rawQuery(sql, new String[]{id});
 		if(cursor.moveToFirst()){
 			long i = cursor.getLong(0);
 			long current = Calendar.getInstance().getTimeInMillis();

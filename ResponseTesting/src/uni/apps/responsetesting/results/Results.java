@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
@@ -192,7 +193,9 @@ public class Results {
 		File root = Environment.getExternalStorageDirectory();
 		File file = new File(root, "Results.csv");
 		try {
-
+			HashMap<String, String> nameMap = cursorToMap(DatabaseHelper.getInstance(activity,
+					activity.getResources()).getMultiUsers());
+			
 			FileWriter fw = new FileWriter(file);
 
 			fw.append("Event Name");
@@ -204,11 +207,13 @@ public class Results {
 			fw.append("Extra Notes");
 			fw.append(',');
 			fw.append("User Id");
+			fw.append(',');
+			fw.append("Username");
 			fw.append("\n");
 			Log.d(TAG, Integer.toString(results.getCount()));
 			if(results.moveToFirst()){
 				do{
-
+					
 					fw.append(results.getString(0));
 					fw.append(',');
 					fw.append(results.getString(1));
@@ -219,7 +224,13 @@ public class Results {
 					fw.append(',');
 					fw.append(results.getString(4));
 					fw.append(',');
-					fw.append(results.getString(5));
+					String id = results.getString(5);
+					fw.append(id);
+					fw.append(',');
+					if(nameMap.containsKey(id))
+						fw.append(nameMap.get(id));
+					else
+						fw.append("Unknown");
 					fw.append("\n");
 				} while(results.moveToNext());
 			} else{
@@ -234,6 +245,19 @@ public class Results {
 		return true;
 	}
 	
+	private static HashMap<String, String> cursorToMap(Cursor cursor) {
+		HashMap<String, String> tmp = new HashMap<String, String>();
+		tmp.put("single", "single");
+		if(cursor.moveToFirst()){
+			do{
+				if(!tmp.containsKey(cursor.getString(2)))
+					tmp.put(cursor.getString(2), cursor.getString(1));
+			} while(cursor.moveToNext());
+		}
+		return tmp;
+	}
+
+
 	//--------------------------------------------------------------------------------------------
 	//Auxiliary Methods
 	

@@ -81,7 +81,7 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 			holder.icon = (ImageView) convertView.findViewById(R.id.multi_group_icon);
 			holder.name = (TextView) convertView.findViewById(R.id.multi_group_name);
 			holder.add = (Button) convertView.findViewById(R.id.multi_group_add);
-			holder.remove = (Button) convertView.findViewById(R.id.multi_group_remove);
+		//	holder.remove = (Button) convertView.findViewById(R.id.multi_group_remove);
 			convertView.setTag(holder);
 		} else{
 			holder = (GroupViewHolder) convertView.getTag();
@@ -101,14 +101,14 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 
 		});
 
-		holder.remove.setOnClickListener(new OnClickListener(){
+		/*holder.remove.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				listener.onRemoveUsersClick(position);
 			}
 
-		});
+		});*/
 
 		return convertView;
 	}
@@ -171,7 +171,7 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 		TextView name;
 		ImageView icon;
 		Button add;
-		Button remove;
+	//	Button remove;
 	}
 
 	private class ChildViewHolder{

@@ -144,7 +144,9 @@ public class ActivityUtilities {
 	//checks if the test is replayable
 	public static boolean checkPlayable(String eventName, int times, Activity activity){
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
-		return times < 3 && db.checkRecent(eventName);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		String userId = prefs.getString(activity.getResources().getString(R.string.pref_key_user_id), "single");
+		return times < 3 && db.checkRecent(eventName, userId);
 	}
 
 }

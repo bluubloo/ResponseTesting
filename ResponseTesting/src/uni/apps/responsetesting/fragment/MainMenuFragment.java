@@ -46,7 +46,7 @@ public class MainMenuFragment extends ListFragment {
 		userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		userName = DatabaseHelper.getInstance(getActivity(), getResources()).getMultiUserName(userId);
 		getActivity().getActionBar().setSubtitle("Main Menu - " + userName);
-		setRetainInstance(true);
+	//	setRetainInstance(true);
 	}
 
 	@Override
@@ -77,9 +77,9 @@ public class MainMenuFragment extends ListFragment {
 		for(String s: tmp){
 			boolean addable = true;
 			if(s.equals(r.getString(R.string.event_name_questionaire)))
-				addable = db.checkQuestionaire(s);
+				addable = db.checkQuestionaire(s, userId);
 			else
-				addable = checkPreferences(s) && db.checkRecent(s);
+				addable = checkPreferences(s) && db.checkRecent(s, userId);
 			if(addable)
 				list.add(s);
 		}

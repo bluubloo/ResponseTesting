@@ -185,8 +185,8 @@ public class GraphUtilities {
 		return tmp;
 	}
 
-	public static ArrayList<Number[]> getScores(Cursor scores){
-		ArrayList<String> times = getDates(scores, 2);
+	public static ArrayList<Number[]> getScores(Cursor scores, String id){
+		ArrayList<String> times = getDates(scores, 2, id, 5);
 		Number[] try1 = new Number[times.size()];
 		Number[] try2 = new Number[times.size()];
 		Number[] try3 = new Number[times.size()];
@@ -197,30 +197,32 @@ public class GraphUtilities {
 		}
 		if(scores.moveToFirst()){
 			do{
-				String score = "";
-				String s1 = scores.getString(1);
-				if(s1.contains("|") || s1.indexOf('|') != -1){
-					int index = s1.indexOf('|');
-					String[] tmp = s1.split("|");
-					if(tmp.length == 1)
-						score = tmp[0];
-					else
-						score = tmp[1];
-					score = s1.substring(index + 1);
-				}else 
-					score = s1;
-				Calendar c = Calendar.getInstance();
-				c.setTimeInMillis(scores.getLong(2));
-				String value = Integer.toString(c.get(Calendar.DATE)) + "/"
-						+ Integer.toString(c.get(Calendar.MONTH));
-				int index = times.indexOf(value);
-				if(index != -1 && index < times.size()){
-					if(try1[index] == null){
-						try1[index] = Double.parseDouble(score);
-					}else if (try2[index] == null){
-						try2[index] = Double.parseDouble(score);
-					}else if( try3[index] == null){
-						try3[index] = Double.parseDouble(score);
+				if(id.equals(scores.getString(5))){
+					String score = "";
+					String s1 = scores.getString(1);
+					if(s1.contains("|") || s1.indexOf('|') != -1){
+						int index = s1.indexOf('|');
+						String[] tmp = s1.split("|");
+						if(tmp.length == 1)
+							score = tmp[0];
+						else
+							score = tmp[1];
+						score = s1.substring(index + 1);
+					}else 
+						score = s1;
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(scores.getLong(2));
+					String value = Integer.toString(c.get(Calendar.DATE)) + "/"
+							+ Integer.toString(c.get(Calendar.MONTH));
+					int index = times.indexOf(value);
+					if(index != -1 && index < times.size()){
+						if(try1[index] == null){
+							try1[index] = Double.parseDouble(score);
+						}else if (try2[index] == null){
+							try2[index] = Double.parseDouble(score);
+						}else if( try3[index] == null){
+							try3[index] = Double.parseDouble(score);
+						}
 					}
 				}
 			}while(scores.moveToNext());
@@ -232,7 +234,7 @@ public class GraphUtilities {
 		return series;
 	}
 
-	public static ArrayList<Number[]> getDurations(Cursor cursor) {
+	public static ArrayList<Number[]> getDurations(Cursor cursor, String id) {
 		if(cursor.getCount() > 0){
 			Number[] total = new Number[cursor.getCount()];
 			Number[] light = new Number[cursor.getCount()];
@@ -242,15 +244,17 @@ public class GraphUtilities {
 
 			if(cursor.moveToFirst()){
 				do{
-					Calendar c = Calendar.getInstance();
-					c.setTimeInMillis(cursor.getLong(0));
-					c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
-							c.get(Calendar.DATE), 0, 0, 0);
-					c.setTimeZone(TimeZone.getTimeZone("GMT+12"));
-					times[counter] = c.getTimeInMillis();
-					total[counter] = formatDouble(cursor.getString(1));
-					light[counter] = formatDouble(cursor.getString(2));
-					sound[counter] = formatDouble(cursor.getString(3));
+					if(id.equals(cursor.getString(6))){
+						Calendar c = Calendar.getInstance();
+						c.setTimeInMillis(cursor.getLong(0));
+						c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+								c.get(Calendar.DATE), 0, 0, 0);
+						c.setTimeZone(TimeZone.getTimeZone("GMT+12"));
+						times[counter] = c.getTimeInMillis();
+						total[counter] = formatDouble(cursor.getString(1));
+						light[counter] = formatDouble(cursor.getString(2));
+						sound[counter] = formatDouble(cursor.getString(3));
+					}
 				} while(cursor.moveToNext());
 			}
 
@@ -276,41 +280,45 @@ public class GraphUtilities {
 		return null;
 	}
 
-	private static ArrayList<String> getDates(Cursor cursor, int index){
+	private static ArrayList<String> getDates(Cursor cursor, int index, String id, int idIndex){
 		ArrayList<String> times = new ArrayList<String>();
 		if(cursor.moveToFirst()){
 			do{
-				Calendar c = Calendar.getInstance();
-				c.setTimeInMillis(cursor.getLong(index));
-				String value = Integer.toString(c.get(Calendar.DATE)) + "/"
-						+ Integer.toString(c.get(Calendar.MONTH));
-				if(!times.contains(value))
-					times.add(value);
+				if(id.equals(cursor.getString(idIndex))){
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(cursor.getLong(index));
+					String value = Integer.toString(c.get(Calendar.DATE)) + "/"
+							+ Integer.toString(c.get(Calendar.MONTH));
+					if(!times.contains(value))
+						times.add(value);
+				}
 			}while(cursor.moveToNext());
 		}		
 		return times;
 	}
 
-	public static long[] getLongDates(Cursor cursor, int index){
+	public static long[] getLongDates(Cursor cursor, int index, String id){
 		long[] tmp = new long[cursor.getCount()];
-		ArrayList<String> times = getDates(cursor, index);
+		ArrayList<String> times = getDates(cursor, index, id, 5);
 		ArrayList<String> doneTimes = new ArrayList<String>();
 		int i = 0;
 		if(cursor.moveToFirst()){
 			do{
-				Calendar c = Calendar.getInstance();
-				c.setTimeInMillis(cursor.getLong(index));
-				c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), 
-						c.get(Calendar.DATE), 0, 0, 0);
-				c.setTimeZone(TimeZone.getTimeZone("GMT+12"));
-				String value = Integer.toString(c.get(Calendar.DATE)) + "/"
-						+ Integer.toString(c.get(Calendar.MONTH));
-				if(times.contains(value) && !doneTimes.contains(value)){
-					if(c.getTimeInMillis() != 0){
-						tmp[i] = c.getTimeInMillis();
-						i++;
-					}	
-					doneTimes.add(value);
+				if(id.equals(cursor.getString(5))){
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(cursor.getLong(index));
+					c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), 
+							c.get(Calendar.DATE), 0, 0, 0);
+					c.setTimeZone(TimeZone.getTimeZone("GMT+12"));
+					String value = Integer.toString(c.get(Calendar.DATE)) + "/"
+							+ Integer.toString(c.get(Calendar.MONTH));
+					if(times.contains(value) && !doneTimes.contains(value)){
+						if(c.getTimeInMillis() != 0){
+							tmp[i] = c.getTimeInMillis();
+							i++;
+						}	
+						doneTimes.add(value);
+					}
 				}
 			} while(cursor.moveToNext());
 		}
@@ -340,7 +348,7 @@ public class GraphUtilities {
 		}
 		return value + 1;
 	}
-	
+
 	public static double roundDown(double value){
 		String stringValue = Double.toString(value);
 		int index = stringValue.indexOf('.');

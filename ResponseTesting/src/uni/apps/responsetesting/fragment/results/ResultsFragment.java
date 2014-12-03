@@ -70,7 +70,9 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 	private void setGraphForQuestionaire() {
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 		Cursor cursor = db.getAllQuestionaireResults();
-		ArrayList<Number[]> series = GraphUtilities.getDurations(cursor);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		ArrayList<Number[]> series = GraphUtilities.getDurations(cursor, userId);
 		XYSeries[] finalSeries = new XYSeries[3]; 
 		if(!series.isEmpty()){
 			for(int i = 1; i < series.size(); i++){
@@ -96,15 +98,15 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		Log.d(TAG, userId);
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
-		//Cursor cursor = db.getSingle(value, userId);
 		Cursor cursor = db.getSingle(value, userId);
+		//Cursor cursor = db.getSingle(value);
 		Log.d(TAG, Integer.toString(cursor.getCount()));
 		if(cursor.getCount() == 0)
 			update();
 		else{
-			long[] longTimes = GraphUtilities.getLongDates(cursor, 2);
+			long[] longTimes = GraphUtilities.getLongDates(cursor, 2, userId);
 
-			ArrayList<Number[]> series = GraphUtilities.getScores(cursor);
+			ArrayList<Number[]> series = GraphUtilities.getScores(cursor, userId);
 			XYSeries[] finalSeries = new XYSeries[series.size()];
 			for(int i = 0; i < series.size(); i ++){
 				Number[] tmp = GraphUtilities.interweaveValues(longTimes, series.get(i));

@@ -10,6 +10,8 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -71,6 +73,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uni.apps.responsetesting.MainMenuActivity" />
         </activity>
+        
+        <service android:name=".reminders.ScheduleService"></service>
+        <service android:name=".reminders.NotifyService"></service>
     </application>
 
 </manifest>

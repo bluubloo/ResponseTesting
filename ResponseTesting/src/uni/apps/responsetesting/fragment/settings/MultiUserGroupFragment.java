@@ -15,17 +15,23 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Spinner;
 
@@ -38,6 +44,7 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 	private MultiUserGroupListAdapter adapter;
 	private MultiUserGroupListener listener;
 	private MultiUserSettingsListener listListener;
+	private TextView email;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,8 +80,56 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.multi_user_group_fragment, container, false);
 		list = (ExpandableListView) view.findViewById(R.id.multi_expand_list);
+		email = (TextView) view.findViewById(R.id.multi_email);
 		setUpAdapter();
+		setUpButtons(view);
 		return view;
+	}
+	
+	private void setUpButtons(View view) {
+		Button setEmail = (Button) view.findViewById(R.id.multi_email_set);
+
+		setEmail.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				updateEmail();
+			}
+
+		});
+	}
+	
+	private void updateEmail(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setTitle("Enter Password");
+
+		final EditText text = new EditText(getActivity());
+		text.setInputType(InputType.TYPE_CLASS_TEXT);
+		text.setText(email.getText());
+		builder.setView(text);
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+				String tmp = text.getText().toString();
+				email.setText(tmp);
+				Editor editor = prefs.edit();
+				editor.putString(getResources().getString(R.string.pref_key_multi_email),
+						getResources().getString(R.string.setup_mode_default_email));
+				editor.commit();
+			}
+		});
+
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+
+			}
+		});
+		builder.show();
 	}
 
 	private void setUpAdapter() {		
@@ -196,7 +251,6 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 		values.put(r.getString(R.string.user_group), tmp.getGroup());
 		values.put(r.getString(R.string.user_name), tmp.getName());
 		values.put(r.getString(R.string.user_settings), getDeafultSettings(r));
-		values.put(r.getString(R.string.user_email), r.getString(R.string.setup_mode_default_email));
 		db.insertMultiSettings(values);
 
 	}

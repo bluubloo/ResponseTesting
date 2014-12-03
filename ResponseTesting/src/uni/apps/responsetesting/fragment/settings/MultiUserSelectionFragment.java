@@ -8,28 +8,22 @@ import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.interfaces.listener.MultiUserSelectionListener;
 import uni.apps.responsetesting.models.MultiUserInfo;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class MultiUserSelectionFragment extends Fragment implements MultiUserSelectionListener{
 
 	private static final String TAG = "MultiUserSelectionFragment";
-	private TextView email;
 	private ListView list;
 	private MultiUserSelectionAdapter adapter;
 	private MultiUserSelectionListener listener;
@@ -88,7 +82,6 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.multi_user_selection_fragment, container, false);
-		email = (TextView) view.findViewById(R.id.multi_email);
 		list = (ListView) view.findViewById(R.id.multi_select_list);
 		setUpListAdapter();
 		setUpButtons(view);
@@ -125,7 +118,6 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 		} else{
 			int j = 0;
 			if(cursor.moveToFirst()){
-				email.setText(cursor.getString(4));
 				String settings = cursor.getString(3);
 				for(int i = 0; i < settings.length(); i += 2){
 					tmp[j] = Integer.parseInt(new String(new char[] {settings.charAt(i)}));
@@ -140,18 +132,8 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 	}
 
 	private void setUpButtons(View view) {
-		Button setEmail = (Button) view.findViewById(R.id.multi_email_set);
 		Button submit = (Button) view.findViewById(R.id.multi_submit);
-
-		setEmail.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				updateEmail();
-			}
-
-		});
-
+		
 		submit.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -163,55 +145,18 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 	}
 
 	private void updateSettings() {
-		String emailText = email.getText().toString();
 		String settings = "";
 		for(int i = 0; i < adapter.getCount(); i++){
-			Log.d(TAG, "Count: " + Integer.toString(i));
 			settings += adapter.getValue(i);
 			if(i < adapter.getCount() - 1)
 				settings += "|"; 
-			Log.d(TAG, settings);
-			/*if(i < list.getCount() - 1)
-				settings += getValue(((CheckBox) list.getChildAt(i).
-						findViewById(R.id.multi_value)).isChecked()) + "|";
-			else
-				settings += getValue(((CheckBox) list.getChildAt(i).
-						findViewById(R.id.multi_value)).isChecked());*/
 		}
 		Resources r = getResources();
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 		ContentValues values = new ContentValues();
-		values.put(r.getString(R.string.user_email), emailText);
 		values.put(r.getString(R.string.user_settings), settings);
 		db.updateMultiSettings(userid, values);
 		getActivity().onBackPressed();
-	}
-
-	private void updateEmail(){
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("Enter Password");
-
-		final EditText text = new EditText(getActivity());
-		text.setInputType(InputType.TYPE_CLASS_TEXT);
-		text.setText(email.getText());
-		builder.setView(text);
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				email.setText(text.getText().toString());
-			}
-		});
-
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-
-			}
-		});
-		builder.show();
 	}
 
 	@Override

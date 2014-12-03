@@ -167,19 +167,19 @@ public final class R {
         public static final int main_menu_container=0x7f0b0002;
         public static final int monkey_button=0x7f0b002d;
         public static final int monkey_grid=0x7f0b002c;
-        public static final int multi_email=0x7f0b0038;
-        public static final int multi_email_set=0x7f0b0039;
-        public static final int multi_expand_list=0x7f0b0032;
-        public static final int multi_group_add=0x7f0b0035;
-        public static final int multi_group_icon=0x7f0b0034;
+        public static final int multi_email=0x7f0b0032;
+        public static final int multi_email_set=0x7f0b0033;
+        public static final int multi_expand_list=0x7f0b0034;
+        public static final int multi_group_add=0x7f0b0037;
+        public static final int multi_group_icon=0x7f0b0036;
         public static final int multi_group_move=0x7f0b0030;
         public static final int multi_group_name=0x7f0b002e;
         public static final int multi_group_remove=0x7f0b0031;
         public static final int multi_group_settings=0x7f0b002f;
         public static final int multi_select_list=0x7f0b003a;
         public static final int multi_submit=0x7f0b003b;
-        public static final int multi_title=0x7f0b0036;
-        public static final int multi_value=0x7f0b0037;
+        public static final int multi_title=0x7f0b0038;
+        public static final int multi_value=0x7f0b0039;
         public static final int one_card_container=0x7f0b003d;
         public static final int one_card_no=0x7f0b003f;
         public static final int one_card_title=0x7f0b003c;
@@ -217,7 +217,7 @@ public final class R {
         public static final int tap_container=0x7f0b0021;
         public static final int tap_title=0x7f0b0020;
         public static final int title=0x7f0b0001;
-        public static final int title_container=0x7f0b0033;
+        public static final int title_container=0x7f0b0035;
         public static final int user_mode_multi=0x7f0b0051;
         public static final int user_mode_single=0x7f0b0050;
     }
@@ -308,29 +308,31 @@ public final class R {
         public static final int no=0x7f080046;
         public static final int no_match=0x7f080048;
         public static final int notes=0x7f080010;
-        public static final int pref_key_ai=0x7f08006f;
-        public static final int pref_key_alert=0x7f08006a;
+        public static final int pref_key_ai=0x7f080072;
+        public static final int pref_key_alert=0x7f08006c;
+        public static final int pref_key_alert_next=0x7f08006f;
         /**  Preference Key Strings for Single User Mode Tests 
          */
-        public static final int pref_key_ao=0x7f08006d;
-        public static final int pref_key_aof=0x7f08006e;
-        public static final int pref_key_cd=0x7f080070;
-        public static final int pref_key_ch=0x7f080071;
-        public static final int pref_key_email=0x7f080068;
-        public static final int pref_key_eov=0x7f080072;
-        public static final int pref_key_ftt=0x7f080073;
+        public static final int pref_key_ao=0x7f080070;
+        public static final int pref_key_aof=0x7f080071;
+        public static final int pref_key_cd=0x7f080073;
+        public static final int pref_key_ch=0x7f080074;
+        public static final int pref_key_email=0x7f080069;
+        public static final int pref_key_eov=0x7f080075;
+        public static final int pref_key_ftt=0x7f080076;
         /**  Preference Key Strings 
          */
-        public static final int pref_key_instruct=0x7f080065;
-        public static final int pref_key_ml=0x7f080074;
-        public static final int pref_key_oclt=0x7f080075;
-        public static final int pref_key_pr=0x7f080076;
-        public static final int pref_key_remind=0x7f08006b;
-        public static final int pref_key_results=0x7f080067;
-        public static final int pref_key_s=0x7f080077;
-        public static final int pref_key_test=0x7f080069;
-        public static final int pref_key_user=0x7f080066;
-        public static final int pref_key_user_id=0x7f08006c;
+        public static final int pref_key_instruct=0x7f080066;
+        public static final int pref_key_ml=0x7f080077;
+        public static final int pref_key_multi_email=0x7f08006a;
+        public static final int pref_key_oclt=0x7f080078;
+        public static final int pref_key_pr=0x7f080079;
+        public static final int pref_key_remind=0x7f08006d;
+        public static final int pref_key_results=0x7f080068;
+        public static final int pref_key_s=0x7f08007a;
+        public static final int pref_key_test=0x7f08006b;
+        public static final int pref_key_user=0x7f080067;
+        public static final int pref_key_user_id=0x7f08006e;
         public static final int quest_avg=0x7f080030;
         public static final int quest_high=0x7f08002f;
         public static final int quest_if_known=0x7f08002d;
@@ -348,37 +350,38 @@ public final class R {
          */
         public static final int results_dis_title=0x7f080031;
         public static final int sent=0x7f080011;
-        public static final int settings_cat_email=0x7f080056;
+        public static final int settings_cat_email=0x7f080057;
         /**  Preference Catageroy Strings 
          */
-        public static final int settings_cat_event=0x7f080053;
-        public static final int settings_cat_other=0x7f080057;
-        public static final int settings_cat_results=0x7f080054;
-        public static final int settings_cat_tests=0x7f080055;
-        public static final int settings_sum_alert=0x7f080063;
-        public static final int settings_sum_email=0x7f080062;
+        public static final int settings_cat_event=0x7f080054;
+        public static final int settings_cat_other=0x7f080058;
+        public static final int settings_cat_results=0x7f080055;
+        public static final int settings_cat_tests=0x7f080056;
+        public static final int settings_sum_alert=0x7f080064;
+        public static final int settings_sum_email=0x7f080063;
         /**  Preference Summary Strings 
          */
-        public static final int settings_sum_instruct=0x7f08005e;
-        public static final int settings_sum_remind=0x7f080064;
-        public static final int settings_sum_results=0x7f080060;
-        public static final int settings_sum_test=0x7f080061;
-        public static final int settings_sum_user=0x7f08005f;
+        public static final int settings_sum_instruct=0x7f08005f;
+        public static final int settings_sum_remind=0x7f080065;
+        public static final int settings_sum_results=0x7f080061;
+        public static final int settings_sum_test=0x7f080062;
+        public static final int settings_sum_user=0x7f080060;
         /**  Other Settings Strings 
          */
-        public static final int settings_time_default=0x7f080078;
-        public static final int settings_title_alert=0x7f08005c;
-        public static final int settings_title_email=0x7f08005b;
+        public static final int settings_time_default=0x7f08007b;
+        public static final int settings_title_alert=0x7f08005d;
+        public static final int settings_title_email=0x7f08005c;
         /**  Preference Title Strings 
          */
-        public static final int settings_title_instruct=0x7f080058;
-        public static final int settings_title_remind=0x7f08005d;
-        public static final int settings_title_results=0x7f08005a;
-        public static final int settings_title_user=0x7f080059;
+        public static final int settings_title_instruct=0x7f080059;
+        public static final int settings_title_remind=0x7f08005e;
+        public static final int settings_title_results=0x7f08005b;
+        public static final int settings_title_user=0x7f08005a;
         public static final int setup_mode_add=0x7f08004f;
         /**  <string name="setup_mode_password">entersetupmode</string> 
          */
         public static final int setup_mode_default_email=0x7f08004c;
+        public static final int setup_mode_groups=0x7f080053;
         /**  Setup Mode Strings 
          */
         public static final int setup_mode_password=0x7f08004b;
