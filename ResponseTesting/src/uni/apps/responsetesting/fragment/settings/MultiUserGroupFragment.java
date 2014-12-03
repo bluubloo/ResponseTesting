@@ -9,6 +9,7 @@ import uni.apps.responsetesting.interfaces.listener.MultiUserGroupListener;
 import uni.apps.responsetesting.interfaces.listener.MultiUserSettingsListener;
 import uni.apps.responsetesting.models.MultiUserGroupInfo;
 import uni.apps.responsetesting.models.MultiUserInfo;
+import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -156,27 +157,23 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 				//updates the notes
 				DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 				String name = text.getText().toString();
-				int id = db.checkUserName(name);
-				if(id == -1){
-					id = db.getNewUserId();
-					MultiUserInfo tmp = new MultiUserInfo(groups.get(pos).getGroup(), 
-							name, Integer.toString(id));
-					add(tmp, db);
-					groups.get(pos).addUser(tmp);
-					resetAdapter();
-				}
-				else{
-					new AlertDialog.Builder(getActivity())
-					.setTitle("Name Exists")
-					.setMessage("The name " + name + " already exists. Please try again")
-					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) { 
-						}
-					})
-					.setIcon(android.R.drawable.ic_menu_info_details)
-					.show();
-					dialog.cancel();
-				}
+				if(!name.equals("single")){
+					int id = db.checkUserName(name);
+					if(id == -1){
+						id = db.getNewUserId();
+						MultiUserInfo tmp = new MultiUserInfo(groups.get(pos).getGroup(), 
+								name, Integer.toString(id));
+						add(tmp, db);
+						groups.get(pos).addUser(tmp);
+						resetAdapter();
+					}
+					else{
+						ActivityUtilities.displayMessage(getActivity(), "Name Exists", 
+								"The name " + name + " already exists. Please try again");
+					}
+				}else
+					ActivityUtilities.displayMessage(getActivity(), "Name Exists", 
+							"Use of the name 'single' is not allowed");
 			}
 		});
 

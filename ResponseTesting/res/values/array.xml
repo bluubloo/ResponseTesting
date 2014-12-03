@@ -38,8 +38,8 @@
         <item>Press yes if the card has been shown before, no if it has not. \nThere will twenty cards</item>
         <item>Recreate the shown pattern as fast as you can.\nFor each pattern you can make 3 errors. </item>
         <item>If the text colour of the top word matches the word colour below, press Match.\nIf not press No Match.</item>
-    </string-array>
-        <string-array name="event_name_groups">
+   </string-array>
+   <string-array name="event_name_array_noq">
         <item>Appearing Object</item>
         <item>Appearing Object - Fixed Point</item>
         <item>Arrow Ignoring Test</item>
@@ -51,7 +51,6 @@
         <item>One Card Learning Test</item>
         <item>Pattern Recreation</item>
         <item>Stroop Test</item>
-        <item>Unassigned</item>
     </string-array>
     
 </resources>

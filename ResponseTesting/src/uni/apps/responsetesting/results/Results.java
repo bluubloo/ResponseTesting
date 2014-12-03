@@ -3,7 +3,6 @@ package uni.apps.responsetesting.results;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
 import uni.apps.responsetesting.R;
@@ -114,7 +113,7 @@ public class Results {
 	//--------------------------------------------------------------------------------------------
 	//INSERT Results
 
-	public static void insertResult(String testName, String result, long time, Activity activity){
+	public static void insertResult(String testName, String result, long time, Activity activity, String id){
 		Resources r = activity.getResources();
 		ContentValues values = new ContentValues();
 		values.put(r.getString(R.string.event_name), testName);
@@ -122,22 +121,23 @@ public class Results {
 		values.put(r.getString(R.string.timestamp), time);
 		values.put(r.getString(R.string.notes), "");
 		values.put(r.getString(R.string.sent), 0);
+		values.put(r.getString(R.string.user_id), id);
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
 		db.insert(values);
 	}
 
 	public static void insertResult(String eventName, int result,
-			long time, Activity activity) {
-		insertResult(eventName, Integer.toString(result), time, activity);		
+			long time, Activity activity, String id) {
+		insertResult(eventName, Integer.toString(result), time, activity, id);		
 	}
 	
 	public static void insertResult(String eventName, double result,
-			long time, Activity activity) {
-		insertResult(eventName, Double.toString(result), time, activity);	
+			long time, Activity activity, String id) {
+		insertResult(eventName, Double.toString(result), time, activity, id);	
 	}
 	
 	public static void insertQuestionaireResult(String eventName, String[] durations, String ratings, 
-			long time, Activity activity){
+			long time, Activity activity, String id){
 		Resources r = activity.getResources();
 		ContentValues values = new ContentValues();
 		values.put(r.getString(R.string.timestamp), time);
@@ -146,6 +146,7 @@ public class Results {
 		values.put(r.getString(R.string.sound_sleep), durations[2]);
 		values.put(r.getString(R.string.ratings), ratings);
 		values.put(r.getString(R.string.sent), 0);
+		values.put(r.getString(R.string.user_id), id);
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
 		db.insertQuestionarie(values);
 	}
@@ -201,6 +202,8 @@ public class Results {
 			fw.append("Time");
 			fw.append(',');
 			fw.append("Extra Notes");
+			fw.append(',');
+			fw.append("User Id");
 			fw.append("\n");
 			Log.d(TAG, Integer.toString(results.getCount()));
 			if(results.moveToFirst()){
@@ -215,6 +218,8 @@ public class Results {
 					fw.append(c.getTime().toString());
 					fw.append(',');
 					fw.append(results.getString(4));
+					fw.append(',');
+					fw.append(results.getString(5));
 					fw.append("\n");
 				} while(results.moveToNext());
 			} else{

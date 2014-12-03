@@ -1,7 +1,5 @@
 package uni.apps.responsetesting.utils;
 
-import java.util.Calendar;
-
 import uni.apps.responsetesting.MainMenuActivity;
 import uni.apps.responsetesting.R;
 import android.app.Notification;

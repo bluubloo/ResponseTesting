@@ -6,8 +6,10 @@ import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.results.Results;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -147,8 +149,10 @@ public class FingerTapTestFragment extends Fragment {
 			infoTextView.setText(getResources().getString(R.string.start_square));
 			clickCountTextView.setText(getResources().getString(R.string.tap_click_info_count));
 			startTime = 0;
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+			String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 			Results.insertResult(eventName, Integer.toString(clickCount),
-					Calendar.getInstance().getTimeInMillis(), getActivity());
+					Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 			ActivityUtilities.displayResults(getActivity(), eventName, 
 					"Your score was " + Integer.toString(clickCount) + " taps in 5s. With an average of " +
 							Double.toString((double) clickCount / (double) seconds) + " taps per second.");

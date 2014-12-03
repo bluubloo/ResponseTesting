@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.adapter.MultiUserSelectionAdapter;
 import uni.apps.responsetesting.database.DatabaseHelper;
+import uni.apps.responsetesting.interfaces.listener.MultiUserSelectionListener;
 import uni.apps.responsetesting.models.MultiUserInfo;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.ContentValues;
@@ -20,20 +22,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MultiUserSelectionFragment extends Fragment {
+public class MultiUserSelectionFragment extends Fragment implements MultiUserSelectionListener{
 
 	private static final String TAG = "MultiUserSelectionFragment";
 	private TextView email;
 	private ListView list;
 	private MultiUserSelectionAdapter adapter;
-	//TODO
+	private MultiUserSelectionListener listener;
 	private String userid = "";
 	private String name = "";
+	private int[] values;
 
 	public static MultiUserSelectionFragment getInstance(MultiUserInfo user) {
 		MultiUserSelectionFragment tmp = new MultiUserSelectionFragment();
@@ -43,7 +45,7 @@ public class MultiUserSelectionFragment extends Fragment {
 		tmp.setArguments(args);
 		return tmp;
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,7 +61,20 @@ public class MultiUserSelectionFragment extends Fragment {
 		}
 		getActivity().getActionBar().setSubtitle(name);
 	}
-	
+
+	//attachs listener to fragment
+	@Override
+	public void onAttach(Activity activity) {
+		Log.d(TAG, "onAttach()");
+		super.onAttach(activity);
+		try {
+			listener = (MultiUserSelectionListener) this;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString() +
+					" must implement MultiUserSelectionListener");
+		}
+	}
+
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
@@ -83,8 +98,8 @@ public class MultiUserSelectionFragment extends Fragment {
 	private void setUpListAdapter() {
 		String[] names = getResources().getStringArray(R.array.event_name_array);
 		names = removeQuestionaire(names);
-		int[] values = getValues(names);
-		adapter = new MultiUserSelectionAdapter(names, values, getActivity());
+		values = getValues(names);
+		adapter = new MultiUserSelectionAdapter(names, values, getActivity(), listener);
 		list.setAdapter(adapter);
 		list.setChoiceMode(ListView.CHOICE_MODE_NONE);
 	}
@@ -136,7 +151,7 @@ public class MultiUserSelectionFragment extends Fragment {
 			}
 
 		});
-		
+
 		submit.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -150,13 +165,18 @@ public class MultiUserSelectionFragment extends Fragment {
 	private void updateSettings() {
 		String emailText = email.getText().toString();
 		String settings = "";
-		for(int i = 0; i < list.getCount(); i++){
-			if(i < list.getCount() - 1)
+		for(int i = 0; i < adapter.getCount(); i++){
+			Log.d(TAG, "Count: " + Integer.toString(i));
+			settings += adapter.getValue(i);
+			if(i < adapter.getCount() - 1)
+				settings += "|"; 
+			Log.d(TAG, settings);
+			/*if(i < list.getCount() - 1)
 				settings += getValue(((CheckBox) list.getChildAt(i).
 						findViewById(R.id.multi_value)).isChecked()) + "|";
 			else
 				settings += getValue(((CheckBox) list.getChildAt(i).
-						findViewById(R.id.multi_value)).isChecked());
+						findViewById(R.id.multi_value)).isChecked());*/
 		}
 		Resources r = getResources();
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
@@ -164,12 +184,7 @@ public class MultiUserSelectionFragment extends Fragment {
 		values.put(r.getString(R.string.user_email), emailText);
 		values.put(r.getString(R.string.user_settings), settings);
 		db.updateMultiSettings(userid, values);
-	}
-
-	private String getValue(boolean checked) {
-		if(checked)
-			return "1";
-		return "0";
+		getActivity().onBackPressed();
 	}
 
 	private void updateEmail(){
@@ -199,6 +214,19 @@ public class MultiUserSelectionFragment extends Fragment {
 		builder.show();
 	}
 
-	
+	@Override
+	public void onCheckChanged(int pos) {
+		// TODO Auto-generated method stub
+		int tmp = values[pos];
+		Log.d(TAG, Integer.toString(tmp));
+		if(tmp == 1)
+			values[pos] = 0;
+		else
+			values[pos] = 1;
+		Log.d(TAG, Integer.toString(values[pos]));
+		adapter.update(values);
+	}
+
+
 
 }

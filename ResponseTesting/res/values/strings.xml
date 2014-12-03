@@ -40,6 +40,8 @@
     <string name="action_delete_all">Delete All Events</string>
     <string name="action_setup">Setup Mode</string>
     <string name="action_add_group">Add New Group</string>
+    <string name="action_switch">Switch Users</string>
+    <string name="action_refresh">Refresh Users Tests</string>
 
     <!-- Finger Tap Test Strings -->
     <string name="tap_click_info_3">Keep on Tapping</string>
@@ -137,6 +139,12 @@
     <string name="pref_key_user">pref_event_user</string>
     <string name="pref_key_results">pref_event_show_results</string>
     <string name="pref_key_email">pref_event_email</string>
+    <string name="pref_key_test">pref_event_test</string>
+    <string name="pref_key_alert">pref_event_alert</string>
+    <string name="pref_key_remind">pref_event_remind</string>
+    <string name="pref_key_user_id">pref_event_user_id</string>
+    
+    <!-- Preference Key Strings for Single User Mode Tests -->
     <string name="pref_key_ao">pref_event_show_ao</string>
     <string name="pref_key_aof">pref_event_show_aof</string>
     <string name="pref_key_ai">pref_event_show_ai</string>
@@ -148,9 +156,7 @@
     <string name="pref_key_oclt">pref_event_show_oclt</string>
     <string name="pref_key_pr">pref_event_show_pr</string>
     <string name="pref_key_s">pref_event_show_s</string>
-    <string name="pref_key_test">pref_event_test</string>
-    <string name="pref_key_alert">pref_event_alert</string>
-    <string name="pref_key_remind">pref_event_remind</string>
+    
     
     <!-- Other Settings Strings -->
     <string name="settings_time_default">9:00</string>

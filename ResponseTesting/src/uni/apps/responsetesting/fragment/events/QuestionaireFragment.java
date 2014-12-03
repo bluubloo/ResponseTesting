@@ -9,7 +9,9 @@ import uni.apps.responsetesting.results.Results;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,9 +87,10 @@ public class QuestionaireFragment extends Fragment {
 					String finalResult = "";
 					for(String s : results)
 						finalResult += s + "|";
-					
+					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+					String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 					Results.insertQuestionaireResult(eventName, new String[] {sleep, light, sound}, 
-							finalResult, Calendar.getInstance().getTimeInMillis(), getActivity());
+							finalResult, Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 
 					new AlertDialog.Builder(getActivity())
 					.setTitle("Questionaire Submitted")

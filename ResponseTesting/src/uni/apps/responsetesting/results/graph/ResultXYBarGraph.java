@@ -67,6 +67,11 @@ public class ResultXYBarGraph extends ResultXYGraph {
 	private void setRangeSeriesFormat(){
 		plot.setRangeValueFormat(new Format(){
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public StringBuffer format(Object object, StringBuffer buffer,
 					FieldPosition field) {

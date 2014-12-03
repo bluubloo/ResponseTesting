@@ -9,8 +9,10 @@ import uni.apps.responsetesting.results.Results;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import uni.apps.responsetesting.utils.Conversion;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,8 +134,10 @@ public class EvenVowelFragment extends Fragment {
 		double[] result = Results.getResults(results);
 		String tmp = Conversion.milliToStringSeconds(result[1], 3);
 		String resultString = result[0] + " correct. " + tmp + " average time (s).";
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		Results.insertResult(eventName, result[0] + "|" + tmp, 
-				Calendar.getInstance().getTimeInMillis(), getActivity());
+				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);
 		Resources r = getResources();
 		yesButton.setText(r.getString(R.string.start));

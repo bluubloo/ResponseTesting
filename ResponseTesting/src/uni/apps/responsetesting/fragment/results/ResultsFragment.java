@@ -7,9 +7,11 @@ import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.results.graph.GraphUtilities;
 import uni.apps.responsetesting.results.graph.ResultXYBarGraph;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,8 +92,13 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 
 	private void setGraphForEvent(String value) {
 		Log.d(TAG, value);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		Log.d(TAG, userId);
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
-		Cursor cursor = db.getSingle(value);
+		//Cursor cursor = db.getSingle(value, userId);
+		Cursor cursor = db.getSingle(value, userId);
+		Log.d(TAG, Integer.toString(cursor.getCount()));
 		if(cursor.getCount() == 0)
 			update();
 		else{

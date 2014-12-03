@@ -11,8 +11,10 @@ import uni.apps.responsetesting.utils.ActivityUtilities;
 import uni.apps.responsetesting.utils.Conversion;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -210,8 +212,10 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 			clickableImageView[imageCounter].setVisibility(View.INVISIBLE);
 			double average = getAverage();
 			String avg =  Conversion.milliToStringSeconds(average, 5);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+			String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 			Results.insertResult(eventName,avg,
-					Calendar.getInstance().getTimeInMillis(), getActivity());
+					Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 			startTextView.setText(getResources().getString(R.string.restart_square));
 			startTextView.setVisibility(View.VISIBLE);
 			ActivityUtilities.displayResults(getActivity(), eventName + " Test", 

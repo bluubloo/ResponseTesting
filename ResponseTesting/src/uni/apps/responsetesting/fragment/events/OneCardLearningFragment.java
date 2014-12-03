@@ -8,9 +8,11 @@ import uni.apps.responsetesting.results.Results;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import uni.apps.responsetesting.utils.CardOperations;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -151,8 +153,10 @@ public class OneCardLearningFragment extends Fragment {
 		counter = 0;
 		running = !running;
 		int result = getResults();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		Results.insertResult(eventName, result,
-				Calendar.getInstance().getTimeInMillis(), getActivity());
+				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, 
 				"You got " + Integer.toString(result) + " correct.");
 	}

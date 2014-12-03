@@ -12,9 +12,11 @@ import uni.apps.responsetesting.utils.Conversion;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -173,8 +175,10 @@ public class StroopTestFragment extends Fragment {
 		String timeDur2 = Conversion.milliToStringSeconds(duration2, 3);
 	//	Results.insertResult(eventName, timeDiff,
 	//			Calendar.getInstance().getTimeInMillis(), getActivity());
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		Results.insertResult(eventName, timeDur2,
-							Calendar.getInstance().getTimeInMillis(), getActivity());
+							Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		new AlertDialog.Builder(getActivity())
 		.setTitle("Stroop Test Complete")
 	//	.setMessage("First Run: " + timeDur1 + "s\nSecond Run: " + timeDur2 + 

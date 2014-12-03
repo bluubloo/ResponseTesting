@@ -47,8 +47,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					resources.getString(R.string.event_score) + " TEXT," + 
 					resources.getString(R.string.timestamp) + " INTEGER, " + 
 					resources.getString(R.string.sent) + " INTEGER, " +
-					resources.getString(R.string.notes) + 
-					" TEXT, PRIMARY KEY(" + resources.getString(R.string.event_name) + 
+					resources.getString(R.string.notes) + " TEXT, " +
+					resources.getString(R.string.user_id) + " TEXT, " +
+					"PRIMARY KEY(" + resources.getString(R.string.event_name) + 
 					", " + resources.getString(R.string.timestamp) + "))";
 			db.execSQL(create);
 			create = "CREATE TABLE " + resources.getString(R.string.table_name_questionaire) +
@@ -57,7 +58,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					resources.getString(R.string.light_sleep) + " TEXT, " + 
 					resources.getString(R.string.sound_sleep) + " TEXT, " + 
 					resources.getString(R.string.ratings) + " TEXT, " + 
-					resources.getString(R.string.sent) + " INTEGER)"; 
+					resources.getString(R.string.sent) + " INTEGER, " +
+					resources.getString(R.string.user_id) + " TEXT)"; 
 			db.execSQL(create);
 			create = "CREATE TABLE " + resources.getString(R.string.table_name_multi_settings) +
 					"(" + resources.getString(R.string.user_id) + " INTEGER PRIMARY KEY, " + 
@@ -163,7 +165,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		onCreate(this.getWritableDatabase());
 		return 0;
 	}
-	
+
 	public void removeMulitUser(String id) {
 		this.getWritableDatabase().delete(resources.getString(R.string.table_name_multi_settings),
 				resources.getString(R.string.user_id) + "=?", new String[] {id});
@@ -178,6 +180,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				resources.getString(R.string.event_name) + "=?", new String[] {testName}, null, 
 				null, resources.getString(R.string.timestamp));
 	}	
+
+	//All rows for single Event and user
+	public Cursor getSingle(String testName, String userId) {
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
+				resources.getString(R.string.event_name) + 
+				"=? AND " + resources.getString(R.string.event_name) + "=?";
+		return this.getReadableDatabase().rawQuery(sql, new String[] {testName, userId});
+		/*String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
+				resources.getString(R.string.event_name) + 
+				"='" + testName + "' AND " + resources.getString(R.string.event_name) + "='" + userId + "'";
+		return this.getReadableDatabase().rawQuery(sql,null);*/
+		/*return this.getReadableDatabase().query(resources.getString(R.string.table_name), null, 
+				resources.getString(R.string.event_name) + "=? AND " + resources.getString(R.string.event_name) + "=?", 
+				new String[] {testName, userId}, null, null, resources.getString(R.string.timestamp));*/
+	}
 
 	//All rows for single Event ordered by score
 	public Cursor getSingleBest(String testName) {
@@ -324,7 +341,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				" WHERE " + resources.getString(R.string.user_id) + "=?";
 		return this.getReadableDatabase().rawQuery(sql, new String[] {id});
 	}
-	
+
 	public String getMultiSettingsString(String id) {
 		Cursor settings = getMultiSettings(id);
 		if(settings.moveToFirst()){
@@ -360,6 +377,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		return 1;
 	}
+
+	public String checkUserExists(String name) {
+		String sql = "SELECT " + resources.getString(R.string.user_id) +" FROM " + resources.getString(R.string.table_name_multi_settings) + 
+				" WHERE " + resources.getString(R.string.user_name) + "=?";
+		Cursor cursor = this.getReadableDatabase().rawQuery(sql, new String[] {name});
+		if(cursor.moveToFirst()){
+			return cursor.getString(0);
+		}
+		return "-1";
+	}
+
+	public String getMultiUserName(String id) {
+		String sql = "SELECT " + resources.getString(R.string.user_name) +" FROM " + resources.getString(R.string.table_name_multi_settings) + 
+				" WHERE " + resources.getString(R.string.user_id) + "=?";
+		Cursor cursor = this.getReadableDatabase().rawQuery(sql, new String[] {id});
+		if(cursor.moveToFirst()){
+			return cursor.getString(0);
+		}
+		return "single";
+	}
+
+
 
 
 

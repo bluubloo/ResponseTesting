@@ -126,6 +126,20 @@ public class ActivityUtilities {
 		.setIcon(android.R.drawable.ic_dialog_alert)
 		.show();
 	}
+	
+	//displays message
+	public static void displayMessage(Activity activity, String title, String message){
+		new AlertDialog.Builder(activity)
+		.setTitle(title)
+		.setMessage(message)
+		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+
+			}
+		})
+		.setIcon(android.R.drawable.ic_dialog_alert)
+		.show();
+	}
 
 	//checks if the test is replayable
 	public static boolean checkPlayable(String eventName, int times, Activity activity){
