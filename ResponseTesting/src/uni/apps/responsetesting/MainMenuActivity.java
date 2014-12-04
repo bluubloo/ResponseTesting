@@ -2,7 +2,6 @@ package uni.apps.responsetesting;
 
 import java.util.Calendar;
 
-import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.fragment.MainMenuFragment;
 import uni.apps.responsetesting.fragment.MultiUserNameFragment;
 import uni.apps.responsetesting.interfaces.listener.MainMenuListener;
@@ -10,21 +9,17 @@ import uni.apps.responsetesting.reminders.AlertClient;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 /**
  * The application's entry point will be a small menu  

@@ -24,12 +24,14 @@
     <string name="total_sleep">TotalSleep</string>
     <string name="light_sleep">LightSleep</string>
     <string name="sound_sleep">SoundSleep</string>
+    <string name="heart_rate">RestingHR</string>
     <string name="ratings">Ratings</string>
     <string name="user_group">UserGroup</string>
     <string name="user_id">UserId</string>
     <string name="user_name">UserName</string>
     <string name="user_settings">Settings</string>
     <string name="user_email">Email</string>
+    
 
     <!-- Action Bar Strings -->
     <string name="action_settings">Settings</string>
@@ -56,6 +58,7 @@
     <string name="quest_total">Total Sleep:</string>
     <string name="quest_light">Light Sleep:</string>
     <string name="quest_sound">Sound Sleep:</string>
+    <string name="quest_hr">Resting HR:</string>
     <string name="quest_if_known">(If Known)</string>
     <string name="quest_low">Very Low</string>
     <string name="quest_high">Very High</string>
@@ -125,6 +128,7 @@
     <string name="settings_title_email">Set Email Address</string>
     <string name="settings_title_alert">Set Reminder Time</string>
     <string name="settings_title_remind">Enable Reminders</string>
+    <string name="settings_title_sleep">Show Light/Sound Sleep</string>
     
     <!-- Preference Summary Strings -->
     <string name="settings_sum_instruct">Enable/Disable the event instructions page</string>
@@ -134,6 +138,7 @@
     <string name="settings_sum_email">Set email address to send results to.</string>
     <string name="settings_sum_alert">Set Time this App Sends You a Reminder</string>
     <string name="settings_sum_remind">Enable/Disable Reminders</string>
+    <string name="settings_sum_sleep">Enable/Disable Light/Sound Sleep Durations</string>
     
     <!-- Preference Key Strings -->
     <string name="pref_key_instruct">pref_event_show_instruct</string>
@@ -146,6 +151,7 @@
     <string name="pref_key_remind">pref_event_remind</string>
     <string name="pref_key_user_id">pref_event_user_id</string>
     <string name="pref_key_alert_next">pref_next_alarm</string>
+    <string name="pref_key_sleep">pref_next_sleep</string>
     
     <!-- Preference Key Strings for Single User Mode Tests -->
     <string name="pref_key_ao">pref_event_show_ao</string>

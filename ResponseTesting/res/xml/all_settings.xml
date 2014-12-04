@@ -12,6 +12,11 @@
             android:key="@string/pref_key_instruct"
             android:summary="@string/settings_sum_instruct"
             android:title="@string/settings_title_instruct" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_sleep"
+            android:summary="@string/settings_sum_sleep"
+            android:title="@string/settings_title_sleep" />
     </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/settings_cat_results">
@@ -24,7 +29,7 @@
     
     <PreferenceCategory android:title="@string/settings_cat_other">
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="@string/pref_key_remind"
             android:summary="@string/settings_sum_remind"
             android:title="@string/settings_title_remind" />

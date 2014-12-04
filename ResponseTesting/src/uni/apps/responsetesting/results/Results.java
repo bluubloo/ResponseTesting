@@ -131,12 +131,12 @@ public class Results {
 			long time, Activity activity, String id) {
 		insertResult(eventName, Integer.toString(result), time, activity, id);		
 	}
-	
+
 	public static void insertResult(String eventName, double result,
 			long time, Activity activity, String id) {
 		insertResult(eventName, Double.toString(result), time, activity, id);	
 	}
-	
+
 	public static void insertQuestionaireResult(String eventName, String[] durations, String ratings, 
 			long time, Activity activity, String id){
 		Resources r = activity.getResources();
@@ -148,6 +148,7 @@ public class Results {
 		values.put(r.getString(R.string.ratings), ratings);
 		values.put(r.getString(R.string.sent), 0);
 		values.put(r.getString(R.string.user_id), id);
+		values.put(r.getString(R.string.heart_rate), durations[3]);
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
 		db.insertQuestionarie(values);
 	}
@@ -179,23 +180,25 @@ public class Results {
 	public static void resultsToCSV(Activity activity){
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		Cursor results = db.getAllResults();
-		resultsToCSV(results, activity);
+		Cursor quest = db.getAllQuestionaireResults();
+		resultsToCSV(results, quest, activity);
 	}
-	
+
 	public static boolean resultsRecentToCSV(Activity activity) {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		Cursor results = db.getMostRecent();
-		return resultsToCSV(results, activity);
+		Cursor quest = db.getMostRecentQuestionaire();
+		return resultsToCSV(results, quest, activity);
 	}
 
-	public static boolean resultsToCSV(final Cursor results, Activity activity){
+	public static boolean resultsToCSV(final Cursor results, final Cursor quest, Activity activity){
 
 		File root = Environment.getExternalStorageDirectory();
 		File file = new File(root, "Results.csv");
 		try {
 			HashMap<String, String> nameMap = cursorToMap(DatabaseHelper.getInstance(activity,
 					activity.getResources()).getMultiUsers());
-			
+
 			FileWriter fw = new FileWriter(file);
 
 			fw.append("Event Name");
@@ -213,7 +216,7 @@ public class Results {
 			Log.d(TAG, Integer.toString(results.getCount()));
 			if(results.moveToFirst()){
 				do{
-					
+
 					fw.append(results.getString(0));
 					fw.append(',');
 					fw.append(results.getString(1));
@@ -238,13 +241,59 @@ public class Results {
 				return false;
 			}
 			fw.flush();
+			fw.append("\n");
+			fw.append("\n");
+			fw.append("Time");
+			fw.append(',');
+			fw.append("Total Sleep");
+			fw.append(',');
+			fw.append("Light Sleep");
+			fw.append(',');
+			fw.append("Sound Sleep");
+			fw.append(',');
+			fw.append("Resting HR");
+			fw.append(',');
+			fw.append("Ratings");
+			fw.append(',');
+			fw.append("User Id");
+			fw.append(',');
+			fw.append("Username");
+			fw.append("\n");
+
+			Log.d(TAG, Integer.toString(quest.getCount()));
+			if(quest.moveToFirst()){
+				Calendar c = Calendar.getInstance();
+				c.setTimeInMillis(quest.getLong(0));
+				fw.append(c.getTime().toString());
+				fw.append(',');
+				fw.append(quest.getString(1));
+				fw.append(',');
+				fw.append(quest.getString(2));
+				fw.append(',');
+				fw.append(quest.getString(3));
+				fw.append(',');
+				fw.append(quest.getString(7));
+				fw.append(',');
+				fw.append(quest.getString(4));
+				fw.append(',');
+				String id = quest.getString(6);
+				fw.append(id);
+				fw.append(',');
+				if(nameMap.containsKey(id))
+					fw.append(nameMap.get(id));
+				else
+					fw.append("Unknown");
+				fw.append("\n");
+			}
+
+			fw.flush();
 			fw.close();
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}
 		return true;
 	}
-	
+
 	private static HashMap<String, String> cursorToMap(Cursor cursor) {
 		HashMap<String, String> tmp = new HashMap<String, String>();
 		tmp.put("single", "single");
@@ -260,7 +309,7 @@ public class Results {
 
 	//--------------------------------------------------------------------------------------------
 	//Auxiliary Methods
-	
+
 	public static double[] getResults(CorrectDurationInfo[] results) {
 		double time = 0;
 		double correct = 0;

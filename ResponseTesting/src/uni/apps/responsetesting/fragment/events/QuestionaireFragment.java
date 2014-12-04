@@ -46,8 +46,16 @@ public class QuestionaireFragment extends Fragment {
 		list_view = (ListView) view.findViewById(R.id.questionaire_list);
 
 		final EditText totalSleep = (EditText) view.findViewById(R.id.questionaire_total);
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		boolean sleep = prefs.getBoolean(getResources().getString(R.string.pref_key_sleep), false);
 		final EditText lightSleep = (EditText) view.findViewById(R.id.questionaire_light);
 		final EditText soundSleep = (EditText) view.findViewById(R.id.questionaire_sound);
+		final EditText heartRate = (EditText) view.findViewById(R.id.questionaire_hr);
+		if(!sleep){
+			view.findViewById(R.id.light_con).setVisibility(View.GONE);
+			view.findViewById(R.id.sound_con).setVisibility(View.GONE);
+		}
 
 		Button submit = (Button) view.findViewById(R.id.questionaire_submit);		
 		submit.setOnClickListener(new OnClickListener(){
@@ -60,6 +68,7 @@ public class QuestionaireFragment extends Fragment {
 				String sleep = totalSleep.getText().toString();
 				String light = lightSleep.getText().toString();
 				String sound = soundSleep.getText().toString();
+				String hr = heartRate.getText().toString();
 
 				if(!checkSleepFormat(sleep, light, sound)){
 					new AlertDialog.Builder(getActivity())
@@ -75,21 +84,23 @@ public class QuestionaireFragment extends Fragment {
 							.show();
 				}else{
 
-					for(int i = 0; i < list_view.getCount(); i++){
-						View view = list_view.getChildAt(i);
+					for(int i = 0; i < adapter.getCount(); i++){
+						results.add(adapter.getRating(i));
+					/*	View view = list_view.getChildAt(i);
 						if(view != null){
 							RatingBar r = (RatingBar) view.findViewById(R.id.questionaire_rating);
 							String s = Float.toString(r.getRating()).substring(0, 3);
 							results.add(s);
-						}
+						}*/
 					}
 					
 					String finalResult = "";
 					for(String s : results)
 						finalResult += s + "|";
+					Log.d(TAG, finalResult);
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 					String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
-					Results.insertQuestionaireResult(eventName, new String[] {sleep, light, sound}, 
+					Results.insertQuestionaireResult(eventName, new String[] {sleep, light, sound, hr}, 
 							finalResult, Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 
 					new AlertDialog.Builder(getActivity())

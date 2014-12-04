@@ -59,7 +59,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					resources.getString(R.string.sound_sleep) + " TEXT, " + 
 					resources.getString(R.string.ratings) + " TEXT, " + 
 					resources.getString(R.string.sent) + " INTEGER, " +
-					resources.getString(R.string.user_id) + " TEXT)"; 
+					resources.getString(R.string.user_id) + " TEXT, " + 
+					resources.getString(R.string.heart_rate) + " TEXT)"; 
 			db.execSQL(create);
 			create = "CREATE TABLE " + resources.getString(R.string.table_name_multi_settings) +
 					"(" + resources.getString(R.string.user_id) + " INTEGER PRIMARY KEY, " + 
@@ -138,6 +139,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				resources.getString(R.string.sent) + "=?", new String[] {"0"});
 
 	}
+	
+	private void updateMostRecentQuest() {
+		ContentValues values =  new ContentValues();
+		values.put(resources.getString(R.string.sent), 1);
+		this.getWritableDatabase().update(resources.getString(R.string.table_name_questionaire), values,
+				resources.getString(R.string.sent) + "=?", new String[] {"0"});
+	}
 
 	public void updateMultiSettings(String id, ContentValues values){
 		this.getWritableDatabase().update(resources.getString(R.string.table_name_multi_settings), values,
@@ -208,6 +216,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				" WHERE " + resources.getString(R.string.sent) + "=0 ORDER BY " + resources.getString(R.string.timestamp);
 		Cursor cursor =  this.getReadableDatabase().rawQuery(sql, null);
 		updateMostRecent();
+		return cursor;
+	}
+	
+	public Cursor getMostRecentQuestionaire() {
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name_questionaire) +
+				" WHERE " + resources.getString(R.string.sent) + "=0 ORDER BY " + resources.getString(R.string.timestamp);
+		Cursor cursor =  this.getReadableDatabase().rawQuery(sql, null);
+		updateMostRecentQuest();
 		return cursor;
 	}
 
@@ -398,6 +414,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		return "single";
 	}
+
+
 
 
 
