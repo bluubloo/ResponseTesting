@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -34,8 +35,8 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 			to = prefs.getString(activity.getResources().getString(R.string.pref_key_email), 
 					activity.getResources().getString(R.string.setup_mode_default_email));
 		else
-			to = getMultiUserEmail(params[0].strings[3], activity);
-		
+			to = getMultiUserEmail(activity, prefs);
+		Log.d("EMAIL", to);
 		//set up email
 		MailClient mail = new MailClient(from, "50waikato");
 		mail.setTo(new String[] {to});
@@ -58,9 +59,10 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 		return true;
 	}
 
-	private String getMultiUserEmail(String string, Activity activity) {
-		// TODO Auto-generated method stub
-		return activity.getResources().getString(R.string.setup_mode_default_email);
+	private String getMultiUserEmail(Activity activity, SharedPreferences prefs) {
+		return prefs.getString(activity.getResources().getString(R.string.pref_key_multi_email), 
+				activity.getResources().getString(R.string.setup_mode_default_email));
+	
 	}
 
 }

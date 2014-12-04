@@ -40,7 +40,7 @@ public class MainMenuFragment extends ListFragment {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		if(savedInstanceState != null){
-			multiUserSettings = savedInstanceState.getString("settings");
+		//	multiUserSettings = savedInstanceState.getString("settings");
 		}
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
@@ -52,7 +52,7 @@ public class MainMenuFragment extends ListFragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
-		outState.putString("settings", multiUserSettings);
+		//outState.putString("settings", multiUserSettings);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class MainMenuFragment extends ListFragment {
 	}
 
 	private boolean checkMultiUserPrferences(Resources resources, String name) {
-		if(multiUserSettings.equals(""))
+		//if(multiUserSettings.equals(""))
 			multiUserSettings = DatabaseHelper.getInstance(getActivity(), resources).
 			getMultiSettingsString(userId);
 		if(!multiUserSettings.equals("")){
@@ -185,5 +185,10 @@ public class MainMenuFragment extends ListFragment {
 		TextView txt = (TextView) v.findViewById(android.R.id.text1);
 		String name = txt.getText().toString();
 		listener.OnMenuItemClick(name);			
+	}
+	
+	public void update(){
+		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, createList());
+		getListView().setAdapter(adapter);
 	}
 }

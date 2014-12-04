@@ -158,9 +158,9 @@ public final class R {
         public static final int even_vowel_vowel=0x7f0b001d;
         public static final int even_vowel_yes=0x7f0b001e;
         public static final int event_container=0x7f0b0000;
-        public static final int instruct_back=0x7f0b002b;
+        public static final int instruct_back=0x7f0b002a;
         public static final int instruct_event_name=0x7f0b0028;
-        public static final int instruct_next=0x7f0b002a;
+        public static final int instruct_next=0x7f0b002b;
         public static final int instruct_title=0x7f0b0027;
         public static final int instuct_info=0x7f0b0029;
         public static final int linearLayout1=0x7f0b0053;

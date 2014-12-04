@@ -10,4 +10,5 @@ package uni.apps.responsetesting.interfaces.listener;
 public interface MainMenuListener {
 	
 	public void OnMenuItemClick(String value);
+	public void OnMultiUserClick(String id);
 }

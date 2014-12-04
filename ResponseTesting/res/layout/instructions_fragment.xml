@@ -6,9 +6,9 @@
 
     <TextView
         android:id="@+id/instruct_title"
+        style="@style/title_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/title_style"
         android:text="@string/instructions"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -22,9 +22,9 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/divider"
         android:layout_marginBottom="10dp"
-        android:contentDescription="@string/image_descript" />
+        android:contentDescription="@string/image_descript"
+        android:src="@drawable/divider" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -48,20 +48,20 @@
             android:layout_alignParentStart="true" >
 
             <Button
-                android:id="@+id/instruct_next"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/next" />
-
-            <Button
                 android:id="@+id/instruct_back"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/back" />
+
+            <Button
+                android:id="@+id/instruct_next"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/next" />
         </LinearLayout>
     </RelativeLayout>
 

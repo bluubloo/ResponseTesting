@@ -81,6 +81,10 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 		View view =  inflater.inflate(R.layout.multi_user_group_fragment, container, false);
 		list = (ExpandableListView) view.findViewById(R.id.multi_expand_list);
 		email = (TextView) view.findViewById(R.id.multi_email);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String tmp = prefs.getString(getResources().getString(R.string.pref_key_multi_email),
+						getResources().getString(R.string.setup_mode_default_email));
+		email.setText(tmp);
 		setUpAdapter();
 		setUpButtons(view);
 		return view;
@@ -101,7 +105,7 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 	
 	private void updateEmail(){
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("Enter Password");
+		builder.setTitle("Enter New Email");
 
 		final EditText text = new EditText(getActivity());
 		text.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -115,8 +119,7 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 				String tmp = text.getText().toString();
 				email.setText(tmp);
 				Editor editor = prefs.edit();
-				editor.putString(getResources().getString(R.string.pref_key_multi_email),
-						getResources().getString(R.string.setup_mode_default_email));
+				editor.putString(getResources().getString(R.string.pref_key_multi_email), tmp);
 				editor.commit();
 			}
 		});

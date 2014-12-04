@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.fragment.MainMenuFragment;
+import uni.apps.responsetesting.fragment.MultiUserNameFragment;
 import uni.apps.responsetesting.interfaces.listener.MainMenuListener;
 import uni.apps.responsetesting.reminders.AlertClient;
 import uni.apps.responsetesting.utils.ActivityUtilities;
@@ -36,8 +37,10 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 
 	//Needed Variables
 	private FragmentManager frag_manager;
-	private MainMenuFragment main_menu_frag = null;
+	private MainMenuFragment main_menu_frag;
+	private MultiUserNameFragment multi_name_frag ;
 	private static final String MAIN_MENU_TAG = "MainMenuFragment";
+	private static final String MULTI_NAME_TAG = "MultiNameFragment";
 	private static final String TAG = "MainMenuActivity";
 	private AlertClient alertClient;
 	private Handler timerHandler = new Handler();
@@ -65,7 +68,7 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);
 		if(!single)
-			startSession();
+			startSession(false);
 		else{
 			Editor editor = prefs.edit();
 			editor.putString(getResources().getString(R.string.pref_key_user_id), "single");
@@ -82,6 +85,8 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 	public void onResume() {
 		super.onResume();
 		invalidateOptionsMenu();
+		if(main_menu_frag != null)
+			main_menu_frag.update();
 	}
 
 	@Override
@@ -97,7 +102,7 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		//calls the action bar defaults
 		switch(item.getItemId()){
 		case R.id.action_switch_user:
-			startSession();
+			startSession(true);
 			return true;
 		case R.id.action_refresh:
 			addFragments();
@@ -125,6 +130,17 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 	}
 
 	@Override
+	public void OnMultiUserClick(String id) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		Editor editor = prefs.edit();
+		editor.putString(getResources().getString(R.string.pref_key_user_id), id);
+		editor.commit();
+		addFragments();
+	}
+
+
+
+	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		//alters action bar
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -136,7 +152,7 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		return super.onPrepareOptionsMenu(menu);
 	}
 
-	private void startSession() {
+	/*private void startSession() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Enter Username");
 
@@ -177,25 +193,31 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 			}
 		});
 		builder.show();
-	}
+	}*/
 
 	//adds fragment to activity
 	private void addFragments() {
-		//checks if fragment exists
-		//	main_menu_frag = (MainMenuFragment) frag_manager.findFragmentByTag(MAIN_MENU_TAG);
+			//begins transaction
+			FragmentTransaction ft = frag_manager.beginTransaction();
 
-		//begins transaction
-		FragmentTransaction ft = frag_manager.beginTransaction();
-
-		//creates a new fragment and adds it to the activity 
-		//	if(main_menu_frag == null){
-		main_menu_frag = new MainMenuFragment();
-		ft.replace(R.id.main_menu_container, main_menu_frag, MAIN_MENU_TAG);
-		//	}
-		//commits the transaction
-		ft.commit();
-		frag_manager.executePendingTransactions();
+			//creates a new fragment and adds it to the activity 
+			//	if(main_menu_frag == null){
+			main_menu_frag = new MainMenuFragment();
+			ft.replace(R.id.main_menu_container, main_menu_frag, MAIN_MENU_TAG);
+			//	}
+			//commits the transaction
+			ft.commit();
+			frag_manager.executePendingTransactions();
 	}
+
+	private void startSession(boolean show) {
+		multi_name_frag = (MultiUserNameFragment) frag_manager.findFragmentByTag(MULTI_NAME_TAG);
+		if(multi_name_frag == null || show){
+			multi_name_frag = new MultiUserNameFragment();
+			frag_manager.beginTransaction().replace(R.id.main_menu_container, multi_name_frag, MULTI_NAME_TAG).commit();
+		}
+	}
+
 
 	private void startNotify() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -246,4 +268,5 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		alertClient = new AlertClient(this);
 		alertClient.doBindService();
 	}
+
 }

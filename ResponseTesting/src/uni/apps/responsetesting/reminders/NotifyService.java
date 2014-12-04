@@ -22,6 +22,7 @@ public class NotifyService extends Service {
 	private final IBinder binder =  new ServiceBinder();
 	
 	private class ServiceBinder extends Binder{
+		@SuppressWarnings("unused")
 		NotifyService getService(){
 			return NotifyService.this;
 		}
