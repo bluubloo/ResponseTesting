@@ -1,5 +1,6 @@
 package uni.apps.responsetesting.mail;
 
+import java.security.Security;
 import java.util.Calendar;
 import java.util.Properties;
 
@@ -21,6 +22,11 @@ import javax.mail.internet.MimeMultipart;
 
 public class MailClient extends Authenticator {
 
+	
+	static{
+		Security.addProvider(new JSSEProvider());
+	}
+	
 	private String user;
 	private String pass;
 	

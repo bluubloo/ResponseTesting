@@ -241,30 +241,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public boolean checkRecent(String eventName, String id) {
-		/*String sql = "SELECT max(" +  resources.getString(R.string.timestamp) + ") FROM " + 
-				resources.getString(R.string.table_name) + " WHERE " + 
-				resources.getString(R.string.event_name) + "=?";
-		Cursor cursor = this.getWritableDatabase().rawQuery(sql, new String[] {eventName});
-		if(cursor.getCount() == 0)
-			return true;		
-		if(cursor.moveToFirst()){
-			long i = cursor.getLong(0);
-			long fiveMin = 5 * 60000; 
-			Calendar current = Calendar.getInstance();
-			if(current.getTimeInMillis() - i < fiveMin)
-				return true;
-			Calendar c1 = Calendar.getInstance();
-			c1.setTimeInMillis(i);
-			if(c1.get(Calendar.DATE) != current.get(Calendar.DATE))
-				return true;
-
-			if(c1.get(Calendar.MONTH) !=  current.get(Calendar.MONTH))
-				return true;
-		}
-		return false;*/
-
-
-		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
+			String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
 				resources.getString(R.string.event_name) + "=? AND " +
 				resources.getString(R.string.user_id) + "=? ORDER BY " + 
 				resources.getString(R.string.timestamp) + " LIMIT 3";
@@ -285,40 +262,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					return true;
 			}
 			return c1.getTimeInMillis() - t1 < 5 * 60000;
-		} else	{		
-			Calendar c1 = Calendar.getInstance();
-			long t1 = 0;
+		} else	{
+			Calendar current = Calendar.getInstance();
 			if(cursor.moveToLast()){
-				t1 = cursor.getLong(2);
-
-				Calendar c2 = Calendar.getInstance();
-				c2.setTimeInMillis(t1);
-
-				if(checkDate(c1, c2))
+				long t = cursor.getLong(2);
+				Calendar last = Calendar.getInstance();
+				last.setTimeInMillis(t);
+				if(checkDate(current,last))
 					return true;
-
-				if(c1.getTimeInMillis() - t1 < 5 * 60000){
-					if(cursor.moveToPrevious()){
-						t1 = cursor.getLong(2);
-						c1.setTimeInMillis(t1);
-
-						if(checkDate(c1, c2))
+				else{
+					if(current.getTimeInMillis() - t < 5 * 60000){
+						cursor.moveToPrevious();
+						long t2 = cursor.getLong(2);
+						last.setTimeInMillis(t2);
+						if(checkDate(current, last))
 							return true;
-
-						if(c2.getTimeInMillis() - t1 < 5 * 60000){
-							if(cursor.moveToPrevious()){
-								t1 = cursor.getLong(2);
-								c2.setTimeInMillis(t1);
-
-								if(checkDate(c1, c2))
-									return true;
-								if(c1.getTimeInMillis() - t1 < 5 * 60000){
-									return false;
-								}
+						else{
+							if(current.getTimeInMillis() - t2 < 10 * 60000){
+								cursor.moveToPrevious();
+								long t3 = cursor.getLong(2);
+								last.setTimeInMillis(t3);
+								return checkDate(current, last);
 							}
-						}					
+						}
 					}
-				}
+				}					
 			}
 		}
 		return false;

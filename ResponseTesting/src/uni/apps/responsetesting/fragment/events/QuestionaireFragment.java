@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RatingBar;
 
 public class QuestionaireFragment extends Fragment {
 
@@ -86,12 +85,6 @@ public class QuestionaireFragment extends Fragment {
 
 					for(int i = 0; i < adapter.getCount(); i++){
 						results.add(adapter.getRating(i));
-					/*	View view = list_view.getChildAt(i);
-						if(view != null){
-							RatingBar r = (RatingBar) view.findViewById(R.id.questionaire_rating);
-							String s = Float.toString(r.getRating()).substring(0, 3);
-							results.add(s);
-						}*/
 					}
 					
 					String finalResult = "";
