@@ -13,6 +13,7 @@ public final class R {
          */
         public static final int event_info_array=0x7f050002;
         public static final int event_name_array=0x7f050001;
+        public static final int event_name_array_graphs=0x7f050004;
         public static final int event_name_array_noq=0x7f050003;
         public static final int questionaire_array=0x7f050000;
     }

@@ -50,7 +50,7 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 	private void setUpSpinner(View view) {
 		Spinner spinner = (Spinner) view.findViewById(R.id.result_dis_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-				R.array.event_name_array, android.R.layout.simple_spinner_item);
+				R.array.event_name_array_graphs, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
@@ -60,14 +60,33 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
 		String value = (String) parent.getItemAtPosition(position);
-		if(value.equals(getResources().getString(R.string.event_name_questionaire))){
-			setGraphForQuestionaire();
-		}else{
+		if(value.equals("Sleep Duration")){
+			setGraphForSleep();
+		} else if(value.equals("Resting HR")){
+			setGraphForHR();
+		} else{
 			setGraphForEvent(value);
 		}
 	}
 
-	private void setGraphForQuestionaire() {
+	private void setGraphForHR() {
+		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
+		Cursor cursor = db.getAllQuestionaireResults();
+		if(cursor.getCount() > 0){
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+			String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+			ArrayList<Number[]> hr = GraphUtilities.getHR(cursor, userId);
+			Number[] data = GraphUtilities.interweaveValues(hr.get(0), hr.get(1));
+			XYSeries[] series = new XYSeries[1];
+			series[0] = graph.getXYSeries(data, "HR");
+			long[] minMaxX = GraphUtilities.getMinandMaxLong(hr.get(0));
+			hr.remove(0);
+			double[] minMaxY = GraphUtilities.getMaxandMin(hr);			
+			setCommonGraphValues("Sleep Duration", minMaxX, minMaxY, series);
+		}	
+	}
+
+	private void setGraphForSleep() {
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 		Cursor cursor = db.getAllQuestionaireResults();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -81,7 +100,7 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 				XYSeries s = graph.getXYSeries(tmp, title);
 				finalSeries[i - 1] = s;
 			}
-			
+		
 			long[] minMaxX = GraphUtilities.getMinandMaxLong(series.get(0));
 			series.remove(0);
 			double[] minMaxY = GraphUtilities.getMaxandMin(series);			
@@ -120,7 +139,7 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 
 		}		
 	}
-	
+
 	private void setCommonGraphValues(String eventName, long[] minMaxX, 
 			double[] minMaxY, XYSeries[] finalSeries){
 		graph.updatePlot(finalSeries, new int[] {Color.BLACK, Color.WHITE, Color.BLUE});
@@ -130,7 +149,7 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		//graph.setRangeAndDomainSteps(GraphUtilities.getStep(minMaxY[0], minMaxY[1]), 86400000, 2, 1);
 		graph.setDomainSteps(86400000, 1);
 	}
-	
+
 	private String getTitle(int i) {
 		switch(i){
 		case 1:

@@ -361,5 +361,31 @@ public class GraphUtilities {
 			}
 		}
 		return value - 1;
+	}
+
+	public static ArrayList<Number[]> getHR(Cursor cursor, String userId) {
+		ArrayList<Number> tmp = new ArrayList<Number>();
+		ArrayList<Number> times = new ArrayList<Number>();
+		if(cursor.moveToFirst()){
+			do{
+				if(cursor.getString(6).equals(userId)){
+					tmp.add(Double.parseDouble(cursor.getString(7)));
+					times.add(cursor.getLong(0));
+				}
+			} while(cursor.moveToNext());
+		}
+		if(!tmp.isEmpty()){
+			Number[] values = new Number[tmp.size()];
+			Number[] times2 = new Number[tmp.size()];
+			for(int i = 0; i < tmp.size(); i++){
+				values[i] = tmp.get(i);
+				times2[i] = times.get(i);
+			}
+			ArrayList<Number[]> array =  new ArrayList<Number[]>();
+			array.add(times2);
+			array.add(values);
+			return array;
+		}			
+		return new ArrayList<Number[]>();
 	} 
 }

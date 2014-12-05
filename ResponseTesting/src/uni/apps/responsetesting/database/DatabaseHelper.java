@@ -190,14 +190,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//All rows for single Event and user
 	public Cursor getSingle(String testName, String userId) {
-		/*String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
-				resources.getString(R.string.event_name) + "=? AND " + 
-				resources.getString(R.string.event_name) + "=?";
-		return this.getReadableDatabase().rawQuery(sql, new String[] {testName, userId});*/
-		/*String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
-				resources.getString(R.string.event_name) + 
-				"='" + testName + "' AND " + resources.getString(R.string.event_name) + "='" + userId + "'";
-		return this.getReadableDatabase().rawQuery(sql,null);*/
 		return this.getReadableDatabase().query(resources.getString(R.string.table_name), null, 
 				resources.getString(R.string.event_name) + "=? AND " + resources.getString(R.string.user_id) + "=?", 
 				new String[] {testName, userId}, null, null, resources.getString(R.string.timestamp));
@@ -312,11 +304,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			Calendar c2 = Calendar.getInstance();
 			c1.setTimeInMillis(i);
 			c2.setTimeInMillis(current);
-			if(c1.get(Calendar.DATE) != c2.get(Calendar.DATE))
-				return true;
-
-			if(c1.get(Calendar.MONTH) !=  c2.get(Calendar.MONTH))
-				return true;
+			return checkDate(c1, c2);
 		}
 		return false;
 	}
@@ -382,13 +370,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		return "single";
 	}
-
-
-
-
-
-
-
-
-
 }
