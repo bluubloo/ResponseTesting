@@ -80,7 +80,18 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 	public void onResume() {
 		super.onResume();
 		invalidateOptionsMenu();
-		if(main_menu_frag != null)
+		boolean done = false;
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);
+		String id = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		if(single && !id.equals("single")){
+			Editor editor = prefs.edit();
+			editor.putString(getResources().getString(R.string.pref_key_user_id), "single");
+			editor.commit();
+			addFragments();
+			done = true;
+		}
+		if(main_menu_frag != null && !done)
 			main_menu_frag.update();
 	}
 

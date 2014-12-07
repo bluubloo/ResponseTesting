@@ -259,7 +259,9 @@ public class GraphUtilities {
 			}
 
 			ArrayList<Number[]> tmp = new ArrayList<Number[]>();
+			//Log.d("TEST", seriesArrayToStringLong(times));
 			tmp.add(times);
+			//Log.d("TEST", seriesArrayToString(total));
 			tmp.add(total);
 			tmp.add(light);
 			tmp.add(sound);

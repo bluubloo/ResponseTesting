@@ -3,6 +3,7 @@ package uni.apps.responsetesting.fragment.settings;
 import java.util.ArrayList;
 
 import uni.apps.responsetesting.R;
+import uni.apps.responsetesting.adapter.GroupIconSpinnerAdapter;
 import uni.apps.responsetesting.adapter.MultiUserGroupListAdapter;
 import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.interfaces.listener.MultiUserGroupListener;
@@ -14,6 +15,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -25,15 +27,15 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class MultiUserGroupFragment extends Fragment implements MultiUserGroupListener {
 
@@ -83,13 +85,13 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 		email = (TextView) view.findViewById(R.id.multi_email);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String tmp = prefs.getString(getResources().getString(R.string.pref_key_multi_email),
-						getResources().getString(R.string.setup_mode_default_email));
+				getResources().getString(R.string.setup_mode_default_email));
 		email.setText(tmp);
 		setUpAdapter();
 		setUpButtons(view);
 		return view;
 	}
-	
+
 	private void setUpButtons(View view) {
 		Button setEmail = (Button) view.findViewById(R.id.multi_email_set);
 
@@ -102,7 +104,7 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 
 		});
 	}
-	
+
 	private void updateEmail(){
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle("Enter New Email");
@@ -186,8 +188,8 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 		if(cursor.moveToFirst()){			
 			do{
 				String s = cursor.getString(0);
-				if(!tmp.contains(s))
-					tmp.add(new MultiUserGroupInfo(s));
+				if(!containsGroup(s, tmp))
+					tmp.add(new MultiUserGroupInfo(s, cursor.getInt(3)));
 			} while(cursor.moveToNext());
 		}		
 		int j = -1;
@@ -197,6 +199,13 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 		if(j == -1)
 			tmp.add(new MultiUserGroupInfo ("Unassigned"));
 		return tmp;
+	}
+	
+	private boolean containsGroup(String name, ArrayList<MultiUserGroupInfo> tmp){
+		for(MultiUserGroupInfo i : tmp)
+			if(i.getGroup().equals(name))
+				return true;
+		return false;
 	}
 
 	@Override
@@ -220,7 +229,7 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 					if(id == -1){
 						id = db.getNewUserId();
 						MultiUserInfo tmp = new MultiUserInfo(groups.get(pos).getGroup(), 
-								name, Integer.toString(id));
+								name, Integer.toString(id), groups.get(pos).getIconId());
 						add(tmp, db);
 						groups.get(pos).addUser(tmp);
 						resetAdapter();
@@ -251,14 +260,20 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 		ContentValues values = new ContentValues();
 		Resources r = getResources();
 		values.put(r.getString(R.string.user_id), tmp.getId());
+		Log.d(TAG, tmp.getId());
 		values.put(r.getString(R.string.user_group), tmp.getGroup());
+		Log.d(TAG, tmp.getGroup());
 		values.put(r.getString(R.string.user_name), tmp.getName());
-		values.put(r.getString(R.string.user_settings), getDeafultSettings(r));
+		Log.d(TAG, tmp.getName());
+		values.put(r.getString(R.string.user_settings), getDefaultSettings(r));
+		Log.d(TAG, getDefaultSettings(r));
+		values.put(r.getString(R.string.group_icon), tmp.getGroupIcon());
+		Log.d(TAG, Integer.toString(tmp.getGroupIcon()));
 		db.insertMultiSettings(values);
 
 	}
 
-	private String getDeafultSettings(Resources r) {
+	private String getDefaultSettings(Resources r) {
 		int length = r.getStringArray(R.array.event_name_array).length - 1;
 		String tmp = "";
 		for(int i = 0; i < length - 1; i ++)
@@ -309,8 +324,6 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 
 		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getActivity(), 
 				android.R.layout.simple_spinner_item, groupNames);
-		//ArrayAdapter.createFromResource(getActivity(),
-		//R.array.event_name_groups, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		chooser.setAdapter(adapter);
 		builder.setView(chooser);
@@ -324,9 +337,9 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 					int index = getNewGroupIndex((String) chooser.getSelectedItem());
 					Log.d(TAG, Integer.toString(index));
 					if(index == -1)
-						groups.get(groups.size() - 1).addUser(tmp);
-					else
-						groups.get(index).addUser(tmp);
+						index = groups.size() - 1;
+					groups.get(index).addUser(tmp);
+					tmp = groups.get(index).getUser(groups.get(index).getAllUsers().size() - 1);
 					updateDB(tmp, index);
 					resetAdapter();
 				} else
@@ -359,6 +372,7 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 		ContentValues values = new ContentValues();
 		Resources r = getResources();
 		values.put(r.getString(R.string.user_group), tmp.getGroup());
+		values.put(r.getString(R.string.group_icon), tmp.getGroupIcon());
 		DatabaseHelper.getInstance(getActivity(), r).updateMultiSettings(tmp.getId(), values);
 	}
 
@@ -373,16 +387,20 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 	public void addNewGroup() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle("Enter Group Name");
-
-		final EditText text = new EditText(getActivity());
+		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View parent = inflater.inflate(R.layout.new_group_parent, null);
+		final EditText text = (EditText) parent.findViewById(R.id.group_name);
+		final Spinner icons = (Spinner) parent.findViewById(R.id.group_icons);
+		icons.setAdapter(new GroupIconSpinnerAdapter(getActivity()));
 		text.setInputType(InputType.TYPE_CLASS_TEXT);
-		builder.setView(text);
+		builder.setView(parent);
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(getGroupIndex(text.getText().toString()) == -1){
-					groups.add(new MultiUserGroupInfo(text.getText().toString()));
+					int iconId = (int) icons.getSelectedItem();
+					groups.add(new MultiUserGroupInfo(text.getText().toString(), iconId));
 					resetAdapter();
 				} else
 					dialog.cancel();

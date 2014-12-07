@@ -66,7 +66,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					"(" + resources.getString(R.string.user_id) + " INTEGER PRIMARY KEY, " + 
 					resources.getString(R.string.user_group) + " TEXT, " + 
 					resources.getString(R.string.user_name) + " TEXT, " +
-					resources.getString(R.string.user_settings) + " TEXT)";
+					resources.getString(R.string.user_settings) + " TEXT, " +
+					resources.getString(R.string.group_icon) + " INTEGER)";
 			db.execSQL(create);
 			db.setTransactionSuccessful();
 		} finally{
@@ -326,8 +327,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public Cursor getMultiUsers() {
 		String sql = "SELECT " + resources.getString(R.string.user_group) + "," +
 				resources.getString(R.string.user_name) + "," + resources.getString(R.string.user_id) +
-				" FROM " + resources.getString(R.string.table_name_multi_settings) + " GROUP BY " + 
-				resources.getString(R.string.user_group);
+				"," + resources.getString(R.string.group_icon) + " FROM " + 
+				resources.getString(R.string.table_name_multi_settings);
 		return this.getReadableDatabase().rawQuery(sql, null);
 	}
 

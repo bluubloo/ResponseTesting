@@ -142,13 +142,20 @@ public class Results {
 		Resources r = activity.getResources();
 		ContentValues values = new ContentValues();
 		values.put(r.getString(R.string.timestamp), time);
+		Log.d(TAG, Long.toString(time));
 		values.put(r.getString(R.string.total_sleep), durations[0]);
+		Log.d(TAG, durations[0]);
 		values.put(r.getString(R.string.light_sleep), durations[1]);
+		Log.d(TAG, durations[1]);
 		values.put(r.getString(R.string.sound_sleep), durations[2]);
+		Log.d(TAG, durations[2]);
 		values.put(r.getString(R.string.ratings), ratings);
+		Log.d(TAG, ratings);
 		values.put(r.getString(R.string.sent), 0);
 		values.put(r.getString(R.string.user_id), id);
+		Log.d(TAG, id);
 		values.put(r.getString(R.string.heart_rate), durations[3]);
+		Log.d(TAG, durations[3]);
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
 		db.insertQuestionarie(values);
 	}

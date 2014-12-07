@@ -82,8 +82,9 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 			long[] minMaxX = GraphUtilities.getMinandMaxLong(hr.get(0));
 			hr.remove(0);
 			double[] minMaxY = GraphUtilities.getMaxandMin(hr);			
-			setCommonGraphValues("Sleep Duration", minMaxX, minMaxY, series);
-		}	
+			setCommonGraphValues("Resting HR", minMaxX, minMaxY, series);
+		} else 
+			update();
 	}
 
 	private void setGraphForSleep() {
@@ -100,7 +101,7 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 				XYSeries s = graph.getXYSeries(tmp, title);
 				finalSeries[i - 1] = s;
 			}
-		
+
 			long[] minMaxX = GraphUtilities.getMinandMaxLong(series.get(0));
 			series.remove(0);
 			double[] minMaxY = GraphUtilities.getMaxandMin(series);			

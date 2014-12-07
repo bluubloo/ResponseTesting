@@ -13,11 +13,18 @@ public class MultiUserGroupInfo {
 	public MultiUserGroupInfo(String group){
 		this.group = group;
 		users = new ArrayList<MultiUserInfo>();
-		setIcon();
+		setIcon(R.drawable.uni_logo);
+	}
+	
+	public MultiUserGroupInfo(String group, int icon){
+		this.group = group;
+		users = new ArrayList<MultiUserInfo>();
+		setIcon(icon);
 	}
 	
 	public void addUser(MultiUserInfo user){
 		user.setGroup(group);
+		user.setIcon(iconId);
 		users.add(user);
 	}
 	
@@ -42,11 +49,10 @@ public class MultiUserGroupInfo {
 		return users.size();
 	}
 	
-	private void setIcon(){
-		switch(group){
-		default:
-			iconId = R.drawable.uni_logo;
-			break;
+	private void setIcon(int id){
+		iconId = id;
+		for(MultiUserInfo i: users){
+			i.setIcon(iconId);
 		}
 	}
 	

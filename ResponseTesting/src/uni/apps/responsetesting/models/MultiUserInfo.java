@@ -5,13 +5,29 @@ public class MultiUserInfo {
 	private String group;
 	private String name;
 	private String id;
+	private int group_icon;
 	
 	public MultiUserInfo(String group, String name, String id){
 		this.group = group;
 		this.name = name;
 		this.id = id;	
 	}
-
+	
+	public MultiUserInfo(String group, String name, String id, int icon){
+		this.group = group;
+		this.name = name;
+		this.id = id;	
+		this.group_icon = icon;
+	}
+	
+	public void setIcon(int icon){
+		this.group_icon = icon;
+	}
+	
+	public int getGroupIcon(){
+		return group_icon;	
+	}
+	
 	public String getName(){
 		return name;
 	}
@@ -27,7 +43,4 @@ public class MultiUserInfo {
 	public String getId(){
 		return id;
 	}
-	
-
-
 }

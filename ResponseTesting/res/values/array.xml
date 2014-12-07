@@ -53,8 +53,6 @@
         <item>Stroop Test</item>
     </string-array>
     <string-array name="event_name_array_graphs">
-        <item>Sleep Duration</item>
-        <item>Resting HR</item>
         <item>Appearing Object</item>
         <item>Appearing Object - Fixed Point</item>
         <item>Arrow Ignoring Test</item>
@@ -65,7 +63,11 @@
         <item>Monkey Ladder</item>
         <item>One Card Learning Test</item>
         <item>Pattern Recreation</item>
+        <item>Resting HR</item>
+        <item>Sleep Duration</item>        
         <item>Stroop Test</item>
     </string-array>
-
+    <string-array name="group_image_names">
+        <item>Uni Logo</item>
+    </string-array>
 </resources>
