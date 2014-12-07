@@ -17,8 +17,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * This adapter is for the MultiUserGroupFragment expandable listview
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 
+	//variables
 	private ArrayList<MultiUserGroupInfo> groups;
 	private LayoutInflater inflater;
 	private Activity activity;
@@ -28,6 +36,7 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 
 	public MultiUserGroupListAdapter(ArrayList<MultiUserGroupInfo> groups, Activity activity, 
 			MultiUserGroupListener listener, MultiUserSettingsListener listListener){
+		//sets variables
 		this.groups = groups;
 		this.activity = activity;
 		this.listener = listener;
@@ -75,18 +84,19 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 			View convertView, ViewGroup parent) {
 		GroupViewHolder holder;
 		final int position = groupPosition;
+		//creates new view 
 		if(convertView == null){
 			convertView = inflater.inflate(R.layout.multi_user_group_parent_item, null);
 			holder = new GroupViewHolder();
 			holder.icon = (ImageView) convertView.findViewById(R.id.multi_group_icon);
 			holder.name = (TextView) convertView.findViewById(R.id.multi_group_name);
 			holder.add = (Button) convertView.findViewById(R.id.multi_group_add);
-		//	holder.remove = (Button) convertView.findViewById(R.id.multi_group_remove);
 			convertView.setTag(holder);
 		} else{
 			holder = (GroupViewHolder) convertView.getTag();
 		}
 
+		//sets view values
 		holder.icon.setImageDrawable(activity.getResources().
 				getDrawable(groups.get(groupPosition).getIconId()));
 
@@ -101,15 +111,6 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 
 		});
 
-		/*holder.remove.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				listener.onRemoveUsersClick(position);
-			}
-
-		});*/
-
 		return convertView;
 	}
 
@@ -119,6 +120,7 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 		final int pos1 = groupPosition;
 		final int pos2 = childPosition;
 		ChildViewHolder holder;
+		//creates new view
 		if(convertView == null){
 			convertView = inflater.inflate(R.layout.multi_user_group_child_item, null);
 			holder = new ChildViewHolder();
@@ -130,7 +132,7 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 		} else{
 			holder = (ChildViewHolder) convertView.getTag();
 		}
-
+		//sets view values
 		holder.name.setText(groups.get(groupPosition).getUser(childPosition).getName() + ", (" + 
 				groups.get(groupPosition).getUser(childPosition).getId() + ")");
 		holder.delete.setOnClickListener(new OnClickListener(){
@@ -167,13 +169,14 @@ public class MultiUserGroupListAdapter extends BaseExpandableListAdapter {
 		return false;
 	}
 
+	//parent viewholder
 	private class GroupViewHolder{
 		TextView name;
 		ImageView icon;
 		Button add;
-	//	Button remove;
 	}
 
+	//child viewholder
 	private class ChildViewHolder{
 		TextView name;
 		ImageView modify;

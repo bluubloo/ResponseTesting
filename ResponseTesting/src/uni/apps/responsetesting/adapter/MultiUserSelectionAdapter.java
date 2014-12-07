@@ -13,8 +13,16 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
+/**
+ * This adapter is for the MultiUserSeletion listview
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class MultiUserSelectionAdapter extends BaseAdapter {
 
+	//variables
 	private String[] data;
 	private int[] values;
 	private LayoutInflater inflater;
@@ -22,6 +30,7 @@ public class MultiUserSelectionAdapter extends BaseAdapter {
 
 	public MultiUserSelectionAdapter(String[] data, int[] values, Activity activity,
 			MultiUserSelectionListener listener){
+		//sets variables
 		if(data.length != values.length)
 			throw new IllegalArgumentException("Names and value array lengths must be the same");
 		this.listener = listener;
@@ -49,12 +58,14 @@ public class MultiUserSelectionAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		final int pos = position;
+		//creates new view
 		holder = new ViewHolder();
 		convertView = inflater.inflate(R.layout.multi_user_select_list_item, null);
 		holder.name = (TextView) convertView.findViewById(R.id.multi_title);
 		holder.value = (CheckBox) convertView.findViewById(R.id.multi_value);
 		convertView.setTag(holder);
 
+		//set view values
 		holder.name.setText(data[position]);
 		holder.value.setChecked(values[position] == 1);
 		holder.value.setOnCheckedChangeListener(new OnCheckedChangeListener(){
@@ -69,15 +80,18 @@ public class MultiUserSelectionAdapter extends BaseAdapter {
 		return convertView;
 	}
 
+	//gets values at position i
 	public int getValue(int i){
 		return values[i];
 	}
 
+	//view holder
 	private class ViewHolder{
 		TextView name;
 		CheckBox value;
 	}
 
+	//updates view
 	public void update(int[] values) {
 		this.values = values;
 		notifyDataSetChanged();

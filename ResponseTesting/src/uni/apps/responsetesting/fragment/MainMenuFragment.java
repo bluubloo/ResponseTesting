@@ -26,6 +26,7 @@ import android.widget.TextView;
  */
 public class MainMenuFragment extends ListFragment {
 
+	//variables
 	private static final String TAG = "MainMenuFragment";
 	private MainMenuListener listener;
 	private ArrayAdapter<?> adapter;
@@ -39,20 +40,12 @@ public class MainMenuFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
-		if(savedInstanceState != null){
-		//	multiUserSettings = savedInstanceState.getString("settings");
-		}
+		//gets user id and username
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		userName = DatabaseHelper.getInstance(getActivity(), getResources()).getMultiUserName(userId);
 		getActivity().getActionBar().setSubtitle("Main Menu - " + userName);
 	//	setRetainInstance(true);
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState){
-		super.onSaveInstanceState(outState);
-		//outState.putString("settings", multiUserSettings);
 	}
 
 	@Override
@@ -76,6 +69,7 @@ public class MainMenuFragment extends ListFragment {
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 		for(String s: tmp){
 			boolean addable = true;
+			//checks if event is addable
 			if(s.equals(r.getString(R.string.event_name_questionaire)))
 				addable = db.checkQuestionaire(s, userId);
 			else
@@ -87,6 +81,7 @@ public class MainMenuFragment extends ListFragment {
 	}
 
 	private boolean checkPreferences(String name) {
+		//checks user mode
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);
 		if(single)
@@ -96,9 +91,10 @@ public class MainMenuFragment extends ListFragment {
 	}
 
 	private boolean checkMultiUserPrferences(Resources resources, String name) {
-		//if(multiUserSettings.equals(""))
+		//gets user settings
 			multiUserSettings = DatabaseHelper.getInstance(getActivity(), resources).
 			getMultiSettingsString(userId);
+			//gets setting value
 		if(!multiUserSettings.equals("")){
 			int index = getSettingIndex(name);
 			if(index != -1)
@@ -107,6 +103,7 @@ public class MainMenuFragment extends ListFragment {
 		return true;
 	}
 
+	//gets settings value
 	private boolean getPreferenceValue(int index) {
 		int i = index * 2;
 		if(multiUserSettings.length() > i && i >= 0)
@@ -114,6 +111,7 @@ public class MainMenuFragment extends ListFragment {
 		return true;
 	}
 
+	//gets setting index
 	private int getSettingIndex(String name) {
 		Log.d(TAG, name);
 		String[] tmp = getResources().getStringArray(R.array.event_name_array_noq);
@@ -123,6 +121,7 @@ public class MainMenuFragment extends ListFragment {
 		return -1;
 	}
 
+	//checks single mode settings value
 	private boolean checkSinglePrefereneces(SharedPreferences prefs,
 			Resources r, String name) {
 		switch(name){
@@ -187,6 +186,7 @@ public class MainMenuFragment extends ListFragment {
 		listener.OnMenuItemClick(name);			
 	}
 	
+	//updates list
 	public void update(){
 		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, createList());
 		getListView().setAdapter(adapter);

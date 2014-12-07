@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 public class SetupModeActivity extends Activity {
 
+	//Needed variables
 	private static final String TAG = "SetupModeActivity";
 	private static final String FRAG_TAG = "SetupModeFragment";
 	private PreferenceFragment fragment;
@@ -19,9 +20,8 @@ public class SetupModeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setup_mode);
-		boolean single = this.getIntent().getBooleanExtra("user", true);
-		if(single)
-			fragment = new SingleUserSettingsFragment();
+		//adds fragment
+		fragment = new SingleUserSettingsFragment();
 		getFragmentManager().beginTransaction().replace(R.id.settings_container, fragment, 
 				FRAG_TAG).commit();
 	}

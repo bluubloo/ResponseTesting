@@ -12,8 +12,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+/**
+ *  This fragment is user for selecting usernames in multi user mode
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class MultiUserNameFragment extends ListFragment {
 
+	//variables
 	private static final String TAG = "MultiUserNameFragment";
 	private MultiUserInfo[] data;
 	private MultiUserNameListAdapter adapter;
@@ -40,14 +48,17 @@ public class MultiUserNameFragment extends ListFragment {
 	}
 	
 	private void setUpList() {
+		//gets data and creates adapter
 		data = formatData(DatabaseHelper.getInstance(getActivity(), getResources()).getMultiUsers());
 		adapter = new MultiUserNameListAdapter(data, getActivity());
+		//sets listview values
 		getListView().setAdapter(adapter);
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		setListShown(true);
 	}
 
 	private MultiUserInfo[] formatData(Cursor cursor) {
+		//formats data into list from cursor
 		MultiUserInfo[] tmp =  new MultiUserInfo[cursor.getCount()];
 		int i = 0;
 		if(cursor.moveToFirst()){
@@ -64,6 +75,7 @@ public class MultiUserNameFragment extends ListFragment {
 	public void onResume() {
 		Log.d(TAG, "onResume()");
 		super.onResume();
+		//sets up list
 		setUpList();
 	}
 	

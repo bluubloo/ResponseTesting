@@ -35,6 +35,7 @@ import android.widget.TextView;
 public class AppearingObjectFragment extends Fragment implements AppearingObjectImageClickListener{
 
 
+	//Variables
 	private static final String TAG = "AppearingObjectFragment";
 	private static String eventName = "Appearing Object";
 	private AppearingObjectImageClickListener listener;
@@ -56,10 +57,12 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 
 		@Override
 		public void run() {
+			//checks if it is fixed point test
 			if(!fixed)
 				imageCounter = (random.nextInt(5) % 5);
 			else
 				imageCounter = 0;
+			//shows clickable image
 			if(running &&counter < 5){
 				clickableImageView[imageCounter].setVisibility(View.VISIBLE);
 				data[counter] = new DurationInfo(Calendar.getInstance().getTimeInMillis());
@@ -74,6 +77,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//gets values from bundles
 		if(savedInstanceState != null){
 			playTimes = savedInstanceState.getInt("playTime");
 			fixed = savedInstanceState.getBoolean("fixed");
@@ -86,14 +90,17 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	}
 	
 	private void checkName(){
+		//sets event names
 		if(fixed)
 			eventName = "Appearing Object - Fixed Point";
 		else
 			eventName = "Appearing Object";
 	}
 	
+	//gets new instance of fragment
 	public static AppearingObjectFragment getInstance(boolean fixed){
 		AppearingObjectFragment frag = new AppearingObjectFragment();
+		//sets bundle values
 		Bundle args = new Bundle();
 		args.putBoolean("fixed", fixed);
 		frag.setArguments(args);
@@ -103,10 +110,12 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
+		//sets out values
 		outState.putInt("playTime", playTimes);
 		outState.putBoolean("fixed", fixed);
 	}
 	
+	//ataches listener to fragment
 	@Override
 	public void onAttach(Activity activity) {
 		Log.d(TAG, "onAttach()");
@@ -126,6 +135,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.appearing_object_fragment, container, false);
+		//sets up view values and proertioes
 		startTextView = (TextView) view.findViewById(R.id.appear_obj_start);
 		setUpImageClickEvents(view);
 		
@@ -135,15 +145,19 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 
 			@Override
 			public void onClick(View v) {
+				//gets timer delay
 				int delay = (random.nextInt(3) + 1) * 1000;
 				if(!running){
+					//check pay times
 					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 					counter = 0;
 					running = !running;
+					//makes images invisible
 					for(ImageView i: clickableImageView)
 						i.setVisibility(View.INVISIBLE);
 					startTextView.setVisibility(View.INVISIBLE);
 					playTimes++;
+					//starts timer
 					timerHandler.postDelayed(timerRunnableImageAppear, delay);
 					} else{
 						ActivityUtilities.displayResults(getActivity(), eventName,
@@ -157,6 +171,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	}
 
 
+	//image view click events
 	private void setUpImageClickEvents(View view) {
 		clickableImageView[0] = (ImageView) view.findViewById(R.id.appear_obj_image_1);
 		clickableImageView[0].setOnClickListener(new OnClickListener(){
@@ -205,8 +220,12 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		});
 	}
 
+	//ends the test
 	private void endTest(){
 		if(running){
+			//resets variables
+			//insert results to db
+			//displays results
 			counter = 0;
 			running = !running;
 			clickableImageView[imageCounter].setVisibility(View.INVISIBLE);
@@ -223,6 +242,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		}
 	}
 
+	//gets average test time
 	private double getAverage() {
 		double tmp = 0;
 		for(DurationInfo a: data)
@@ -232,6 +252,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 
 	@Override
 	public void onClick() {
+		//handles click event
 		int delay = (random.nextInt(3) + 1) * 1000;
 		if (running && counter < 4){
 			data[counter].addEndTime(Calendar.getInstance().getTimeInMillis());

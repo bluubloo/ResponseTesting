@@ -110,6 +110,7 @@ public class QuestionaireListAdapter extends BaseAdapter {
 		data = tmp;
 	}
 	
+	//gets rating values
 	public String getRating(int pos){
 		return Float.toString(ratings[pos]);
 	}

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 public class MultiUserSetupModeActivity extends Activity implements MultiUserSettingsListener {
 
+	//Needed variables
 	private static final String TAG = "MultiUserSetupModeActivity";
 	private static final String FRAG_TAG = "MultiUserSetupMode";
 	private FragmentManager manager;
@@ -24,16 +25,19 @@ public class MultiUserSetupModeActivity extends Activity implements MultiUserSet
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_multi_user_setup_mode);
+		//set variable
 		manager = this.getFragmentManager();
 		addFragments();
 	}
 
 	private void addFragments() {
+		//add fragment to activity
 		groupFragment = new MultiUserGroupFragment();
 		manager.beginTransaction().add(R.id.settings_container, groupFragment, FRAG_TAG).commit();
 	}
 	
 	private void switchFragments(boolean b, MultiUserInfo user) {
+		//switches fragments
 		if(b){
 			selectFragment = MultiUserSelectionFragment.getInstance(user);
 			manager.beginTransaction().replace(R.id.settings_container, selectFragment, FRAG_TAG).commit();
@@ -73,6 +77,7 @@ public class MultiUserSetupModeActivity extends Activity implements MultiUserSet
 	
 	@Override
 	public void onBackPressed(){
+		//switches fragments or goes back
 		if(groupFragment.isVisible() && groupFragment.isResumed() && !groupFragment.isRemoving())
 			super.onBackPressed();
 		else
@@ -81,7 +86,7 @@ public class MultiUserSetupModeActivity extends Activity implements MultiUserSet
 
 	@Override
 	public void onGroupChildClick(MultiUserInfo user) {
-		// TODO Auto-generated method stub
+		//switches fragments
 		switchFragments(true, user);
 	}
 }

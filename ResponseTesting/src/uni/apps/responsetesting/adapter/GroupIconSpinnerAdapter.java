@@ -10,13 +10,23 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * This adapter is for the spinner in multi user mode setup
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class GroupIconSpinnerAdapter extends BaseAdapter {
 
+	//drawable ids
 	private int[] icons = new int[] {R.drawable.uni_logo};
+	//varaibles
 	private String[] names;
 	private Activity activity;
 	private LayoutInflater inflater;
 	
+	//sets up variables
 	public GroupIconSpinnerAdapter(Activity activity){
 		this.activity = activity;
 		names = activity.getResources().getStringArray(R.array.group_image_names);
@@ -41,6 +51,7 @@ public class GroupIconSpinnerAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
+		//creates new view and initalises viewholder
 		if(convertView == null){
 			convertView = inflater.inflate(R.layout.new_group, null);
 			holder = new ViewHolder();
@@ -51,11 +62,13 @@ public class GroupIconSpinnerAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
+		//sets values
 		holder.name.setText(names[position]);
 		holder.icon.setImageDrawable(activity.getResources().getDrawable(icons[position]));
 		return convertView;
 	}
 	
+	//viewholder class
 	class ViewHolder{
 		ImageView icon;
 		TextView name;

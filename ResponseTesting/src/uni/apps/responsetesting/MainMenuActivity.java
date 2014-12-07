@@ -60,18 +60,26 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		setContentView(R.layout.activity_main_menu);
 		PreferenceManager.setDefaultValues(this, R.xml.all_settings, true);
 		frag_manager = this.getFragmentManager();
+		//checks the user mode
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);
 		if(!single)
+			//if multi user mode
 			startSession(false);
 		else{
+			//if single user mode
+			//sets user id to single
 			Editor editor = prefs.edit();
 			editor.putString(getResources().getString(R.string.pref_key_user_id), "single");
 			editor.commit();
+			//add fragment to activity
 			addFragments();
 		}
+		//checks if reminders are on
 		if(prefs.getBoolean(getResources().getString(R.string.pref_key_remind), false)){
+			//binds service to activty
 			bindClient();
+			//sets timer
 			timerHandler.postDelayed(timerRunnable, 2000);
 		}
 	}
@@ -79,33 +87,41 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 	@Override
 	public void onResume() {
 		super.onResume();
+		//resets action bar
 		invalidateOptionsMenu();
+		//if first time since changing out of multi user mode
 		boolean done = false;
+		//gets id and user mode
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);
 		String id = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		if(single && !id.equals("single")){
+			//updates user id
 			Editor editor = prefs.edit();
 			editor.putString(getResources().getString(R.string.pref_key_user_id), "single");
 			editor.commit();
+			//refreshes page
 			addFragments();
 			done = true;
 		}
+		//checks if fragment needs to be updated
 		if(main_menu_frag != null && !done)
 			main_menu_frag.update();
 	}
 
 	@Override
 	protected void onStop(){
+		//unbinds service
 		if(alertClient != null)
 			alertClient.doUnbindService();
+		//remove timers
 		timerHandler.removeCallbacks(timerRunnable);
 		super.onStop();
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		//calls the action bar defaults
+		//calls the action bar methods
 		switch(item.getItemId()){
 		case R.id.action_switch_user:
 			startSession(true);
@@ -137,10 +153,12 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 
 	@Override
 	public void OnMultiUserClick(String id) {
+		//updates user id
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		Editor editor = prefs.edit();
 		editor.putString(getResources().getString(R.string.pref_key_user_id), id);
 		editor.commit();
+		//replaces fragment
 		addFragments();
 	}
 
@@ -158,49 +176,6 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		return super.onPrepareOptionsMenu(menu);
 	}
 
-	/*private void startSession() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Enter Username");
-
-		final EditText text = new EditText(this);
-		text.setInputType(InputType.TYPE_CLASS_TEXT);
-		builder.setView(text);
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				//updates the notes
-				String name = text.getText().toString();
-				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-				if(!prefs.getString(getResources().getString(R.string.pref_key_user_id), "single").equals(name)){
-					String exists = DatabaseHelper.getInstance(getApplicationContext(), getResources()).
-							checkUserExists(name);
-					if(!exists.equals("-1")){
-						Editor editor = prefs.edit();
-						editor.putString(getResources().getString(R.string.pref_key_user_id), exists);
-						editor.commit();
-						addFragments();
-					} else{
-						ActivityUtilities.displayMessage(MainMenuActivity.this, "Login Error",
-								"Username doesn't exist.\nPlease try again");
-					}
-				} else
-					addFragments();
-			}
-		});
-
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				//closes dialog
-				dialog.cancel();
-
-			}
-		});
-		builder.show();
-	}*/
-
 	//adds fragment to activity
 	private void addFragments() {
 			//begins transaction
@@ -217,8 +192,11 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 	}
 
 	private void startSession(boolean show) {
+		//get existing fragment
 		multi_name_frag = (MultiUserNameFragment) frag_manager.findFragmentByTag(MULTI_NAME_TAG);
+		//checks if needs to be shown
 		if(multi_name_frag == null || show){
+			//adds fragment to activity container
 			multi_name_frag = new MultiUserNameFragment();
 			frag_manager.beginTransaction().replace(R.id.main_menu_container, multi_name_frag, MULTI_NAME_TAG).commit();
 		}
@@ -226,9 +204,11 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 
 
 	private void startNotify() {
+		//gets alert time
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String time = prefs.getString(getResources().getString(R.string.pref_key_alert),
 				getResources().getString(R.string.settings_time_default));
+		//sets alert time
 		int hour = getHour(time);
 		int min = getMin(time);
 		Calendar c = Calendar.getInstance();
@@ -236,14 +216,18 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		c.set(Calendar.HOUR_OF_DAY, hour);
 		c.set(Calendar.MINUTE, min);
 		c.set(Calendar.SECOND, 0);
+		//gets next alert time
 		c.setTimeInMillis(c.getTimeInMillis() + (24*60*60*1000));
 		long tmp = prefs.getLong(getResources().getString(R.string.pref_key_alert_next), 0);
 		Calendar c2 = Calendar.getInstance();
 		c2.setTimeInMillis(tmp);
+		//checks if alert isn't set already
 		if(c2.get(Calendar.DATE) != c.get(Calendar.DATE)){
 			Log.d(TAG, "set Alarm");
+			//set up alert
 			alertClient.setAlarmForNotification(c);
 			Editor editor = prefs.edit();
+			//updates next alert time
 			editor.putLong(getResources().getString(R.string.pref_key_alert_next),
 					c.getTimeInMillis());
 			editor.commit();
@@ -252,6 +236,7 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		}
 	}
 
+	//gets minutes from string
 	private int getMin(String time) {
 		int index = time.indexOf(':');
 		if(index == -1)
@@ -261,6 +246,7 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		}
 	}
 
+	//gets hour from string
 	private int getHour(String time) {
 		int index = time.indexOf(':');
 		if(index == -1)
@@ -270,6 +256,7 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		}
 	}
 
+	//binds alert service to activity
 	private void bindClient() {
 		alertClient = new AlertClient(this);
 		alertClient.doBindService();

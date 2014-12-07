@@ -233,6 +233,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return this.getReadableDatabase().rawQuery(sql, null);
 	}
 
+	//checks most recently played times for 3 goes in 1 day
 	public boolean checkRecent(String eventName, String id) {
 			String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
 				resources.getString(R.string.event_name) + "=? AND " +
@@ -285,6 +286,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return false;
 	}
 
+	//checks if date is not the same
 	private boolean checkDate(Calendar c1, Calendar c2){
 		if(c1.get(Calendar.DATE) != c2.get(Calendar.DATE))
 			return true;
@@ -293,6 +295,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return false;
 	}
 
+	//checks if questionaire was done today
 	public boolean checkQuestionaire(String eventName, String id){
 		String sql = "SELECT max(" +  resources.getString(R.string.timestamp) + ") FROM " + 
 				resources.getString(R.string.table_name_questionaire) + " WHERE " + 
@@ -310,12 +313,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return false;
 	}
 
+	//gets multi users settings
 	public Cursor getMultiSettings(String id){
 		String sql = "SELECT * FROM " + resources.getString(R.string.table_name_multi_settings) + 
 				" WHERE " + resources.getString(R.string.user_id) + "=?";
 		return this.getReadableDatabase().rawQuery(sql, new String[] {id});
 	}
 
+	//gets multi users settings
 	public String getMultiSettingsString(String id) {
 		Cursor settings = getMultiSettings(id);
 		if(settings.moveToFirst()){
@@ -324,6 +329,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return "";
 	}
 
+	//gets multi users settings user info
 	public Cursor getMultiUsers() {
 		String sql = "SELECT " + resources.getString(R.string.user_group) + "," +
 				resources.getString(R.string.user_name) + "," + resources.getString(R.string.user_id) +
@@ -332,6 +338,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return this.getReadableDatabase().rawQuery(sql, null);
 	}
 
+	////checks if user name exists
 	public int checkUserName(String name) {
 		String sql = "SELECT * FROM " + resources.getString(R.string.table_name_multi_settings) + 
 				" WHERE " + resources.getString(R.string.user_name) + "=?";
@@ -342,6 +349,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return -1;
 	}
 
+	//gets new user id
 	public int getNewUserId(){
 		String sql = "SELECT max(" + resources.getString(R.string.user_id) + ") FROM " +
 				resources.getString(R.string.table_name_multi_settings);
@@ -352,6 +360,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return 1;
 	}
 
+	//checks if user exists
 	public String checkUserExists(String name) {
 		String sql = "SELECT " + resources.getString(R.string.user_id) +" FROM " + resources.getString(R.string.table_name_multi_settings) + 
 				" WHERE " + resources.getString(R.string.user_name) + "=?";
@@ -362,6 +371,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return "-1";
 	}
 
+	//gets username
 	public String getMultiUserName(String id) {
 		String sql = "SELECT " + resources.getString(R.string.user_name) +" FROM " + resources.getString(R.string.table_name_multi_settings) + 
 				" WHERE " + resources.getString(R.string.user_id) + "=?";
