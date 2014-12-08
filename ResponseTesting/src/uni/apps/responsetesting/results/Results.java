@@ -2,7 +2,6 @@ package uni.apps.responsetesting.results;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -29,66 +28,6 @@ public class Results {
 
 	//--------------------------------------------------------------------------------------------
 	//Get Results
-
-	public static String[][] getResultsForInApp(Activity activity){
-		Resources r = activity.getResources();
-		ArrayList<String> nonBestList = new ArrayList<String>();
-		//nonBestList.addAll(Arrays.asList(r.getStringArray(R.array.non_numeric_events)));
-		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
-		String[] events = r.getStringArray(R.array.event_name_array);
-		ArrayList<ArrayList<String>> tmp = new ArrayList<ArrayList<String>>();
-		for(String s: events){
-			ArrayList<String> tmp2 = new ArrayList<String>();
-			tmp2.add("Recent:");
-			Cursor results = db.getSingle(s);
-			tmp2.addAll(getInAppResultList(results));
-
-			//TODO RESULTS FIX
-			if(!nonBestList.contains(s)){
-				tmp2.add("Best:");
-				results = db.getSingleBest(s);
-				tmp2.addAll(getInAppResultList(results));
-			}			
-
-			tmp.add(tmp2);
-		}
-		String[][] list = listToArray(tmp);
-		return list;
-	}
-
-
-	private static String[][] listToArray(ArrayList<ArrayList<String>> list){
-		int i = 0;
-		String[][] newList = new String[list.size()][8];
-		for(ArrayList<String> a : list){
-			String[] tmp = new String[a.size()];
-			int j = 0; 
-			for(String s : a){
-				tmp[j] = s;
-				j++;
-			}
-			newList[i] = tmp;
-			i ++;
-		}
-		return newList;
-	}
-
-	private static ArrayList<String> getInAppResultList(Cursor results){
-		ArrayList<String> tmp = new ArrayList<String>();
-		int i = 1;
-		if(results.moveToFirst()){
-			do{
-				String s1 = Integer.toString(i) + ".Score = " + results.getString(1); 
-				Calendar c = Calendar.getInstance();
-				c.setTimeInMillis(results.getLong(2));
-				s1 += ". Time = " + c.getTime().toString() + ". Extra notes = " +
-						results.getString(4);
-				tmp.add(s1);
-				i++;
-			} while (results.moveToNext() && i < 4);
-		}
-		return tmp;
-	}
 
 	public static String getSingleResults(Activity activity, String testName) {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());

@@ -7,6 +7,13 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 
+/**
+ * This class handles line and scatter graphs
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class ResultXYScatterLineGraph extends ResultXYGraph {
 
 	public ResultXYScatterLineGraph(XYPlot plot, String yLabel, String xLabel,
@@ -14,6 +21,8 @@ public class ResultXYScatterLineGraph extends ResultXYGraph {
 		super(plot, yLabel, xLabel, eventName);
 	}
 	
+	//----------------------------------------------------------------------------------------------------------------
+	//add series
 	public void addSeries(Number[] data, String name, SimpleXYSeries.ArrayFormat format, LineAndPointFormatter formatter){
 		XYSeries s = new SimpleXYSeries(Arrays.asList(data), format, name);
 		super.addSeries(s, formatter);

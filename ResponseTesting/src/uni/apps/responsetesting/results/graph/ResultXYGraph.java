@@ -19,12 +19,20 @@ import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYSeriesFormatter;
 import com.androidplot.xy.XYStepMode;
 
+/**
+ * The super class for all graphs
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class ResultXYGraph {
 
+	//plot and series
 	protected XYPlot plot;
 	protected ArrayList<XYSeries> series;
 	
 	public ResultXYGraph(XYPlot plot, String yLabel, String xLabel, String eventName){
+		//set values
 		this.plot = plot;
 		this.plot.setRangeLabel(yLabel);
 		this.plot.setDomainLabel(xLabel);
@@ -35,6 +43,7 @@ public class ResultXYGraph {
 	}
 	
 	private void alterLegend(){
+		//set up legend
 		XYLegendWidget legend = plot.getLegendWidget();
 		legend.setTableModel(new DynamicTableModel(2,2));
 		Paint p = new Paint();
@@ -46,6 +55,7 @@ public class ResultXYGraph {
 	}
 	
 	private void alterDomainLabel(){
+		//set up x axis label
 		TextLabelWidget domain = plot.getDomainLabelWidget();
 		domain.position(0, XLayoutStyle.ABSOLUTE_FROM_LEFT,
 				300, YLayoutStyle.ABSOLUTE_FROM_BOTTOM);
@@ -56,6 +66,7 @@ public class ResultXYGraph {
 	}
 		
 	public void setRangeAndDomainSteps(double range, double domain, int rTicks, int dTicks){
+		//set steps and ticks
 		plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, range);
 		plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, domain);
 		plot.setTicksPerRangeLabel(rTicks);
@@ -63,32 +74,39 @@ public class ResultXYGraph {
 	}
 	
 	public void setDomainSteps(double domain, int ticks){
+		//set x axis steps and ticks
 		plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, domain);
 		plot.setTicksPerDomainLabel(ticks);
 	}
 	
+	//set min and max Y
 	public void setMaxMinY(double min, double max){
 		plot.setRangeBoundaries(min, max, BoundaryMode.FIXED);
 	}
 	
+	//set min and max x
 	public void setMaxMinX(double min, double max){
 		plot.setDomainBoundaries(min, max, BoundaryMode.FIXED);
 	}
 	
+	//set min and max x
 	public void setMaxMinX(long min, long max){
 		plot.setDomainBoundaries(min, max, BoundaryMode.FIXED);
 	}
 	
+	//set event name
 	public void setEventName(String eventName){
 		plot.getTitleWidget().setText("Results - " + eventName);
 	}
 	
+	//add series
 	@SuppressWarnings("rawtypes")
 	public void addSeries(XYSeries data, XYSeriesFormatter formatter){
 		series.add(data);
 		plot.addSeries(data, formatter);
 	}
 	
+	//remove series
 	public void clearGraph(){
 		setEventName("");
 		for(XYSeries s: series)
