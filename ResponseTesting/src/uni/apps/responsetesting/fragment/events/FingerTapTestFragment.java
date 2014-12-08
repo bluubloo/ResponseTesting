@@ -21,13 +21,14 @@ import android.widget.TextView;
 
 /***
  * This fragment performs the Finger Tap Test
- * 
+ * Tests - CNS
  * 
  * @author Mathew Andela
  *
  */
 public class FingerTapTestFragment extends Fragment {
 
+	//variables
 	private static final String TAG = "FingerTapTestFragment";
 	private static final String eventName = "Finger Tap Test";
 	private static final int seconds = 5; 
@@ -48,10 +49,12 @@ public class FingerTapTestFragment extends Fragment {
 
 		@Override
 		public void run(){
+			//gets time
 			long millis = Calendar.getInstance().getTimeInMillis();
 			double seconds = (double) 5 - (double) (millis - startTime) / 1000;
 			String value = Double.toString(seconds).substring(0, 3);
 			timeLeftTextView.setText("Time Left: " + value + "s");
+			//checks if time left
 			if(running && (millis - startTime) < 5000)
 				timerHandler.postDelayed(this, 100);
 			else{
@@ -94,16 +97,19 @@ public class FingerTapTestFragment extends Fragment {
 	}
 
 	private void setupTest(View view) {
+		//sets views
 		RelativeLayout clickable = (RelativeLayout) view.findViewById(R.id.tap_container);
 		startButton = (Button) view.findViewById(R.id.tap_click_start_button);
 		infoTextView = (TextView) clickable.findViewById(R.id.tap_click_info);
 		clickCountTextView = (TextView) clickable.findViewById(R.id.tap_click_count);
 		timeLeftTextView = (TextView) clickable.findViewById(R.id.tap_click_time);
+		//sets click events
 		clickable.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				if(!running){
+					//initialises test variables
 					running = !running;
 					clickCount = 0;
 					startTime = Calendar.getInstance().getTimeInMillis();
@@ -115,6 +121,7 @@ public class FingerTapTestFragment extends Fragment {
 				} else if (running && (Calendar.getInstance().getTimeInMillis() - startTime) > (seconds * 1000)){
 					//do nothing
 				} else if (running && startTime != 0) {
+					//increase tap count
 					clickCount ++;
 					clickCountTextView.setText("Tap Count: " + Integer.toString(clickCount));
 				}
@@ -122,6 +129,7 @@ public class FingerTapTestFragment extends Fragment {
 
 		});
 
+		//checks startable
 		startButton.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -141,16 +149,20 @@ public class FingerTapTestFragment extends Fragment {
 		});
 	}
 
+	//ends test
 	private void endTest() {		
 		if(running){
+			//resets views
 			timerHandler.removeCallbacks(timerRunnable);
 			startButton.setText(getResources().getString(R.string.restart));
 			infoTextView.setVisibility(View.INVISIBLE);
 			infoTextView.setText(getResources().getString(R.string.start_square));
 			clickCountTextView.setText(getResources().getString(R.string.tap_click_info_count));
 			startTime = 0;
+			//gets user id
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 			String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+			//inserts and displays results
 			Results.insertResult(eventName, Integer.toString(clickCount),
 					Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 			ActivityUtilities.displayResults(getActivity(), eventName, 

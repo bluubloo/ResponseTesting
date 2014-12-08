@@ -26,9 +26,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 
+/**
+ * This fragment handles the monkey ladder test
+ * tests - attention to detail, response times
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class MonkeyLadderFragment extends Fragment {
 
-
+	//constants
 	private static final String TAG = "MonkeyLadderFragment";
 	private static final String eventName = "Monkey Ladder";
 	private static final int maxTurns = 10;
@@ -36,9 +43,11 @@ public class MonkeyLadderFragment extends Fragment {
 	private static final int waitTime = 250;
 	private static final int maxErrors = 3;
 
+	//views
 	private GridView grid;
 	private Button button;
-
+	
+	//varaibles
 	private int playTimes = 0;
 	private int tiles = 3;
 	private int clickedTiles = 0;
@@ -59,6 +68,10 @@ public class MonkeyLadderFragment extends Fragment {
 
 		@Override
 		public void run() {
+			//sets start time
+			if(counter < maxTurns)
+				results[counter] = new DurationInfo(Calendar.getInstance().getTimeInMillis());
+			//show grid
 			grid.setVisibility(View.VISIBLE);
 			timerHandler.postDelayed(timerRunnableTextDisappear, tiles * 500);
 		}
@@ -68,6 +81,7 @@ public class MonkeyLadderFragment extends Fragment {
 
 		@Override
 		public void run() {
+			//update adapter
 			adapter.update(false);
 			clickable = true;
 		}
@@ -102,8 +116,10 @@ public class MonkeyLadderFragment extends Fragment {
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.monkey_ladder_fragment, container, false);
+		//sets views
 		grid = (GridView) view.findViewById(R.id.monkey_grid);
 		button = (Button) view.findViewById(R.id.monkey_button);
+		//sets adapter
 		adapter = new MonkeyLadderGridAdapter(getActivity(), tileList, tiles);
 		grid.setAdapter(adapter);
 		setUpButton();
@@ -112,12 +128,15 @@ public class MonkeyLadderFragment extends Fragment {
 	}
 
 	private void setUpGridItemClick() {
+		//sets grid click
 		grid.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				//if clickable
 				if(clickable){	
+					//check click result
 					if((int) adapter.getItem(position) <= tiles){
 						boolean result = checkClick(position);
 						if(result){
@@ -148,12 +167,14 @@ public class MonkeyLadderFragment extends Fragment {
 	}
 
 	private void setUpButton() {
+		//set start button click
 		button.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 					if(button.isEnabled()){
+						//set initial test variables
 						button.setEnabled(false);
 						playTimes++;
 						counter = 0;
@@ -164,6 +185,7 @@ public class MonkeyLadderFragment extends Fragment {
 						clickable = false;
 						results = new DurationInfo[maxTurns];
 						results[counter] = new DurationInfo(Calendar.getInstance().getTimeInMillis());
+						//alters tiles
 						alterTiles(false);
 						grid.setVisibility(View.VISIBLE);
 						timerHandler.postDelayed(timerRunnableTextDisappear, tiles * 500);
@@ -177,19 +199,24 @@ public class MonkeyLadderFragment extends Fragment {
 		});
 	}
 
+	//ends test
 	private void endTest(){
+		//reset variables
 		removeTimerCallbacks();
 		button.setEnabled(true);
 		grid.setVisibility(View.INVISIBLE);
+		//gets results
 		String time = getResult();
 		String resultString = Integer.toString(currentMax) + " reached. " + time + " average time (s).";
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		//inserts and displays results
 		Results.insertResult(eventName, Integer.toString(currentMax) + "|" + time,
 				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);
 	}
 
+	//gets results as string
 	private String getResult() {
 		double tmp = 0;
 		int i = 0;
@@ -202,36 +229,40 @@ public class MonkeyLadderFragment extends Fragment {
 		return Conversion.milliToStringSeconds(tmp, 3);
 	}
 
+	//sets up tile list
 	private void setUpTiles(){
 		tileList = new ArrayList<Integer>();
 		for(int i = 1; i <= gridColumns * gridColumns; i++)
 			tileList.add(i);
 	}
 
+	//alters tiles
 	private void alterTiles(boolean inc){
 		if(inc)
 			tiles ++;
 		else if(tiles > 3)
 			tiles --;
+		//shuffles list then updates adapter
 		Collections.shuffle(tileList, new Random());
 		adapter.clear();
 		adapter.update(tileList, tiles);
 	}
 
+	//check user click
 	private boolean checkClick(int position) {
 		int clicked = (int) adapter.getItem(position);
 		return clicked == clickedTiles + 1;
 	}
 
+	//add end time & inc counter
 	private void moveToNext() {
 		long time = Calendar.getInstance().getTimeInMillis();
 		results[counter].addEndTime(time);
 		counter ++;
-		if(counter < maxTurns)
-			results[counter] = new DurationInfo(time + waitTime);
 	}
 
 
+	//alters tiles
 	private void next(boolean inc) {
 		moveToNext();
 		grid.setVisibility(View.INVISIBLE);
@@ -240,6 +271,7 @@ public class MonkeyLadderFragment extends Fragment {
 		timerHandler.postDelayed(timerRunnableGridAppear, waitTime);
 	}
 
+	//disables timers
 	private void removeTimerCallbacks(){
 		timerHandler.removeCallbacks(timerRunnableGridAppear);
 		timerHandler.removeCallbacks(timerRunnableTextDisappear);

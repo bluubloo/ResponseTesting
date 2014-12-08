@@ -15,16 +15,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * This fragment shows the instructions for the events
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class EventInstructionsFragment extends Fragment {
 
+	//variables
 	private static final String TAG = "EventInstructionsFragment";
 	private String eventName = "";
 	private EventInstructionsListener listener;
-	//private TextView infoTextView;
-	//private TextView eventNameTextView;
 	
 	public EventInstructionsFragment(){}
 	
+	//sets event name 
 	public static EventInstructionsFragment getInstance(String eventName, Resources r){
 		EventInstructionsFragment tmp = new EventInstructionsFragment();
 		Bundle args = new Bundle();
@@ -46,6 +53,7 @@ public class EventInstructionsFragment extends Fragment {
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.instructions_fragment, container, false);
+		//sets view values
 		String info = ActivityUtilities.getEventInfo(eventName, getResources());
 		TextView infoTextView = (TextView) view.findViewById(R.id.instuct_info);
 		infoTextView.setText(info);
@@ -69,6 +77,7 @@ public class EventInstructionsFragment extends Fragment {
 	}
 
 	private void setUpButtons(View view) {
+		//sets button click events
 		Button next = (Button) view.findViewById(R.id.instruct_next);
 		next.setOnClickListener(new OnClickListener(){
 

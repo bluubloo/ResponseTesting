@@ -19,6 +19,14 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+
+/**
+ * This class handles common app methods
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class ActivityUtilities {
 
 	//Does the action bar events for items common accross all activities
@@ -45,6 +53,7 @@ public class ActivityUtilities {
 		}
 	}
 
+	//runs setup mode
 	private static void setupMode(Activity activity){
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 		boolean single = prefs.getBoolean(activity.getResources().getString(R.string.pref_key_user), true);
@@ -57,6 +66,7 @@ public class ActivityUtilities {
 		activity.startActivity(intent);
 	}
 
+	//checks password for setup mode
 	private static void passwordForSetupMode(final Activity activity){
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setTitle("Enter Password");

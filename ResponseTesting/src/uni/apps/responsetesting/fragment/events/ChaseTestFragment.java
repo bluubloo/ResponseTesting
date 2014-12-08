@@ -25,8 +25,17 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 
+/**
+ * This fragment handles the chase test
+ * Tests - visual motor functions, CNS & response times
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class ChaseTestFragment extends Fragment {
 
+	//variables
 	private static final String TAG = "ChaseTestFragment";
 	private static final String eventName = "Chase Test";
 	private ChaseTestGridAdapter adapter;
@@ -47,6 +56,7 @@ public class ChaseTestFragment extends Fragment {
 
 		@Override
 		public void run(){
+			//ends test
 			endTest();
 		}
 	};
@@ -55,6 +65,7 @@ public class ChaseTestFragment extends Fragment {
 
 		@Override
 		public void run(){
+			//updates results
 			results.add(counter);
 			counter = 0;
 			timerHandler.postDelayed(this, 1000);
@@ -80,6 +91,7 @@ public class ChaseTestFragment extends Fragment {
 	@Override
 	public void onStop(){
 		super.onStop();
+		//cancels timers
 		timerHandler.removeCallbacks(timerRunnable);
 		timerHandler.removeCallbacks(timerClicks);
 	}
@@ -92,6 +104,7 @@ public class ChaseTestFragment extends Fragment {
 		View view =  inflater.inflate(R.layout.chase_test_fragment, container, false);
 		grid = (GridView) view.findViewById(R.id.chase_grid);
 		grid.setVisibility(View.INVISIBLE);
+		//sets grid adapteer
 		adapter = new ChaseTestGridAdapter(getActivity());
 		grid.setAdapter(adapter);
 		setUpGridItemClick();
@@ -99,6 +112,7 @@ public class ChaseTestFragment extends Fragment {
 		return view;
 	}
 
+	//set button clicks
 	private void setUpButtonClick(View view) {
 		final Resources r = getResources();
 		button = (Button) view.findViewById(R.id.chase_button);
@@ -106,8 +120,10 @@ public class ChaseTestFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+				//checks if test is startable
 				if(button.getText().toString().equals(r.getString(R.string.start))){
 					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+						//initalise test variables
 					button.setEnabled(false);
 					grid.setVisibility(View.VISIBLE);
 					running = true;
@@ -115,6 +131,7 @@ public class ChaseTestFragment extends Fragment {
 					targetPos = 42;
 					userPos = 6;
 					results = new ArrayList<Integer>();
+					//start timers
 					timerHandler.postDelayed(timerRunnable, 30 * 1000);
 					timerHandler.postDelayed(timerClicks, 1000);
 					} else{
@@ -128,11 +145,13 @@ public class ChaseTestFragment extends Fragment {
 	}
 
 	private void setUpGridItemClick() {
+		//sets grid click events
 		grid.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				//alters test state
 				if(running){
 					counter ++;
 					if(targetPos == position){
@@ -150,6 +169,7 @@ public class ChaseTestFragment extends Fragment {
 	}
 
 	protected void moveToNext(int position) {
+		//moves positions of target and user
 		userPos = position;
 		int[] newTarget = new int[] {targetPos + 1, targetPos + 7,
 				targetPos - 1, targetPos - 7};
@@ -221,13 +241,16 @@ public class ChaseTestFragment extends Fragment {
 	}
 
 	private boolean moveable(int position, int current) {
+		//checks if move is legal
 		if(position == userPos - 1 || position == userPos + 1 || 
 				position == userPos - 7 || position == userPos + 7)
 			return true;
 		return false;
 	}
 
+	//ends the test
 	private void endTest(){
+		//resets test variables 
 		timerHandler.removeCallbacks(timerRunnable);
 		timerHandler.removeCallbacks(timerClicks);
 		results.add(counter);
@@ -236,15 +259,18 @@ public class ChaseTestFragment extends Fragment {
 		grid.setVisibility(View.INVISIBLE);
 		adapter.reset();
 		button.setEnabled(true);
+		//gets results
 		String result = getResults();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		//inserts and displays results
 		Results.insertResult(eventName, result,
 				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName,
 				"You had an average of " + result + " moves a second");
 	}
 
+	//gets average results
 	private String getResults() {
 		double tmp = 0;
 		for(int i : results)

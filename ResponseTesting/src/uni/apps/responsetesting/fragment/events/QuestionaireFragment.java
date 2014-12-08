@@ -21,8 +21,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+/**
+ * This fragment handles the questionnaire
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class QuestionaireFragment extends Fragment {
 
+	//variables
 	private static final String TAG = "QuestionaireFragment";
 	private static final String eventName = "Questionaire";
 	private QuestionaireListAdapter adapter;
@@ -42,10 +50,11 @@ public class QuestionaireFragment extends Fragment {
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.questionaire_fragment, container, false);
+		//get list view
 		list_view = (ListView) view.findViewById(R.id.questionaire_list);
 
+		//set views
 		final EditText totalSleep = (EditText) view.findViewById(R.id.questionaire_total);
-		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		boolean sleep = prefs.getBoolean(getResources().getString(R.string.pref_key_sleep), false);
 		final EditText lightSleep = (EditText) view.findViewById(R.id.questionaire_light);
@@ -56,19 +65,20 @@ public class QuestionaireFragment extends Fragment {
 			view.findViewById(R.id.sound_con).setVisibility(View.GONE);
 		}
 
+		//set button click
 		Button submit = (Button) view.findViewById(R.id.questionaire_submit);		
 		submit.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-
+				
 				ArrayList<String> results = new ArrayList<String>();
-
+				//get values
 				String sleep = totalSleep.getText().toString();
 				String light = lightSleep.getText().toString();
 				String sound = soundSleep.getText().toString();
 				String hr = heartRate.getText().toString();
-
+				//check string format
 				if(!checkSleepFormat(sleep, light, sound)){
 					new AlertDialog.Builder(getActivity())
 					.setTitle("Time Duration Error")
@@ -82,20 +92,22 @@ public class QuestionaireFragment extends Fragment {
 							.setIcon(android.R.drawable.ic_dialog_alert)
 							.show();
 				}else{
-
+					//get ratings
 					for(int i = 0; i < adapter.getCount(); i++){
 						results.add(adapter.getRating(i));
 					}
-					
+					//format ratings
 					String finalResult = "";
 					for(String s : results)
 						finalResult += s + "|";
 					Log.d(TAG, finalResult);
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 					String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+					//insert result
 					Results.insertQuestionaireResult(eventName, new String[] {sleep, light, sound, hr}, 
 							finalResult, Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 
+					//return to main menu
 					new AlertDialog.Builder(getActivity())
 					.setTitle("Questionaire Submitted")
 					.setMessage("You will now be returned to the Main Menu.")
@@ -112,6 +124,7 @@ public class QuestionaireFragment extends Fragment {
 		return view;
 	}
 
+	//checks string time format
 	private boolean checkSleepFormat(String sleep, String light, String sound) {
 		if(checkStringFormat(sleep) && checkStringFormat(light) && checkStringFormat(sound))
 			return true;		

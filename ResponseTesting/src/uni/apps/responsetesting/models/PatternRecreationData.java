@@ -1,5 +1,12 @@
 package uni.apps.responsetesting.models;
 
+
+/**
+ * This is the data structure for the patternrecreationfragment
+ * 
+ * @author Mathew Andea
+ *
+ */
 public class PatternRecreationData {
 
 	private boolean pattern = false;

@@ -7,7 +7,6 @@ import uni.apps.responsetesting.fragment.events.ChaseTestFragment;
 import uni.apps.responsetesting.fragment.events.EvenVowelFragment;
 import uni.apps.responsetesting.fragment.events.EventInstructionsFragment;
 import uni.apps.responsetesting.fragment.events.FingerTapTestFragment;
-import uni.apps.responsetesting.fragment.events.GraphTestFragment;
 import uni.apps.responsetesting.fragment.events.MonkeyLadderFragment;
 import uni.apps.responsetesting.fragment.events.OneCardLearningFragment;
 import uni.apps.responsetesting.fragment.events.PatternRecreationFragment;
@@ -110,9 +109,6 @@ public class EventActivity extends Activity implements EventInstructionsListener
 			fragment = new CenterArrowFragment();
 		else if(eventName.equals(r.getString(R.string.event_name_monkey)))
 			fragment = new MonkeyLadderFragment();
-		//TODO Remove
-		else if(eventName.equals("Graph Test"))
-			fragment = new GraphTestFragment();
 	}
 
 	@Override

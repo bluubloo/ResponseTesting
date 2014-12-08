@@ -20,6 +20,12 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+/**
+ * MailClient
+ * 
+ * @author Mathew Andel
+ *
+ */
 public class MailClient extends Authenticator {
 
 	
@@ -27,6 +33,7 @@ public class MailClient extends Authenticator {
 		Security.addProvider(new JSSEProvider());
 	}
 	
+	//vairables
 	private String user;
 	private String pass;
 	
@@ -46,6 +53,7 @@ public class MailClient extends Authenticator {
 	
 	private Multipart multipart;
 	
+	//default constructor
 	public MailClient(){
 		host = "smtp.gmail.com";
 		port = "465";
@@ -71,6 +79,7 @@ public class MailClient extends Authenticator {
 		CommandMap.setDefaultCommandMap(mc);	
 	}
 	
+	//sets username and password
 	public MailClient(String user, String pass){
 		this();
 		
@@ -78,6 +87,7 @@ public class MailClient extends Authenticator {
 		this.pass = pass;
 	}
 	
+	//send email
 	public boolean send() throws Exception {
 		Properties prop = setProperties();
 		if(!user.equals("") && !pass.equals("") && to.length > 0 && !from.equals("") && 
@@ -107,6 +117,7 @@ public class MailClient extends Authenticator {
 		}
 	}
 	
+	//adds attachment
 	public void addAttachment(String fileName) throws Exception {
 		BodyPart messageBodyPart = new MimeBodyPart();
 		DataSource source = new FileDataSource(fileName);
@@ -115,11 +126,13 @@ public class MailClient extends Authenticator {
 		multipart.addBodyPart(messageBodyPart);
 	}
 	
+	//authenticates email
 	@Override
 	public PasswordAuthentication getPasswordAuthentication(){
 		return new PasswordAuthentication(user, pass);
 	}
 
+	//sets properties
 	private Properties setProperties() {
 		Properties prop = new Properties();
 		

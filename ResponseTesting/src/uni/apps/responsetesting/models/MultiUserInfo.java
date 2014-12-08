@@ -1,5 +1,11 @@
 package uni.apps.responsetesting.models;
 
+/**
+ * This is the data structure for the multi user mode user info
+ * 
+ * @author Mathew Andea
+ *
+ */
 public class MultiUserInfo {
 
 	private String group;

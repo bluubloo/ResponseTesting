@@ -9,7 +9,16 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RadioButton;
 
+/**
+ * This dialogpreference if for the user mode selection
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class UserModePreference extends DialogPreference {
+	
+	//variables
 	private RadioButton single;
 	private RadioButton multi;
 	private final boolean  default_value = true;
@@ -17,6 +26,7 @@ public class UserModePreference extends DialogPreference {
 	
 	public UserModePreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		//sets dialog properties
 		setDialogLayoutResource(R.layout.settings_user_mode);
 		setPositiveButtonText(android.R.string.ok);
 		setNegativeButtonText(android.R.string.cancel);
@@ -28,6 +38,7 @@ public class UserModePreference extends DialogPreference {
 	public void onBindDialogView(View view){
 		super.onBindDialogView(view);
 		
+		//sets view up
 		single = (RadioButton) view.findViewById(R.id.user_mode_single);
 		multi = (RadioButton) view.findViewById(R.id.user_mode_multi);
 		
@@ -39,11 +50,13 @@ public class UserModePreference extends DialogPreference {
 	
 	@Override
 	protected Object onGetDefaultValue(TypedArray attr, int index){
+		//sets default value
 		return attr.getBoolean(index, default_value);
 	}
 	
 	@Override
 	protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue){
+		//sets value
 		if(restorePersistedValue)
 			storeValue(getPersistedBoolean(current_value));
 		else
@@ -51,12 +64,14 @@ public class UserModePreference extends DialogPreference {
 	}
 
 	private void storeValue(boolean value) {
+		//sets value
 		current_value = value;
 		persistBoolean(current_value);
 	}
 	
 	@Override
 	protected void onDialogClosed(boolean positiveResult){
+		//sets value
 		if(positiveResult){
 			boolean tmp = true;
 			if(single.isChecked())

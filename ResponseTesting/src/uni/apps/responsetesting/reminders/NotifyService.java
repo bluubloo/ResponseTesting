@@ -13,14 +13,23 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+/**
+ * This service notifys the user to do the tests
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class NotifyService extends Service {
 
+	//varaibles
 	private static final int NOTIFICATION = 123;
 	public static final String INTENT_NOTIFY = "uni.apps.responsetesting.reminders.INTENT_NOTIFY";
 	private static final String TAG = "NotifyService";
 	private NotificationManager manager;
 	private final IBinder binder =  new ServiceBinder();
 	
+	//service binder
 	private class ServiceBinder extends Binder{
 		@SuppressWarnings("unused")
 		NotifyService getService(){

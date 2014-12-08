@@ -29,13 +29,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+/**
+ * This fragment handles the arrow ignoring test
+ * Tests - attention & response time
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class CenterArrowFragment extends Fragment implements CenterArrowListener {
 
+	//constants
 	private static final String TAG = "CenterArrowFragment";
 	private static final String eventName = "Arrow Ignoring Test";
 	private static final int maxTurns = 10;
 	private static final int waitTime = 250;
 
+	//variables
 	private CenterArrowListener listener;
 	private CenterArrowGridAdapter adapter;
 
@@ -62,6 +71,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 
 		@Override
 		public void run() {
+			//makes grid visible and clickable
 			grid.setVisibility(View.VISIBLE);
 			clickable = true;
 		}
@@ -109,15 +119,19 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.center_arrow_fragment, container, false);
+		//sets view variables
 		textView = (TextView) view.findViewById(R.id.center_arrow_info);
 		grid = (GridView) view.findViewById(R.id.center_arrow_grid);
+		//creates and sets adapter
 		adapter = new CenterArrowGridAdapter(getInitalData(), getActivity());
 		grid.setAdapter(adapter);
+		//sets up click events
 		setUpContainerClick(view);
 		setUpButtons(view);
 		return view;
 	}
 
+	//gets initial data
 	private int[] getInitalData(){
 		int[] tmp = new int[25];
 		for(int i = 0; i < tmp.length; i++)
@@ -126,6 +140,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	}
 
 	private void setUpContainerClick(View view) {
+		//sets up container click event
 		RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.center_arrow_container);
 		layout.setOnClickListener(new OnClickListener(){
 
@@ -138,6 +153,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	}
 
 	private void setUpButtons(View view) {
+		//sets up imageviews
 		buttons = new ImageView[4];
 		buttons[0] = (ImageView) view.findViewById(R.id.center_arrow_button_down);
 		buttons[0].setTag("down");
@@ -148,6 +164,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 		buttons[3] = (ImageView) view.findViewById(R.id.center_arrow_button_right);
 		buttons[3].setTag("right");
 
+		//sets up imageview click events
 		for(final ImageView b: buttons){
 			b.setOnClickListener(new OnClickListener(){
 
@@ -163,6 +180,10 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 
 	@Override
 	public void buttonClick(String direction) {
+		//on imageview click
+		//check answer
+		//alter arrows
+		//run timer
 		if(running && clickable){
 			clickable = false;
 			if(counter < maxTurns - 1){
@@ -179,6 +200,8 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 
 	@Override
 	public void containerClick() {
+		//on container click
+		//initailises test vairables
 		if(!running &&  textView.getVisibility() == View.VISIBLE){
 			if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 				running = true;
@@ -199,8 +222,10 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	}
 
 	private void alterArrowSetup() {
+		//shuffles arrow icons
 		Collections.shuffle(arrows, new Random());
 		Log.d(TAG, Integer.toString(arrows.size()));
+		//get new arrows
 		center = arrows.get(0);
 		ArrayList<Integer> positions = new ArrayList<Integer>();
 		positions.add(12);
@@ -224,9 +249,11 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 			else
 				data[i] = -1;
 		}
+		//update adapter
 		adapter.update(data);
 	}
 
+	//initail arrow drawable values
 	private void setUpArrowInfo() {
 		arrows = new ArrayList<CenterArrowInfo>();
 		//NOTE: keep below arrows in the order down, up, left, right
@@ -244,6 +271,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	}
 
 
+	//checks answer
 	private void checkAnswer(String direction) {
 		boolean correct = center.checkCorrect(direction);
 		long time = Calendar.getInstance().getTimeInMillis();
@@ -252,24 +280,29 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 		moveToNext(time + waitTime);
 	}
 
-
+//move to next result position
 	private void moveToNext(long l) {
 		counter ++;
 		if(counter < maxTurns)
 			results[counter] = new CorrectDurationInfo(l);
 	}
 
+	//ends test
 	private void endTest() {
+		//resets variables
 		timerHandler.removeCallbacks(timerRunnable);
 		running = false;
 		textView.setVisibility(View.VISIBLE);
 		grid.setVisibility(View.INVISIBLE);
+		//gets results
 		double[] result = Results.getResults(results);
 		String tmp = Conversion.milliToStringSeconds(result[1], 3);
 		String resultString = result[0] + " correct. " + 
 				tmp + " average time (s)"; 
+		//gets user id
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		//insert results to db and displays
 		Results.insertResult(eventName, result[0] + "|" + tmp,
 				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);

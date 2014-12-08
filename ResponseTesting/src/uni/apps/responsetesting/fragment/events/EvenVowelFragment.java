@@ -21,8 +21,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * This fragment handles the even or vowel test
+ * tests - mental flexibility, response times & attention to detail
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class EvenVowelFragment extends Fragment {
 
+	//variables
 	private static final String TAG = "EvenVowelFragment";
 	private static final String eventName = "Even or Vowel";
 	private String testText = "";
@@ -33,6 +42,7 @@ public class EvenVowelFragment extends Fragment {
 
 	private CorrectDurationInfo[] results;
 
+	//views
 	private Button yesButton;
 	private Button noButton;
 	private TextView evenTextView;
@@ -58,6 +68,7 @@ public class EvenVowelFragment extends Fragment {
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.even_vowel_fragment, container, false);
+		//sets up views
 		evenTextView = (TextView) view.findViewById(R.id.even_vowel_even);
 		vowelTextView = (TextView) view.findViewById(R.id.even_vowel_vowel);
 		setUpButtons(view);
@@ -65,6 +76,7 @@ public class EvenVowelFragment extends Fragment {
 	}
 
 	private void setUpButtons(View view) {
+		//sets buttons
 		yesButton = (Button) view.findViewById(R.id.even_vowel_yes);
 		noButton = (Button) view.findViewById(R.id.even_vowel_no);
 
@@ -72,6 +84,7 @@ public class EvenVowelFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+				//checks if startable or playing
 				if(yesButton.getText().equals(getResources().getString(R.string.start)))
 					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 						startTest();
@@ -81,6 +94,7 @@ public class EvenVowelFragment extends Fragment {
 								"You have completed you daily 3 tries, please try a different test");
 					}
 				else
+					//checks answer
 					checkAnswer(true);				
 			}
 		});
@@ -89,12 +103,15 @@ public class EvenVowelFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+				//checks answer
 				checkAnswer(false);
 			}
 		});
 	}
 
 	private void startTest() {
+		//initalises test varaibles
+		//starts the test
 		counter = 0;
 		testText = "";
 		results = new CorrectDurationInfo[maxTurns];
@@ -107,6 +124,7 @@ public class EvenVowelFragment extends Fragment {
 	}
 
 	private void checkAnswer(boolean input) {
+		//checks if user anwser is correct
 		results[counter].addEndTime(Calendar.getInstance().getTimeInMillis());
 		if(evenTextView.getVisibility() == View.VISIBLE){
 			boolean even = isEven();
@@ -122,6 +140,7 @@ public class EvenVowelFragment extends Fragment {
 				results[counter].addResult(false);
 		}
 
+		//checks if time to end test
 		if(counter != maxTurns - 1){
 			switchText();
 			moveToNext();
@@ -130,16 +149,20 @@ public class EvenVowelFragment extends Fragment {
 
 	}
 
+	//ends test
 	private void endTest() {
+		//gets results
 		double[] result = Results.getResults(results);
 		String tmp = Conversion.milliToStringSeconds(result[1], 3);
 		String resultString = result[0] + " correct. " + tmp + " average time (s).";
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		//inserts and display results
 		Results.insertResult(eventName, result[0] + "|" + tmp, 
 				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);
 		Resources r = getResources();
+		//resets views
 		yesButton.setText(r.getString(R.string.start));
 		noButton.setText("");
 		noButton.setEnabled(false);
@@ -149,6 +172,7 @@ public class EvenVowelFragment extends Fragment {
 		vowelTextView.setVisibility(View.INVISIBLE);
 	}
 
+	//checks if vowel
 	private boolean isVowel() {
 		char l = testText.charAt(1);
 		char[] tmp = new char[] {'a','e','i','o','u'};
@@ -158,6 +182,7 @@ public class EvenVowelFragment extends Fragment {
 		return false;
 	}
 
+	//checks if even
 	private boolean isEven() {
 		char l = testText.charAt(0);
 		int n = Character.getNumericValue(l);
@@ -166,13 +191,17 @@ public class EvenVowelFragment extends Fragment {
 		return false;
 	}
 
+	//switches text values
 	private void switchText() {
+		//new text values
 		Random random = new Random();
 		int number = random.nextInt(9) + 1;
 		int letter = random.nextInt(90 - 65) + 65;
 		char l = Character.toChars(letter)[0];
 		testText = Integer.toString(number) + l;
+		//new viewable box
 		int box = random.nextInt(11);
+		//sets text
 		if(box < 5){
 			evenTextView.setText(testText);
 			evenTextView.setVisibility(View.VISIBLE);
@@ -187,6 +216,7 @@ public class EvenVowelFragment extends Fragment {
 	}
 
 	private void moveToNext(){
+		//moves to next result position
 		counter ++;
 		if(counter < results.length)
 			results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());

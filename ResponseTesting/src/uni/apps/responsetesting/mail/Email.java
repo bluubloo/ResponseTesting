@@ -18,8 +18,10 @@ import android.os.Environment;
  */
 public class Email {
 
+	//sends results via email
 	public static void sendResults(Activity activity, boolean all){
 		String body = "Hi\n\nAttached is the Test Results\n\nCheers\nResponse Testing";
+		//decides what values to send
 		if(all){
 			Results.resultsToCSV(activity);
 			sendEmail(activity, body, "All");
@@ -40,7 +42,7 @@ public class Email {
 
 	public static void sendEmail(Activity activity, String body, String testName) 
 	{
-
+		//gets file
 		String fileName = "";
 
 		try {
@@ -49,7 +51,7 @@ public class Email {
 			e1.printStackTrace();
 		}
 		String PATH =  Environment.getExternalStorageDirectory()+"/"+fileName.trim().toString();
-
+		//executes email task
 		EmailTask task = new EmailTask();
 		task.execute(new EmailTaskData(new String[]{body, "Test " + testName + " - Results", PATH},
 				activity));

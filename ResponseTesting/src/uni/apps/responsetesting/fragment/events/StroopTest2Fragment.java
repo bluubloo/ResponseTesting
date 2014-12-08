@@ -22,8 +22,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * This fragment handles the stroop test
+ * test - response time, attention to detail
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class StroopTest2Fragment extends Fragment {
 
+	//variables
 	private static final String TAG = "StroopTest2Fragment";
 	private static final String eventName = "Stroop Test";
 	private static CorrectDurationInfo[] results;
@@ -35,8 +44,9 @@ public class StroopTest2Fragment extends Fragment {
 	private int playTimes = 0;
 	private TextView colourTextView;
 	private TextView wordTextView;
+	//color names
 	private String[] colourNames = new String[] {"Black","Red","Blue","Green", "Yellow","Orange", "Pink"};
-
+	//color values
 	private int[] colourValues = new int[] {Color.BLACK,Color.RED,Color.BLUE,Color.GREEN, Color.YELLOW, 
 			Color.rgb(255, 153, 51), Color.rgb(255, 153, 255)};
 
@@ -48,7 +58,7 @@ public class StroopTest2Fragment extends Fragment {
 			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
@@ -61,6 +71,7 @@ public class StroopTest2Fragment extends Fragment {
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.stroop_test2_fragment, container, false);
+		//set views
 		colourTextView = (TextView) view.findViewById(R.id.stroop_colour);
 		wordTextView = (TextView) view.findViewById(R.id.stroop_word);
 		setUpButtons(view);
@@ -68,6 +79,7 @@ public class StroopTest2Fragment extends Fragment {
 	}
 
 	private void setUpButtons(View view) {
+		//set buttons
 		final Button match = (Button) view.findViewById(R.id.stroop_match);
 		final Button noMatch = (Button) view.findViewById(R.id.stroop_no_match);
 		final Resources r = getResources();
@@ -75,20 +87,23 @@ public class StroopTest2Fragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+				//check if startable
 				if(match.getText().toString().equals(r.getString(R.string.start))){
 					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
-					match.setText(r.getString(R.string.match));
-					noMatch.setText(r.getString(R.string.no_match));
-					noMatch.setEnabled(true);
-					setTextViews();
-					results = new CorrectDurationInfo[maxChanges];
-					counter = 0;
-					playTimes++;
-					results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
+						//initialise test variables
+						match.setText(r.getString(R.string.match));
+						noMatch.setText(r.getString(R.string.no_match));
+						noMatch.setEnabled(true);
+						setTextViews();
+						results = new CorrectDurationInfo[maxChanges];
+						counter = 0;
+						playTimes++;
+						results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
 					} else{
 						ActivityUtilities.displayResults(getActivity(), eventName,
 								"You have completed you daily 3 tries, please try a different test");
 					}
+					//check answers
 				} else if(counter < maxChanges - 1){
 					setResultsTrue();
 					setTextViews();
@@ -104,6 +119,7 @@ public class StroopTest2Fragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+				//check answers
 				if(counter < maxChanges - 1){
 					setResultsFalse();
 					setTextViews();
@@ -117,41 +133,47 @@ public class StroopTest2Fragment extends Fragment {
 	}
 
 	private void endTest(Button match, Button noMatch) {
+		//reset test vairables
 		Resources r = getResources();
 		match.setText(r.getString(R.string.start));
 		noMatch.setText("");
 		noMatch.setEnabled(false);
 		colourTextView.setText("");
 		wordTextView.setText("");
+		//get results
 		double[] tmp = Results.getResults(results);
 		String tmp2 = Conversion.milliToStringSeconds(tmp[1], 3);
 		String value = tmp[0] + " correct. " + tmp2 + " average time (s)"; 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		//insert and display results
 		Results.insertResult(eventName, tmp[0] + "|" + tmp2,
 				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, value);
 	}
 
-
+	//set results match click
 	private void setResultsTrue(){
 		results[counter].addEndTime(Calendar.getInstance().getTimeInMillis());
 		results[counter].addResult(colour == word2);
 		moveToNext();
 	}
 
+	//set result no match click
 	private void setResultsFalse(){
 		results[counter].addEndTime(Calendar.getInstance().getTimeInMillis());
 		results[counter].addResult(colour != word2);
 		moveToNext();
 	}
 
+	//move to next result position
 	private void moveToNext(){
 		counter ++;
 		if(counter < maxChanges)
 			results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
 	}
 
+	//set views
 	private void setTextViews() {
 		Random random = new Random();
 		colour = random.nextInt(colourNames.length);

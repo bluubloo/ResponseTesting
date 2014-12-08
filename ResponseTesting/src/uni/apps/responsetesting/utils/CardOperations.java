@@ -5,6 +5,13 @@ import java.util.Random;
 
 import uni.apps.responsetesting.R;
 
+/**
+ * This class handles one card learing operations
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class CardOperations {
 
 	//Sets up random list of cards

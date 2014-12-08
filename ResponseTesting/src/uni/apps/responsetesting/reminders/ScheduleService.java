@@ -8,8 +8,16 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+/**
+ * This service sets the alarm
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class ScheduleService extends Service {
 
+	//variables
 	private final IBinder binder = new ServiceBinder();
 	private static final String TAG = "ScheduleService";
 	
@@ -30,6 +38,7 @@ public class ScheduleService extends Service {
 		return binder;
 	}
 	
+	//sets alarm
 	public void setAlarm(Calendar c){
 		new AlarmTask(this, c).run();
 	}

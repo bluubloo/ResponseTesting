@@ -8,8 +8,17 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
 
+
+/**
+ * This is the dialog preference for the reminder time
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class ReminderTimePreference extends DialogPreference {
 
+	//variables
 	private TimePicker time;
 	private final String default_value = "9:00";
 	private int current_hour;
@@ -18,6 +27,7 @@ public class ReminderTimePreference extends DialogPreference {
 	
 	public ReminderTimePreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		//set dialog properties
 		setDialogLayoutResource(R.layout.settings_reminder_time);
 		setPositiveButtonText(android.R.string.ok);
 		setNegativeButtonText(android.R.string.cancel);
@@ -28,7 +38,7 @@ public class ReminderTimePreference extends DialogPreference {
 	@Override
 	public void onBindDialogView(View view){
 		super.onBindDialogView(view);
-		
+		//set views up
 		time = (TimePicker) view.findViewById(R.id.remind_time);
 		time.setIs24HourView(true);
 		time.setCurrentHour(current_hour);
@@ -37,11 +47,13 @@ public class ReminderTimePreference extends DialogPreference {
 	
 	@Override
 	protected Object onGetDefaultValue(TypedArray attr, int index){
+		//get default value
 		return default_value;
 	}
 	
 	@Override
 	protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue){
+		//set value
 		if(restorePersistedValue)
 			storeValue(getPersistedString(current_value));
 		else
@@ -49,11 +61,13 @@ public class ReminderTimePreference extends DialogPreference {
 	}
 
 	private void storeValue(String value) {
+		//set value
 		current_value = value;
 		getCurrentHourMin(value);
 		persistString(current_value);
 	}
 	
+	//get current hour & min
 	private void getCurrentHourMin(String value) {
 		int index = value.indexOf(":");
 		if(index != -1){
@@ -65,6 +79,7 @@ public class ReminderTimePreference extends DialogPreference {
 	@Override
 	protected void onDialogClosed(boolean positiveResult){
 		if(positiveResult){
+			//set values
 			current_hour = time.getCurrentHour();
 			current_min = time.getCurrentMinute();
 			String tmp = Integer.toString(current_hour) + ":" + Integer.toString(current_min);

@@ -1,7 +1,7 @@
 package uni.apps.responsetesting.models;
 
 /**
- * Data structure for the Appearing object clicks
+ * Data structure for the duration only results
  * 
  * 
  * @author Mathew Andela

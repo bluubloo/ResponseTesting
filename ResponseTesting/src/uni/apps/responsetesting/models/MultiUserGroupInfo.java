@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import uni.apps.responsetesting.R;
 
+/**
+ * This is the data structure for the multi user mode group list
+ * 
+ * @author Mathew Andea
+ *
+ */
 public class MultiUserGroupInfo {
 
 	private String group;

@@ -26,9 +26,10 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 		String PATH = params[0].strings[2];
 		Activity activity = params[0].activity;
 		
+		//to and froms
 		String from = "activitytrackers@gmail.com";
 		String to = "";
-		
+		//to addresses
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 		boolean single = prefs.getBoolean(activity.getResources().getString(R.string.pref_key_user), true);
 		if(single)
@@ -38,6 +39,7 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 			to = getMultiUserEmail(activity, prefs);
 		Log.d("EMAIL", to);
 		//set up email
+		//sets up client
 		MailClient mail = new MailClient(from, "50waikato");
 		mail.setTo(new String[] {to});
 		mail.setFrom(from);
@@ -59,6 +61,7 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 		return true;
 	}
 
+	//get multi user mode email
 	private String getMultiUserEmail(Activity activity, SharedPreferences prefs) {
 		return prefs.getString(activity.getResources().getString(R.string.pref_key_multi_email), 
 				activity.getResources().getString(R.string.setup_mode_default_email));

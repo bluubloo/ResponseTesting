@@ -7,12 +7,21 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+/**
+ * This runnable sets up an alarm
+ * 
+ * @author Mathew Andea
+ *
+ */
 public class AlarmTask implements Runnable{
 
+	
+	//variables
 	private final Calendar date;
 	private final AlarmManager am;
 	private final Context context;
 	
+	//sets variables
 	public AlarmTask(Context context, Calendar date){
 		this.context = context;
 		this.date = date;
@@ -22,8 +31,7 @@ public class AlarmTask implements Runnable{
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		//sets alarm
 		Intent intent = new Intent(context, NotifyService.class);
 		intent.putExtra(NotifyService.INTENT_NOTIFY, true);
 		PendingIntent pending = PendingIntent.getService(context, 0, intent, 0);

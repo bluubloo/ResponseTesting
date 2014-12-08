@@ -1,5 +1,12 @@
 package uni.apps.responsetesting.models;
 
+/**
+ * This is the data structure for the results gathering
+ * for tests with correct values
+ * 
+ * @author Mathew Andea
+ *
+ */
 public class CorrectDurationInfo extends DurationInfo {
 
 	private boolean correct;

@@ -29,12 +29,22 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 
+/**
+ * This fragment handles the pattern recreation test
+ * tests - visual learning, memory, response time
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class PatternRecreationFragment extends Fragment implements PatternRecreationClickListener {
 
+	//contants
 	private static final String TAG = "PatternRecreationFragment";
 	private static final String eventName = "Pattern Recreation";
 	private static final int maxTurns = 10;
 
+	//varaibles
 	private int turns = 1;
 	private int tiles = 3;
 	private int maxTilesReached = tiles;
@@ -50,6 +60,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 	private PatternRecreationData[] data;
 	private DurationInfo[] results;
 
+	//views
 	private GridView grid;
 	private Button start;
 
@@ -65,10 +76,12 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 
 		@Override
 		public void run(){
+			//flips pattern
 			for(PatternRecreationData prd : data){
 				if(prd.isPartOfPattern())
 					prd.switchCover();
 			}
+			//updates results and adpater
 			results[counter] = new DurationInfo(Calendar.getInstance().getTimeInMillis());
 			adapter.clear();
 			adapter.update(data);
@@ -90,6 +103,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.pattern_recreation_fragment, container, false);
+		//sets up grid and buttons
 		grid = (GridView) view.findViewById(R.id.pattern_grid);
 		setUpGridData(3, 3);
 		setUpGridOther();
@@ -117,6 +131,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 
 	}
 
+	//sets grid properties
 	private void setUpGridData(int col, int row) {
 		coloumns = col;
 		rows = row;
@@ -129,8 +144,10 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 
 
 	private void setUpGridOther() {
+		//sets adpater
 		adapter = new PatternRecreationGridAdapter(data, getActivity());
 		grid.setAdapter(adapter);
+		//sets grid click events
 		grid.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
@@ -143,13 +160,16 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 	}
 
 	private void setUpStartButton(View view) {
+		//sets start button view
 		start = (Button) view.findViewById(R.id.pattern_start);
 		start.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
+				//check if playable
 				if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 					if(start.isEnabled()){
+						//sets initial test variables
 						start.setEnabled(false);
 						tiles = 3;
 						canClick = false;
@@ -174,30 +194,38 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 	}
 
 
+	//starts the test
 	private void startGame() {
+		//sets grid data
 		ArrayList<Integer> clickableTiles = getClickableTiles();
 		for(int i = 0; i < tiles; i++){
 			int j = clickableTiles.get(i);
 			data[j].switchPattern();
-			data[j].switchCover();;
+			data[j].switchCover();
 		}
+		//updates adpater and starts timer
 		updateAdapter();
 		timerHandler.postDelayed(timerCoverRunnable, (1000 * tiles / 2));
 	}
 
+	//gets clickable tiles
 	private ArrayList<Integer> getClickableTiles(){
 		ArrayList<Integer> tmp = new ArrayList<Integer>();
 		for(int i = 0; i < data.length; i++){
 			tmp.add(i);
 		}
+		//shuffles list
 		Collections.shuffle(tmp, new Random());
 		return tmp;
 	}
 
 	@Override
 	public void gridItemClick(int position) {
+		//checks if clickable
 		if(canClick){
+			//get data
 			PatternRecreationData p = data[position];
+			//check for result
 			if(p.isPartOfPattern() && !p.isUncovered()){
 				p.switchCover();
 				clickCount ++;
@@ -206,6 +234,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 				p.switchCover();
 				errorClickCount--;
 			}		
+			//choose what to do next
 			data[position] = p;
 			updateAdapter();
 			if(clickCount == tiles && errorClickCount != 0)
@@ -215,11 +244,15 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 		}
 	}
 
+	//if error 
 	private void error() {
+		//check if can proceed
 		canClick = false;
 		if(turns == maxTurns){
+			//end test
 			endTest();
 		} else{
+			//decrease tiles
 			if(tiles != 3)
 				tiles --;
 			errorClickCount = 3;
@@ -227,11 +260,15 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 		}
 	}
 
+	
 	private void next() {
+		//check if can proceed
 		canClick = false;
 		if(turns == maxTurns)
+			//end test
 			endTest();
 		else{
+			//increase tiles
 			errorClickCount = 3;
 			tiles ++;
 			maxTilesReached ++;
@@ -239,7 +276,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 		}
 	}
 
-
+	//sets tiles
 	private void resetTiles(boolean error) {
 		turns ++;
 		clickCount = 0;
@@ -262,21 +299,26 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 		startGame();
 	}
 
+	//ends test
 	private void endTest() {
+		//get results
 		double timeMilli =  getResults();
 		String tmp = Conversion.milliToStringSeconds(timeMilli, 3);
 		String result = "Max Tiles: " + Integer.toString(maxTilesReached) + ". " + 
 				 tmp + " average time (s)";
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		//inserts and dispalys results
 		Results.insertResult(eventName, Integer.toString(maxTilesReached) + "|" + tmp,
 				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, result);		
+		//resest values
 		start.setEnabled(true);
 		setUpGridData(3,3);
 		updateAdapter();
 	}
 
+	//gets results
 	private double getResults() {
 		double tmp = 0;
 		for(DurationInfo d : results){
@@ -285,6 +327,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 		return tmp / results.length;
 	}
 
+	//updates adapter
 	private void updateAdapter(){
 		adapter.clear();
 		adapter.update(data);

@@ -1,5 +1,11 @@
 package uni.apps.responsetesting.models;
 
+/**
+ * This is the data structure for the CenterArrowfragment
+ * 
+ * @author Mathew Andea
+ *
+ */
 public class CenterArrowInfo {
 
 	private int drawableId = 0;

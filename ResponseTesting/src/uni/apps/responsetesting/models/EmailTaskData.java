@@ -2,6 +2,12 @@ package uni.apps.responsetesting.models;
 
 import android.app.Activity;
 
+/**
+ * This is the data structure for the emailtask
+ * 
+ * @author Mathew Andea
+ *
+ */
 public class EmailTaskData {
 
 	public String[] strings;

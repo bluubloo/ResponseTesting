@@ -6,7 +6,7 @@ import java.security.Provider;
 public class JSSEProvider extends Provider {
 
 	/**
-	 * 
+	 * provider for mail client
 	 */
 	private static final long serialVersionUID = 1L;
 

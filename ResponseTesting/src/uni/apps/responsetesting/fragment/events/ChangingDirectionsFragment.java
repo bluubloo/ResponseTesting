@@ -25,6 +25,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+/**
+ * This fragment is for the Changing directions test
+ * Tests - response time, attention to detail & mental flexibility
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class ChangingDirectionsFragment extends Fragment implements ChangingDirectionsListener {
 
 	private static final String TAG = "ChangingDirectionsFragment";
@@ -62,6 +70,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 
 		@Override
 		public void run(){
+			//checks times
 			timeElapsed += 100;
 			if(totalTime - timeElapsed <= 0 || counter == maxTurns){
 				endTest();
@@ -76,7 +85,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
+			//makes image visible
 			center.setVisibility(View.VISIBLE);
 		}
 	};
@@ -195,8 +204,10 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 
 	@Override
 	public void onButtonClick() {
+		//checks if test is unstarted
 		if(button.getText().toString().equals(getResources().getString(R.string.start))){
 			if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+				//initalises test variables
 				results = new CorrectDurationInfo[maxTurns];
 				button.setText("");
 				button.setEnabled(false);
@@ -213,30 +224,39 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 	}
 
 	private void endTest() {
+		//ends test
+		//resets test vairables
 		removeTimerCallbacks();
 		button.setText(getResources().getString(R.string.start));
 		button.setEnabled(true);
 		clearImageViews();
+		//gets results
 		double[] results = Results.getResults(this.results);
 		String tmp = Conversion.milliToStringSeconds(results[1], 3);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		String resultString = results[0] + " correct. " + tmp + " average time (s).";
+		//inserts & displays results
 		Results.insertResult(eventName, results[0] + "|" + tmp,
 				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);
 	}
 
 	private void clearImageViews() {
+		//clears imageview
 		center.setImageDrawable(null);
 		for(ImageView iv: clickable)
 			iv.setImageDrawable(null);
 	}
 
 	private void changeImageViews() {
+		//alters imageviews
+		//shuffles outer arrows
 		if(toShuffle())
 			Collections.shuffle(order, new Random());
+		//gets next arrow direction
 		centerIndex = new Random().nextInt(centerArrows.length);
+		//redraws images
 		for(int i = 0; i < clickable.length; i++){
 			clickable[i].setImageDrawable(getResources().getDrawable(buttonArrows[order.get(i)]));
 		}
@@ -244,6 +264,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 	}
 
 	private boolean toShuffle(){
+		//shuffle outer arrow turns
 		int[] shuffle = new int[] {3,5,6,8,9};
 		for(int i: shuffle)
 			if(i == counter){
@@ -254,6 +275,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 
 	@Override
 	public void onImageClick(int view) {
+		//image view clicks
 		if(counter < maxTurns - 1){
 			checkAnswer(view);
 			changeImageViews();
@@ -263,6 +285,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		}
 	}
 
+	//checks if answer is correct
 	private void checkAnswer(int viewIndex) {
 		center.setVisibility(View.INVISIBLE);
 		boolean result = false;
@@ -275,12 +298,14 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		timerHandler.postDelayed(centerImageAppear, 200);
 	}
 
+	//moves to net result position
 	private void moveToNext(long time){
 		counter++;
 		if(counter < results.length)
 			results[counter] = new CorrectDurationInfo(time);
 	}
 
+	//diables timers
 	private void removeTimerCallbacks(){
 		timerHandler.removeCallbacks(timerRunnable);
 		timerHandler.removeCallbacks(centerImageAppear);

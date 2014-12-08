@@ -21,8 +21,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+/**
+ * This fragment handles the one card learning test
+ * tests - attention to detail, memory & visual learning
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class OneCardLearningFragment extends Fragment {
 
+	//variables
 	private static final String TAG = "OneCardLearningFragment";
 	private static final String eventName = "One Card Learning Test";
 	private int counter = 0;
@@ -70,6 +79,7 @@ public class OneCardLearningFragment extends Fragment {
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.one_card_learning_fragment, container, false);
+		//set button views
 		card = (FrameLayout) view.findViewById(R.id.one_card_container);
 		yesButton = (Button) view.findViewById(R.id.one_card_yes);
 		noButton = (Button) view.findViewById(R.id.one_card_no);
@@ -80,12 +90,15 @@ public class OneCardLearningFragment extends Fragment {
 
 	private void setUpClicks() {
 		final Resources r = getResources();
+		//sets match button
 		yesButton.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
+				//checks for startable
 				if(counter == 0 && !running){
 					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+						//initailises test variables
 						deck = CardOperations.setUpCards(maxCards);
 						seen = new ArrayList<Integer>();
 						running = !running;
@@ -99,6 +112,7 @@ public class OneCardLearningFragment extends Fragment {
 						ActivityUtilities.displayResults(getActivity(), eventName,
 								"You have completed you daily 3 tries, please try a different test");
 					}
+					//checks answers
 				} else if(counter < maxCards - 1){
 					counterLess(true);
 				} else if(counter == maxCards - 1){
@@ -109,10 +123,12 @@ public class OneCardLearningFragment extends Fragment {
 
 		});
 
+		//set no match button
 		noButton.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
+				//checks answers
 				if(counter < maxCards - 1){
 					counterLess(false);
 				} else if(counter == maxCards - 1){
@@ -125,26 +141,34 @@ public class OneCardLearningFragment extends Fragment {
 	}
 
 	private void counterLess(boolean button){
+		//updates results gets rid of card
 		updateResults(button);
 		counter ++;
 		changeToBlankBackground();
 		timerHandler.postDelayed(timerRunnable, 500);
 	}
 
+	
 	private void updateResults(boolean button){
+		//gets result value
 		results[counter] = CardOperations.checkCard(deck.get(counter), seen, button);
+		//add card to seen deck
 		seen.add(deck.get(counter));
 	}
 
+	//changes card
 	private void changeToNextCard() {
 		card.setBackground(getResources().getDrawable(deck.get(counter)));
 	}
 
+	//removes card
 	private void changeToBlankBackground(){
 		card.setBackground(null);
 	}
-
+	
+	//ends the test
 	private void endTest() {
+		//reset varaibles
 		Resources r = getResources();
 		changeToBlankBackground();
 		noButton.setText("");
@@ -152,15 +176,18 @@ public class OneCardLearningFragment extends Fragment {
 		yesButton.setText(r.getString(R.string.start));
 		counter = 0;
 		running = !running;
+		//gets results
 		int result = getResults();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		//inserts and displays results
 		Results.insertResult(eventName, result,
 				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, 
 				"You got " + Integer.toString(result) + " correct.");
 	}
 
+	//get correct count
 	private int getResults() {
 		int i = 0;
 		for(boolean b: results){
@@ -170,6 +197,7 @@ public class OneCardLearningFragment extends Fragment {
 		return i;
 	}
 
+	//result results
 	private void resetResults(){
 		results = new boolean[maxCards];
 	}
@@ -179,6 +207,4 @@ public class OneCardLearningFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 		outState.putInt("playTime", playTimes);
 	}
-
-
 }

@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 /**
  * This fragment performs all actions required for the Appearing Object test
- * 
+ * Tests - response time & visual motor function
  * 
  * @author Mathew Andela
  *

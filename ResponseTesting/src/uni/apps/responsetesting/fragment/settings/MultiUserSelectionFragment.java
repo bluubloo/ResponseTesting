@@ -21,8 +21,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
+/**
+ * This fragment handles the selection of the visible tests
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class MultiUserSelectionFragment extends Fragment implements MultiUserSelectionListener{
 
+	//variables
 	private static final String TAG = "MultiUserSelectionFragment";
 	private ListView list;
 	private MultiUserSelectionAdapter adapter;
@@ -33,6 +40,7 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 
 	public static MultiUserSelectionFragment getInstance(MultiUserInfo user) {
 		MultiUserSelectionFragment tmp = new MultiUserSelectionFragment();
+		//sets arguments
 		Bundle args = new Bundle();
 		args.putString("id", user.getId());
 		args.putString("name", user.getName());
@@ -43,6 +51,7 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//gets values
 		if(savedInstanceState != null){
 			userid = savedInstanceState.getString("id"); 
 			name = savedInstanceState.getString("name");
@@ -72,6 +81,7 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
+		//saves values
 		outState.putString("id", userid);
 		outState.putString("name", name);
 	}
@@ -82,6 +92,7 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 		Log.d(TAG, "onCreateView");
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.multi_user_selection_fragment, container, false);
+		//sets views
 		list = (ListView) view.findViewById(R.id.multi_select_list);
 		setUpListAdapter();
 		setUpButtons(view);
@@ -89,33 +100,25 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 	}
 
 	private void setUpListAdapter() {
-		String[] names = getResources().getStringArray(R.array.event_name_array);
-		names = removeQuestionaire(names);
+		//get values
+		String[] names = getResources().getStringArray(R.array.event_name_array_noq);
 		values = getValues(names);
+		//set list adapter
 		adapter = new MultiUserSelectionAdapter(names, values, getActivity(), listener);
 		list.setAdapter(adapter);
 		list.setChoiceMode(ListView.CHOICE_MODE_NONE);
 	}
 
-	private String[] removeQuestionaire(String[] names) {
-		ArrayList<String> tmp = new ArrayList<String>();
-		String q = getResources().getString(R.string.event_name_questionaire);
-		for(String s : names)
-			if(!s.equals(q))
-				tmp.add(s);
-		String[] nameTmp = new String[tmp.size()];
-		for(int i = 0; i < tmp.size(); i++)
-			nameTmp[i] = tmp.get(i);
-		return nameTmp;
-	}
-
 	private int[] getValues(String[] names) {
+		//get values from db
 		int[] tmp = new int[names.length];
 		Cursor cursor = DatabaseHelper.getInstance(getActivity(), getResources()).getMultiSettings(userid);
 		if(cursor.getCount() == 0){
+			//set defaults
 			for(int i = 0; i < tmp.length; i ++)
 				tmp[i] = 1;
 		} else{
+			//get values from string
 			int j = 0;
 			if(cursor.moveToFirst()){
 				String settings = cursor.getString(3);
@@ -131,6 +134,7 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 		return tmp;
 	}
 
+	//sets button
 	private void setUpButtons(View view) {
 		Button submit = (Button) view.findViewById(R.id.multi_submit);
 		
@@ -144,14 +148,18 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 		});
 	}
 
+	//updates settings
 	private void updateSettings() {
 		String settings = "";
+		//gets settings
+		//formats string
 		for(int i = 0; i < adapter.getCount(); i++){
 			settings += adapter.getValue(i);
 			if(i < adapter.getCount() - 1)
 				settings += "|"; 
 		}
 		Resources r = getResources();
+		//updates db
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 		ContentValues values = new ContentValues();
 		values.put(r.getString(R.string.user_settings), settings);
@@ -161,7 +169,7 @@ public class MultiUserSelectionFragment extends Fragment implements MultiUserSel
 
 	@Override
 	public void onCheckChanged(int pos) {
-		// TODO Auto-generated method stub
+		//changes values
 		int tmp = values[pos];
 		Log.d(TAG, Integer.toString(tmp));
 		if(tmp == 1)
