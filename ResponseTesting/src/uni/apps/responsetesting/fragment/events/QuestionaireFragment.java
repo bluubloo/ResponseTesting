@@ -2,10 +2,10 @@ package uni.apps.responsetesting.fragment.events;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.adapter.QuestionaireListAdapter;
 import uni.apps.responsetesting.results.Results;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -14,12 +14,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TimePicker;
 
 /**
  * This fragment handles the questionnaire
@@ -52,17 +55,27 @@ public class QuestionaireFragment extends Fragment {
 		View view =  inflater.inflate(R.layout.questionaire_fragment, container, false);
 		//get list view
 		list_view = (ListView) view.findViewById(R.id.questionaire_list);
-
+		seListViewProperties();
 		//set views
-		final EditText totalSleep = (EditText) view.findViewById(R.id.questionaire_total);
+		final TimePicker totalSleep = (TimePicker) view.findViewById(R.id.questionaire_total);
+		totalSleep.setIs24HourView(true);
+		totalSleep.setCurrentHour(0);
+		totalSleep.setCurrentMinute(0);		
+		final TimePicker lightSleep = (TimePicker) view.findViewById(R.id.questionaire_light);
+		lightSleep.setIs24HourView(true);
+		lightSleep.setCurrentHour(0);
+		lightSleep.setCurrentMinute(0);
+		final TimePicker soundSleep = (TimePicker) view.findViewById(R.id.questionaire_sound);
+		soundSleep.setIs24HourView(true);
+		soundSleep.setCurrentHour(0);
+		soundSleep.setCurrentMinute(0);
+		
+		final EditText heartRate = (EditText) view.findViewById(R.id.questionaire_hr);
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		boolean sleep = prefs.getBoolean(getResources().getString(R.string.pref_key_sleep), false);
-		final EditText lightSleep = (EditText) view.findViewById(R.id.questionaire_light);
-		final EditText soundSleep = (EditText) view.findViewById(R.id.questionaire_sound);
-		final EditText heartRate = (EditText) view.findViewById(R.id.questionaire_hr);
 		if(!sleep){
-			view.findViewById(R.id.light_con).setVisibility(View.GONE);
-			view.findViewById(R.id.sound_con).setVisibility(View.GONE);
+			view.findViewById(R.id.sleep_con).setVisibility(View.GONE);
 		}
 
 		//set button click
@@ -74,9 +87,9 @@ public class QuestionaireFragment extends Fragment {
 				
 				ArrayList<String> results = new ArrayList<String>();
 				//get values
-				String sleep = totalSleep.getText().toString();
-				String light = lightSleep.getText().toString();
-				String sound = soundSleep.getText().toString();
+				String sleep = totalSleep.getCurrentHour() + ":" + totalSleep.getCurrentMinute();
+				String light = lightSleep.getCurrentHour() + ":" + lightSleep.getCurrentMinute();
+				String sound = soundSleep.getCurrentHour() + ":" + soundSleep.getCurrentMinute();
 				String hr = heartRate.getText().toString();
 				//check string format
 				if(!checkSleepFormat(sleep, light, sound)){
@@ -122,6 +135,28 @@ public class QuestionaireFragment extends Fragment {
 			}
 		});
 		return view;
+	}
+
+	@SuppressLint("ClickableViewAccessibility")
+	private void seListViewProperties() {
+		// TODO Auto-generated method stub
+		adapter = new QuestionaireListAdapter(getActivity());
+		list_view.setAdapter(adapter);
+		list_view.setChoiceMode(ListView.CHOICE_MODE_NONE);
+		list_view.setOnTouchListener(new OnTouchListener(){
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				v.getParent().requestDisallowInterceptTouchEvent(true);
+			    return false;
+			}
+			
+		});
+		
+		ViewGroup.LayoutParams params = list_view.getLayoutParams();
+	    params.height = 1000 + (list_view.getDividerHeight() * (adapter.getCount() - 1));
+	    list_view.setLayoutParams(params);
+	    list_view.requestLayout();
 	}
 
 	//checks string time format
@@ -178,7 +213,7 @@ public class QuestionaireFragment extends Fragment {
 		Log.d(TAG, "onActivityCreated()");
 		super.onActivityCreated(savedInstanceState);
 		//set up list adapter
-		adapter = new QuestionaireListAdapter(getActivity());
+		
 	}
 
 	@Override
@@ -186,8 +221,7 @@ public class QuestionaireFragment extends Fragment {
 		Log.d(TAG, "onResume()");
 		super.onResume();
 		//set list adpater
-		list_view.setAdapter(adapter);
-		list_view.setChoiceMode(ListView.CHOICE_MODE_NONE);
+		
 	}
 
 }

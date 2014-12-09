@@ -33,6 +33,7 @@
     <string name="user_email">Email</string>
     <string name="group_icon">GroupIcon</string>
     <string name="tries">Tries</string>
+    <string name="all_scores">AllEventScores</string>
     
 
     <!-- Action Bar Strings -->

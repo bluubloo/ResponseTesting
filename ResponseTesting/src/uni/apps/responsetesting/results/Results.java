@@ -58,23 +58,60 @@ public class Results {
 	public static void insertResult(String testName, String result, long time, Activity activity, String id){
 		Resources r = activity.getResources();
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
-		int tries = db.getSingleTries(testName, id);
-		
+		String[] info = db.getSingleTries(testName, id);
+
 		ContentValues values = new ContentValues();
-		values.put(r.getString(R.string.event_score), result);		
+		if(resultIsBetter(result, info[1], testName, r))
+			values.put(r.getString(R.string.event_score), result);		
 		values.put(r.getString(R.string.sent), 0);
-		values.put(r.getString(R.string.tries), tries);
-		//TODO
-		//if(tries == 1){
+		values.put(r.getString(R.string.tries), Integer.parseInt(info[0]));
+		values.put(r.getString(R.string.all_scores), info[2] + "|" + result);
+
+		if(Integer.parseInt(info[0]) == 1){
 			values.put(r.getString(R.string.event_name), testName);
 			values.put(r.getString(R.string.timestamp), time);
 			values.put(r.getString(R.string.notes), "");
 			values.put(r.getString(R.string.user_id), id);
 			db.insert(values);
-	/*	} else {
+		} else {
 			db.updateSingleTries(testName, values, id);
-		}*/
-		
+		}
+
+	}
+
+	private static boolean resultIsBetter(String result, String score, String testName, Resources r) {
+		if(score.equals(""))
+			return true;
+		int indexP = result.indexOf('|');
+		int indexC = score.indexOf('|');
+		if(indexP != -1 && indexC != -1){
+			double b = Double.parseDouble(score.substring(0, indexC));
+			double a = Double.parseDouble(result.substring(0, indexP));
+			if(a != b)
+				return isBetter(a, b, false);
+			else{
+				double d = Double.parseDouble(score.substring(indexC + 1));
+				double c = Double.parseDouble(result.substring(indexP + 1));
+				return isBetter(c, d, true);
+			}
+		} else{
+			double a = Double.parseDouble(result);
+			double b = Double.parseDouble(score);
+			if(r.getString(R.string.event_name_appear_obj).equals(testName) ||
+					r.getString(R.string.event_name_appear_obj_fixed).equals(testName))
+				return isBetter(a, b, true);
+			else{
+				return isBetter(a, b, false);
+			}
+				
+		}
+	}
+
+	private static boolean isBetter(double newV, double oldV, boolean smaller){
+		if(smaller)
+			return newV < oldV;
+		else
+			return newV > oldV;
 	}
 
 	public static void insertResult(String eventName, int result,
@@ -152,7 +189,7 @@ public class Results {
 
 		if(results.getCount() == 0 && quest.getCount() == 0)
 			return false;
-		
+
 		File root = Environment.getExternalStorageDirectory();
 		File file = new File(root, "Results.csv");
 		try {
@@ -169,11 +206,15 @@ public class Results {
 			fw.append(',');
 			fw.append("Extra Notes");
 			fw.append(',');
+			fw.append("Tries");
+			fw.append(',');
+			fw.append("All Scores");
+			fw.append(',');
 			fw.append("User Id");
 			fw.append(',');
 			fw.append("Username");
 			fw.append("\n");
-			
+
 			if(results.moveToFirst()){
 				do{
 					Log.d(TAG, "sent =" + results.getString(3));
@@ -187,6 +228,10 @@ public class Results {
 					fw.append(',');
 					fw.append(results.getString(4));
 					fw.append(',');
+					fw.append(results.getString(6));
+					fw.append(',');
+					fw.append(results.getString(7));
+					fw.append(',');
 					String id = results.getString(5);
 					fw.append(id);
 					fw.append(',');
@@ -197,7 +242,7 @@ public class Results {
 					fw.append("\n");
 				} while(results.moveToNext());
 			}
-			
+
 			fw.flush();
 			fw.append("\n");
 			fw.append("\n");

@@ -203,63 +203,60 @@ public class GraphUtilities {
 
 	//---------------------------------------------------------------------------------------------
 	//get data
-
-	//get scores for events
-	public static ArrayList<Number[]> getScores(Cursor scores, String id){
-		//variables
-		ArrayList<String> times = getDates(scores, 2, id, 5);
-		Number[] try1 = new Number[times.size()];
-		Number[] try2 = new Number[times.size()];
-		Number[] try3 = new Number[times.size()];
-		//initialise variables
-		for(int i = 0; i < try1.length; i++){
-			try1[i] = null;
-			try2[i] = null;
-			try3[i] = null;
-		}
-		if(scores.moveToFirst()){
+	
+	//gets data for specified events
+	public static ArrayList<Number[]> getScores(Cursor cursor, String id){
+		//list variables
+		ArrayList<Number> dates = new ArrayList<Number>();
+		ArrayList<Number> scores = new ArrayList<Number>();
+		ArrayList<Number> times = new ArrayList<Number>();
+		
+		if(cursor.moveToFirst()){
 			do{
-				//checks user id
-				if(id.equals(scores.getString(5))){
-					//get score
-					String score = "";
-					String s1 = scores.getString(1);
-					//format score
-					if(s1.contains("|") || s1.indexOf('|') != -1){
-						int index = s1.indexOf('|');
-						String[] tmp = s1.split("|");
-						if(tmp.length == 1)
-							score = tmp[0];
-						else
-							score = tmp[1];
-						score = s1.substring(index + 1);
-					}else 
-						score = s1;
-					//get time
-					Calendar c = Calendar.getInstance();
-					c.setTimeInMillis(scores.getLong(2));
-					String value = Integer.toString(c.get(Calendar.DATE)) + "/"
-							+ Integer.toString(c.get(Calendar.MONTH));
-					int index = times.indexOf(value);
-					//add to array
-					if(index != -1 && index < times.size()){
-						if(try1[index] == null){
-							try1[index] = Double.parseDouble(score);
-						}else if (try2[index] == null){
-							try2[index] = Double.parseDouble(score);
-						}else if( try3[index] == null){
-							try3[index] = Double.parseDouble(score);
-						}
-					}
-				}
-			}while(scores.moveToNext());
+				//checks id
+				if(cursor.getString(5).equals(id)){
+					//adds date
+					dates.add(cursor.getLong(2));
+					//checks scrore type
+					//adds scores to list
+					String s = cursor.getString(1);
+					int index = s.indexOf('|');
+					if(index != -1){
+						scores.add(Double.parseDouble(s.substring(0, index)));
+						times.add(Double.parseDouble(s.substring(index + 1)));
+					} else
+						scores.add(Double.parseDouble(s));
+				}				
+			} while(cursor.moveToNext());
 		}
-		//add arrays to list
-		ArrayList<Number[]> series = new ArrayList<Number[]>();
-		series.add(try1);
-		series.add(try2);
-		series.add(try3);
-		return series;
+		
+		//checks if mandatory lists are empty
+		if(!dates.isEmpty() && !scores.isEmpty()){
+			//new variable
+			ArrayList<Number[]> tmp = new ArrayList<Number[]>();
+			Number[] datesA = new Number[dates.size()];
+			Number[] scoresA = new Number[dates.size()];
+			//adds to array
+			for(int i = 0; i < dates.size(); i ++){
+				datesA[i] = dates.get(i);
+				scoresA[i] = scores.get(i);
+			}
+			//adds to list
+			tmp.add(datesA);
+			tmp.add(scoresA);
+			//checks if there is extra series
+			if(!times.isEmpty()){
+				//creates list data for new series
+				Number[] timesA = new Number[dates.size()];
+				for(int i = 0; i < dates.size(); i ++){
+					timesA[i] = times.get(i);
+				}
+				//adds to list
+				tmp.add(timesA);
+			}
+			return tmp;
+		}
+		return new ArrayList<Number[]>();
 	}
 
 	//gets sleep durations
@@ -449,31 +446,23 @@ public class GraphUtilities {
 	}
 
 	public static ArrayList<Number[]> getData(Cursor cursor, String userId) {
-		// TODO Auto-generated method stub
 		ArrayList<Number> scores = new ArrayList<Number>();
 		ArrayList<Number> times = new ArrayList<Number>();
-		ArrayList<String> seen = new ArrayList<String>();
-		
+
 		if(cursor.moveToFirst()){
 			do{
-				/*Calendar c = Calendar.getInstance();
-				c.setTimeInMillis(cursor.getLong(2));
-				String value = Integer.toString(c.get(Calendar.DATE)) + "/"
-						+ Integer.toString(c.get(Calendar.MONTH));*/
-				//if(!seen.contains(value)){
-				//	seen.add(value);
-					String s1 = cursor.getString(1);
-					if(s1.contains("|") || s1.indexOf('|') != -1){
-						int index = s1.indexOf('|');
-						times.add(Double.parseDouble(s1.substring(index + 1)));
-						scores.add(Double.parseDouble(s1.substring(0, index)));
-					}else {
-						scores.add(null);
-						times.add(null);
-					}
-				//}
-				
+				String s1 = cursor.getString(1);
+				if(s1.contains("|") || s1.indexOf('|') != -1){
+					int index = s1.indexOf('|');
+					times.add(Double.parseDouble(s1.substring(index + 1)));
+					scores.add(Double.parseDouble(s1.substring(0, index)));
+				}else {
+					scores.add(null);
+					times.add(Double.parseDouble(s1));
+				}
+
 			} while(cursor.moveToNext());
+			
 			if(!times.isEmpty() || !scores.isEmpty()){
 				Number[] timeTmp = new Number[times.size()];
 				Number[] scoreTmp = new Number[times.size()];

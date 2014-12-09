@@ -50,6 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					resources.getString(R.string.notes) + " TEXT, " +
 					resources.getString(R.string.user_id) + " TEXT, " +
 					resources.getString(R.string.tries) + " INTEGER, " +
+					resources.getString(R.string.all_scores) + " TEXT, " +
 					"PRIMARY KEY(" + resources.getString(R.string.event_name) + 
 					", " + resources.getString(R.string.timestamp) + "))";
 			db.execSQL(create);
@@ -208,7 +209,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				new String[] {testName, userId}, null, null, resources.getString(R.string.timestamp));
 	}
 
-	public int getSingleTries(String testName, String id){
+	public String[] getSingleTries(String testName, String id){
 		String sql = "SELECT max(" + resources.getString(R.string.timestamp) + ") FROM " + resources.getString(R.string.table_name) +
 				" WHERE " + resources.getString(R.string.event_name) + "=? AND " + resources.getString(R.string.user_id) + "=?";
 		Cursor cursor = this.getReadableDatabase().rawQuery(sql, new String[] {testName, id});
@@ -218,14 +219,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			Calendar current = Calendar.getInstance();
 			if(c.get(Calendar.DATE) == current.get(Calendar.DATE) && 
 					c.get(Calendar.MONTH) == current.get(Calendar.MONTH)){
-				sql = "SELECT " + resources.getString(R.string.tries) + " FROM " + resources.getString(R.string.table_name) +
+				sql = "SELECT " + resources.getString(R.string.tries) + ", " +  resources.getString(R.string.event_score) + ", " + 
+						 resources.getString(R.string.all_scores) + " FROM " + resources.getString(R.string.table_name) +
 						" WHERE " + resources.getString(R.string.timestamp) + "=?";
 				Cursor tries = this.getReadableDatabase().rawQuery(sql, new String[] {Long.toString(cursor.getLong(0))});
 				if(tries.moveToFirst())
-					return tries.getInt(0) + 1;
+					return new String[] {Integer.toString(tries.getInt(0) + 1), tries.getString(1), tries.getString(2)};
 			}
 		} 
-		return 1;
+		return new String[] {"1", "", ""};
 	}
 
 	//All rows for single Event ordered by score

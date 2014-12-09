@@ -1,7 +1,6 @@
 package uni.apps.responsetesting.fragment.results;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
@@ -73,44 +72,13 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		//get value
 		String value = (String) parent.getItemAtPosition(position);
 		//set up graph
-		
-		if(value.equals("Test")){
-			setTestGraph();
-		} else if(value.equals("Sleep Duration")){
+		if(value.equals("Sleep Duration")){
 			setGraphForSleep();
 		} else if(value.equals("Resting HR")){
 			setGraphForHR();
 		} else{
 			setGraphForEvent(value);
 		}
-	}
-
-	private void setTestGraph() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
-		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
-		Cursor cursor = db.getSingle("Stroop Test", userId);
-		if(cursor.getCount() == 0)
-			update();
-		else{
-			long t = Calendar.getInstance().getTimeInMillis();
-			long day = 24 * 60 * 60 * 1000;
-			long[] longTimes = new long[] {t, t + day, t + day * 2};
-			ArrayList<Number[]> data = GraphUtilities.getData(cursor, userId);
-			ArrayList<Number[]> tmp2 = new ArrayList<Number[]>();
-			tmp2.add(data.get(1));
-			double[] minMaxY = GraphUtilities.getMaxandMin(tmp2);
-			Number[] normScore = GraphUtilities.normalize(data.get(0), new double[] {0, 10});
-			Number[] normTime = GraphUtilities.normalize(data.get(1), new double[] {0, minMaxY[1]});
-			ArrayList<Number[]> data2 = new ArrayList<Number[]>();
-			data2.add(normTime);
-			data2.add(normScore);
-			XYSeries[] series = new XYSeries[2];
-			series[0] = graph.getXYSeries(GraphUtilities.interweaveValues(longTimes, normTime), "Time");
-			series[1] = graph.getXYSeries(GraphUtilities.interweaveValues(longTimes, normScore), "Score");
-			setCommonGraphValues("Test Norm", GraphUtilities.getMinandMaxLong(longTimes), -0.1, 1.1, series);
-		}
-		
 	}
 
 	private void setGraphForHR() {
@@ -184,24 +152,39 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 			//clear graph
 			update();
 		else{
-			//get datas
-			long[] longTimes = GraphUtilities.getLongDates(cursor, 2, userId);
-			//get y data
-			ArrayList<Number[]> series = GraphUtilities.getScores(cursor, userId);
-			XYSeries[] finalSeries = new XYSeries[series.size()];
-			//set uo series
-			for(int i = 0; i < series.size(); i ++){
-				Number[] tmp = GraphUtilities.interweaveValues(longTimes, series.get(i));
-				XYSeries s = graph.getXYSeries(tmp, "Try " + Integer.toString(i + 1));
-				finalSeries[i] = s;
+			//get values			
+			ArrayList<Number[]> data = GraphUtilities.getScores(cursor, userId);
+			//dates
+			Number[] dates = data.get(0);
+			data.remove(0);
+			XYSeries[] series = new XYSeries[data.size()];
+			for(int i = 0; i < data.size(); i++){
+				//set title
+				String title = "";
+				if(i == 0)
+					title = "Scores";
+				else
+					title = "Times";
+				//normalize
+				Number[] norm = getNormData(data.get(i), i, data.size());
+				//get series
+				series[i] = graph.getXYSeries(GraphUtilities.interweaveValues(dates, norm), title);
 			}
-			//get min and maxs
-			double[] minMaxY = GraphUtilities.getMaxandMin(series);
-			long[] minMaxX = GraphUtilities.getMinandMaxLong(longTimes);
-			//set common values
-			setCommonGraphValues(value, minMaxX, minMaxY, finalSeries);
-
+			//set graph values
+			setCommonGraphValues(value, GraphUtilities.getMinandMaxLong(dates), -0.1, 1.1, series);
 		}		
+	}
+
+	private Number[] getNormData(Number[] numbers, int i, int size) {
+		//check if correct only
+		if(size == 2 && i == 0)
+			return GraphUtilities.normalize(numbers, new double[] {0, 10});	
+		//get max and min
+		ArrayList<Number[]> tmp = new ArrayList<Number[]>();
+		tmp.add(numbers);
+		double[] minMax = GraphUtilities.getMaxandMin(tmp);
+		//normalize
+		return GraphUtilities.normalize(numbers, new double[] {0, minMax[1]});
 	}
 
 	private void setCommonGraphValues(String eventName, long[] minMaxX, 
