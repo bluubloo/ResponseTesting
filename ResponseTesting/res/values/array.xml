@@ -53,6 +53,7 @@
         <item>Stroop Test</item>
     </string-array>
     <string-array name="event_name_array_graphs">
+        <item>Test</item>
         <item>Appearing Object</item>
         <item>Appearing Object - Fixed Point</item>
         <item>Arrow Ignoring Test</item>

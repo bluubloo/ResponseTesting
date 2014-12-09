@@ -36,7 +36,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:text="@string/start_square"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/appear_obj_image_4"
@@ -81,5 +82,11 @@
             android:src="@drawable/target_icon"
             android:visibility="invisible" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package uni.apps.responsetesting.mail;
 
 import uni.apps.responsetesting.R;
+import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.models.EmailTaskData;
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -17,14 +18,16 @@ import android.widget.Toast;
  *
  */
 public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
-
+	private Activity activity;
+	
+	
 	@Override
 	protected Boolean doInBackground(EmailTaskData... params) {
 		//Info for the email
 		String body = params[0].strings[0];
 		String testName = params[0].strings[1];
 		String PATH = params[0].strings[2];
-		Activity activity = params[0].activity;
+		activity = params[0].activity;
 		
 		//to and froms
 		String from = "activitytrackers@gmail.com";
@@ -49,16 +52,12 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 			//add attatchment to email
 			mail.addAttachment(PATH);
 			//send email
-			if(mail.send())
-				Toast.makeText(activity, "Email sent successfully", Toast.LENGTH_LONG).show();
-			else
-				Toast.makeText(activity, "Email was not sent", Toast.LENGTH_LONG).show();
+			return mail.send();
 
 		}catch(Exception e){
 			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 
 	//get multi user mode email
@@ -67,5 +66,16 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 				activity.getResources().getString(R.string.setup_mode_default_email));
 	
 	}
-
+	
+	@Override
+	public void onPostExecute(Boolean done){
+		if(done){
+			Toast.makeText(activity, "Email sent successfully", Toast.LENGTH_LONG).show();
+			DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
+			db.updateMostRecent();
+			db.updateMostRecentQuest();
+		}
+		else
+			Toast.makeText(activity, "Email was not sent", Toast.LENGTH_LONG).show();
+	}
 }

@@ -20,9 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 
 /**
@@ -39,9 +38,9 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	private static final String TAG = "AppearingObjectFragment";
 	private static String eventName = "Appearing Object";
 	private AppearingObjectImageClickListener listener;
-	private TextView startTextView;
 	private Handler timerHandler = new Handler();
 	private ImageView[] clickableImageView = new ImageView[5];
+	private Button start;
 	private DurationInfo[] data = new DurationInfo[5];
 	private int counter = 0;
 	private int imageCounter = 0;
@@ -88,7 +87,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 			fixed = args.getBoolean("fixed");
 		checkName();
 	}
-	
+
 	private void checkName(){
 		//sets event names
 		if(fixed)
@@ -96,7 +95,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		else
 			eventName = "Appearing Object";
 	}
-	
+
 	//gets new instance of fragment
 	public static AppearingObjectFragment getInstance(boolean fixed){
 		AppearingObjectFragment frag = new AppearingObjectFragment();
@@ -106,7 +105,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		frag.setArguments(args);
 		return frag;
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
@@ -114,7 +113,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		outState.putInt("playTime", playTimes);
 		outState.putBoolean("fixed", fixed);
 	}
-	
+
 	//ataches listener to fragment
 	@Override
 	public void onAttach(Activity activity) {
@@ -136,12 +135,11 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.appearing_object_fragment, container, false);
 		//sets up view values and proertioes
-		startTextView = (TextView) view.findViewById(R.id.appear_obj_start);
 		setUpImageClickEvents(view);
-		
 
-		RelativeLayout frame = (RelativeLayout) view.findViewById(R.id.appear_obj_container);
-		frame.setOnClickListener(new OnClickListener(){
+		start = (Button) view.findViewById(R.id.button_start);
+		//RelativeLayout frame = (RelativeLayout) view.findViewById(R.id.appear_obj_container);
+		start.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
@@ -150,15 +148,15 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 				if(!running){
 					//check pay times
 					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
-					counter = 0;
-					running = !running;
-					//makes images invisible
-					for(ImageView i: clickableImageView)
-						i.setVisibility(View.INVISIBLE);
-					startTextView.setVisibility(View.INVISIBLE);
-					playTimes++;
-					//starts timer
-					timerHandler.postDelayed(timerRunnableImageAppear, delay);
+						start.setEnabled(false);
+						counter = 0;
+						running = !running;
+						//makes images invisible
+						for(ImageView i: clickableImageView)
+							i.setVisibility(View.INVISIBLE);
+						playTimes++;
+						//starts timer
+						timerHandler.postDelayed(timerRunnableImageAppear, delay);
 					} else{
 						ActivityUtilities.displayResults(getActivity(), eventName,
 								"You have completed you daily 3 tries, please try a different test");
@@ -226,6 +224,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 			//resets variables
 			//insert results to db
 			//displays results
+			start.setEnabled(true);
 			counter = 0;
 			running = !running;
 			clickableImageView[imageCounter].setVisibility(View.INVISIBLE);
@@ -235,8 +234,6 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 			String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 			Results.insertResult(eventName,avg,
 					Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
-			startTextView.setText(getResources().getString(R.string.restart_square));
-			startTextView.setVisibility(View.VISIBLE);
 			ActivityUtilities.displayResults(getActivity(), eventName + " Test", 
 					"Average Time to Click Image = " + avg + "s");
 		}

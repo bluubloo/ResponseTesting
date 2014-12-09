@@ -28,7 +28,7 @@
         androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_font_size"
         androidPlot.graphWidget.gridLinePaint.color="@color/Black"
         androidPlot.graphWidget.marginBottom="50dp"
-        androidPlot.graphWidget.marginLeft="15dp"
+        androidPlot.graphWidget.marginLeft="30dp"
         androidPlot.graphWidget.marginRight="10dp"
         androidPlot.graphWidget.marginTop="20dp"
         androidPlot.graphWidget.rangeLabelPaint.textSize="@dimen/range_tick_font_size"

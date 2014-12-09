@@ -28,8 +28,9 @@ public class Email {
 		}
 		else{
 			boolean recent = Results.resultsRecentToCSV(activity);
-			if(recent)
+			if(recent){
 				sendEmail(activity, body, "Recent");
+			}
 			else
 				ActivityUtilities.displayResults(activity, "Email Attempt", "All recent results have already been sent.\n" +
 						"Please select 'Send All Results' if you still wish to send them.");

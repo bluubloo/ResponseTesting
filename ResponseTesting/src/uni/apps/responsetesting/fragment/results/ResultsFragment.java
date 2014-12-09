@@ -1,6 +1,7 @@
 package uni.apps.responsetesting.fragment.results;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
@@ -72,13 +73,44 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		//get value
 		String value = (String) parent.getItemAtPosition(position);
 		//set up graph
-		if(value.equals("Sleep Duration")){
+		
+		if(value.equals("Test")){
+			setTestGraph();
+		} else if(value.equals("Sleep Duration")){
 			setGraphForSleep();
 		} else if(value.equals("Resting HR")){
 			setGraphForHR();
 		} else{
 			setGraphForEvent(value);
 		}
+	}
+
+	private void setTestGraph() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
+		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
+		Cursor cursor = db.getSingle("Stroop Test", userId);
+		if(cursor.getCount() == 0)
+			update();
+		else{
+			long t = Calendar.getInstance().getTimeInMillis();
+			long day = 24 * 60 * 60 * 1000;
+			long[] longTimes = new long[] {t, t + day, t + day * 2};
+			ArrayList<Number[]> data = GraphUtilities.getData(cursor, userId);
+			ArrayList<Number[]> tmp2 = new ArrayList<Number[]>();
+			tmp2.add(data.get(1));
+			double[] minMaxY = GraphUtilities.getMaxandMin(tmp2);
+			Number[] normScore = GraphUtilities.normalize(data.get(0), new double[] {0, 10});
+			Number[] normTime = GraphUtilities.normalize(data.get(1), new double[] {0, minMaxY[1]});
+			ArrayList<Number[]> data2 = new ArrayList<Number[]>();
+			data2.add(normTime);
+			data2.add(normScore);
+			XYSeries[] series = new XYSeries[2];
+			series[0] = graph.getXYSeries(GraphUtilities.interweaveValues(longTimes, normTime), "Time");
+			series[1] = graph.getXYSeries(GraphUtilities.interweaveValues(longTimes, normScore), "Score");
+			setCommonGraphValues("Test Norm", GraphUtilities.getMinandMaxLong(longTimes), -0.1, 1.1, series);
+		}
+		
 	}
 
 	private void setGraphForHR() {
@@ -180,6 +212,17 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		graph.setMaxMinX(minMaxX[0], minMaxX[1]);
 		graph.setMaxMinY(GraphUtilities.roundDown(minMaxY[0]), GraphUtilities.roundUp(minMaxY[1]));
 		graph.setDomainSteps(86400000, 1);
+	}
+	
+	private void setCommonGraphValues(String eventName, long[] minMaxX, 
+			double min, double max, XYSeries[] finalSeries){
+		//set plot data and properties
+		graph.updatePlot(finalSeries, new int[] {Color.BLACK, Color.WHITE, Color.BLUE});
+		graph.setEventName(eventName);
+		graph.setMaxMinX(minMaxX[0], minMaxX[1]);
+		graph.setMaxMinY(min, max);
+		graph.setDomainSteps(86400000, 1);
+		graph.setRangeSteps(0.1, 2);
 	}
 
 	//get title

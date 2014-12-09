@@ -49,6 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					resources.getString(R.string.sent) + " INTEGER, " +
 					resources.getString(R.string.notes) + " TEXT, " +
 					resources.getString(R.string.user_id) + " TEXT, " +
+					resources.getString(R.string.tries) + " INTEGER, " +
 					"PRIMARY KEY(" + resources.getString(R.string.event_name) + 
 					", " + resources.getString(R.string.timestamp) + "))";
 			db.execSQL(create);
@@ -132,16 +133,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	}
 
+	public void updateSingleTries(String testName, ContentValues values,
+			String id) {
+		String sql = "SELECT max(" + resources.getString(R.string.timestamp) + ") FROM " + resources.getString(R.string.table_name) +
+				" WHERE " + resources.getString(R.string.event_name) + "=? AND " + resources.getString(R.string.user_id) + "=?";
+		Cursor cursor = this.getReadableDatabase().rawQuery(sql, new String[] {testName, id});
+		if(cursor.moveToFirst()){
+			this.getWritableDatabase().update(resources.getString(R.string.table_name), values, 
+					resources.getString(R.string.timestamp) + "=?", new String[]{cursor.getString(0)});
+		}
+	}
+
 	//Update All Unsent to Sent
-	private void updateMostRecent() {
+	public void updateMostRecent() {
 		ContentValues values =  new ContentValues();
 		values.put(resources.getString(R.string.sent), 1);
 		this.getWritableDatabase().update(resources.getString(R.string.table_name), values,
 				resources.getString(R.string.sent) + "=?", new String[] {"0"});
 
 	}
-	
-	private void updateMostRecentQuest() {
+
+	public void updateMostRecentQuest() {
 		ContentValues values =  new ContentValues();
 		values.put(resources.getString(R.string.sent), 1);
 		this.getWritableDatabase().update(resources.getString(R.string.table_name_questionaire), values,
@@ -196,6 +208,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				new String[] {testName, userId}, null, null, resources.getString(R.string.timestamp));
 	}
 
+	public int getSingleTries(String testName, String id){
+		String sql = "SELECT max(" + resources.getString(R.string.timestamp) + ") FROM " + resources.getString(R.string.table_name) +
+				" WHERE " + resources.getString(R.string.event_name) + "=? AND " + resources.getString(R.string.user_id) + "=?";
+		Cursor cursor = this.getReadableDatabase().rawQuery(sql, new String[] {testName, id});
+		if(cursor.moveToFirst()){
+			Calendar c = Calendar.getInstance();
+			c.setTimeInMillis(cursor.getLong(0));
+			Calendar current = Calendar.getInstance();
+			if(c.get(Calendar.DATE) == current.get(Calendar.DATE) && 
+					c.get(Calendar.MONTH) == current.get(Calendar.MONTH)){
+				sql = "SELECT " + resources.getString(R.string.tries) + " FROM " + resources.getString(R.string.table_name) +
+						" WHERE " + resources.getString(R.string.timestamp) + "=?";
+				Cursor tries = this.getReadableDatabase().rawQuery(sql, new String[] {Long.toString(cursor.getLong(0))});
+				if(tries.moveToFirst())
+					return tries.getInt(0) + 1;
+			}
+		} 
+		return 1;
+	}
+
 	//All rows for single Event ordered by score
 	public Cursor getSingleBest(String testName) {
 		return this.getReadableDatabase().query(resources.getString(R.string.table_name), null, 
@@ -206,17 +238,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	//All Rows not yet sent
 	public Cursor getMostRecent() {
 		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) +
-				" WHERE " + resources.getString(R.string.sent) + "=0 ORDER BY " + resources.getString(R.string.timestamp);
-		Cursor cursor =  this.getReadableDatabase().rawQuery(sql, null);
-		updateMostRecent();
+				" WHERE " + resources.getString(R.string.sent) + "=?";
+		Cursor cursor =  this.getReadableDatabase().rawQuery(sql, new String[]{"0"});
+		//updateMostRecent();
 		return cursor;
 	}
-	
+
 	public Cursor getMostRecentQuestionaire() {
 		String sql = "SELECT * FROM " + resources.getString(R.string.table_name_questionaire) +
-				" WHERE " + resources.getString(R.string.sent) + "=0 ORDER BY " + resources.getString(R.string.timestamp);
+				" WHERE " + resources.getString(R.string.sent) + "=0";// ORDER BY " + resources.getString(R.string.timestamp);
 		Cursor cursor =  this.getReadableDatabase().rawQuery(sql, null);
-		updateMostRecentQuest();
+		//updateMostRecentQuest();
 		return cursor;
 	}
 
@@ -235,52 +267,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//checks most recently played times for 3 goes in 1 day
 	public boolean checkRecent(String eventName, String id) {
-			String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
+		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
 				resources.getString(R.string.event_name) + "=? AND " +
-				resources.getString(R.string.user_id) + "=? ORDER BY " + 
-				resources.getString(R.string.timestamp) + " LIMIT 3";
-
+				resources.getString(R.string.user_id) + "=?";
 		Cursor cursor = this.getWritableDatabase().rawQuery(sql, new String[] {eventName, id});
 		if(cursor.getCount() == 0)
 			return true;
-		if(cursor.getCount() < 3){
-			Calendar c1 = Calendar.getInstance();
-			long t1 = 0;
+		else{
 			if(cursor.moveToLast()){
-				t1 = cursor.getLong(2);
-
-				Calendar c2 = Calendar.getInstance();
-				c2.setTimeInMillis(t1);
-
-				if(checkDate(c1, c2))
-					return true;
-			}
-			return c1.getTimeInMillis() - t1 < 5 * 60000;
-		} else	{
-			Calendar current = Calendar.getInstance();
-			if(cursor.moveToLast()){
-				long t = cursor.getLong(2);
+				Calendar current = Calendar.getInstance();
 				Calendar last = Calendar.getInstance();
-				last.setTimeInMillis(t);
-				if(checkDate(current,last))
+				last.setTimeInMillis(cursor.getLong(2));
+				//check for same day
+				if(checkDate(current, last))
 					return true;
-				else{
-					if(current.getTimeInMillis() - t < 5 * 60000){
-						cursor.moveToPrevious();
-						long t2 = cursor.getLong(2);
-						last.setTimeInMillis(t2);
-						if(checkDate(current, last))
-							return true;
-						else{
-							if(current.getTimeInMillis() - t2 < 10 * 60000){
-								cursor.moveToPrevious();
-								long t3 = cursor.getLong(2);
-								last.setTimeInMillis(t3);
-								return checkDate(current, last);
-							}
-						}
-					}
-				}					
+				//check if more than 5 min has passed
+				if(current.getTimeInMillis() - cursor.getLong(2) < 5 * 60 * 1000){
+					//check amount of tries
+					if(cursor.getInt(6) != 3)
+						return true;
+				}
+				
 			}
 		}
 		return false;
@@ -288,11 +295,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//checks if date is not the same
 	private boolean checkDate(Calendar c1, Calendar c2){
-		if(c1.get(Calendar.DATE) != c2.get(Calendar.DATE))
-			return true;
-		if(c1.get(Calendar.MONTH) !=  c2.get(Calendar.MONTH))
-			return true;
-		return false;
+		return (c1.get(Calendar.DATE) != c2.get(Calendar.DATE) ||
+				c1.get(Calendar.MONTH) !=  c2.get(Calendar.MONTH) ||
+				c1.get(Calendar.YEAR) !=  c2.get(Calendar.YEAR));
 	}
 
 	//checks if questionaire was done today
@@ -381,4 +386,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		return "single";
 	}
+
+
 }

@@ -15,6 +15,8 @@ import android.util.Log;
  */
 public class GraphUtilities {
 
+	private static final String TAG = "GraphUtilities";
+
 	//---------------------------------------------------------------------------------------------
 	//Mins and Maxs
 	public static double[] getMaxandMinDouble(ArrayList<double[]> values){
@@ -444,5 +446,65 @@ public class GraphUtilities {
 			return Double.parseDouble(s1) + (Double.parseDouble(s2) / 60);
 		}
 		return null;
+	}
+
+	public static ArrayList<Number[]> getData(Cursor cursor, String userId) {
+		// TODO Auto-generated method stub
+		ArrayList<Number> scores = new ArrayList<Number>();
+		ArrayList<Number> times = new ArrayList<Number>();
+		ArrayList<String> seen = new ArrayList<String>();
+		
+		if(cursor.moveToFirst()){
+			do{
+				/*Calendar c = Calendar.getInstance();
+				c.setTimeInMillis(cursor.getLong(2));
+				String value = Integer.toString(c.get(Calendar.DATE)) + "/"
+						+ Integer.toString(c.get(Calendar.MONTH));*/
+				//if(!seen.contains(value)){
+				//	seen.add(value);
+					String s1 = cursor.getString(1);
+					if(s1.contains("|") || s1.indexOf('|') != -1){
+						int index = s1.indexOf('|');
+						times.add(Double.parseDouble(s1.substring(index + 1)));
+						scores.add(Double.parseDouble(s1.substring(0, index)));
+					}else {
+						scores.add(null);
+						times.add(null);
+					}
+				//}
+				
+			} while(cursor.moveToNext());
+			if(!times.isEmpty() || !scores.isEmpty()){
+				Number[] timeTmp = new Number[times.size()];
+				Number[] scoreTmp = new Number[times.size()];
+				for(int i = 0; i < times.size(); i ++){
+					timeTmp[i] = times.get(i);
+					scoreTmp[i] = scores.get(i);
+				}
+				Log.d(TAG, seriesArrayToString(timeTmp));
+				Log.d(TAG, seriesArrayToString(scoreTmp));
+				ArrayList<Number[]> tmp = new ArrayList<Number[]>();
+				tmp.add(scoreTmp);
+				tmp.add(timeTmp);
+				return tmp;
+			}
+		}		
+		return new ArrayList<Number[]>();
+	}
+
+	public static Number[] normalize(Number[] numbers, double[] minMaxY) {
+		Number[] tmp = new Number[numbers.length];
+		for(int i = 0; i < numbers.length; i ++){
+			if(numbers[i] == null)
+				tmp[i] = null;
+			else{
+				double n = numbers[i].doubleValue();
+				double a = n - minMaxY[0];
+				double b = minMaxY[1] - minMaxY[0];
+				double j = a / b;
+				tmp[i] = j;
+			}
+		}
+		return tmp;
 	}
 }

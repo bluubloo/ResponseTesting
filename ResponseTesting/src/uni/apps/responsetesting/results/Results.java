@@ -10,9 +10,11 @@ import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.models.CorrectDurationInfo;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -55,15 +57,24 @@ public class Results {
 
 	public static void insertResult(String testName, String result, long time, Activity activity, String id){
 		Resources r = activity.getResources();
-		ContentValues values = new ContentValues();
-		values.put(r.getString(R.string.event_name), testName);
-		values.put(r.getString(R.string.event_score), result);
-		values.put(r.getString(R.string.timestamp), time);
-		values.put(r.getString(R.string.notes), "");
-		values.put(r.getString(R.string.sent), 0);
-		values.put(r.getString(R.string.user_id), id);
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
-		db.insert(values);
+		int tries = db.getSingleTries(testName, id);
+		
+		ContentValues values = new ContentValues();
+		values.put(r.getString(R.string.event_score), result);		
+		values.put(r.getString(R.string.sent), 0);
+		values.put(r.getString(R.string.tries), tries);
+		//TODO
+		//if(tries == 1){
+			values.put(r.getString(R.string.event_name), testName);
+			values.put(r.getString(R.string.timestamp), time);
+			values.put(r.getString(R.string.notes), "");
+			values.put(r.getString(R.string.user_id), id);
+			db.insert(values);
+	/*	} else {
+			db.updateSingleTries(testName, values, id);
+		}*/
+		
 	}
 
 	public static void insertResult(String eventName, int result,
@@ -139,11 +150,14 @@ public class Results {
 
 	public static boolean resultsToCSV(final Cursor results, final Cursor quest, Activity activity){
 
+		if(results.getCount() == 0 && quest.getCount() == 0)
+			return false;
+		
 		File root = Environment.getExternalStorageDirectory();
 		File file = new File(root, "Results.csv");
 		try {
 			HashMap<String, String> nameMap = cursorToMap(DatabaseHelper.getInstance(activity,
-					activity.getResources()).getMultiUsers());
+					activity.getResources()).getMultiUsers(), activity);
 
 			FileWriter fw = new FileWriter(file);
 
@@ -159,10 +173,10 @@ public class Results {
 			fw.append(',');
 			fw.append("Username");
 			fw.append("\n");
-			Log.d(TAG, Integer.toString(results.getCount()));
+			
 			if(results.moveToFirst()){
 				do{
-
+					Log.d(TAG, "sent =" + results.getString(3));
 					fw.append(results.getString(0));
 					fw.append(',');
 					fw.append(results.getString(1));
@@ -182,10 +196,8 @@ public class Results {
 						fw.append("Unknown");
 					fw.append("\n");
 				} while(results.moveToNext());
-			} else{
-				fw.close();
-				return false;
 			}
+			
 			fw.flush();
 			fw.append("\n");
 			fw.append("\n");
@@ -206,7 +218,6 @@ public class Results {
 			fw.append("Username");
 			fw.append("\n");
 
-			Log.d(TAG, Integer.toString(quest.getCount()));
 			if(quest.moveToFirst()){
 				Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(quest.getLong(0));
@@ -240,9 +251,11 @@ public class Results {
 		return true;
 	}
 
-	private static HashMap<String, String> cursorToMap(Cursor cursor) {
+	private static HashMap<String, String> cursorToMap(Cursor cursor, Activity activity) {
 		HashMap<String, String> tmp = new HashMap<String, String>();
-		tmp.put("single", "single");
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		tmp.put("single", prefs.getString(activity.getResources().getString(R.string.pref_key_user_name),
+				activity.getResources().getString(R.string.setup_mode_default_user_name_single)));
 		if(cursor.moveToFirst()){
 			do{
 				if(!tmp.containsKey(cursor.getString(2)))

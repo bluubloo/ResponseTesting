@@ -1,7 +1,5 @@
 package uni.apps.responsetesting.fragment.settings;
 
-import java.util.ArrayList;
-
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.adapter.MultiUserSelectionAdapter;
 import uni.apps.responsetesting.database.DatabaseHelper;

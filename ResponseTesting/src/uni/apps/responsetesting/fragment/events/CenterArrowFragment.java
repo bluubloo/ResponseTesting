@@ -24,10 +24,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 /**
  * This fragment handles the arrow ignoring test
@@ -49,8 +49,9 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	private CenterArrowGridAdapter adapter;
 
 	private ImageView[] buttons;
-	private TextView textView;
 	private GridView grid;
+	private Button start;
+	private LinearLayout container;
 
 	private boolean running = false;
 	private boolean clickable = false;
@@ -120,8 +121,8 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.center_arrow_fragment, container, false);
 		//sets view variables
-		textView = (TextView) view.findViewById(R.id.center_arrow_info);
 		grid = (GridView) view.findViewById(R.id.center_arrow_grid);
+		this.container = (LinearLayout) view.findViewById(R.id.clickable_container);
 		//creates and sets adapter
 		adapter = new CenterArrowGridAdapter(getInitalData(), getActivity());
 		grid.setAdapter(adapter);
@@ -141,8 +142,10 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 
 	private void setUpContainerClick(View view) {
 		//sets up container click event
-		RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.center_arrow_container);
-		layout.setOnClickListener(new OnClickListener(){
+		start = (Button) view.findViewById(R.id.button_start);
+		
+		//RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.center_arrow_container);
+		start.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
@@ -202,10 +205,12 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	public void containerClick() {
 		//on container click
 		//initailises test vairables
-		if(!running &&  textView.getVisibility() == View.VISIBLE){
+		if(!running){
 			if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
+				start.setEnabled(false);
+				start.setVisibility(View.GONE);
+				container.setVisibility(View.VISIBLE);
 				running = true;
-				textView.setVisibility(View.INVISIBLE);
 				grid.setVisibility(View.VISIBLE);
 				counter = 0;
 				clickable = true;
@@ -290,9 +295,11 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	//ends test
 	private void endTest() {
 		//resets variables
+		start.setEnabled(true);
+		start.setVisibility(View.VISIBLE);
+		container.setVisibility(View.GONE);
 		timerHandler.removeCallbacks(timerRunnable);
 		running = false;
-		textView.setVisibility(View.VISIBLE);
 		grid.setVisibility(View.INVISIBLE);
 		//gets results
 		double[] result = Results.getResults(results);

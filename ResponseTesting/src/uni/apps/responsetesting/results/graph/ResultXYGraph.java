@@ -79,6 +79,12 @@ public class ResultXYGraph {
 		plot.setTicksPerDomainLabel(ticks);
 	}
 	
+	public void setRangeSteps(double range, int ticks){
+		//set y axis steps and ticks
+		plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, range);
+		plot.setTicksPerRangeLabel(ticks);
+	}
+	
 	//set min and max Y
 	public void setMaxMinY(double min, double max){
 		plot.setRangeBoundaries(min, max, BoundaryMode.FIXED);
