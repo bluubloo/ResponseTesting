@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-     <PreferenceCategory android:title="@string/settings_cat_user" >
-        <EditTextPreference 
-            android:summary="@string/settings_sum_user_name" 
-            android:key="@string/pref_key_user_name" 
-            android:title="@string/settings_title_user_name" 
-            android:defaultValue="@string/setup_mode_default_user_name_single"/>"
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/settings_cat_email" >
-        <EditTextPreference 
-            android:summary="@string/settings_sum_email" 
-            android:key="@string/pref_key_email" 
-            android:title="@string/settings_title_email" 
-            android:defaultValue="@string/setup_mode_default_email"/>"
+    <PreferenceCategory android:title="@string/settings_cat_user" >
+        <EditTextPreference
+            android:defaultValue="@string/setup_mode_default_user_name_single"
+            android:key="@string/pref_key_user_name"
+            android:summary="@string/settings_sum_user_name"
+            android:title="@string/settings_title_user_name" />
+        <EditTextPreference
+            android:defaultValue="@string/setup_mode_default_email"
+            android:key="@string/pref_key_email"
+            android:summary="@string/settings_sum_email"
+            android:title="@string/settings_title_email" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/settings_cat_tests" >
         <CheckBoxPreference

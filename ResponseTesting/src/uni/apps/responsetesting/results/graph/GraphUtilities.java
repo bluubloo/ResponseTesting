@@ -378,7 +378,10 @@ public class GraphUtilities {
 				//checks user id
 				if(cursor.getString(6).equals(userId)){
 					//gets time and hr
-					tmp.add(Double.parseDouble(cursor.getString(7)));
+					if(!cursor.getString(7).equals(""))
+						tmp.add(Double.parseDouble(cursor.getString(7)));
+					else
+						tmp.add(null);
 					times.add(cursor.getLong(0));
 				}
 			} while(cursor.moveToNext());

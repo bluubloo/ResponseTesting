@@ -88,23 +88,14 @@ public class QuestionaireFragment extends Fragment {
 				ArrayList<String> results = new ArrayList<String>();
 				//get values
 				String sleep = totalSleep.getCurrentHour() + ":" + totalSleep.getCurrentMinute();
-				String light = lightSleep.getCurrentHour() + ":" + lightSleep.getCurrentMinute();
-				String sound = soundSleep.getCurrentHour() + ":" + soundSleep.getCurrentMinute();
+				String light = "";
+				String sound = "";
+				if(lightSleep.getCurrentHour() != 0 || lightSleep.getCurrentMinute() != 0)
+					light = lightSleep.getCurrentHour() + ":" + lightSleep.getCurrentMinute();
+				if(soundSleep.getCurrentHour() != 0 || soundSleep.getCurrentMinute() != 0)
+					sound = soundSleep.getCurrentHour() + ":" + soundSleep.getCurrentMinute();
 				String hr = heartRate.getText().toString();
 				//check string format
-				if(!checkSleepFormat(sleep, light, sound)){
-					new AlertDialog.Builder(getActivity())
-					.setTitle("Time Duration Error")
-					.setMessage("Please the sleep duration formats. It needs to be in the form of:\n"
-							+ "HH:mm or HH.mm")
-							.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int which) { 
-									//do nothing
-								}
-							})
-							.setIcon(android.R.drawable.ic_dialog_alert)
-							.show();
-				}else{
 					//get ratings
 					for(int i = 0; i < adapter.getCount(); i++){
 						results.add(adapter.getRating(i));
@@ -131,7 +122,6 @@ public class QuestionaireFragment extends Fragment {
 					})
 					.setIcon(android.R.drawable.ic_dialog_alert)
 					.show();
-				}
 			}
 		});
 		return view;
@@ -159,55 +149,6 @@ public class QuestionaireFragment extends Fragment {
 	    list_view.requestLayout();
 	}
 
-	//checks string time format
-	private boolean checkSleepFormat(String sleep, String light, String sound) {
-		if(checkStringFormat(sleep) && checkStringFormat(light) && checkStringFormat(sound))
-			return true;		
-		return false;
-	}
-
-	private boolean checkStringFormat(String s){
-		//check if the input hasn't been changed
-		if(s.equals("") || s.equals(getResources().getString(R.string.quest_if_known)))
-			return true;
-		//remove spaces
-		String[] tmpArray = s.split(" ");
-		String noSpaces = "";
-		for(String s1: tmpArray)
-			noSpaces += s1;
-		//check for : and .
-		if(noSpaces.contains(":") || noSpaces.contains(".")){
-			//get substrings
-			if(noSpaces.contains(":"))
-				tmpArray = noSpaces.split(":");
-			else{
-				int index = noSpaces.indexOf(".");
-				tmpArray = new String[] {noSpaces.substring(0, index),
-						noSpaces.substring(index + 1)};
-				for(String s2 : tmpArray)
-					Log.d(TAG, s2);
-			}
-				
-			//check array size
-			if(tmpArray.length != 2)
-				return false;
-			else{
-				//check string size
-				for(String s1: tmpArray){
-					if(s1.length() < 1 || s1.length() >= 3)
-						return false;
-					//check if chars are digits
-					for(char c: s1.toCharArray()){
-						if(!Character.isDigit(c))
-							return false;
-					}
-				}
-				return true;
-			}
-		}
-		return false;
-	}
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		Log.d(TAG, "onActivityCreated()");
@@ -219,9 +160,7 @@ public class QuestionaireFragment extends Fragment {
 	@Override
 	public void onResume() {
 		Log.d(TAG, "onResume()");
-		super.onResume();
-		//set list adpater
-		
+		super.onResume();		
 	}
 
 }

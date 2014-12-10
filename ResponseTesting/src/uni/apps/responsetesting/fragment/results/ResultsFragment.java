@@ -73,15 +73,15 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		String value = (String) parent.getItemAtPosition(position);
 		//set up graph
 		if(value.equals("Sleep Duration")){
-			setGraphForSleep();
+			setGraphForSleep(value);
 		} else if(value.equals("Resting HR")){
-			setGraphForHR();
+			setGraphForHR(value);
 		} else{
 			setGraphForEvent(value);
 		}
 	}
 
-	private void setGraphForHR() {
+	private void setGraphForHR(String value) {
 		//get questionaire info
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 		Cursor cursor = db.getAllQuestionaireResults();
@@ -101,13 +101,13 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 			//get y min and max
 			double[] minMaxY = GraphUtilities.getMaxandMin(hr);			
 			//set common variables
-			setCommonGraphValues("Resting HR", minMaxX, minMaxY, series);
+			setCommonGraphValues(value, minMaxX, minMaxY, series);
 		} else 
 			//clear graph
 			update();
 	}
 
-	private void setGraphForSleep() {
+	private void setGraphForSleep(String value) {
 		//get questionaire info
 		DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 		Cursor cursor = db.getAllQuestionaireResults();
@@ -130,7 +130,7 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 			series.remove(0);
 			double[] minMaxY = GraphUtilities.getMaxandMin(series);		
 			//set graph data
-			setCommonGraphValues("Sleep Duration", minMaxX, minMaxY, finalSeries);
+			setCommonGraphValues(value, minMaxX, minMaxY, finalSeries);
 		}
 		else
 			//clear graph
@@ -200,11 +200,8 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 	private void setCommonGraphValues(String eventName, long[] minMaxX, 
 			double min, double max, XYSeries[] finalSeries){
 		//set plot data and properties
-		graph.updatePlot(finalSeries, new int[] {Color.BLACK, Color.WHITE, Color.BLUE});
-		graph.setEventName(eventName);
-		graph.setMaxMinX(minMaxX[0], minMaxX[1]);
+		setCommonGraphValues(eventName, minMaxX, new double[]{min, max}, finalSeries);
 		graph.setMaxMinY(min, max);
-		graph.setDomainSteps(86400000, 1);
 		graph.setRangeSteps(0.1, 2);
 	}
 
