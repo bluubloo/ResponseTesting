@@ -268,7 +268,7 @@ public class GraphUtilities {
 			Number[] sound = new Number[cursor.getCount()];
 			Number[] times = new Number[cursor.getCount()];
 			int counter = 0;
-
+			Log.d(TAG, Integer.toString(cursor.getCount()));
 			if(cursor.moveToFirst()){
 				do{
 					//check user id
@@ -284,6 +284,7 @@ public class GraphUtilities {
 						total[counter] = formatDouble(cursor.getString(1));
 						light[counter] = formatDouble(cursor.getString(2));
 						sound[counter] = formatDouble(cursor.getString(3));
+						counter++;
 					}
 				} while(cursor.moveToNext());
 			}
@@ -409,7 +410,6 @@ public class GraphUtilities {
 	public static double roundUp(double value){
 		String stringValue = Double.toString(value);
 		int index = stringValue.indexOf('.');
-		Log.d("TEST", stringValue);
 		if(index != -1){
 			if(stringValue.charAt(index + 1) != '0'){
 				double tmp = value * 100 + 5;
@@ -424,7 +424,6 @@ public class GraphUtilities {
 	public static double roundDown(double value){
 		String stringValue = Double.toString(value);
 		int index = stringValue.indexOf('.');
-		Log.d("TEST", stringValue);
 		if(index != -1){
 			if(stringValue.charAt(index + 1) != '0'){
 				double tmp = value * 100 - 5;
@@ -437,9 +436,8 @@ public class GraphUtilities {
 
 	//formats time as number
 	private static Number formatDouble(String string) {
-		int index = string.indexOf('.');
-		if(index == -1)
-			index = string.indexOf(':');
+		Log.d(TAG, string);
+		int index = string.indexOf(':');
 		if(index != -1){
 			String s1 = string.substring(0, index);
 			String s2 = string.substring(index + 1);
@@ -473,8 +471,6 @@ public class GraphUtilities {
 					timeTmp[i] = times.get(i);
 					scoreTmp[i] = scores.get(i);
 				}
-				Log.d(TAG, seriesArrayToString(timeTmp));
-				Log.d(TAG, seriesArrayToString(scoreTmp));
 				ArrayList<Number[]> tmp = new ArrayList<Number[]>();
 				tmp.add(scoreTmp);
 				tmp.add(timeTmp);

@@ -51,7 +51,7 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		View view =  inflater.inflate(R.layout.results_display_fragment2, container, false);
 		//gets graph
 		XYPlot plot = (XYPlot) view.findViewById(R.id.results_plot);
-		graph = new ResultXYBarGraph(plot, "Score", "Date", "");
+		graph = new ResultXYBarGraph(plot, "Values", "Date", "");
 		setUpSpinner(view);
 		return view;
 	}
@@ -126,6 +126,8 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 				finalSeries[i - 1] = s;
 			}
 			//get mins and maxs
+			Log.d(TAG, GraphUtilities.seriesArrayToStringLong(series.get(0)));
+			Log.d(TAG, GraphUtilities.seriesArrayToString(series.get(1)));
 			long[] minMaxX = GraphUtilities.getMinandMaxLong(series.get(0));
 			series.remove(0);
 			double[] minMaxY = GraphUtilities.getMaxandMin(series);		
