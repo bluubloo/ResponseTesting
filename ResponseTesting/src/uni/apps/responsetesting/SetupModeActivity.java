@@ -3,8 +3,8 @@ package uni.apps.responsetesting;
 import uni.apps.responsetesting.fragment.settings.SingleUserSettingsFragment;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +14,7 @@ public class SetupModeActivity extends Activity {
 	//Needed variables
 	private static final String TAG = "SetupModeActivity";
 	private static final String FRAG_TAG = "SetupModeFragment";
-	private PreferenceFragment fragment;
+	private Fragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,7 @@ public class SetupModeActivity extends Activity {
 		Log.d(TAG, "onPrepareOptionsMenu()");
 		//alters action bar
 		menu.findItem(R.id.action_setup).setVisible(false);
+		menu.findItem(R.id.action_home).setVisible(true);
 		return super.onPrepareOptionsMenu(menu);
 	}
 }

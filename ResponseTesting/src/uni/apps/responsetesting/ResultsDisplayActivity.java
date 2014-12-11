@@ -77,6 +77,7 @@ public class ResultsDisplayActivity extends Activity {
 		Log.d(TAG, "onPrepareOptionsMenu()");
 		//alters action bar
 		menu.findItem(R.id.action_delete_all).setVisible(true);
+		menu.findItem(R.id.action_home).setVisible(true);
 		return super.onPrepareOptionsMenu(menu);
 	}
 	

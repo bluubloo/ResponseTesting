@@ -54,6 +54,7 @@ public class SettingsActivity extends Activity {
 		Log.d(TAG, "onPrepareOptionsMenu()");
 		//alters action bar
 		menu.findItem(R.id.action_settings).setVisible(false);
+		menu.findItem(R.id.action_home).setVisible(true);
 		return super.onPrepareOptionsMenu(menu);
 	}
 }

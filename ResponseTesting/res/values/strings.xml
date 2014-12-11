@@ -47,6 +47,7 @@
     <string name="action_add_group">Add New Group</string>
     <string name="action_switch">Switch Users</string>
     <string name="action_refresh">Refresh Users Tests</string>
+    <string name="action_home">Go to Main Menu</string>
 
     <!-- Finger Tap Test Strings -->
     <string name="tap_click_info_3">Keep on Tapping</string>
@@ -138,14 +139,14 @@
     <string name="settings_title_user_name">Username</string>
     
     <!-- Preference Summary Strings -->
-    <string name="settings_sum_instruct">Enable/Disable the event instructions page</string>
+    <string name="settings_sum_instruct">Enable/Disable the event\ninstructions page</string>
     <string name="settings_sum_user">Select User Mode</string>
     <string name="settings_sum_results">Enable/Disable the results page</string>
     <string name="settings_sum_test">Enable/Disable the Test</string>
     <string name="settings_sum_email">Set email address to send results to.</string>
     <string name="settings_sum_alert">Set Time this App Sends You a Reminder</string>
     <string name="settings_sum_remind">Enable/Disable Reminders</string>
-    <string name="settings_sum_sleep">Enable/Disable Light/Sound Sleep Durations</string>
+    <string name="settings_sum_sleep">Enable/Disable Light/Sound\nSleep Durations</string>
     <string name="settings_sum_user_name">Set Username</string>
     
     <!-- Preference Key Strings -->

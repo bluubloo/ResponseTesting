@@ -143,6 +143,7 @@ public class EventActivity extends Activity implements EventInstructionsListener
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean results = prefs.getBoolean(getResources().getString(R.string.pref_key_results), true);
 		menu.findItem(R.id.action_results).setVisible(results);
+		menu.findItem(R.id.action_home).setVisible(true);
 		return super.onPrepareOptionsMenu(menu);
 	}
 

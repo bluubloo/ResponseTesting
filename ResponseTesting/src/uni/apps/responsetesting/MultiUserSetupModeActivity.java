@@ -72,6 +72,7 @@ public class MultiUserSetupModeActivity extends Activity implements MultiUserSet
 		//alters action bar
 		menu.findItem(R.id.action_setup).setVisible(false);
 		menu.findItem(R.id.action_add_group).setVisible(true);
+		menu.findItem(R.id.action_home).setVisible(true);
 		return super.onPrepareOptionsMenu(menu);
 	}
 	

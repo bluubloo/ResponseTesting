@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MenuItem;
@@ -47,6 +48,9 @@ public class ActivityUtilities {
 			return true;
 		case R.id.action_setup:
 			passwordForSetupMode(activity);
+			return true;
+		case R.id.action_home:
+			NavUtils.navigateUpFromSameTask(activity);
 			return true;
 		default:
 			return false;
@@ -126,13 +130,13 @@ public class ActivityUtilities {
 	}
 
 	//displays results for all events that do not require extra actions on closing the dialog
-	public static void displayResults(Activity activity, String eventName, String message){
+	public static void displayResults(final Activity activity, String eventName, String message){
 		new AlertDialog.Builder(activity)
 		.setTitle(eventName + " Complete")
 		.setMessage(message)
 		.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) { 
-
+				activity.onBackPressed();
 			}
 		})
 		.setIcon(android.R.drawable.ic_dialog_alert)

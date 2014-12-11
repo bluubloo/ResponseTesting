@@ -22,5 +22,11 @@
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
+    
+    <style name="title_style_settings">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
 
 </resources>

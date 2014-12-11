@@ -1,14 +1,21 @@
 package uni.apps.responsetesting.mail;
 
+import uni.apps.responsetesting.MainMenuActivity;
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.models.EmailTaskData;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.app.TaskStackBuilder;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * This thread sends the result email
@@ -19,6 +26,8 @@ import android.widget.Toast;
  */
 public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 	private Activity activity;
+	private static final int NOTIFICATION = 123;
+	private NotificationManager manager;
 	
 	
 	@Override
@@ -28,7 +37,7 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 		String testName = params[0].strings[1];
 		String PATH = params[0].strings[2];
 		activity = params[0].activity;
-		
+		manager = (NotificationManager) activity.getSystemService(Service.NOTIFICATION_SERVICE);
 		//to and froms
 		String from = "activitytrackers@gmail.com";
 		String to = "";
@@ -70,12 +79,45 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 	@Override
 	public void onPostExecute(Boolean done){
 		if(done){
-			Toast.makeText(activity, "Email sent successfully", Toast.LENGTH_LONG).show();
+			//Toast.makeText(activity, "Email sent successfully", Toast.LENGTH_LONG).show();
+			notification("successful.");
 			DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 			db.updateMostRecent();
 			db.updateMostRecentQuest();
 		}
 		else
-			Toast.makeText(activity, "Email was not sent", Toast.LENGTH_LONG).show();
+			//Toast.makeText(activity, "Email was not sent", Toast.LENGTH_LONG).show();
+			notification("unsuccessful.");
+	}
+	
+	private void notification(String value){
+		
+		NotificationCompat.Builder mBuilder =
+		        new NotificationCompat.Builder(activity)
+		        .setSmallIcon(R.drawable.uni_logo)
+		        .setContentTitle("Email")
+		        .setContentText("Email sending was " + value)
+		        .setAutoCancel(true)
+		        .setDefaults(Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND);
+		// Creates an explicit intent for an Activity in your app
+		Intent resultIntent = new Intent(activity, MainMenuActivity.class);
+		// The stack builder object will contain an artificial back stack for the
+		// started Activity.
+		// This ensures that navigating backward from the Activity leads out of
+		// your application to the Home screen.
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(activity);
+		// Adds the back stack for the Intent (but not the Intent itself)
+		stackBuilder.addParentStack(MainMenuActivity.class);
+		// Adds the Intent that starts the Activity to the top of the stack
+		stackBuilder.addNextIntent(resultIntent);
+		PendingIntent resultPendingIntent =
+		        stackBuilder.getPendingIntent(
+		            0,
+		            PendingIntent.FLAG_UPDATE_CURRENT
+		        );
+		mBuilder.setContentIntent(resultPendingIntent);
+		
+		// mId allows you to update the notification later on.
+		manager.notify(NOTIFICATION, mBuilder.build());
 	}
 }

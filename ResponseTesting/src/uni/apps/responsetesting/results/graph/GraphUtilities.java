@@ -216,7 +216,12 @@ public class GraphUtilities {
 				//checks id
 				if(cursor.getString(5).equals(id)){
 					//adds date
-					dates.add(cursor.getLong(2));
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(cursor.getLong(2));
+					c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+							c.get(Calendar.DATE), 0, 0, 0);
+					c.setTimeZone(TimeZone.getTimeZone("GMT+12"));
+					dates.add(c.getTimeInMillis());
 					//checks scrore type
 					//adds scores to list
 					String s = cursor.getString(1);
@@ -383,7 +388,13 @@ public class GraphUtilities {
 						tmp.add(Double.parseDouble(cursor.getString(7)));
 					else
 						tmp.add(null);
-					times.add(cursor.getLong(0));
+					
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(cursor.getLong(0));
+					c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+							c.get(Calendar.DATE), 0, 0, 0);
+					c.setTimeZone(TimeZone.getTimeZone("GMT+12"));
+					times.add(c.getTimeInMillis());
 				}
 			} while(cursor.moveToNext());
 		}
@@ -446,47 +457,18 @@ public class GraphUtilities {
 		return null;
 	}
 
-	public static ArrayList<Number[]> getData(Cursor cursor, String userId) {
-		ArrayList<Number> scores = new ArrayList<Number>();
-		ArrayList<Number> times = new ArrayList<Number>();
-
-		if(cursor.moveToFirst()){
-			do{
-				String s1 = cursor.getString(1);
-				if(s1.contains("|") || s1.indexOf('|') != -1){
-					int index = s1.indexOf('|');
-					times.add(Double.parseDouble(s1.substring(index + 1)));
-					scores.add(Double.parseDouble(s1.substring(0, index)));
-				}else {
-					scores.add(null);
-					times.add(Double.parseDouble(s1));
-				}
-
-			} while(cursor.moveToNext());
-			
-			if(!times.isEmpty() || !scores.isEmpty()){
-				Number[] timeTmp = new Number[times.size()];
-				Number[] scoreTmp = new Number[times.size()];
-				for(int i = 0; i < times.size(); i ++){
-					timeTmp[i] = times.get(i);
-					scoreTmp[i] = scores.get(i);
-				}
-				ArrayList<Number[]> tmp = new ArrayList<Number[]>();
-				tmp.add(scoreTmp);
-				tmp.add(timeTmp);
-				return tmp;
-			}
-		}		
-		return new ArrayList<Number[]>();
-	}
-
+	//normalizes the given data
 	public static Number[] normalize(Number[] numbers, double[] minMaxY) {
 		Number[] tmp = new Number[numbers.length];
 		for(int i = 0; i < numbers.length; i ++){
+			//checks if data is null
+			//does nothing to it
 			if(numbers[i] == null)
 				tmp[i] = null;
 			else{
+				//gets value
 				double n = numbers[i].doubleValue();
+				//normalizes data
 				double a = n - minMaxY[0];
 				double b = minMaxY[1] - minMaxY[0];
 				double j = a / b;
