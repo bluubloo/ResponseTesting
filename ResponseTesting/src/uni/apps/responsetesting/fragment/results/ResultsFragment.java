@@ -15,11 +15,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.Button;
 
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
@@ -31,16 +29,28 @@ import com.androidplot.xy.XYSeries;
  * @author Mathew Andela
  *
  */
-public class ResultsFragment extends Fragment implements OnItemSelectedListener{
+public class ResultsFragment extends Fragment {//implements OnItemSelectedListener{
 
 	//variables
 	private static final String TAG = "ResultsFragment";
+	private String test = "";
 	private ResultXYBarGraph graph;
 
+	public static ResultsFragment getInstance(String value){
+		ResultsFragment tmp = new ResultsFragment();
+		Bundle b = new Bundle();
+		b.putString("test", value);
+		tmp.setArguments(b);
+		return tmp;
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+		Bundle b = this.getArguments();
+		if(b != null)
+			test = b.getString("test");
 	}
 
 	@Override
@@ -52,11 +62,21 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		//gets graph
 		XYPlot plot = (XYPlot) view.findViewById(R.id.results_plot);
 		graph = new ResultXYBarGraph(plot, "Values", "Date", "");
-		setUpSpinner(view);
+		//setUpSpinner(view);
+		Button back = (Button) view.findViewById(R.id.results_back);
+		back.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				getActivity().onBackPressed();
+			}
+		
+		});
+		setUpGraph(test);
 		return view;
 	}
 
-	private void setUpSpinner(View view) {
+/*	private void setUpSpinner(View view) {
 		//sets up the spinner
 		Spinner spinner = (Spinner) view.findViewById(R.id.result_dis_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -65,6 +85,7 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
 	}
+	
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
@@ -78,6 +99,16 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 			setGraphForHR(value);
 		} else{
 			setGraphForEvent(value);
+		}
+	}*/
+	
+	private void setUpGraph(String test){
+		if(test.equals("Sleep Duration")){
+			setGraphForSleep(test);
+		} else if(test.equals("Resting HR")){
+			setGraphForHR(test);
+		} else{
+			setGraphForEvent(test);
 		}
 	}
 
@@ -126,8 +157,6 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 				finalSeries[i - 1] = s;
 			}
 			//get mins and maxs
-			Log.d(TAG, GraphUtilities.seriesArrayToStringLong(series.get(0)));
-			Log.d(TAG, GraphUtilities.seriesArrayToString(series.get(1)));
 			long[] minMaxX = GraphUtilities.getMinandMaxLong(series.get(0));
 			series.remove(0);
 			double[] minMaxY = GraphUtilities.getMaxandMin(series);		
@@ -221,10 +250,10 @@ public class ResultsFragment extends Fragment implements OnItemSelectedListener{
 		}
 	}
 
-	@Override
+	/*@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 		update();
-	}
+	}*/
 
 	public void update(){
 		graph.clearGraph();

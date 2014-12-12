@@ -70,7 +70,7 @@
 
     <!-- Result Display Strings -->
     <string name="results_dis_title">Results</string>
-    <string name="results_dis_notes">Add Note</string>
+    <string name="results_dis_graphs">All Graph List</string>
 
     <!-- Event Instructions Strings -->
     <string name="instructions">Instructions</string>

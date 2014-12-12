@@ -1,6 +1,8 @@
 package uni.apps.responsetesting;
 
 import uni.apps.responsetesting.fragment.results.ResultsFragment;
+import uni.apps.responsetesting.interfaces.listener.ResultsListener;
+import uni.apps.responsetesting.results.GraphListFragment;
 import uni.apps.responsetesting.results.Results;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
@@ -13,13 +15,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class ResultsDisplayActivity extends Activity {
+public class ResultsDisplayActivity extends Activity implements ResultsListener{
 
 	//Needed Variables
 	private FragmentManager frag_manager;
 	private ResultsFragment fragment;
+	private GraphListFragment listFragment;
 	//private ResultsDisplayFragment fragment;
 	private static final String RESULTS_FRAG_TAG = "ResultsDisplayFragment";
+	private static final String GRAPH_LIST_TAG = "GraphListFragment";
 	private static final String TAG = "ResultsDisplayActivity";
 	
 	@Override
@@ -34,16 +38,16 @@ public class ResultsDisplayActivity extends Activity {
 	//adds fragment to activity
 	private void addFragments() {
 		//checks if fragment exists
-		fragment = (ResultsFragment) frag_manager.findFragmentByTag(RESULTS_FRAG_TAG);
-		//fragment = (ResultsDisplayFragment) frag_manager.findFragmentByTag(RESULTS_FRAG_TAG);
+		//fragment = (ResultsFragment) frag_manager.findFragmentByTag(RESULTS_FRAG_TAG);
+		listFragment = (GraphListFragment) frag_manager.findFragmentByTag(GRAPH_LIST_TAG);
 		//begins transaction
 		FragmentTransaction ft = frag_manager.beginTransaction();
 		//creates a new fragment and adds it to the activity 
-		if(fragment == null){
-			fragment = new ResultsFragment();
-			//fragment = new ResultsDisplayFragment();
-			ft.add(R.id.results_container, fragment, RESULTS_FRAG_TAG);
+		if(listFragment == null){
+			listFragment = new GraphListFragment();
+			//fragment = new ResultsFragment();
 		}
+		ft.replace(R.id.results_container, listFragment, GRAPH_LIST_TAG);
 		//commits the transaction
 		ft.commit();
 		frag_manager.executePendingTransactions();
@@ -100,5 +104,22 @@ public class ResultsDisplayActivity extends Activity {
 		.setIcon(android.R.drawable.ic_dialog_alert)
 		.show();
 		
+	}
+
+	@Override
+	public void switchToGraph(String value) {
+		fragment = ResultsFragment.getInstance(value);
+		frag_manager.beginTransaction().replace(R.id.results_container, fragment, RESULTS_FRAG_TAG).commit();
+	}
+	
+	@Override
+	public void onBackPressed(){
+		if(fragment != null && fragment.isVisible() && fragment.isResumed() && !fragment.isRemoving()){
+			listFragment = (GraphListFragment) frag_manager.findFragmentByTag(GRAPH_LIST_TAG);
+			if(listFragment == null)
+				listFragment = new GraphListFragment();
+			frag_manager.beginTransaction().replace(R.id.results_container, listFragment, GRAPH_LIST_TAG).commit();
+		} else
+			super.onBackPressed();
 	}
 }

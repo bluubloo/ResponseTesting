@@ -12,10 +12,16 @@
         android:text="@string/results_dis_title"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Spinner
+  <!--   <Spinner
         android:id="@+id/result_dis_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />-->
+     <Button
+        android:id="@+id/results_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/results_dis_graphs"
         android:layout_marginBottom="10dp" />
 
     <com.androidplot.xy.XYPlot
@@ -42,5 +48,7 @@
         androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_font_size"
         androidPlot.title="Results - Event"
         androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size" />
+
+
 
 </LinearLayout>
