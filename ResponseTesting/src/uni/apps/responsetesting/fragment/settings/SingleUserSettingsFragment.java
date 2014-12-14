@@ -12,16 +12,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
 /**
  * This fragment deals with single user mode setup
@@ -57,9 +54,6 @@ public class SingleUserSettingsFragment extends Fragment implements MultiUserSel
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.settings_single_mode_fragment, container, false);
 		//sets views
-		ScrollView scroll = (ScrollView) view.findViewById(R.id.settings_view);
-		scroll.requestFocus();
-		scroll.scrollBy(0, 0);
 		
 		setUpInitialValues(view);
 		setUpButtons(view);
@@ -110,20 +104,6 @@ public class SingleUserSettingsFragment extends Fragment implements MultiUserSel
 		adapter = new MultiUserSelectionAdapter(names, values, getActivity(), listener);
 		list.setAdapter(adapter);
 		list.setChoiceMode(ListView.CHOICE_MODE_NONE);
-		list.setOnTouchListener(new OnTouchListener(){
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				v.getParent().requestDisallowInterceptTouchEvent(true);
-			    return false;
-			}
-			
-		});
-		
-		ViewGroup.LayoutParams params = list.getLayoutParams();
-	    params.height = 1000 + (list.getDividerHeight() * (adapter.getCount() - 1));
-	    list.setLayoutParams(params);
-	    list.requestLayout();
 	}
 
 	//gets initial values

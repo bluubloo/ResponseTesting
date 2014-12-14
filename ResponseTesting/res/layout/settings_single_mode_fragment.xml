@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants" >
+<!-- <ScrollView 
     android:id="@+id/settings_view"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent" >-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -111,24 +115,27 @@
                 android:src="@drawable/divider" />
         </RelativeLayout>
 
-        <LinearLayout
+       <!-- -> <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants"
-            android:orientation="vertical" >
+            android:orientation="vertical" >-->
 
             <ListView
                 android:id="@+id/test_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="10dp" />
-
-            <Button
+      <!--   </LinearLayout>-->
+        
+        <Button
                 android:id="@+id/submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/save" />
-        </LinearLayout>
+                android:text="@string/save"
+                android:layout_alignParentBottom="true" />
     </LinearLayout>
 
-</ScrollView>
+
+</RelativeLayout>
