@@ -220,10 +220,12 @@ public class MultiUserGroupFragment extends Fragment implements MultiUserGroupLi
 		//add if not
 		int j = -1;
 		for(int i = 0; i < tmp.size(); i++)
-			if(tmp.get(i).getGroup().equals("Unassigned"))
+			if(tmp.get(i).getGroup().equals("Unassigned")){
 				j = i;
+				break;
+			}
 		if(j == -1)
-			tmp.add(new MultiUserGroupInfo ("Unassigned"));
+			tmp.add(new MultiUserGroupInfo ("Unassigned", R.drawable.uni_logo));
 		return tmp;
 	}
 	

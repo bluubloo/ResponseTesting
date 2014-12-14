@@ -4,12 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        style="@style/title_style"
-        android:layout_width="wrap_content"
+        <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings_title_email"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:descendantFocusability="beforeDescendants" >
+
+        <TextView
+            android:id="@+id/text_title_1"
+            style="@style/title_style_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/settings_title_email"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/text_title_1"
+            android:contentDescription="@string/image_descript"
+            android:src="@drawable/divider" />
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,13 +52,30 @@
             android:text="@string/setup_mode_set" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+            <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="10dp"
-        android:text="@string/setup_mode_groups"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:descendantFocusability="beforeDescendants" >
+
+        <TextView
+            android:id="@+id/text_title_2"
+            style="@style/title_style_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/setup_mode_groups"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/text_title_2"
+            android:contentDescription="@string/image_descript"
+            android:src="@drawable/divider" />
+    </RelativeLayout>
+
 
     <ExpandableListView
         android:id="@+id/multi_expand_list"
