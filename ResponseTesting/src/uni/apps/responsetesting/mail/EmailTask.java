@@ -79,14 +79,12 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 	@Override
 	public void onPostExecute(Boolean done){
 		if(done){
-			//Toast.makeText(activity, "Email sent successfully", Toast.LENGTH_LONG).show();
 			notification("successful.");
 			DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 			db.updateMostRecent();
 			db.updateMostRecentQuest();
 		}
 		else
-			//Toast.makeText(activity, "Email was not sent", Toast.LENGTH_LONG).show();
 			notification("unsuccessful.");
 	}
 	

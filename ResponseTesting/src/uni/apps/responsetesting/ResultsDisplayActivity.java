@@ -65,7 +65,8 @@ public class ResultsDisplayActivity extends Activity implements ResultsListener{
 		//checks if delete all is clicked
 		if(item.getItemId() == R.id.action_delete_all){
 			deleteAll();
-			fragment.update();
+			if(fragment != null)
+				fragment.update();
 			return true;
 		}
 		//calls the action bar defaults

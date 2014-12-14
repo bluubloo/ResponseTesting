@@ -3,69 +3,63 @@
 
     <item
         android:id="@+id/action_home"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:showAsAction="always"
         android:title="@string/action_home"
         android:icon="@drawable/home"
         android:visible="false" />
     <item
-        android:id="@+id/action_refresh"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_refresh"
-        android:visible="false"/>
-    <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
     <item
         android:id="@+id/action_send_all"
-        android:orderInCategory="100"
+        android:orderInCategory="3"
         android:showAsAction="never"
         android:title="@string/action_send_all"/>
     <item
         android:id="@+id/action_send_recent"
-        android:orderInCategory="100"
+        android:orderInCategory="4"
         android:showAsAction="never"
         android:title="@string/action_send_recent"/>
     <item
         android:id="@+id/action_delete_all"
         android:icon="@android:drawable/ic_menu_delete"
-        android:orderInCategory="100"
+        android:orderInCategory="5"
         android:showAsAction="never"
         android:title="@string/action_delete_all"
         android:visible="false"/>
     <item
         android:id="@+id/action_info"
         android:icon="@android:drawable/ic_menu_info_details"
-        android:orderInCategory="100"
+        android:orderInCategory="5"
         android:showAsAction="ifRoom"
         android:title="@string/action_event_info"
         android:visible="false"/>
     <item
         android:id="@+id/action_results"
         android:icon="@drawable/results_icon"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:showAsAction="ifRoom"
         android:title="@string/action_send_results"
         android:visible="false"/>
     <item
         android:id="@+id/action_setup"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:showAsAction="never"
         android:title="@string/action_setup"/>
     <item
         android:id="@+id/action_add_group"
         android:icon="@android:drawable/ic_menu_add"
-        android:orderInCategory="100"
+        android:orderInCategory="4"
         android:showAsAction="ifRoom"
         android:title="@string/action_add_group"
         android:visible="false"/>
     <item
         android:id="@+id/action_switch_user"
         android:icon="@drawable/ic_menu_allfriends"
-        android:orderInCategory="100"
+        android:orderInCategory="5"
         android:showAsAction="ifRoom"
         android:title="@string/action_switch"
         android:visible="false"/>

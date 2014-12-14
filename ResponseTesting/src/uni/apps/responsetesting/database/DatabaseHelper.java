@@ -42,29 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		try{
 			db.beginTransaction();
-			String create = "CREATE TABLE " + resources.getString(R.string.table_name) +
-					"(" + resources.getString(R.string.event_name) + " TEXT," + 
-					resources.getString(R.string.event_score) + " TEXT," + 
-					resources.getString(R.string.timestamp) + " INTEGER, " + 
-					resources.getString(R.string.sent) + " INTEGER, " +
-					resources.getString(R.string.notes) + " TEXT, " +
-					resources.getString(R.string.user_id) + " TEXT, " +
-					resources.getString(R.string.tries) + " INTEGER, " +
-					resources.getString(R.string.all_scores) + " TEXT, " +
-					"PRIMARY KEY(" + resources.getString(R.string.event_name) + 
-					", " + resources.getString(R.string.timestamp) + "))";
-			db.execSQL(create);
-			create = "CREATE TABLE " + resources.getString(R.string.table_name_questionaire) +
-					"(" + resources.getString(R.string.timestamp) + " INTEGER PRIMARY KEY, " + 
-					resources.getString(R.string.total_sleep) + " TEXT, " + 
-					resources.getString(R.string.light_sleep) + " TEXT, " + 
-					resources.getString(R.string.sound_sleep) + " TEXT, " + 
-					resources.getString(R.string.ratings) + " TEXT, " + 
-					resources.getString(R.string.sent) + " INTEGER, " +
-					resources.getString(R.string.user_id) + " TEXT, " + 
-					resources.getString(R.string.heart_rate) + " TEXT)"; 
-			db.execSQL(create);
-			create = "CREATE TABLE " + resources.getString(R.string.table_name_multi_settings) +
+			createEventTables(db);
+			String create = "CREATE TABLE " + resources.getString(R.string.table_name_multi_settings) +
 					"(" + resources.getString(R.string.user_id) + " INTEGER PRIMARY KEY, " + 
 					resources.getString(R.string.user_group) + " TEXT, " + 
 					resources.getString(R.string.user_name) + " TEXT, " +
@@ -75,6 +54,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		} finally{
 			db.endTransaction();
 		}
+	}
+
+	public void createEventTables(SQLiteDatabase db){
+		String create = "CREATE TABLE " + resources.getString(R.string.table_name) +
+				"(" + resources.getString(R.string.event_name) + " TEXT," + 
+				resources.getString(R.string.event_score) + " TEXT," + 
+				resources.getString(R.string.timestamp) + " INTEGER, " + 
+				resources.getString(R.string.sent) + " INTEGER, " +
+				resources.getString(R.string.notes) + " TEXT, " +
+				resources.getString(R.string.user_id) + " TEXT, " +
+				resources.getString(R.string.tries) + " INTEGER, " +
+				resources.getString(R.string.all_scores) + " TEXT, " +
+				"PRIMARY KEY(" + resources.getString(R.string.event_name) + 
+				", " + resources.getString(R.string.timestamp) + "))";
+		db.execSQL(create);
+		create = "CREATE TABLE " + resources.getString(R.string.table_name_questionaire) +
+				"(" + resources.getString(R.string.timestamp) + " INTEGER PRIMARY KEY, " + 
+				resources.getString(R.string.total_sleep) + " TEXT, " + 
+				resources.getString(R.string.light_sleep) + " TEXT, " + 
+				resources.getString(R.string.sound_sleep) + " TEXT, " + 
+				resources.getString(R.string.ratings) + " TEXT, " + 
+				resources.getString(R.string.sent) + " INTEGER, " +
+				resources.getString(R.string.user_id) + " TEXT, " + 
+				resources.getString(R.string.heart_rate) + " TEXT)"; 
+		db.execSQL(create);
 	}
 
 	@Override
@@ -176,15 +180,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	//Delete All Rows
-	public int deleteAll() {
-		String query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name);
-		this.getWritableDatabase().execSQL(query);
-		query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name_questionaire);
-		this.getWritableDatabase().execSQL(query);
-		query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name_multi_settings);
-		this.getWritableDatabase().execSQL(query);
-		onCreate(this.getWritableDatabase());
-		return 0;
+	public void deleteAll() {
+		SQLiteDatabase db = this.getWritableDatabase();
+		try{
+			db.beginTransaction();
+			String query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name);
+			db.execSQL(query);
+			query = "DROP TABLE IF EXISTS " + resources.getString(R.string.table_name_questionaire);
+			db.execSQL(query);
+			createEventTables(db);
+			db.setTransactionSuccessful();
+		} finally{
+			db.endTransaction();
+		}
 	}
 
 	public void removeMulitUser(String id) {
@@ -220,7 +228,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			if(c.get(Calendar.DATE) == current.get(Calendar.DATE) && 
 					c.get(Calendar.MONTH) == current.get(Calendar.MONTH)){
 				sql = "SELECT " + resources.getString(R.string.tries) + ", " +  resources.getString(R.string.event_score) + ", " + 
-						 resources.getString(R.string.all_scores) + " FROM " + resources.getString(R.string.table_name) +
+						resources.getString(R.string.all_scores) + " FROM " + resources.getString(R.string.table_name) +
 						" WHERE " + resources.getString(R.string.timestamp) + "=?";
 				Cursor tries = this.getReadableDatabase().rawQuery(sql, new String[] {Long.toString(cursor.getLong(0))});
 				if(tries.moveToFirst())
@@ -289,7 +297,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					if(cursor.getInt(6) != 3)
 						return true;
 				}
-				
+
 			}
 		}
 		return false;

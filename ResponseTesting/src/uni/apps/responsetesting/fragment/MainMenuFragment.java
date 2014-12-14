@@ -62,7 +62,7 @@ public class MainMenuFragment extends ListFragment {
 	//Creates main menu list
 	private ArrayList<String> createList(){
 		//gets string array from rescoures
-		Resources r = this.getActivity().getResources();
+		Resources r = getResources();
 		String[] tmp = r.getStringArray(R.array.event_name_array);
 		//adds from array to list
 		ArrayList<String> list = new ArrayList<String>();

@@ -47,7 +47,6 @@
     <string name="action_setup">Setup Mode</string>
     <string name="action_add_group">Add New Group</string>
     <string name="action_switch">Switch Users</string>
-    <string name="action_refresh">Refresh Users Tests</string>
     <string name="action_home">Go to Main Menu</string>
 
     <!-- Finger Tap Test Strings -->

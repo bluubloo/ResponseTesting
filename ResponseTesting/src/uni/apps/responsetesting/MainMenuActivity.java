@@ -126,9 +126,6 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		case R.id.action_switch_user:
 			startSession(true);
 			return true;
-		case R.id.action_refresh:
-			addFragments();
-			return true;
 		default:
 			return ActivityUtilities.actionBarClicks(item, this);
 		}
@@ -172,7 +169,6 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		menu.findItem(R.id.action_results).setVisible(results);
 		boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);
 		menu.findItem(R.id.action_switch_user).setVisible(!single);
-		menu.findItem(R.id.action_refresh).setVisible(!single);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
