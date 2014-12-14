@@ -12,7 +12,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants" >
+            android:descendantFocusability="beforeDescendants" >
 
             <TextView
                 android:id="@+id/text_title_1"
@@ -36,7 +36,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants" >
+            android:descendantFocusability="beforeDescendants" >
 
             <TextView
                 android:id="@+id/text_title_user_name"
@@ -63,7 +63,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants" >
+            android:descendantFocusability="beforeDescendants" >
 
             <TextView
                 android:id="@+id/text_title_email"
@@ -127,7 +127,7 @@
                 android:id="@+id/submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/submit" />
+                android:text="@string/save" />
         </LinearLayout>
     </LinearLayout>
 
