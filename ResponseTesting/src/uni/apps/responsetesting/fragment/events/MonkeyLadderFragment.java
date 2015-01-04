@@ -46,6 +46,7 @@ public class MonkeyLadderFragment extends Fragment {
 	//views
 	private GridView grid;
 	private Button button;
+	private Button instruct;
 	
 	//varaibles
 	private int playTimes = 0;
@@ -118,7 +119,8 @@ public class MonkeyLadderFragment extends Fragment {
 		View view =  inflater.inflate(R.layout.monkey_ladder_fragment, container, false);
 		//sets views
 		grid = (GridView) view.findViewById(R.id.monkey_grid);
-		button = (Button) view.findViewById(R.id.monkey_button);
+		button = (Button) view.findViewById(R.id.button_start);
+		instruct = (Button) view.findViewById(R.id.button_instruct);
 		//sets adapter
 		adapter = new MonkeyLadderGridAdapter(getActivity(), tileList, tiles);
 		grid.setAdapter(adapter);
@@ -176,6 +178,7 @@ public class MonkeyLadderFragment extends Fragment {
 					if(button.isEnabled()){
 						//set initial test variables
 						button.setEnabled(false);
+						instruct.setEnabled(false);
 						playTimes++;
 						counter = 0;
 						currentMax = 0;
@@ -197,6 +200,15 @@ public class MonkeyLadderFragment extends Fragment {
 			} 
 
 		});
+		
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
+			}
+			
+		});
 	}
 
 	//ends test
@@ -204,6 +216,7 @@ public class MonkeyLadderFragment extends Fragment {
 		//reset variables
 		removeTimerCallbacks();
 		button.setEnabled(true);
+		instruct.setEnabled(true);
 		grid.setVisibility(View.INVISIBLE);
 		//gets results
 		String time = getResult();

@@ -63,6 +63,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 	//views
 	private GridView grid;
 	private Button start;
+	private Button instruct;
 
 	private PatternRecreationGridAdapter adapter;
 	private PatternRecreationClickListener listener;
@@ -161,7 +162,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 
 	private void setUpStartButton(View view) {
 		//sets start button view
-		start = (Button) view.findViewById(R.id.pattern_start);
+		start = (Button) view.findViewById(R.id.button_start);
 		start.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -171,6 +172,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 					if(start.isEnabled()){
 						//sets initial test variables
 						start.setEnabled(false);
+						instruct.setEnabled(false);
 						tiles = 3;
 						canClick = false;
 						clickCount = 0;
@@ -190,6 +192,17 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 							"You have completed you daily 3 tries, please try a different test");
 				}
 			}
+		});
+
+		instruct = (Button) view.findViewById(R.id.button_instruct);
+
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
+			}
+
 		});
 	}
 
@@ -260,7 +273,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 		}
 	}
 
-	
+
 	private void next() {
 		//check if can proceed
 		canClick = false;
@@ -305,7 +318,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 		double timeMilli =  getResults();
 		String tmp = Conversion.milliToStringSeconds(timeMilli, 3);
 		String result = "Max Tiles: " + Integer.toString(maxTilesReached) + ". " + 
-				 tmp + " average time (s)";
+				tmp + " average time (s)";
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		//inserts and dispalys results
@@ -314,6 +327,7 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 		ActivityUtilities.displayResults(getActivity(), eventName, result);		
 		//resest values
 		start.setEnabled(true);
+		instruct.setEnabled(true);
 		setUpGridData(3,3);
 		updateAdapter();
 	}

@@ -44,6 +44,7 @@ public class StroopTest2Fragment extends Fragment {
 	private int playTimes = 0;
 	private TextView colourTextView;
 	private TextView wordTextView;
+	private Button instruct;
 	//color names
 	private String[] colourNames = new String[] {"Black","Red","Blue","Green", "Yellow","Orange", "Pink"};
 	//color values
@@ -94,6 +95,8 @@ public class StroopTest2Fragment extends Fragment {
 						match.setText(r.getString(R.string.match));
 						noMatch.setText(r.getString(R.string.no_match));
 						noMatch.setEnabled(true);
+						instruct.setEnabled(false);
+						instruct.setVisibility(View.GONE);
 						setTextViews();
 						results = new CorrectDurationInfo[maxChanges];
 						counter = 0;
@@ -130,6 +133,17 @@ public class StroopTest2Fragment extends Fragment {
 			}
 
 		});
+
+		instruct = (Button) view.findViewById(R.id.button_instruct);
+
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
+			}
+
+		});
 	}
 
 	private void endTest(Button match, Button noMatch) {
@@ -138,6 +152,8 @@ public class StroopTest2Fragment extends Fragment {
 		match.setText(r.getString(R.string.start));
 		noMatch.setText("");
 		noMatch.setEnabled(false);
+		instruct.setEnabled(true);
+		instruct.setVisibility(View.VISIBLE);
 		colourTextView.setText("");
 		wordTextView.setText("");
 		//get results

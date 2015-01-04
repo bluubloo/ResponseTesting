@@ -33,6 +33,7 @@ public class FingerTapTestFragment extends Fragment {
 	private static final String eventName = "Finger Tap Test";
 	private static final int seconds = 5; 
 	private Button startButton;
+	private Button instruct;
 	private TextView infoTextView;
 	private TextView clickCountTextView;
 	private TextView timeLeftTextView;
@@ -79,7 +80,7 @@ public class FingerTapTestFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 		outState.putInt("playTime", playTimes);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class FingerTapTestFragment extends Fragment {
 	private void setupTest(View view) {
 		//sets views
 		RelativeLayout clickable = (RelativeLayout) view.findViewById(R.id.tap_container);
-		startButton = (Button) view.findViewById(R.id.tap_click_start_button);
+		startButton = (Button) view.findViewById(R.id.button_start);
 		infoTextView = (TextView) clickable.findViewById(R.id.tap_click_info);
 		clickCountTextView = (TextView) clickable.findViewById(R.id.tap_click_count);
 		timeLeftTextView = (TextView) clickable.findViewById(R.id.tap_click_time);
@@ -139,11 +140,24 @@ public class FingerTapTestFragment extends Fragment {
 						running = !running;
 						infoTextView.setVisibility(View.VISIBLE);
 						playTimes++;
+						instruct.setEnabled(false);
+						startButton.setEnabled(false);
 					} else{
 						ActivityUtilities.displayResults(getActivity(), eventName,
 								"You have completed you daily 3 tries, please try a different test");
 					}
 				}
+			}
+
+		});
+
+		instruct = (Button) view.findViewById(R.id.button_instruct);
+
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
 			}
 
 		});
@@ -153,6 +167,8 @@ public class FingerTapTestFragment extends Fragment {
 	private void endTest() {		
 		if(running){
 			//resets views
+			startButton.setEnabled(true);
+			instruct.setEnabled(true);
 			timerHandler.removeCallbacks(timerRunnable);
 			startButton.setText(getResources().getString(R.string.restart));
 			infoTextView.setVisibility(View.INVISIBLE);

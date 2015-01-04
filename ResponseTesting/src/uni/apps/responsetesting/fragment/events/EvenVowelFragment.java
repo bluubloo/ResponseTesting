@@ -45,6 +45,7 @@ public class EvenVowelFragment extends Fragment {
 	//views
 	private Button yesButton;
 	private Button noButton;
+	private Button instruct;
 	private TextView evenTextView;
 	private TextView vowelTextView;
 
@@ -107,6 +108,17 @@ public class EvenVowelFragment extends Fragment {
 				checkAnswer(false);
 			}
 		});
+
+		instruct = (Button) view.findViewById(R.id.button_instruct);
+
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
+			}
+
+		});
 	}
 
 	private void startTest() {
@@ -120,6 +132,8 @@ public class EvenVowelFragment extends Fragment {
 		yesButton.setText(r.getString(R.string.yes));
 		noButton.setText(r.getString(R.string.no));
 		noButton.setEnabled(true);
+		instruct.setEnabled(false);
+		instruct.setVisibility(View.GONE);
 		switchText();
 	}
 
@@ -166,6 +180,8 @@ public class EvenVowelFragment extends Fragment {
 		yesButton.setText(r.getString(R.string.start));
 		noButton.setText("");
 		noButton.setEnabled(false);
+		instruct.setEnabled(true);
+		instruct.setVisibility(View.VISIBLE);
 		evenTextView.setText("");
 		evenTextView.setVisibility(View.INVISIBLE);
 		vowelTextView.setText("");

@@ -41,6 +41,7 @@ public class ChaseTestFragment extends Fragment {
 	private ChaseTestGridAdapter adapter;
 	private GridView grid;
 	private Button button;
+	private Button instruct;
 	private boolean running = false;
 	private int targetPos = 42;
 	private int userPos = 6;
@@ -81,7 +82,7 @@ public class ChaseTestFragment extends Fragment {
 			playTimes = savedInstanceState.getInt("playTime");
 		setRetainInstance(true);
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
@@ -115,7 +116,7 @@ public class ChaseTestFragment extends Fragment {
 	//set button clicks
 	private void setUpButtonClick(View view) {
 		final Resources r = getResources();
-		button = (Button) view.findViewById(R.id.chase_button);
+		button = (Button) view.findViewById(R.id.button_start);
 		button.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -124,21 +125,33 @@ public class ChaseTestFragment extends Fragment {
 				if(button.getText().toString().equals(r.getString(R.string.start))){
 					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 						//initalise test variables
-					button.setEnabled(false);
-					grid.setVisibility(View.VISIBLE);
-					running = true;
-					counter = 0;
-					targetPos = 42;
-					userPos = 6;
-					results = new ArrayList<Integer>();
-					//start timers
-					timerHandler.postDelayed(timerRunnable, 30 * 1000);
-					timerHandler.postDelayed(timerClicks, 1000);
+						button.setEnabled(false);
+						instruct.setEnabled(false);
+						grid.setVisibility(View.VISIBLE);
+						running = true;
+						counter = 0;
+						targetPos = 42;
+						userPos = 6;
+						results = new ArrayList<Integer>();
+						//start timers
+						timerHandler.postDelayed(timerRunnable, 30 * 1000);
+						timerHandler.postDelayed(timerClicks, 1000);
 					} else{
 						ActivityUtilities.displayResults(getActivity(), eventName,
 								"You have completed you daily 3 tries, please try a different test");
 					}
 				}
+			}
+
+		});
+
+		instruct = (Button) view.findViewById(R.id.button_instruct);
+
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
 			}
 
 		});
@@ -259,6 +272,7 @@ public class ChaseTestFragment extends Fragment {
 		grid.setVisibility(View.INVISIBLE);
 		adapter.reset();
 		button.setEnabled(true);
+		instruct.setEnabled(true);
 		//gets results
 		String result = getResults();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());

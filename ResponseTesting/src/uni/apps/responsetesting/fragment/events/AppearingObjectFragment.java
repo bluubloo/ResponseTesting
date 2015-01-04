@@ -41,6 +41,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 	private Handler timerHandler = new Handler();
 	private ImageView[] clickableImageView = new ImageView[5];
 	private Button start;
+	private Button instruct;
 	private DurationInfo[] data = new DurationInfo[5];
 	private int counter = 0;
 	private int imageCounter = 0;
@@ -138,7 +139,17 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		setUpImageClickEvents(view);
 
 		start = (Button) view.findViewById(R.id.button_start);
-		//RelativeLayout frame = (RelativeLayout) view.findViewById(R.id.appear_obj_container);
+		instruct = (Button) view.findViewById(R.id.button_instruct);
+		
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
+			}
+			
+		});
+
 		start.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -149,6 +160,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 					//check pay times
 					if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 						start.setEnabled(false);
+						instruct.setEnabled(false);
 						counter = 0;
 						running = !running;
 						//makes images invisible
@@ -225,6 +237,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 			//insert results to db
 			//displays results
 			start.setEnabled(true);
+			instruct.setEnabled(true);
 			counter = 0;
 			running = !running;
 			clickableImageView[imageCounter].setVisibility(View.INVISIBLE);

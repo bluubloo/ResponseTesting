@@ -222,9 +222,10 @@ public class Results {
 					fw.append(',');
 					fw.append(results.getString(1));
 					fw.append(',');
-					Calendar c = Calendar.getInstance();
+					/*Calendar c = Calendar.getInstance();
 					c.setTimeInMillis(results.getLong(2));
-					fw.append(c.getTime().toString());
+					fw.append(c.getTime().toString());*/
+					fw.append(Long.toString(results.getLong(2)));
 					fw.append(',');
 					fw.append(results.getString(4));
 					fw.append(',');
@@ -264,9 +265,10 @@ public class Results {
 			fw.append("\n");
 
 			if(quest.moveToFirst()){
-				Calendar c = Calendar.getInstance();
+			/*Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(quest.getLong(0));
-				fw.append(c.getTime().toString());
+				fw.append(c.getTime().toString());*/
+				fw.append(Long.toString(quest.getLong(0)));
 				fw.append(',');
 				fw.append(quest.getString(1));
 				fw.append(',');

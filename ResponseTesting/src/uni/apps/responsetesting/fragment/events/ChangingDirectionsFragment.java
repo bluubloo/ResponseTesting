@@ -47,6 +47,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 	private int centerIndex = 0;
 	//start button
 	private Button button;
+	private Button instruct;
 	//other variables used to measure test progress
 	private int counter = 0;
 	private int maxTurns = 10;
@@ -191,12 +192,22 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 	}
 
 	private void setUpButton(View view) {
-		button = (Button) view.findViewById(R.id.cd_button);
+		button = (Button) view.findViewById(R.id.button_start);
 		button.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				listener.onButtonClick();
+			}
+
+		});
+		instruct = (Button) view.findViewById(R.id.button_instruct);
+
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
 			}
 
 		});
@@ -211,6 +222,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 				results = new CorrectDurationInfo[maxTurns];
 				button.setText("");
 				button.setEnabled(false);
+				instruct.setEnabled(false);
 				counter = 0;
 				results[counter] = new CorrectDurationInfo(Calendar.getInstance().getTimeInMillis());
 				timeElapsed = 0;
@@ -229,6 +241,7 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		removeTimerCallbacks();
 		button.setText(getResources().getString(R.string.start));
 		button.setEnabled(true);
+		instruct.setEnabled(true);
 		clearImageViews();
 		//gets results
 		double[] results = Results.getResults(this.results);

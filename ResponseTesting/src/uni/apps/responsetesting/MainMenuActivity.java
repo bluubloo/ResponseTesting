@@ -159,8 +159,6 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		addFragments();
 	}
 
-
-
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		//alters action bar
@@ -194,10 +192,9 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		if(multi_name_frag == null || show){
 			//adds fragment to activity container
 			multi_name_frag = new MultiUserNameFragment();
-			frag_manager.beginTransaction().replace(R.id.main_menu_container, multi_name_frag, MULTI_NAME_TAG).commit();
 		}
+		frag_manager.beginTransaction().replace(R.id.main_menu_container, multi_name_frag, MULTI_NAME_TAG).commit();
 	}
-
 
 	private void startNotify() {
 		//gets alert time

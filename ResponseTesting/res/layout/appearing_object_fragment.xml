@@ -6,9 +6,9 @@
 
     <TextView
         android:id="@+id/appear_obj_title"
+        style="@style/title_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/title_style"
         android:text="@string/event_name_appear_obj"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -83,10 +83,27 @@
             android:visibility="invisible" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/button_start"
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start" />
+        android:layout_marginTop="10dp" >
+
+        <Button
+            android:id="@+id/button_start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/start"
+            style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
+            android:id="@+id/button_instruct"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/instructions"
+            style="?android:attr/buttonBarButtonStyle" />
+    </LinearLayout>
 
 </LinearLayout>

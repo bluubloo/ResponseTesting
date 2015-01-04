@@ -51,6 +51,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	private ImageView[] buttons;
 	private GridView grid;
 	private Button start;
+	private Button instruct;
 	private LinearLayout container;
 
 	private boolean running = false;
@@ -88,7 +89,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 		setRetainInstance(true);
 		setUpArrowInfo();
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
@@ -143,7 +144,16 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	private void setUpContainerClick(View view) {
 		//sets up container click event
 		start = (Button) view.findViewById(R.id.button_start);
-		
+		instruct = (Button) view.findViewById(R.id.button_instruct);
+
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
+			}
+
+		});
 		//RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.center_arrow_container);
 		start.setOnClickListener(new OnClickListener(){
 
@@ -208,6 +218,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 		if(!running){
 			if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 				start.setEnabled(false);
+				instruct.setEnabled(false);
 				start.setVisibility(View.GONE);
 				container.setVisibility(View.VISIBLE);
 				running = true;
@@ -285,7 +296,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 		moveToNext(time + waitTime);
 	}
 
-//move to next result position
+	//move to next result position
 	private void moveToNext(long l) {
 		counter ++;
 		if(counter < maxTurns)
@@ -296,6 +307,7 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 	private void endTest() {
 		//resets variables
 		start.setEnabled(true);
+		instruct.setEnabled(true);
 		start.setVisibility(View.VISIBLE);
 		container.setVisibility(View.GONE);
 		timerHandler.removeCallbacks(timerRunnable);

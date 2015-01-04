@@ -7,9 +7,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:text="@string/event_name_chase"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -24,21 +24,35 @@
             style="@style/title_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numColumns="7"
-            android:background="@color/Black"
             android:layout_centerInParent="true"
+            android:background="@color/Black"
             android:horizontalSpacing="1dp"
+            android:numColumns="7"
             android:verticalSpacing="1dp" >
         </GridView>
-
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/chase_button"
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginTop="10dp" >
+
+        <Button
+            android:id="@+id/button_start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/start"
+            style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
+            android:id="@+id/button_instruct"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/instructions"
+            style="?android:attr/buttonBarButtonStyle" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,8 +1,8 @@
 package uni.apps.responsetesting;
 
+import uni.apps.responsetesting.fragment.results.GraphListFragment;
 import uni.apps.responsetesting.fragment.results.ResultsFragment;
 import uni.apps.responsetesting.interfaces.listener.ResultsListener;
-import uni.apps.responsetesting.results.GraphListFragment;
 import uni.apps.responsetesting.results.Results;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;

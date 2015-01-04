@@ -42,6 +42,7 @@ public class OneCardLearningFragment extends Fragment {
 	private FrameLayout card;
 	private Button yesButton;
 	private Button noButton;
+	private Button instruct;
 	private ArrayList<Integer> seen;
 	private ArrayList<Integer> deck;
 	private Handler timerHandler = new Handler();
@@ -83,6 +84,17 @@ public class OneCardLearningFragment extends Fragment {
 		card = (FrameLayout) view.findViewById(R.id.one_card_container);
 		yesButton = (Button) view.findViewById(R.id.one_card_yes);
 		noButton = (Button) view.findViewById(R.id.one_card_no);
+
+		instruct = (Button) view.findViewById(R.id.button_instruct);
+
+		instruct.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				ActivityUtilities.eventInfo(eventName, getActivity());
+			}
+
+		});
 		setUpClicks();
 
 		return view;
@@ -105,6 +117,8 @@ public class OneCardLearningFragment extends Fragment {
 						playTimes++;
 						noButton.setText(r.getString(R.string.no));
 						noButton.setEnabled(true);
+						instruct.setEnabled(false);
+						instruct.setVisibility(View.GONE);
 						yesButton.setText(r.getString(R.string.yes));
 						resetResults();
 						changeToNextCard();			
@@ -148,7 +162,7 @@ public class OneCardLearningFragment extends Fragment {
 		timerHandler.postDelayed(timerRunnable, 500);
 	}
 
-	
+
 	private void updateResults(boolean button){
 		//gets result value
 		results[counter] = CardOperations.checkCard(deck.get(counter), seen, button);
@@ -165,7 +179,7 @@ public class OneCardLearningFragment extends Fragment {
 	private void changeToBlankBackground(){
 		card.setBackground(null);
 	}
-	
+
 	//ends the test
 	private void endTest() {
 		//reset varaibles
@@ -174,6 +188,8 @@ public class OneCardLearningFragment extends Fragment {
 		noButton.setText("");
 		noButton.setEnabled(false);
 		yesButton.setText(r.getString(R.string.start));
+		instruct.setEnabled(true);
+		instruct.setVisibility(View.VISIBLE);
 		counter = 0;
 		running = !running;
 		//gets results
