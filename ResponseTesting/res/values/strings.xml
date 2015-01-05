@@ -35,7 +35,6 @@
     <string name="group_icon">GroupIcon</string>
     <string name="tries">Tries</string>
     <string name="all_scores">AllEventScores</string>
-    
 
     <!-- Action Bar Strings -->
     <string name="action_settings">Settings</string>
@@ -114,12 +113,12 @@
     <string name="setup_mode_user_title">Multi User Settings</string>
     <string name="setup_mode_add">Add New User</string>
     <string name="setup_mode_remove">Remove User(s)</string>
-     <string name="setup_mode_user_single">Single User</string>
+    <string name="setup_mode_user_single">Single User</string>
     <string name="setup_mode_user_multi">Multi User</string>
-     <string name="setup_mode_groups">Groups and Users</string>
-     <string name="setup_mode_group_name_hint">Group Name</string>
-     <string name="setup_mode_default_user_name_single">Single</string>
-    
+    <string name="setup_mode_groups">Groups and Users</string>
+    <string name="setup_mode_group_name_hint">Group Name</string>
+    <string name="setup_mode_default_user_name_single">Single</string>
+
     <!-- Preference Catageroy Strings -->
     <string name="settings_cat_event">Event Settings</string>
     <string name="settings_cat_results">Results Settings</string>
@@ -127,7 +126,7 @@
     <string name="settings_cat_email">Email</string>
     <string name="settings_cat_other">Other</string>
     <string name="settings_cat_user">User Info</string>
-    
+
     <!-- Preference Title Strings -->
     <string name="settings_title_instruct">Show Instructions Page</string>
     <string name="settings_title_user">User Mode</string>
@@ -137,7 +136,7 @@
     <string name="settings_title_remind">Enable Reminders</string>
     <string name="settings_title_sleep">Show Light/Sound Sleep</string>
     <string name="settings_title_user_name">Username</string>
-    
+
     <!-- Preference Summary Strings -->
     <string name="settings_sum_instruct">Enable/Disable the event\ninstructions page</string>
     <string name="settings_sum_user">Select User Mode</string>
@@ -148,7 +147,7 @@
     <string name="settings_sum_remind">Enable/Disable Reminders</string>
     <string name="settings_sum_sleep">Enable/Disable Light/Sound\nSleep Durations</string>
     <string name="settings_sum_user_name">Set Username</string>
-    
+
     <!-- Preference Key Strings -->
     <string name="pref_key_instruct">pref_event_show_instruct</string>
     <string name="pref_key_user">pref_event_user</string>
@@ -162,7 +161,7 @@
     <string name="pref_key_alert_next">pref_next_alarm</string>
     <string name="pref_key_sleep">pref_next_sleep</string>
     <string name="pref_key_user_name">pref_next_user_name</string>
-    
+
     <!-- Preference Key Strings for Single User Mode Tests -->
     <string name="pref_key_ao">pref_event_show_ao</string>
     <string name="pref_key_aof">pref_event_show_aof</string>
@@ -175,9 +174,13 @@
     <string name="pref_key_oclt">pref_event_show_oclt</string>
     <string name="pref_key_pr">pref_event_show_pr</string>
     <string name="pref_key_s">pref_event_show_s</string>
-    
-    
+
     <!-- Other Settings Strings -->
     <string name="settings_time_default">9:00</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_section1">Attention</string>
+    <string name="title_section2">Memory</string>
+    <string name="title_section3">Motor Function</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

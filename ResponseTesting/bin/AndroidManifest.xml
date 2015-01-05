@@ -22,67 +22,80 @@
             android:name=".MainMenuActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainMenuActivityTabbed" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uni.apps.responsetesting.MainMenuActivityTabbed" />
+        </activity>
+        <activity
+            android:name=".EventActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_event"
+            android:parentActivityName=".MainMenuActivityTabbed"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustPan|adjustResize" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uni.apps.responsetesting.MainMenuActivityTabbed" />
+        </activity>
+        <activity
+            android:name=".ResultsDisplayActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_results_display"
+            android:parentActivityName=".MainMenuActivityTabbed"
             android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uni.apps.responsetesting.MainMenuActivityTabbed" />
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainMenuActivityTabbed"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uni.apps.responsetesting.MainMenuActivityTabbed" />
+        </activity>
+        <activity
+            android:name=".SetupModeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_setup_mode"
+            android:parentActivityName=".MainMenuActivityTabbed"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uni.apps.responsetesting.MainMenuActivityTabbed" />
+        </activity>
+        <activity
+            android:name=".MultiUserSetupModeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_setup_mode"
+            android:parentActivityName=".MainMenuActivityTabbed"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uni.apps.responsetesting.MainMenuActivityTabbed" />
+        </activity>
+
+        <service android:name=".reminders.ScheduleService" >
+        </service>
+        <service android:name=".reminders.NotifyService" >
+        </service>
+
+        <activity
+            android:name=".MainMenuActivityTabbed"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".EventActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_event"
-            android:parentActivityName=".MainMenuActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateUnchanged|adjustPan|adjustResize" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uni.apps.responsetesting.MainMenuActivity" />
-        </activity>
-        <activity
-            android:name=".ResultsDisplayActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_results_display"
-            android:parentActivityName=".MainMenuActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uni.apps.responsetesting.MainMenuActivity" />
-        </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainMenuActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uni.apps.responsetesting.MainMenuActivity" />
-        </activity>
-        <activity
-            android:name=".SetupModeActivity"
-            android:label="@string/title_activity_setup_mode"
-            android:parentActivityName=".MainMenuActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uni.apps.responsetesting.MainMenuActivity" />
-        </activity>
-        <activity
-            android:name=".MultiUserSetupModeActivity"
-            android:label="@string/title_activity_setup_mode"
-            android:parentActivityName=".MainMenuActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uni.apps.responsetesting.MainMenuActivity" />
-        </activity>
-        
-        <service android:name=".reminders.ScheduleService"></service>
-        <service android:name=".reminders.NotifyService"></service>
     </application>
 
 </manifest>
