@@ -48,6 +48,11 @@
     <string name="action_switch">Switch Users</string>
     <string name="action_home">Go to Main Menu</string>
 
+    <!-- Main Menu Strings -->
+    <string name="title_section1">Attention</string>
+    <string name="title_section2">Memory</string>
+    <string name="title_section3">Motor Function</string>
+
     <!-- Finger Tap Test Strings -->
     <string name="tap_click_info_3">Keep on Tapping</string>
     <string name="tap_click_info_count">Tap Count: 0</string>
@@ -136,6 +141,7 @@
     <string name="settings_title_remind">Enable Reminders</string>
     <string name="settings_title_sleep">Show Light/Sound Sleep</string>
     <string name="settings_title_user_name">Username</string>
+    <string name="settings_title_theme">Change Theme</string>
 
     <!-- Preference Summary Strings -->
     <string name="settings_sum_instruct">Enable/Disable the event\ninstructions page</string>
@@ -161,6 +167,7 @@
     <string name="pref_key_alert_next">pref_next_alarm</string>
     <string name="pref_key_sleep">pref_next_sleep</string>
     <string name="pref_key_user_name">pref_next_user_name</string>
+    <string name="pref_key_theme">pref_theme</string>
 
     <!-- Preference Key Strings for Single User Mode Tests -->
     <string name="pref_key_ao">pref_event_show_ao</string>
@@ -177,10 +184,5 @@
 
     <!-- Other Settings Strings -->
     <string name="settings_time_default">9:00</string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="title_section1">Attention</string>
-    <string name="title_section2">Memory</string>
-    <string name="title_section3">Motor Function</string>
-    <string name="hello_world">Hello world!</string>
 
 </resources>

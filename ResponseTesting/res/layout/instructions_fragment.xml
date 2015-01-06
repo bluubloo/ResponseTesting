@@ -51,14 +51,14 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
 
                 <ImageView
                     android:id="@+id/large_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginTop="5dp"
                     android:contentDescription="@string/image_descript" />
             </RelativeLayout>
         </LinearLayout>
@@ -67,7 +67,8 @@
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <Button
             android:id="@+id/instruct_back"

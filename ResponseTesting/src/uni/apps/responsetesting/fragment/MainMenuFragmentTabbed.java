@@ -16,21 +16,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * This fragment holds the information used to display the ui in the main menu page viewer
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class MainMenuFragmentTabbed extends Fragment {
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
 		/**
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
 		private static final String ARG_SECTION_NUMBER = "section_number";
-		private static final String TAG = "PlaceholderFragment";
+		//variables
+		private static final String TAG = "MainMenuFragmentTabbed";
 		private MainMenuListener listener;
 		private static String multiUserSettings = "";
 		private static String userId = "";
@@ -57,14 +62,6 @@ public class MainMenuFragmentTabbed extends Fragment {
 			super.onCreate(savedInstanceState);
 			setRetainInstance(true);
 		}
-		
-		@Override
-		public void onResume() {
-			super.onResume();
-			if(adapter != null)
-				adapter.notifyDataSetChanged();
-			Log.d(TAG, "onResume");
-		}
 
 		@Override
 		public void onAttach(Activity activity) {
@@ -81,13 +78,20 @@ public class MainMenuFragmentTabbed extends Fragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			//creates view
 			View rootView = inflater.inflate(R.layout.fragment_test, container,
 					false);
+			//gets sub views
 			TextView title = (TextView) rootView.findViewById(R.id.section_title);
+			ImageView image = (ImageView) rootView.findViewById(R.id.section_image);
+			//sets sub view data
 			int i = (int) getArguments().get(ARG_SECTION_NUMBER);
 			title.setText(getTitle(i));
+			image.setBackground(getResources().getDrawable(getImage(i)));
+			//gets list of tests
 			String[] listS = getList(i);
 			adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listS);
+			//gets listview and sets its data
 			listV = (ListView) rootView.findViewById(R.id.section_list);
 			listV.setAdapter(adapter);
 			listV.setOnItemClickListener(new OnItemClickListener(){
@@ -95,6 +99,7 @@ public class MainMenuFragmentTabbed extends Fragment {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
+					//moves to new activity
 					TextView text = (TextView) view.findViewById(android.R.id.text1);
 					listener.OnMenuItemClick(text.getText().toString());
 				}
@@ -103,6 +108,20 @@ public class MainMenuFragmentTabbed extends Fragment {
 			return rootView;
 		}
 		
+		//gets image id
+		private int getImage(int position) {
+			switch (position - 1) {
+			case 0:
+				return R.drawable.attention;
+			case 1:
+				return R.drawable.memory;
+			case 2:
+				return R.drawable.motor;
+			}
+			return R.drawable.uni_logo;
+		}
+
+		//gets lists of tests
 		private String[] getList(int position) {
 			switch (position - 1) {
 			case 0:
@@ -115,11 +134,14 @@ public class MainMenuFragmentTabbed extends Fragment {
 			return null;
 		}
 
+		//checks list of tests for playable
 		private String[] checkList(String[] stringArray) {
+			//get user id
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 			userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 			Resources r = getResources();
 			ArrayList<String> list = new ArrayList<String>();
+			//gets data from database
 			DatabaseHelper db = DatabaseHelper.getInstance(getActivity(), getResources());
 			for(String s: stringArray){
 				boolean addable = true;
@@ -139,17 +161,21 @@ public class MainMenuFragmentTabbed extends Fragment {
 			return tmp;
 		}
 
+		//checks preferencs
 		private boolean checkPreferences(String name) {
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 			boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);
+			//checks user mode
 			if(single)
 				return checkSinglePrefereneces(prefs, getResources(), name);
 			else
 				return checkMultiUserPrferences(getResources(), name);
 		}
 
+		//checks multi user mode settings
 		private boolean checkMultiUserPrferences(Resources resources,
 				String name) {
+			//gets settings string
 			multiUserSettings = DatabaseHelper.getInstance(getActivity(), resources).
 					getMultiSettingsString(userId);
 					//gets setting value
@@ -179,6 +205,7 @@ public class MainMenuFragmentTabbed extends Fragment {
 			return -1;
 		}
 
+		//checks single user mode preferences
 		private boolean checkSinglePrefereneces(SharedPreferences prefs,
 				Resources r, String name) {
 			switch(name){
@@ -209,6 +236,7 @@ public class MainMenuFragmentTabbed extends Fragment {
 			}
 		}
 
+		//gets section title
 		private String getTitle(int position){
 			switch (position - 1) {
 			case 0:

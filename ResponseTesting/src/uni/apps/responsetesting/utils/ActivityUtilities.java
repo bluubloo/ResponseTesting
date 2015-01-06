@@ -164,5 +164,24 @@ public class ActivityUtilities {
 		String userId = prefs.getString(activity.getResources().getString(R.string.pref_key_user_id), "single");
 		return times < 3 && db.checkRecent(eventName, userId);
 	}
+	
+	public static void changeTheme(Activity activity){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), "Default");
+		switch(theme){
+		case "Default":
+			activity.getApplicationContext().setTheme(R.style.AppTheme);
+			break;
+		case "Magic":
+			activity.getApplicationContext().setTheme(R.style.MagicTheme);
+			break;
+		case "Forestry":
+			activity.getApplicationContext().setTheme(R.style.ForestryTheme);
+			break;
+		default:
+			activity.getApplicationContext().setTheme(R.style.AppTheme);
+			break;
+		}
+	}
 
 }

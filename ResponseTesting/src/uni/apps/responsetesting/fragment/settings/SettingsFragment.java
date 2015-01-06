@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 
 
@@ -41,6 +43,7 @@ public class SettingsFragment extends Fragment {
 	private RadioButton single;
 	private RadioButton multi;
 	private TimePicker time;
+	private Spinner themes;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -109,7 +112,22 @@ public class SettingsFragment extends Fragment {
 		if(!reminder)
 			time.setEnabled(false);
 		
-		
+		//set up spinner for themes
+		themes = (Spinner) view.findViewById(R.id.settings_theme);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+				R.array.theme_names, android.R.layout.simple_spinner_item);
+		themes.setAdapter(adapter);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		String theme = prefs.getString(r.getString(R.string.pref_key_theme), "Default");
+		int j = 0;
+		for(int i = 0; i < adapter.getCount(); i ++){
+			String s = (String) adapter.getItem(i);
+			if(theme.equals(s)){
+				j = i;
+				break;
+			}
+		}
+		themes.setSelection(j);
 	}
 
 	//set submit button
@@ -137,6 +155,7 @@ public class SettingsFragment extends Fragment {
 		edit.putBoolean(r.getString(R.string.pref_key_sleep), sleep.isChecked());
 		edit.putBoolean(r.getString(R.string.pref_key_user), single.isChecked());
 		edit.putString(r.getString(R.string.pref_key_alert), getTime());
+		edit.putString(r.getString(R.string.pref_key_theme), (String) themes.getSelectedItem());
 		edit.commit();
 		//return to main menu
 		getActivity().onBackPressed();

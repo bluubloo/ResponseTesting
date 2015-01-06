@@ -30,9 +30,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+
+/**
+ * This activity handles the main menu and multi user selection 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class MainMenuActivityTabbed extends Activity implements ActionBar.TabListener, MainMenuListener {
 
-	private static final String TAG = "TestActivity";
+	private static final String TAG = "MainMenuActivityTabbed";
 
 
 	/**
@@ -49,6 +56,8 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	
+	//variables for the alarm
 	private AlertClient alertClient;
 	private Handler timerHandler = new Handler();
 
@@ -67,11 +76,11 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ActivityUtilities.changeTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test);
 
 		PreferenceManager.setDefaultValues(this, R.xml.all_settings, true);
-		//frag_manager = this.getFragmentManager();
 		//checks the user mode
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);
@@ -127,9 +136,12 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 			// this tab is selected.
 			actionBar.addTab(actionBar.newTab()
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
+					//.setIcon(getImageIcon(i))
 					.setTabListener(this));
 		}
 	}
+
+
 
 	@Override
 	protected void onStop(){
@@ -157,7 +169,7 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 			editor.commit();
 		} else if(!single && id.equals("single"))
 			startSession();
-
+		//updates main menu
 			mViewPager.getAdapter().notifyDataSetChanged();
 	}
 
@@ -234,6 +246,7 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 
 		@Override
 		public CharSequence getPageTitle(int position) {
+			//gets the tab title
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
@@ -250,6 +263,8 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 		public int getItemPosition(Object object) {
 			return POSITION_NONE;
 		}
+		
+		
 	}
 
 
@@ -272,9 +287,12 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 	}
 
 	private void startSession() {
+		//creates list adapter
 		final MultiUserNameListAdapter adapter = new MultiUserNameListAdapter(setUpList(), this);
 
+		//creates dialog builder
 		AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+		//sets dialog details
 		builderSingle.setIcon(R.drawable.uni_logo);
 		builderSingle.setTitle("Select One Name:-");
 
@@ -292,17 +310,18 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				//gets user info
 				MultiUserInfo info = (MultiUserInfo) adapter.getItem(which);
 				OnMultiUserClick(info.getId());
+				//uodates main muenu
 				if(mViewPager == null)
 					setUpPage();
 				else
 					mViewPager.getAdapter().notifyDataSetChanged();
 			}
 		});
+		//shows dialog
 		builderSingle.show();
-
-
 	}
 
 	private MultiUserInfo[] setUpList() {
@@ -382,4 +401,20 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 		alertClient = new AlertClient(this);
 		alertClient.doBindService();
 	}
+	
+	/*private Drawable getImageIcon(int position) {
+		return getResources().getDrawable(getIcon(position));
+	}
+	
+	private int getIcon(int position) {
+		switch (position) {
+		case 0:
+			return R.drawable.attention;
+		case 1:
+			return R.drawable.memory;
+		case 2:
+			return R.drawable.motor;
+		}
+		return R.drawable.uni_logo;
+	}*/
 }

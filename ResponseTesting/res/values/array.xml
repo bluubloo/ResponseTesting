@@ -90,4 +90,9 @@
     <string-array name="group_image_names">
         <item>Uni Logo</item>
     </string-array>
+    <string-array name="theme_names">
+        <item>Default</item>
+        <item>Magic</item>
+        <item>Forestry</item>
+    </string-array>
 </resources>
