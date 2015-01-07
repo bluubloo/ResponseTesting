@@ -167,7 +167,8 @@ public class ActivityUtilities {
 	
 	public static void changeTheme(Activity activity){
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-		String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), "Default");
+		String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), 
+				activity.getResources().getString(R.string.settings_theme_default));
 		switch(theme){
 		case "Default":
 			activity.setTheme(R.style.AppTheme);
@@ -182,6 +183,22 @@ public class ActivityUtilities {
 			activity.setTheme(R.style.AppTheme);
 			break;
 		}
+	}
+	
+	public static void changeActionBarIcon(Activity activity){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), 
+				activity.getResources().getString(R.string.settings_theme_default));
+		int imageId = 0;
+		if(theme.equals("Default"))
+			imageId = R.drawable.uni_logo;
+		else if(theme.equals("Magic"))
+			imageId = R.drawable.ic_menu_magic;
+		else if(theme.equals("Forestry"))
+			imageId = R.drawable.ic_menu_forestry;
+		else
+			imageId = R.drawable.uni_logo;
+		activity.getActionBar().setIcon(activity.getResources().getDrawable(imageId));
 	}
 
 }

@@ -4,20 +4,23 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <!--
+         <TextView
         android:id="@+id/instruct_title"
         style="@style/title_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/instructions"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentStart="true" />
+    -->
 
     <TextView
         android:id="@+id/instruct_event_name"
+        style="@style/title_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -35,20 +38,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-              >
-
-            <TextView
-                android:id="@+id/instuct_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Gallery
-                android:id="@+id/gallery"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -60,9 +50,21 @@
                     android:id="@+id/webView1"
                     android:layout_width="270dp"
                     android:layout_height="370dp"
-                    android:background="@android:color/transparent"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerHorizontal="true"
+                    android:background="@android:color/transparent" />
             </RelativeLayout>
+
+            <Gallery
+                android:id="@+id/gallery"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/instuct_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
     </ScrollView>
 

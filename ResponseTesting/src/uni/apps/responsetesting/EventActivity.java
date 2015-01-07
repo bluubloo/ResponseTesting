@@ -46,6 +46,7 @@ public class EventActivity extends Activity implements EventInstructionsListener
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ActivityUtilities.changeTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event);
 		//gets fragment manager
@@ -132,6 +133,7 @@ public class EventActivity extends Activity implements EventInstructionsListener
 		//adds event name to actionbar subtitle
 		ActionBar a = getActionBar();
 		a.setSubtitle(eventName);
+		ActivityUtilities.changeActionBarIcon(this);
 		return true;
 	}
 

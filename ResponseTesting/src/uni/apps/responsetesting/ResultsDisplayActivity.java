@@ -28,6 +28,7 @@ public class ResultsDisplayActivity extends Activity implements ResultsListener{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ActivityUtilities.changeTheme(this);
 		super.onCreate(savedInstanceState);
 		//set layout, fragment manager and fragment
 		setContentView(R.layout.activity_results_display);
@@ -57,6 +58,7 @@ public class ResultsDisplayActivity extends Activity implements ResultsListener{
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.action_bar, menu);
+		ActivityUtilities.changeActionBarIcon(this);
 		return true;
 	}
 

@@ -25,6 +25,7 @@ public class SettingsActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ActivityUtilities.changeTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		//sets up settings fragment
@@ -37,6 +38,7 @@ public class SettingsActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.action_bar, menu);
+		ActivityUtilities.changeActionBarIcon(this);
 		return true;
 	}
 

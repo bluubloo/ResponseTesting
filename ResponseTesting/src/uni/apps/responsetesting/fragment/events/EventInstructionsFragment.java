@@ -10,6 +10,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -45,13 +46,12 @@ public class EventInstructionsFragment extends Fragment {
 	private int counter = 0;
 	private EventInstructionsListener listener;
 
-	//TODO add final image files
 	//NOTE: below array need to be in the same order as the event name list
 	private static final int[] finalThumbnailIds = new int[] {R.drawable.appearingobject1_small,
 		R.drawable.arrowignoring1_small, R.drawable.changingdirections1_small, R.drawable.changingdirections2_small, 
 		R.drawable.chasetest1_small, R.drawable.evenorvowel1_small, R.drawable.evenorvowel2_small,
-		R.drawable.tmp_thumb, R.drawable.monkeyladder1_small, R.drawable.onecardlearningtest1_small,
-		R.drawable.patternrecreation1_small, R.drawable.tmp_thumb, R.drawable.tmp_thumb2};
+		R.drawable.fingertaptest1_small, R.drawable.monkeyladder1_small, R.drawable.onecardlearningtest1_small,
+		R.drawable.patternrecreation1_small, R.drawable.strooptest1_small, R.drawable.strooptest2_small};
 	private int[] thumbnails;
 
 	private Gallery gallery;
@@ -93,7 +93,7 @@ public class EventInstructionsFragment extends Fragment {
 		setUpButtons(view);
 		
 		web = (WebView) view.findViewById(R.id.webView1);
-		
+		web.setBackgroundColor(Color.TRANSPARENT);
 		//set up images for instructions
 		gallery = (Gallery) view.findViewById(R.id.gallery);
 		
@@ -205,7 +205,6 @@ public class EventInstructionsFragment extends Fragment {
 
 		//gets sub list according to position in list
 		if(j != -1 || j != 0){
-			//TODO alter min max positions
 			switch(j){
 			case 1:
 			case 2:
@@ -227,7 +226,7 @@ public class EventInstructionsFragment extends Fragment {
 			case 10:
 				return getSnipit(10, 10, ids);
 			case 11:
-				return getSnipit(11, 11, ids);
+				return getSnipit(11, 12, ids);
 			}
 		}
 		return new int[0];

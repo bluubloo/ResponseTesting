@@ -32,12 +32,12 @@
         <item>You are the blue square.\n\nYou can move 1 square at time vertically or horizontally. (You cannot move diagonally)\n\n
             The goal is to chase after the red square for 30s or till you catch them. </item>
         <item>Click on yes if:\n - The top boxes number is even.\n - The bottom boxes letter is a vowel.\n\nOtherwise click no. </item>
-        <item>Tap space above as many times as possible within 5 seconds.</item>
+        <item>Tap as many times as possible within 5 seconds.</item>
         <item>You will see a 5x5 grid contain several green sqaures.\nEach square contains a number, memorise these.\nAfter a short amount of time
              the numbers will disappear.\nClick on the green squares in sequential order.\nGetting a error will set you back one square, 3 errors will end the test.</item>
         <item>Press yes if the card has been shown before, no if it has not. \nThere will twenty cards</item>
         <item>Recreate the shown pattern as fast as you can.\nFor each pattern you can make 3 errors. </item>
-        <item>If the text colour of the top word matches the word colour below, press Match.\nIf not press No Match.</item>
+        <item>If the text colour of the top word matches the text meaning below, press Match.\nIf not press No Match.</item>
     </string-array>
     <string-array name="event_name_array_noq">
         <item>Appearing Object</item>

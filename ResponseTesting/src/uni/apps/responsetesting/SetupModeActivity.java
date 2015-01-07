@@ -18,6 +18,7 @@ public class SetupModeActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ActivityUtilities.changeTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setup_mode);
 		//adds fragment
@@ -30,6 +31,7 @@ public class SetupModeActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.action_bar, menu);
+		ActivityUtilities.changeActionBarIcon(this);
 		return true;
 	}
 

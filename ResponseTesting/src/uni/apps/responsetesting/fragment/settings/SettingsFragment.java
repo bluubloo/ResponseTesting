@@ -118,7 +118,8 @@ public class SettingsFragment extends Fragment {
 				R.array.theme_names, android.R.layout.simple_spinner_item);
 		themes.setAdapter(adapter);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		String theme = prefs.getString(r.getString(R.string.pref_key_theme), "Default");
+		String theme = prefs.getString(r.getString(R.string.pref_key_theme),
+				r.getString(R.string.settings_theme_default));
 		int j = 0;
 		for(int i = 0; i < adapter.getCount(); i ++){
 			String s = (String) adapter.getItem(i);

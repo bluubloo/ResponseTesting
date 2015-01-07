@@ -179,6 +179,7 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 		getMenuInflater().inflate(R.menu.action_bar, menu);
 		ActionBar a = getActionBar();
 		a.setSubtitle(getResources().getString(R.string.main_menu));
+		ActivityUtilities.changeActionBarIcon(this);
 		return true;
 	}
 

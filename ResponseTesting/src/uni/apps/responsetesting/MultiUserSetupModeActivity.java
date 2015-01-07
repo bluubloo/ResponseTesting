@@ -23,6 +23,7 @@ public class MultiUserSetupModeActivity extends Activity implements MultiUserSet
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ActivityUtilities.changeTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_multi_user_setup_mode);
 		//set variable
@@ -50,6 +51,7 @@ public class MultiUserSetupModeActivity extends Activity implements MultiUserSet
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.action_bar, menu);
+		ActivityUtilities.changeActionBarIcon(this);
 		return true;
 	}
 
