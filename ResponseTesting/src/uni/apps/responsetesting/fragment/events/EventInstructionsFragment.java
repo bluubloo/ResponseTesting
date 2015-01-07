@@ -1,5 +1,7 @@
 package uni.apps.responsetesting.fragment.events;
 
+import java.util.Locale;
+
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.interfaces.listener.EventInstructionsListener;
 import uni.apps.responsetesting.utils.ActivityUtilities;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -43,21 +46,17 @@ public class EventInstructionsFragment extends Fragment {
 	private EventInstructionsListener listener;
 
 	//TODO add final image files
-	//NOTE: below two arrays need to be in the same order as the event name list
-	private static final int[] finalImageIds = new int[] {R.drawable.tmp1, R.drawable.tmp2, R.drawable.tmp3,
-		R.drawable.tmp4, R.drawable.tmp5, R.drawable.card_club_1, R.drawable.card_club_2, 
-		R.drawable.card_club_3, R.drawable.card_club_4, R.drawable.card_club_5,	R.drawable.card_club_6,
-		R.drawable.card_club_7, R.drawable.card_club_8, R.drawable.card_club_9};
-	private static final int[] finalThumbnailIds = new int[] {R.drawable.tmp_thumb, R.drawable.tmp_thumb2,
-		R.drawable.tmp_thumb, R.drawable.tmp_thumb2, R.drawable.tmp_thumb, R.drawable.tmp_thumb2,
-		R.drawable.tmp_thumb, R.drawable.tmp_thumb2, R.drawable.tmp_thumb, R.drawable.tmp_thumb2,	
-		R.drawable.tmp_thumb, R.drawable.tmp_thumb2, R.drawable.tmp_thumb, R.drawable.tmp_thumb2};
-	private int[] imageIds;
+	//NOTE: below array need to be in the same order as the event name list
+	private static final int[] finalThumbnailIds = new int[] {R.drawable.appearingobject1_small,
+		R.drawable.arrowignoring1_small, R.drawable.changingdirections1_small, R.drawable.changingdirections2_small, 
+		R.drawable.chasetest1_small, R.drawable.evenorvowel1_small, R.drawable.evenorvowel2_small,
+		R.drawable.tmp_thumb, R.drawable.monkeyladder1_small, R.drawable.onecardlearningtest1_small,
+		R.drawable.patternrecreation1_small, R.drawable.tmp_thumb, R.drawable.tmp_thumb2};
 	private int[] thumbnails;
 
 	private Gallery gallery;
-	private ImageView largeImage;
-	public int biggerImageAtPosition;
+	private WebView web;
+	private int currentImageNum = 1;
 
 
 	public EventInstructionsFragment(){}
@@ -76,11 +75,7 @@ public class EventInstructionsFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		eventName = this.getArguments().getString(getResources().getString(R.string.event_name));	
-		//TODO
-		//imageIds = getImages(finalImageIds);
-		//thumbnails = getImages(finalThumbnailIds);
-		thumbnails = finalThumbnailIds;
-		imageIds = finalImageIds;
+		thumbnails = getImages(finalThumbnailIds);
 	}
 
 	@Override
@@ -97,44 +92,67 @@ public class EventInstructionsFragment extends Fragment {
 		eventNameTextView.setText(eventName);
 		setUpButtons(view);
 		
+		web = (WebView) view.findViewById(R.id.webView1);
+		
 		//set up images for instructions
-		largeImage = (ImageView) view.findViewById(R.id.large_image);
 		gallery = (Gallery) view.findViewById(R.id.gallery);
 		
 		if(eventName.equals("Questionaire")){
 			//gets rid of images for questionaire
-			largeImage.setVisibility(View.GONE);
 			gallery.setVisibility(View.GONE);
+			web.setVisibility(View.GONE);
 		} else{
 			//sets image adpaters and values
-			largeImage.setBackground(getResources().getDrawable(imageIds[counter]));
+			setWebImage(currentImageNum);
 			gallery.setAdapter(new ImageAdapter(getActivity()));
 			gallery.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					largeImage.setBackground(getResources().getDrawable(imageIds[position]));
 					counter = position;
 					((ImageAdapter) gallery.getAdapter()).makeBigger(position);
+					setWebImage(counter + 1);
 				}
 
 			});
 			
 			//swipe detector
 			final GestureDetector gdt = new GestureDetector(getActivity(), new GestureListener());
-			largeImage.setOnTouchListener(new OnTouchListener(){
-
+			
+			web.setOnTouchListener(new OnTouchListener(){
+				
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 					gdt.onTouchEvent(event);
 					v.performClick();
 					return true;
 				}
-
+				
 			});
 		}
 		return view;
+	}
+	
+	private void setWebImage(int i){
+		web.loadDataWithBaseURL("file:///android_res/drawable/", "<img src='" + getImageName(i) + "' />", 
+				"text/html", "utf-8", null);
+	}
+
+	private String getImageName(int i) {
+		String name;
+		Locale l = Locale.getDefault();
+		if(eventName.equals(getResources().getString(R.string.event_name_appear_obj_fixed)))
+			name = getResources().getString(R.string.event_name_appear_obj);
+		else
+			name = eventName;
+		String start = "";
+		for(char c : name.toCharArray())
+			if(c != ' ')
+				start += c;
+		String file = start.toLowerCase(l) + i + ".gif";
+		Log.d(TAG, file);
+		return file;
 	}
 
 	@Override
@@ -191,25 +209,25 @@ public class EventInstructionsFragment extends Fragment {
 			switch(j){
 			case 1:
 			case 2:
-				return getSnipit(0, 1, ids);
+				return getSnipit(0, 0, ids);
 			case 3:
-				return getSnipit(2, 3, ids);
+				return getSnipit(1, 1, ids);
 			case 4:
-				return getSnipit(4, 5, ids);
+				return getSnipit(2, 3, ids);
 			case 5:
-				return getSnipit(6, 7, ids);
+				return getSnipit(4, 4, ids);
 			case 6:
-				return getSnipit(8, 9, ids);
+				return getSnipit(5, 6, ids);
 			case 7:
-				return getSnipit(10, 11, ids);
+				return getSnipit(7, 7, ids);
 			case 8:
-				return getSnipit(12, 13, ids);
+				return getSnipit(8, 8, ids);
 			case 9:
-				return getSnipit(14, 15, ids);
+				return getSnipit(9, 9, ids);
 			case 10:
-				return getSnipit(16, 17, ids);
+				return getSnipit(10, 10, ids);
 			case 11:
-				return getSnipit(18, 19, ids);
+				return getSnipit(11, 11, ids);
 			}
 		}
 		return new int[0];
@@ -217,7 +235,7 @@ public class EventInstructionsFragment extends Fragment {
 
 	//gets subset of images
 	private int[] getSnipit(int i, int j, int[] ids) {
-		int[] tmp = new int[j - i];
+		int[] tmp = new int[j - i + 1];
 		for(int n = i, k = 0; n <= j; n++, k++)
 			tmp[k] = ids[n];
 		return tmp;
@@ -297,7 +315,7 @@ public class EventInstructionsFragment extends Fragment {
 		//checks direction going in
 		if(up){
 			//checks array bounds
-			if(counter < imageIds.length - 1){
+			if(counter < thumbnails.length - 1){
 				//increments counter
 				counter += 1;
 				return alterImageCommon();
@@ -316,9 +334,9 @@ public class EventInstructionsFragment extends Fragment {
 	//alters image displayed
 	//sets new image, gallery selection and new center gallery value
 	private boolean alterImageCommon(){
-		largeImage.setBackground(getResources().getDrawable(imageIds[counter]));
 		gallery.setSelection(counter);
 		((ImageAdapter) gallery.getAdapter()).makeBigger(counter);
+		setWebImage(counter + 1);
 		return true;
 	}
 }

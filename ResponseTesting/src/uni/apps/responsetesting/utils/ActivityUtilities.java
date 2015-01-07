@@ -170,16 +170,16 @@ public class ActivityUtilities {
 		String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), "Default");
 		switch(theme){
 		case "Default":
-			activity.getApplicationContext().setTheme(R.style.AppTheme);
+			activity.setTheme(R.style.AppTheme);
 			break;
 		case "Magic":
-			activity.getApplicationContext().setTheme(R.style.MagicTheme);
+			activity.setTheme(R.style.MagicTheme);
 			break;
 		case "Forestry":
-			activity.getApplicationContext().setTheme(R.style.ForestryTheme);
+			activity.setTheme(R.style.ForestryTheme);
 			break;
 		default:
-			activity.getApplicationContext().setTheme(R.style.AppTheme);
+			activity.setTheme(R.style.AppTheme);
 			break;
 		}
 	}
