@@ -65,17 +65,32 @@ public class GraphUtilities {
 	}
 
 	public static long[] getMinandMaxLong(Number[] numbers) {
-		long min = numbers[0].longValue();
-		long max = numbers[0].longValue();
+		long min = 1000000;
+		long max = 0;
+		boolean allNull = true;
+		if(numbers[0] != null){
+			min = numbers[0].longValue();
+			max = numbers[0].longValue();
+			allNull = false;
+		}
 
 		for(Number l: numbers){
-			if(l.longValue() > max)
-				max = l.longValue();
-			if(l.longValue() < min)
-				min = l.longValue();
+			if(l != null){
+				if(l.longValue() > max)
+					max = l.longValue();
+				if(l.longValue() < min)
+					min = l.longValue();
+				allNull = false;
+			}
 		}
-		min -= 1000;
-		max += 1000;
+		
+		if(!allNull){
+			min -= 1000;
+			max += 1000;
+		} else{
+			min = 0;
+			max = 1;
+		}
 		return new long[]{min, max};
 	}
 
@@ -203,14 +218,14 @@ public class GraphUtilities {
 
 	//---------------------------------------------------------------------------------------------
 	//get data
-	
+
 	//gets data for specified events
 	public static ArrayList<Number[]> getScores(Cursor cursor, String id){
 		//list variables
 		ArrayList<Number> dates = new ArrayList<Number>();
 		ArrayList<Number> scores = new ArrayList<Number>();
 		ArrayList<Number> times = new ArrayList<Number>();
-		
+
 		if(cursor.moveToFirst()){
 			do{
 				//checks id
@@ -234,7 +249,7 @@ public class GraphUtilities {
 				}				
 			} while(cursor.moveToNext());
 		}
-		
+
 		//checks if mandatory lists are empty
 		if(!dates.isEmpty() && !scores.isEmpty()){
 			//new variable
@@ -388,7 +403,7 @@ public class GraphUtilities {
 						tmp.add(Double.parseDouble(cursor.getString(7)));
 					else
 						tmp.add(null);
-					
+
 					Calendar c = Calendar.getInstance();
 					c.setTimeInMillis(cursor.getLong(0));
 					c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),

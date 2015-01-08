@@ -2,6 +2,7 @@ package uni.apps.responsetesting.fragment.results;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.interfaces.listener.ResultsListener;
+import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -45,8 +46,13 @@ public class GraphListFragment extends ListFragment {
 	}
 
 	private void setUpList() {
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.event_name_array_graphs, 
-				android.R.layout.simple_list_item_1);
+		
+		String[] list = getActivity().getResources().getStringArray(R.array.event_name_array_graphs);
+		list = ActivityUtilities.checkList(list, getActivity());
+		/*ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.event_name_array_graphs, 
+				android.R.layout.simple_list_item_1);*/
+		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getActivity(), 
+				android.R.layout.simple_list_item_1, list);
 		getListView().setAdapter(adapter);
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		setListShown(true);

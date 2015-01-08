@@ -1,19 +1,19 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
+    <style name="DefaultTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
@@ -48,6 +48,12 @@
         <item name="android:subtitleTextStyle">@style/MyActionBarSubtitleText</item>
         <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
         <item name="android:popupBackground">@color/ActionBar</item>
+        <item name="android:actionMenuTextColor">@color/White</item>
+    </style>
+
+    <style name="DefaultActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/Black</item>
+        <item name="android:popupBackground">@color/Black</item>
         <item name="android:actionMenuTextColor">@color/White</item>
     </style>
 
@@ -102,10 +108,31 @@
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
+    <style name="palatino" parent="@style/title_style">
+        <item name="android:textAppearance">@style/palatino_large</item>
+    </style>
+
+    <style name="palatino_settings" parent="@style/title_style_settings">
+        <item name="android:textAppearance">@style/palatino_large</item>
+    </style>
+
+    <style name="palatino_large" parent="@android:style/TextAppearance.Large">
+        <item name="android:typeface">serif</item>
+        <item name="android:fontFamily">palatino</item>
+    </style>
+
     <style name="title_style_settings">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="multi_images">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:contentDescription">@string/image_descript</item>
+        <item name="android:focusable">false</item>
     </style>
 
 </resources>

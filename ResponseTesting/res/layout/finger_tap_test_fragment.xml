@@ -8,9 +8,8 @@
         android:id="@+id/tap_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/title_style"
-        android:text="@string/event_name_finger_tap"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        style="@style/palatino"
+        android:text="@string/event_name_finger_tap" />
 
     <RelativeLayout
         android:id="@+id/tap_container"

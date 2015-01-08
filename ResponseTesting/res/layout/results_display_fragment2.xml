@@ -6,17 +6,11 @@
 
     <TextView
         android:id="@+id/results_dis_title"
-        style="@style/title_style"
+        style="@style/palatino"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/results_dis_title"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="@string/results_dis_title" />
 
-  <!--   <Spinner
-        android:id="@+id/result_dis_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp" />-->
      <Button
         android:id="@+id/results_back"
         android:layout_width="match_parent"

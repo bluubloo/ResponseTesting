@@ -7,9 +7,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/title_style"
-        android:text="@string/event_name_change_direct"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        style="@style/palatino"
+        android:text="@string/event_name_change_direct" />
 
     <RelativeLayout
         android:layout_width="match_parent"

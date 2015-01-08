@@ -122,6 +122,10 @@ public class ResultsFragment extends Fragment {//implements OnItemSelectedListen
 			String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 			//get data and interweave xs and ys
 			ArrayList<Number[]> hr = GraphUtilities.getHR(cursor, userId);
+			if(hr.isEmpty()){
+				update();
+				return;
+			}
 			Number[] data = GraphUtilities.interweaveValues(hr.get(0), hr.get(1));
 			//set xyseries
 			XYSeries[] series = new XYSeries[1];

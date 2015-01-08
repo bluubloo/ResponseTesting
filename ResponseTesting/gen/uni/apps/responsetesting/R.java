@@ -141,45 +141,49 @@ public final class R {
         public static final int green_arrow_up=0x7f020053;
         public static final int hand=0x7f020054;
         public static final int home=0x7f020055;
-        public static final int ic_launcher=0x7f020056;
-        public static final int ic_menu_allfriends=0x7f020057;
-        public static final int ic_menu_forestry=0x7f020058;
-        public static final int ic_menu_magic=0x7f020059;
-        public static final int layout_border=0x7f02005a;
-        public static final int list_focused_popup=0x7f02005b;
-        public static final int list_pressed_popup=0x7f02005c;
-        public static final int memory=0x7f02005d;
-        public static final int menu_dropdown_panel_popup=0x7f02005e;
-        public static final int monkeyladder1=0x7f02005f;
-        public static final int monkeyladder1_small=0x7f020060;
-        public static final int motor=0x7f020061;
-        public static final int onecardlearningtest1=0x7f020062;
-        public static final int onecardlearningtest1_small=0x7f020063;
-        public static final int orange_arrow_down=0x7f020064;
-        public static final int orange_arrow_left=0x7f020065;
-        public static final int orange_arrow_right=0x7f020066;
-        public static final int orange_arrow_up=0x7f020067;
-        public static final int patternrecreation1=0x7f020068;
-        public static final int patternrecreation1_small=0x7f020069;
-        public static final int results_icon=0x7f02006a;
-        public static final int selectable_background_popup=0x7f02006b;
-        public static final int spinner_ab_default_popup=0x7f02006c;
-        public static final int spinner_ab_disabled_popup=0x7f02006d;
-        public static final int spinner_ab_focused_popup=0x7f02006e;
-        public static final int spinner_ab_pressed_popup=0x7f02006f;
-        public static final int spinner_background_ab_popup=0x7f020070;
-        public static final int strooptest1=0x7f020071;
-        public static final int strooptest1_small=0x7f020072;
-        public static final int strooptest2=0x7f020073;
-        public static final int strooptest2_small=0x7f020074;
-        public static final int tab_indicator_forestry=0x7f020075;
-        public static final int tab_indicator_magic=0x7f020076;
-        public static final int tab_selected=0x7f020077;
-        public static final int tab_selected_forestry=0x7f020078;
-        public static final int tab_selected_magic=0x7f020079;
-        public static final int target_icon=0x7f02007a;
-        public static final int tree=0x7f02007b;
-        public static final int uni_logo=0x7f02007c;
+        public static final int ic_delete=0x7f020056;
+        public static final int ic_launcher=0x7f020057;
+        public static final int ic_menu_add=0x7f020058;
+        public static final int ic_menu_forestry=0x7f020059;
+        public static final int ic_menu_magic=0x7f02005a;
+        public static final int ic_menu_user=0x7f02005b;
+        public static final int ic_move=0x7f02005c;
+        public static final int ic_settings=0x7f02005d;
+        public static final int layout_border=0x7f02005e;
+        public static final int list_focused_popup=0x7f02005f;
+        public static final int list_pressed_popup=0x7f020060;
+        public static final int memory=0x7f020061;
+        public static final int menu_dropdown_panel_popup=0x7f020062;
+        public static final int monkeyladder1=0x7f020063;
+        public static final int monkeyladder1_small=0x7f020064;
+        public static final int motor=0x7f020065;
+        public static final int onecardlearningtest1=0x7f020066;
+        public static final int onecardlearningtest1_small=0x7f020067;
+        public static final int orange_arrow_down=0x7f020068;
+        public static final int orange_arrow_left=0x7f020069;
+        public static final int orange_arrow_right=0x7f02006a;
+        public static final int orange_arrow_up=0x7f02006b;
+        public static final int patternrecreation1=0x7f02006c;
+        public static final int patternrecreation1_small=0x7f02006d;
+        public static final int results_icon=0x7f02006e;
+        public static final int selectable_background_popup=0x7f02006f;
+        public static final int spinner_ab_default_popup=0x7f020070;
+        public static final int spinner_ab_disabled_popup=0x7f020071;
+        public static final int spinner_ab_focused_popup=0x7f020072;
+        public static final int spinner_ab_pressed_popup=0x7f020073;
+        public static final int spinner_background_ab_popup=0x7f020074;
+        public static final int strooptest1=0x7f020075;
+        public static final int strooptest1_small=0x7f020076;
+        public static final int strooptest2=0x7f020077;
+        public static final int strooptest2_small=0x7f020078;
+        public static final int tab_indicator_forestry=0x7f020079;
+        public static final int tab_indicator_magic=0x7f02007a;
+        public static final int tab_selected=0x7f02007b;
+        public static final int tab_selected_forestry=0x7f02007c;
+        public static final int tab_selected_magic=0x7f02007d;
+        public static final int target_icon=0x7f02007e;
+        public static final int tree=0x7f02007f;
+        public static final int uni_logo=0x7f020080;
     }
     public static final class id {
         public static final int action_add_group=0x7f0b008a;
@@ -362,7 +366,6 @@ public final class R {
     }
     public static final class menu {
         public static final int action_bar=0x7f0a0000;
-        public static final int test=0x7f0a0001;
     }
     public static final class string {
         public static final int action_add_group=0x7f080027;
@@ -562,11 +565,13 @@ public final class R {
 
 
 
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
         
 
         Base application theme for API 11+. This theme completely replaces
@@ -581,25 +586,30 @@ public final class R {
  API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f090000;
+        public static final int DefaultActionBar=0x7f090005;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f090001;
-        public static final int DropDownListView_Popup=0x7f09000b;
-        public static final int DropDownNav_Popup=0x7f09000c;
-        public static final int ForestryActionBarTabs=0x7f090008;
+        public static final int DefaultTheme=0x7f090001;
+        public static final int DropDownListView_Popup=0x7f09000c;
+        public static final int DropDownNav_Popup=0x7f09000d;
+        public static final int ForestryActionBarTabs=0x7f090009;
         public static final int ForestryTheme=0x7f090003;
-        public static final int MagicActionBarTabs=0x7f090009;
+        public static final int MagicActionBarTabs=0x7f09000a;
         public static final int MagicTheme=0x7f090002;
-        public static final int MyActionBarSubtitleText=0x7f090006;
-        public static final int MyActionBarTabText=0x7f090007;
-        public static final int MyActionBarTitleText=0x7f090005;
-        public static final int PopupMenu_Popup=0x7f09000a;
-        public static final int Theme_Popup_Widget=0x7f09000d;
+        public static final int MyActionBarSubtitleText=0x7f090007;
+        public static final int MyActionBarTabText=0x7f090008;
+        public static final int MyActionBarTitleText=0x7f090006;
+        public static final int PopupMenu_Popup=0x7f09000b;
+        public static final int Theme_Popup_Widget=0x7f09000e;
+        public static final int multi_images=0x7f090014;
+        public static final int palatino=0x7f090010;
+        public static final int palatino_large=0x7f090012;
+        public static final int palatino_settings=0x7f090011;
         /**  Widget sytles 
          */
-        public static final int title_style=0x7f09000e;
-        public static final int title_style_settings=0x7f09000f;
+        public static final int title_style=0x7f09000f;
+        public static final int title_style_settings=0x7f090013;
     }
     public static final class xml {
         public static final int all_settings=0x7f040000;

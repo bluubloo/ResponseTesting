@@ -20,8 +20,8 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/section_image"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="50sp" />
+            android:textSize="50sp"
+            style="@style/palatino_large" />
 
         <ImageView
             android:id="@+id/section_image"

@@ -49,6 +49,7 @@ public class MultiUserNameListAdapter extends BaseAdapter {
 		if(view == null)
 			view = new TextView(context);
 		//sets view values
+		view.setPadding(50, 5, 10, 5);
 		view.setText(data[position].getName());
 		view.setTextSize(40);
 		return view;

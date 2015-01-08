@@ -51,14 +51,14 @@
         android:title="@string/action_setup"/>
     <item
         android:id="@+id/action_add_group"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_menu_add"
         android:orderInCategory="4"
         android:showAsAction="ifRoom"
         android:title="@string/action_add_group"
         android:visible="false"/>
     <item
         android:id="@+id/action_switch_user"
-        android:icon="@drawable/ic_menu_allfriends"
+        android:icon="@drawable/ic_menu_user"
         android:orderInCategory="5"
         android:showAsAction="ifRoom"
         android:title="@string/action_switch"

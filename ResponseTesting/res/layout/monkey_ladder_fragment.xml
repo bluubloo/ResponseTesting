@@ -5,11 +5,10 @@
     android:orientation="vertical" >
 
     <TextView
-        style="@style/title_style"
+        style="@style/palatino"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/event_name_monkey"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="@string/event_name_monkey" />
 
     <RelativeLayout
         android:layout_width="match_parent"

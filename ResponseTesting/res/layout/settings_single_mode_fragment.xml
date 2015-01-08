@@ -11,13 +11,12 @@
 
         <TextView
             android:id="@+id/text_title_1"
-            style="@style/title_style_settings"
+            style="@style/palatino_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/settings_cat_user"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/settings_cat_user" />
 
         <ImageView
             android:layout_width="fill_parent"
@@ -89,13 +88,12 @@
 
         <TextView
             android:id="@+id/text_title_2"
-            style="@style/title_style_settings"
+            style="@style/palatino_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/settings_cat_tests"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/settings_cat_tests" />
 
         <ImageView
             android:layout_width="fill_parent"
