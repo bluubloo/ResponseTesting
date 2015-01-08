@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Response Testing</string>
+    <string name="app_name">Ready?</string>
     <string name="title_activity_event">Event</string>
     <string name="title_activity_results_display">Results</string>
     <string name="title_activity_settings">Settings</string>
@@ -51,7 +51,7 @@
     <!-- Main Menu Strings -->
     <string name="title_section1">Attention</string>
     <string name="title_section2">Memory</string>
-    <string name="title_section3">Motor Function</string>
+    <string name="title_section3">Motor</string>
 
     <!-- Finger Tap Test Strings -->
     <string name="tap_click_info_3">Keep on Tapping</string>
@@ -185,5 +185,7 @@
     <!-- Other Settings Strings -->
     <string name="settings_time_default">9:00</string>
     <string name="settings_theme_default">Default</string>
+    <!-- <string name="settings_theme_default">Magic</string> -->
+    <!-- <string name="settings_theme_default">Forestry</string> -->
 
 </resources>

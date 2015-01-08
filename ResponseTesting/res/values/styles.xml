@@ -2,13 +2,14 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.        -->
+            backward-compatibility can go here.
+        -->
     </style>
 
     <!-- Application theme. -->
@@ -17,23 +18,36 @@
     </style>
 
     <style name="MagicTheme" parent="AppBaseTheme">
+
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarTabStyle">@style/MagicActionBarTabs</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Popup</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Popup</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Popup</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_popup</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.Popup.Widget</item>
     </style>
 
     <style name="ForestryTheme" parent="AppBaseTheme">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <item name="android:actionBarStyle">@style/ForestryActionBar</item>
+        <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarTabStyle">@style/ForestryActionBarTabs</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Popup</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Popup</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Popup</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_popup</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.Popup.Widget</item>
     </style>
 
     <!-- Action Bar Styles -->
-    <style name="ForestryActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/Forestry_ActionBar</item>
+    <style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/ActionBar</item>
         <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
         <item name="android:subtitleTextStyle">@style/MyActionBarSubtitleText</item>
         <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
-        <item name="android:popupBackground">@color/Forestry_ActionBar</item>
+        <item name="android:popupBackground">@color/ActionBar</item>
         <item name="android:actionMenuTextColor">@color/White</item>
     </style>
 
@@ -48,11 +62,36 @@
     <style name="MyActionBarTabText" parent="@android:style/Widget.Holo.ActionBar.TabText">
         <item name="android:textColor">@color/White</item>
     </style>
-    
-    <style name="ForestryActionBarTabs"
-           parent="@android:style/Widget.Holo.ActionBar.TabView">
+
+    <style name="ForestryActionBarTabs" parent="@android:style/Widget.Holo.ActionBar.TabView">
+
         <!-- tab indicator -->
         <item name="android:background">@drawable/tab_indicator_forestry</item>
+    </style>
+
+    <style name="MagicActionBarTabs" parent="@android:style/Widget.Holo.ActionBar.TabView">
+
+        <!-- tab indicator -->
+        <item name="android:background">@drawable/tab_indicator_magic</item>
+    </style>
+
+    <style name="PopupMenu.Popup" parent="@android:style/Widget.Holo.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_popup</item>
+    </style>
+
+    <style name="DropDownListView.Popup" parent="@android:style/Widget.Holo.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_popup</item>
+    </style>
+
+    <style name="DropDownNav.Popup" parent="@android:style/Widget.Holo.Spinner">
+        <item name="android:background">@drawable/spinner_background_ab_popup</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_popup</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_popup</item>
+    </style>
+
+    <style name="Theme.Popup.Widget" parent="@android:style/Theme.Holo">
+        <item name="android:popupMenuStyle">@style/PopupMenu.Popup</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Popup</item>
     </style>
 
     <!-- Widget sytles -->

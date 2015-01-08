@@ -20,7 +20,7 @@ import android.widget.TextView;
 public class GroupIconSpinnerAdapter extends BaseAdapter {
 
 	//drawable ids
-	private int[] icons = new int[] {R.drawable.uni_logo};
+	private int[] icons = new int[] {R.drawable.uni_logo, R.drawable.ic_menu_magic, R.drawable.ic_menu_forestry};
 	//varaibles
 	private String[] names;
 	private Activity activity;

@@ -116,7 +116,7 @@ public class MainMenuFragmentTabbed extends Fragment {
 			case 1:
 				return R.drawable.memory;
 			case 2:
-				return R.drawable.motor;
+				return R.drawable.hand;
 			}
 			return R.drawable.uni_logo;
 		}

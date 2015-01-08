@@ -167,9 +167,14 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 			Editor editor = prefs.edit();
 			editor.putString(getResources().getString(R.string.pref_key_user_id), "single");
 			editor.commit();
+			
+			if(mViewPager == null)
+				setUpPage();
+			
 		} else if(!single && id.equals("single"))
 			startSession();
 		//updates main menu
+		if(mViewPager != null)
 			mViewPager.getAdapter().notifyDataSetChanged();
 	}
 
@@ -294,7 +299,7 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 		//creates dialog builder
 		AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
 		//sets dialog details
-		builderSingle.setIcon(R.drawable.uni_logo);
+		builderSingle.setIcon(ActivityUtilities.getThemeIconId(this));
 		builderSingle.setTitle("Select One Name:-");
 
 		builderSingle.setNegativeButton("cancel",

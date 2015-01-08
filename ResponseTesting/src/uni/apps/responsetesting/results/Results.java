@@ -2,12 +2,14 @@ package uni.apps.responsetesting.results;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.models.CorrectDurationInfo;
+import uni.apps.responsetesting.models.ResultsInfo;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -103,7 +105,7 @@ public class Results {
 			else{
 				return isBetter(a, b, false);
 			}
-				
+
 		}
 	}
 
@@ -198,7 +200,7 @@ public class Results {
 
 			FileWriter fw = new FileWriter(file);
 
-			fw.append("Event Name");
+			/*fw.append("Event Name");
 			fw.append(',');
 			fw.append("Score");
 			fw.append(',');
@@ -222,10 +224,10 @@ public class Results {
 					fw.append(',');
 					fw.append(results.getString(1));
 					fw.append(',');
-					/*Calendar c = Calendar.getInstance();
+					Calendar c = Calendar.getInstance();
 					c.setTimeInMillis(results.getLong(2));
-					fw.append(c.getTime().toString());*/
-					fw.append(Long.toString(results.getLong(2)));
+					fw.append(c.getTime().toString());
+				//	fw.append(Long.toString(results.getLong(2)));
 					fw.append(',');
 					fw.append(results.getString(4));
 					fw.append(',');
@@ -265,9 +267,9 @@ public class Results {
 			fw.append("\n");
 
 			if(quest.moveToFirst()){
-			/*Calendar c = Calendar.getInstance();
+			Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(quest.getLong(0));
-				fw.append(c.getTime().toString());*/
+				fw.append(c.getTime().toString());
 				fw.append(Long.toString(quest.getLong(0)));
 				fw.append(',');
 				fw.append(quest.getString(1));
@@ -289,13 +291,130 @@ public class Results {
 					fw.append("Unknown");
 				fw.append("\n");
 			}
+			 */
+			fw.append("User Name");
+			fw.append(',');
+			fw.append("Time");
+			fw.append(',');
+			String[] eventNames = activity.getResources().getStringArray(R.array.event_name_array_noq);
+			for(String s: eventNames){
+				fw.append(s);
+				fw.append(',');
+			}
+			fw.append("Total Sleep");
+			fw.append(',');
+			fw.append("Mood");
+			fw.append(',');
+			fw.append("Fatigue");
+			fw.append(',');
+			fw.append("Muscle soreness");
+			fw.append(',');
+			fw.append("Sleep Quality");
+			fw.append("\n");
+			fw.flush();
+			ArrayList<ResultsInfo> tmp = new ArrayList<ResultsInfo>();
+			if(results.moveToFirst()){
+				do{
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(results.getLong(2));
+					c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 0, 0, 0);
+
+					String eventName = results.getString(0);
+					String score = results.getString(1); 
+					Log.d(TAG, score + " " + eventName); 
+					String id = results.getString(5);
+					Log.d(TAG, id);
+					String username = "";
+					if(nameMap.containsKey(id))
+						username = nameMap.get(id);
+					else
+						username = "Unknown";
+
+
+					int index = exists(c, tmp, username);
+					if(index != -1){
+						tmp.get(index).addScore(eventName, score);
+
+					} else {
+
+						ResultsInfo r = new ResultsInfo(username, c.getTimeInMillis(), eventName, score, eventNames);
+						tmp.add(r);
+					}
+				} while(results.moveToNext());
+			}
+
+
+			if(quest.moveToFirst()){
+				do{
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(quest.getLong(0));
+					c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 0, 0, 0);
+
+					String sleep = quest.getString(1);
+					String hr = quest.getString(7);
+					String[] ratings = formatRatings(quest.getString(4));
+
+					String id = quest.getString(6);
+					String username = "";
+					if(nameMap.containsKey(id))
+						username = nameMap.get(id);
+					else
+						username = "Unknown";
+
+					int index = exists(c, tmp, username);
+					if(index != -1){
+						tmp.get(index).addTotalSleep(sleep);
+						tmp.get(index).addRestingHR(hr);
+						tmp.get(index).addRating(ratings);
+					} else {
+
+
+						ResultsInfo r = new ResultsInfo(username, c.getTimeInMillis(), sleep, hr, ratings, eventNames);
+						tmp.add(r);
+					}
+				} while(quest.moveToNext());
+			}
+
+			for(ResultsInfo r : tmp){
+				fw.append(r.getString());
+				fw.append("\n");
+			}
 
 			fw.flush();
 			fw.close();
 		} catch (Exception e) {
-			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
 		}
 		return true;
+	}
+
+	private static String[] formatRatings(String s) {
+		String s1 = getRating(s);
+		String s2 = getRating(s1);
+		String s3 = getRating(s2);
+		return new String[]{s1, s2, s3, getRating(s3)};
+	}
+
+	private static String getRating(String s){
+		int i = s.indexOf('|');
+		if(i != -1)
+			return s.substring(0, i);
+		else
+			return s;
+	}
+
+	private static int exists(Calendar l, ArrayList<ResultsInfo> tmp, String userName) {
+		int i = 0;
+		for(ResultsInfo r : tmp){
+			if(r.checkUserName(userName)){
+				if(r.getTime().getTimeInMillis() == l.getTimeInMillis() ||
+						(r.getTime().get(Calendar.MONTH) == l.get(Calendar.MONTH) && r.getTime().get(Calendar.DATE) == 
+						l.get(Calendar.DATE)))
+					return i;
+			}
+			i++;
+		}
+		return -1;
 	}
 
 	private static HashMap<String, String> cursorToMap(Cursor cursor, Activity activity) {

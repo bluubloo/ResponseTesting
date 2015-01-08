@@ -186,6 +186,10 @@ public class ActivityUtilities {
 	}
 	
 	public static void changeActionBarIcon(Activity activity){
+		activity.getActionBar().setIcon(activity.getResources().getDrawable(getThemeIconId(activity)));
+	}
+	
+	public static int getThemeIconId(Activity activity){
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 		String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), 
 				activity.getResources().getString(R.string.settings_theme_default));
@@ -198,7 +202,7 @@ public class ActivityUtilities {
 			imageId = R.drawable.ic_menu_forestry;
 		else
 			imageId = R.drawable.uni_logo;
-		activity.getActionBar().setIcon(activity.getResources().getDrawable(imageId));
+		return imageId;
 	}
 
 }

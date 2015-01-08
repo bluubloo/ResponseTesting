@@ -25,14 +25,16 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int ActionBar=0x7f060004;
         public static final int Black=0x7f060000;
         public static final int Blue=0x7f060003;
         public static final int Forestry_Accent=0x7f060007;
-        public static final int Forestry_ActionBar=0x7f060004;
-        public static final int Forestry_Tabs_Selected=0x7f060006;
-        public static final int Forestry_Tabs_Unselected=0x7f060005;
         public static final int Red=0x7f060002;
+        public static final int Tabs_Selected=0x7f060006;
+        public static final int Tabs_Unselected=0x7f060005;
         public static final int White=0x7f060001;
+        public static final int forestry_green=0x7f060008;
+        public static final int magic_red=0x7f060009;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -137,33 +139,47 @@ public final class R {
         public static final int green_arrow_left=0x7f020051;
         public static final int green_arrow_right=0x7f020052;
         public static final int green_arrow_up=0x7f020053;
-        public static final int home=0x7f020054;
-        public static final int ic_launcher=0x7f020055;
-        public static final int ic_menu_allfriends=0x7f020056;
-        public static final int ic_menu_forestry=0x7f020057;
-        public static final int ic_menu_magic=0x7f020058;
-        public static final int layout_border=0x7f020059;
-        public static final int memory=0x7f02005a;
-        public static final int monkeyladder1=0x7f02005b;
-        public static final int monkeyladder1_small=0x7f02005c;
-        public static final int motor=0x7f02005d;
-        public static final int onecardlearningtest1=0x7f02005e;
-        public static final int onecardlearningtest1_small=0x7f02005f;
-        public static final int orange_arrow_down=0x7f020060;
-        public static final int orange_arrow_left=0x7f020061;
-        public static final int orange_arrow_right=0x7f020062;
-        public static final int orange_arrow_up=0x7f020063;
-        public static final int patternrecreation1=0x7f020064;
-        public static final int patternrecreation1_small=0x7f020065;
-        public static final int results_icon=0x7f020066;
-        public static final int strooptest1=0x7f020067;
-        public static final int strooptest1_small=0x7f020068;
-        public static final int strooptest2=0x7f020069;
-        public static final int strooptest2_small=0x7f02006a;
-        public static final int tab_indicator_forestry=0x7f02006b;
-        public static final int tab_selected=0x7f02006c;
-        public static final int target_icon=0x7f02006d;
-        public static final int uni_logo=0x7f02006e;
+        public static final int hand=0x7f020054;
+        public static final int home=0x7f020055;
+        public static final int ic_launcher=0x7f020056;
+        public static final int ic_menu_allfriends=0x7f020057;
+        public static final int ic_menu_forestry=0x7f020058;
+        public static final int ic_menu_magic=0x7f020059;
+        public static final int layout_border=0x7f02005a;
+        public static final int list_focused_popup=0x7f02005b;
+        public static final int list_pressed_popup=0x7f02005c;
+        public static final int memory=0x7f02005d;
+        public static final int menu_dropdown_panel_popup=0x7f02005e;
+        public static final int monkeyladder1=0x7f02005f;
+        public static final int monkeyladder1_small=0x7f020060;
+        public static final int motor=0x7f020061;
+        public static final int onecardlearningtest1=0x7f020062;
+        public static final int onecardlearningtest1_small=0x7f020063;
+        public static final int orange_arrow_down=0x7f020064;
+        public static final int orange_arrow_left=0x7f020065;
+        public static final int orange_arrow_right=0x7f020066;
+        public static final int orange_arrow_up=0x7f020067;
+        public static final int patternrecreation1=0x7f020068;
+        public static final int patternrecreation1_small=0x7f020069;
+        public static final int results_icon=0x7f02006a;
+        public static final int selectable_background_popup=0x7f02006b;
+        public static final int spinner_ab_default_popup=0x7f02006c;
+        public static final int spinner_ab_disabled_popup=0x7f02006d;
+        public static final int spinner_ab_focused_popup=0x7f02006e;
+        public static final int spinner_ab_pressed_popup=0x7f02006f;
+        public static final int spinner_background_ab_popup=0x7f020070;
+        public static final int strooptest1=0x7f020071;
+        public static final int strooptest1_small=0x7f020072;
+        public static final int strooptest2=0x7f020073;
+        public static final int strooptest2_small=0x7f020074;
+        public static final int tab_indicator_forestry=0x7f020075;
+        public static final int tab_indicator_magic=0x7f020076;
+        public static final int tab_selected=0x7f020077;
+        public static final int tab_selected_forestry=0x7f020078;
+        public static final int tab_selected_magic=0x7f020079;
+        public static final int target_icon=0x7f02007a;
+        public static final int tree=0x7f02007b;
+        public static final int uni_logo=0x7f02007c;
     }
     public static final class id {
         public static final int action_add_group=0x7f0b008a;
@@ -536,9 +552,13 @@ public final class R {
         public static final int yes=0x7f08004e;
     }
     public static final class style {
+        /**  Action Bar Styles 
+         */
+        public static final int ActionBar=0x7f090004;
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
 
 
 
@@ -565,21 +585,21 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f090001;
-        /**  Action Bar Styles 
-         */
-        public static final int ForestryActionBar=0x7f090004;
+        public static final int DropDownListView_Popup=0x7f09000b;
+        public static final int DropDownNav_Popup=0x7f09000c;
         public static final int ForestryActionBarTabs=0x7f090008;
         public static final int ForestryTheme=0x7f090003;
-        /**  All customizations that are NOT specific to a particular API-level can go here. 
-         */
+        public static final int MagicActionBarTabs=0x7f090009;
         public static final int MagicTheme=0x7f090002;
         public static final int MyActionBarSubtitleText=0x7f090006;
         public static final int MyActionBarTabText=0x7f090007;
         public static final int MyActionBarTitleText=0x7f090005;
+        public static final int PopupMenu_Popup=0x7f09000a;
+        public static final int Theme_Popup_Widget=0x7f09000d;
         /**  Widget sytles 
          */
-        public static final int title_style=0x7f090009;
-        public static final int title_style_settings=0x7f09000a;
+        public static final int title_style=0x7f09000e;
+        public static final int title_style_settings=0x7f09000f;
     }
     public static final class xml {
         public static final int all_settings=0x7f040000;
