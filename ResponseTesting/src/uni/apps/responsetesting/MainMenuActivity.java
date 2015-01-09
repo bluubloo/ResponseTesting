@@ -58,7 +58,6 @@ public class MainMenuActivity extends Activity implements MainMenuListener {
 		super.onCreate(savedInstanceState);
 		//set layout, fragment manager and fragment
 		setContentView(R.layout.activity_main_menu);
-		PreferenceManager.setDefaultValues(this, R.xml.all_settings, true);
 		frag_manager = this.getFragmentManager();
 		//checks the user mode
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

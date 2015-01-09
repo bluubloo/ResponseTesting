@@ -80,7 +80,7 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test);
 
-		PreferenceManager.setDefaultValues(this, R.xml.all_settings, true);
+		//PreferenceManager.setDefaultValues(this, R.xml.all_settings, true);
 		//checks the user mode
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean single = prefs.getBoolean(getResources().getString(R.string.pref_key_user), true);

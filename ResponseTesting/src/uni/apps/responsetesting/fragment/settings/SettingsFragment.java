@@ -76,7 +76,7 @@ public class SettingsFragment extends Fragment {
 		instruct.setChecked(prefs.getBoolean(r.getString(R.string.pref_key_instruct), true));
 		
 		sleep = (CheckBox) view.findViewById(R.id.checkbox_sleep);
-		sleep.setChecked(prefs.getBoolean(r.getString(R.string.pref_key_sleep), true));
+		sleep.setChecked(prefs.getBoolean(r.getString(R.string.pref_key_sleep), false));
 		
 		results = (CheckBox) view.findViewById(R.id.checkbox_results);
 		results.setChecked(prefs.getBoolean(r.getString(R.string.pref_key_results), true));
@@ -97,7 +97,7 @@ public class SettingsFragment extends Fragment {
 		//set radiobuttons
 		single = (RadioButton) view.findViewById(R.id.user_mode_single);
 		multi = (RadioButton) view.findViewById(R.id.user_mode_multi);
-		boolean mode = prefs.getBoolean(r.getString(R.string.pref_key_user), false);
+		boolean mode = prefs.getBoolean(r.getString(R.string.pref_key_user), true);
 		if(mode)
 			single.setChecked(true);
 		else
