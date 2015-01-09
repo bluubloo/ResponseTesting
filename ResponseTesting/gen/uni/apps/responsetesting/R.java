@@ -176,13 +176,15 @@ public final class R {
         public static final int strooptest1_small=0x7f020076;
         public static final int strooptest2=0x7f020077;
         public static final int strooptest2_small=0x7f020078;
-        public static final int tab_indicator_forestry=0x7f020079;
-        public static final int tab_indicator_magic=0x7f02007a;
-        public static final int tab_selected_forestry=0x7f02007b;
-        public static final int tab_selected_magic=0x7f02007c;
-        public static final int target_icon=0x7f02007d;
-        public static final int tree=0x7f02007e;
-        public static final int uni_logo=0x7f02007f;
+        public static final int tab_indicator_default=0x7f020079;
+        public static final int tab_indicator_forestry=0x7f02007a;
+        public static final int tab_indicator_magic=0x7f02007b;
+        public static final int tab_selected_default=0x7f02007c;
+        public static final int tab_selected_forestry=0x7f02007d;
+        public static final int tab_selected_magic=0x7f02007e;
+        public static final int target_icon=0x7f02007f;
+        public static final int tree=0x7f020080;
+        public static final int uni_logo=0x7f020081;
     }
     public static final class id {
         public static final int action_add_group=0x7f0a008a;
@@ -586,12 +588,12 @@ public final class R {
          */
         public static final int AppBaseTheme=0x7f080000;
         public static final int DefaultActionBar=0x7f080005;
+        public static final int DefaultActionBarTabs=0x7f08000b;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int DefaultTheme=0x7f080001;
-        public static final int DropDownListView_Popup=0x7f08000c;
-        public static final int DropDownNav_Popup=0x7f08000d;
+        public static final int DropDownListView_Popup=0x7f08000d;
+        public static final int DropDownNav_Popup=0x7f08000e;
         public static final int ForestryActionBarTabs=0x7f080009;
         public static final int ForestryTheme=0x7f080003;
         public static final int MagicActionBarTabs=0x7f08000a;
@@ -599,16 +601,16 @@ public final class R {
         public static final int MyActionBarSubtitleText=0x7f080007;
         public static final int MyActionBarTabText=0x7f080008;
         public static final int MyActionBarTitleText=0x7f080006;
-        public static final int PopupMenu_Popup=0x7f08000b;
-        public static final int Theme_Popup_Widget=0x7f08000e;
-        public static final int multi_images=0x7f080014;
-        public static final int palatino=0x7f080010;
-        public static final int palatino_large=0x7f080012;
-        public static final int palatino_settings=0x7f080011;
+        public static final int PopupMenu_Popup=0x7f08000c;
+        public static final int Theme_Popup_Widget=0x7f08000f;
+        public static final int multi_images=0x7f080015;
+        public static final int palatino=0x7f080011;
+        public static final int palatino_large=0x7f080013;
+        public static final int palatino_settings=0x7f080012;
         /**  Widget sytles 
          */
-        public static final int title_style=0x7f08000f;
-        public static final int title_style_settings=0x7f080013;
+        public static final int title_style=0x7f080010;
+        public static final int title_style_settings=0x7f080014;
     }
     public static final class styleable {
         /** Attributes that can be used with a MyGallery.

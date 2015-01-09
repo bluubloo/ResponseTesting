@@ -15,6 +15,13 @@
     <!-- Application theme. -->
     <style name="DefaultTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarTabStyle">@style/DefaultActionBarTabs</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Popup</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Popup</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Popup</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_popup</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.Popup.Widget</item>
     </style>
 
     <style name="MagicTheme" parent="AppBaseTheme">
@@ -79,6 +86,12 @@
 
         <!-- tab indicator -->
         <item name="android:background">@drawable/tab_indicator_magic</item>
+    </style>
+    
+    <style name="DefaultActionBarTabs" parent="@android:style/Widget.Holo.ActionBar.TabView">
+
+        <!-- tab indicator -->
+        <item name="android:background">@drawable/tab_indicator_default</item>
     </style>
 
     <style name="PopupMenu.Popup" parent="@android:style/Widget.Holo.ListPopupWindow">
