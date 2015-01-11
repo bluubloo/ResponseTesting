@@ -1,7 +1,6 @@
 package uni.apps.responsetesting;
 
 import uni.apps.responsetesting.utils.ActivityUtilities;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;

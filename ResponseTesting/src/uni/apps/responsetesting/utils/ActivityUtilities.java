@@ -233,15 +233,15 @@ public class ActivityUtilities {
 		if(theme.equals("Default"))
 			imageId = R.drawable.ic_launcher_512;
 		else if(theme.equals("Magic"))
-			imageId = R.drawable.ic_menu_magic;
+			imageId = R.drawable.ic_magic_512;
 		else if(theme.equals("Forestry"))
-			imageId = R.drawable.ic_menu_forestry;
+			imageId = R.drawable.ic_forestry_512;
 		else
 			imageId = R.drawable.ic_launcher_512;
 		return imageId;
 	}
 	
-	public static String[] checkList(String[] stringArray, Activity activity) {
+	public static String[] checkList(String[] stringArray, Activity activity, boolean graph) {
 		//get user id
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 		String userId = prefs.getString(activity.getResources().getString(R.string.pref_key_user_id), "single");
@@ -256,7 +256,10 @@ public class ActivityUtilities {
 			if(s.equals(r.getString(R.string.event_name_questionaire)))
 				addable = db.checkQuestionaire(s, userId);
 			else
-				addable = checkPreferences(s, r, activity, userId) && db.checkRecent(s, userId, activity);
+				if(graph)
+					addable = checkPreferences(s, r, activity, userId);
+				else
+					addable = checkPreferences(s, r, activity, userId) && db.checkRecent(s, userId, activity);
 			if(addable)
 				list.add(s);
 		}

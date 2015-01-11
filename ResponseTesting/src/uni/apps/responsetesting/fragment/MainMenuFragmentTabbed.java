@@ -118,11 +118,11 @@ public class MainMenuFragmentTabbed extends Fragment {
 		private String[] getList(int position) {
 			switch (position - 1) {
 			case 0:
-				return ActivityUtilities.checkList(getResources().getStringArray(R.array.event_name_attention), getActivity());
+				return ActivityUtilities.checkList(getResources().getStringArray(R.array.event_name_attention), getActivity(), false);
 			case 1:
-				return ActivityUtilities.checkList(getResources().getStringArray(R.array.event_name_memory), getActivity());
+				return ActivityUtilities.checkList(getResources().getStringArray(R.array.event_name_memory), getActivity(), false);
 			case 2:
-				return ActivityUtilities.checkList(getResources().getStringArray(R.array.event_name_motor), getActivity());
+				return ActivityUtilities.checkList(getResources().getStringArray(R.array.event_name_motor), getActivity(), false);
 			}
 			return null;
 		}

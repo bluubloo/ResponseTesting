@@ -48,9 +48,7 @@ public class GraphListFragment extends ListFragment {
 	private void setUpList() {
 		
 		String[] list = getActivity().getResources().getStringArray(R.array.event_name_array_graphs);
-		list = ActivityUtilities.checkList(list, getActivity());
-		/*ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.event_name_array_graphs, 
-				android.R.layout.simple_list_item_1);*/
+		list = ActivityUtilities.checkList(list, getActivity(), true);
 		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getActivity(), 
 				android.R.layout.simple_list_item_1, list);
 		getListView().setAdapter(adapter);
