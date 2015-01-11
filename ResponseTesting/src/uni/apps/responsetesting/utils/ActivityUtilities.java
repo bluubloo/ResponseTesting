@@ -2,6 +2,7 @@ package uni.apps.responsetesting.utils;
 
 import java.util.ArrayList;
 
+import uni.apps.responsetesting.AboutActivity;
 import uni.apps.responsetesting.MultiUserSetupModeActivity;
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.ResultsDisplayActivity;
@@ -48,14 +49,16 @@ public class ActivityUtilities {
 			Email.sendResults(activity, false);
 			return true;
 		case R.id.action_results:
-			Intent i = new Intent(activity, ResultsDisplayActivity.class);
-			activity.startActivity(i);
+			activity.startActivity(new Intent(activity, ResultsDisplayActivity.class));
 			return true;
 		case R.id.action_setup:
 			passwordForSetupMode(activity);
 			return true;
 		case R.id.action_home:
 			NavUtils.navigateUpFromSameTask(activity);
+			return true;
+		case R.id.action_about:
+			activity.startActivity(new Intent(activity, AboutActivity.class));
 			return true;
 		default:
 			return false;
@@ -167,7 +170,7 @@ public class ActivityUtilities {
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, activity.getResources());
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 		String userId = prefs.getString(activity.getResources().getString(R.string.pref_key_user_id), "single");
-		return times < 3 && db.checkRecent(eventName, userId);
+		return times < 3 && db.checkRecent(eventName, userId, activity);
 	}
 	
 	public static void changeTheme(Activity activity){
@@ -210,6 +213,34 @@ public class ActivityUtilities {
 		return imageId;
 	}
 	
+	public static int getThemeQuestionsId(Activity activity){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), 
+				activity.getResources().getString(R.string.settings_theme_default));
+		int arrayId = 0;
+		if(theme.equals("Magic"))
+			arrayId = R.array.questionaire_array_magic;
+		else
+			arrayId = R.array.questionaire_array;
+		return arrayId;
+	}
+	
+	public static int getSplashIconId(Activity activity){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), 
+				activity.getResources().getString(R.string.settings_theme_default));
+		int imageId = 0;
+		if(theme.equals("Default"))
+			imageId = R.drawable.ic_launcher_512;
+		else if(theme.equals("Magic"))
+			imageId = R.drawable.ic_menu_magic;
+		else if(theme.equals("Forestry"))
+			imageId = R.drawable.ic_menu_forestry;
+		else
+			imageId = R.drawable.ic_launcher_512;
+		return imageId;
+	}
+	
 	public static String[] checkList(String[] stringArray, Activity activity) {
 		//get user id
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
@@ -225,7 +256,7 @@ public class ActivityUtilities {
 			if(s.equals(r.getString(R.string.event_name_questionaire)))
 				addable = db.checkQuestionaire(s, userId);
 			else
-				addable = checkPreferences(s, r, activity, userId) && db.checkRecent(s, userId);
+				addable = checkPreferences(s, r, activity, userId) && db.checkRecent(s, userId, activity);
 			if(addable)
 				list.add(s);
 		}
@@ -310,5 +341,7 @@ public class ActivityUtilities {
 			return true;
 		}
 	}
+	
+	
 
 }

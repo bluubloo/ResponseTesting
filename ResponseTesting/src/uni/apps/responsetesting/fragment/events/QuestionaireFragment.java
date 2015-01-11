@@ -1,14 +1,11 @@
 package uni.apps.responsetesting.fragment.events;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.adapter.QuestionaireListAdapter;
-import uni.apps.responsetesting.results.Results;
+import uni.apps.responsetesting.interfaces.listener.EventInstructionsListener;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,9 +32,10 @@ public class QuestionaireFragment extends Fragment {
 
 	//variables
 	private static final String TAG = "QuestionaireFragment";
-	private static final String eventName = "Questionaire";
 	private QuestionaireListAdapter adapter;
+	private EventInstructionsListener listener;
 	private ListView list_view;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,8 +52,8 @@ public class QuestionaireFragment extends Fragment {
 		// Inflate the layout for this fragment
 		View view =  inflater.inflate(R.layout.questionaire_fragment, container, false);
 		//get list view
-		list_view = (ListView) view.findViewById(R.id.questionaire_list);
-		seListViewProperties();
+		//list_view = (ListView) view.findViewById(R.id.questionaire_list);
+		//seListViewProperties();
 		//set views
 		final TimePicker totalSleep = (TimePicker) view.findViewById(R.id.questionaire_total);
 		totalSleep.setIs24HourView(true);
@@ -72,10 +70,17 @@ public class QuestionaireFragment extends Fragment {
 		
 		final EditText heartRate = (EditText) view.findViewById(R.id.questionaire_hr);
 		
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		boolean sleep = prefs.getBoolean(getResources().getString(R.string.pref_key_sleep), false);
 		if(!sleep){
 			view.findViewById(R.id.sleep_con).setVisibility(View.GONE);
+		}
+		String theme = prefs.getString(getResources().getString(R.string.pref_key_theme), 
+				getResources().getString(R.string.settings_theme_default));
+		
+		if(!theme.equals("Magic")){
+			view.findViewById(R.id.questionaire_hr_container).setVisibility(View.GONE);
 		}
 
 		//set button click
@@ -85,7 +90,6 @@ public class QuestionaireFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				
-				ArrayList<String> results = new ArrayList<String>();
 				//get values
 				String sleep = totalSleep.getCurrentHour() + ":" + totalSleep.getCurrentMinute();
 				String light = "";
@@ -95,36 +99,25 @@ public class QuestionaireFragment extends Fragment {
 				if(soundSleep.getCurrentHour() != 0 || soundSleep.getCurrentMinute() != 0)
 					sound = soundSleep.getCurrentHour() + ":" + soundSleep.getCurrentMinute();
 				String hr = heartRate.getText().toString();
-				//check string format
-					//get ratings
-					for(int i = 0; i < adapter.getCount(); i++){
-						results.add(adapter.getRating(i));
-					}
-					//format ratings
-					String finalResult = "";
-					for(String s : results)
-						finalResult += s + "|";
-					Log.d(TAG, finalResult);
-					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-					String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
-					//insert result
-					Results.insertQuestionaireResult(eventName, new String[] {sleep, light, sound, hr}, 
-							finalResult, Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
-
-					//return to main menu
-					new AlertDialog.Builder(getActivity())
-					.setTitle("Questionaire Submitted")
-					.setMessage("You will now be returned to the Main Menu.")
-					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) { 
-							getActivity().onBackPressed();
-						}
-					})
-					.setIcon(android.R.drawable.ic_dialog_alert)
-					.show();
+				
+				listener.onNextClick(sleep, light, sound, hr);
+					
 			}
 		});
 		return view;
+	}
+	
+	//attachs listener to activity
+	@Override
+	public void onAttach(Activity activity) {
+		Log.d(TAG, "onAttach()");
+		super.onAttach(activity);
+		try {
+			listener = (EventInstructionsListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString() + " must implement EventInstructionsListener");
+		}
+
 	}
 
 	@SuppressLint("ClickableViewAccessibility")

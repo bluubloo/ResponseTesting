@@ -3,12 +3,15 @@ package uni.apps.responsetesting.database;
 import java.util.Calendar;
 
 import uni.apps.responsetesting.R;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
 /**
  * This class handles any operations the database requires
@@ -217,7 +220,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				new String[] {testName, userId}, null, null, resources.getString(R.string.timestamp));
 	}
 
-	public String[] getSingleTries(String testName, String id){
+	public String[] getSingleTries(String testName, String id, Activity activity){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		String theme = prefs.getString(resources.getString(R.string.pref_key_theme), 
+				resources.getString(R.string.settings_theme_default));
 		String sql = "SELECT max(" + resources.getString(R.string.timestamp) + ") FROM " + resources.getString(R.string.table_name) +
 				" WHERE " + resources.getString(R.string.event_name) + "=? AND " + resources.getString(R.string.user_id) + "=?";
 		Cursor cursor = this.getReadableDatabase().rawQuery(sql, new String[] {testName, id});
@@ -227,12 +233,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			Calendar current = Calendar.getInstance();
 			if(c.get(Calendar.DATE) == current.get(Calendar.DATE) && 
 					c.get(Calendar.MONTH) == current.get(Calendar.MONTH)){
-				sql = "SELECT " + resources.getString(R.string.tries) + ", " +  resources.getString(R.string.event_score) + ", " + 
-						resources.getString(R.string.all_scores) + " FROM " + resources.getString(R.string.table_name) +
-						" WHERE " + resources.getString(R.string.timestamp) + "=?";
-				Cursor tries = this.getReadableDatabase().rawQuery(sql, new String[] {Long.toString(cursor.getLong(0))});
-				if(tries.moveToFirst())
-					return new String[] {Integer.toString(tries.getInt(0) + 1), tries.getString(1), tries.getString(2)};
+				if(theme.equals("Forestry") && checkAfternoon(current, c))
+					return new String[] {"1", "", ""};
+				else{
+					sql = "SELECT " + resources.getString(R.string.tries) + ", " +  resources.getString(R.string.event_score) + ", " + 
+							resources.getString(R.string.all_scores) + " FROM " + resources.getString(R.string.table_name) +
+							" WHERE " + resources.getString(R.string.timestamp) + "=?";
+					Cursor tries = this.getReadableDatabase().rawQuery(sql, new String[] {Long.toString(cursor.getLong(0))});
+					if(tries.moveToFirst())
+						return new String[] {Integer.toString(tries.getInt(0) + 1), tries.getString(1), tries.getString(2)};
+				}
 			}
 		} 
 		return new String[] {"1", "", ""};
@@ -276,7 +286,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	//checks most recently played times for 3 goes in 1 day
-	public boolean checkRecent(String eventName, String id) {
+	public boolean checkRecent(String eventName, String id, Activity activity) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		String theme = prefs.getString(resources.getString(R.string.pref_key_theme), 
+				resources.getString(R.string.settings_theme_default));
 		String sql = "SELECT * FROM " + resources.getString(R.string.table_name) + " WHERE " + 
 				resources.getString(R.string.event_name) + "=? AND " +
 				resources.getString(R.string.user_id) + "=?";
@@ -291,6 +304,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				//check for same day
 				if(checkDate(current, last))
 					return true;
+				if(theme.equals("Forestry")){
+					//check if afternoon
+					if(checkAfternoon(current, last))
+						return true;
+				}
 				//check if more than 5 min has passed
 				if(current.getTimeInMillis() - cursor.getLong(2) < 5 * 60 * 1000){
 					//check amount of tries
@@ -301,6 +319,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			}
 		}
 		return false;
+	}
+
+	private boolean checkAfternoon(Calendar current, Calendar last) {
+		return (last.get(Calendar.HOUR_OF_DAY) < 12 && current.get(Calendar.HOUR_OF_DAY) >= 12);
 	}
 
 	//checks if date is not the same

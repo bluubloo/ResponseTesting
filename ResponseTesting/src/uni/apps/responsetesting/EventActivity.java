@@ -11,6 +11,7 @@ import uni.apps.responsetesting.fragment.events.MonkeyLadderFragment;
 import uni.apps.responsetesting.fragment.events.OneCardLearningFragment;
 import uni.apps.responsetesting.fragment.events.PatternRecreationFragment;
 import uni.apps.responsetesting.fragment.events.QuestionaireFragment;
+import uni.apps.responsetesting.fragment.events.QuestionaireQuestionFragment;
 import uni.apps.responsetesting.fragment.events.StroopTest2Fragment;
 import uni.apps.responsetesting.interfaces.listener.EventInstructionsListener;
 import uni.apps.responsetesting.utils.ActivityUtilities;
@@ -34,7 +35,7 @@ import android.view.MenuItem;
  * @author Mathew Andela
  *
  */
-public class EventActivity extends Activity implements EventInstructionsListener {
+public class EventActivity extends Activity implements EventInstructionsListener  {
 
 	//Needed Variables
 	private FragmentManager frag_manager;
@@ -85,6 +86,11 @@ public class EventActivity extends Activity implements EventInstructionsListener
 
 	public void setFragment(){
 		Resources r = getResources();
+		if(eventName.equals(r.getString(R.string.event_name_questionaire)) && checkTheme()){
+			fragment = new QuestionaireQuestionFragment();
+			return;
+		}
+		
 		//TODO add new Event fragments here
 		if(eventName.equals(r.getString(R.string.event_name_finger_tap)))
 			fragment = new FingerTapTestFragment();
@@ -110,6 +116,13 @@ public class EventActivity extends Activity implements EventInstructionsListener
 			fragment = new CenterArrowFragment();
 		else if(eventName.equals(r.getString(R.string.event_name_monkey)))
 			fragment = new MonkeyLadderFragment();
+	}
+
+	private boolean checkTheme() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String theme = prefs.getString(getResources().getString(R.string.pref_key_theme), 
+				getResources().getString(R.string.settings_theme_default));
+		return theme.equals("Default");
 	}
 
 	@Override
@@ -167,5 +180,11 @@ public class EventActivity extends Activity implements EventInstructionsListener
 	public void goBack() {
 		//goes back to main menu
 		onBackPressed();
+	}
+
+	@Override
+	public void onNextClick(String total, String light, String sound, String hr) {
+		QuestionaireQuestionFragment frag = QuestionaireQuestionFragment.getInstance(total, light, sound, hr);
+		frag_manager.beginTransaction().replace(R.id.event_container, frag, EVENT_TAG).commit();
 	}
 }

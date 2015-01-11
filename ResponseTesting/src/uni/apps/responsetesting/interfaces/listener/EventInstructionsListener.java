@@ -11,4 +11,5 @@ public interface EventInstructionsListener {
 
 	public void switchFragments();
 	public void goBack();
+	public void onNextClick(String total, String light, String sound, String hr);
 }

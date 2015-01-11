@@ -2,18 +2,19 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
     <!-- Application theme. -->
     <style name="DefaultTheme" parent="AppBaseTheme">
+
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarTabStyle">@style/DefaultActionBarTabs</item>
@@ -87,7 +88,7 @@
         <!-- tab indicator -->
         <item name="android:background">@drawable/tab_indicator_magic</item>
     </style>
-    
+
     <style name="DefaultActionBarTabs" parent="@android:style/Widget.Holo.ActionBar.TabView">
 
         <!-- tab indicator -->
@@ -146,6 +147,13 @@
         <item name="android:layout_marginEnd">5dp</item>
         <item name="android:contentDescription">@string/image_descript</item>
         <item name="android:focusable">false</item>
+    </style>
+
+    <style name="about_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
     </style>
 
 </resources>

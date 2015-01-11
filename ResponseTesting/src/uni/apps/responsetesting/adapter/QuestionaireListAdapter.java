@@ -1,6 +1,7 @@
 package uni.apps.responsetesting.adapter;
 
 import uni.apps.responsetesting.R;
+import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -27,10 +28,10 @@ public class QuestionaireListAdapter extends BaseAdapter {
 
 	//sets variables
 	public QuestionaireListAdapter(Activity activity){
-		data = activity.getResources().getStringArray(R.array.questionaire_array);
+		data = activity.getResources().getStringArray(ActivityUtilities.getThemeQuestionsId(activity));
 		ratings = new float[data.length];
 		for(int i = 0; i < ratings.length; i++)
-			ratings[i] = 3;
+			ratings[i] = 0;
 		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 	}
 

@@ -60,7 +60,7 @@ public class Results {
 	public static void insertResult(String testName, String result, long time, Activity activity, String id){
 		Resources r = activity.getResources();
 		DatabaseHelper db = DatabaseHelper.getInstance(activity, r);
-		String[] info = db.getSingleTries(testName, id);
+		String[] info = db.getSingleTries(testName, id, activity);
 
 		ContentValues values = new ContentValues();
 		if(resultIsBetter(result, info[1], testName, r))
@@ -199,99 +199,26 @@ public class Results {
 					activity.getResources()).getMultiUsers(), activity);
 
 			FileWriter fw = new FileWriter(file);
-
-			/*fw.append("Event Name");
-			fw.append(',');
-			fw.append("Score");
-			fw.append(',');
-			fw.append("Time");
-			fw.append(',');
-			fw.append("Extra Notes");
-			fw.append(',');
-			fw.append("Tries");
-			fw.append(',');
-			fw.append("All Scores");
-			fw.append(',');
-			fw.append("User Id");
-			fw.append(',');
-			fw.append("Username");
-			fw.append("\n");
-
-			if(results.moveToFirst()){
-				do{
-					Log.d(TAG, "sent =" + results.getString(3));
-					fw.append(results.getString(0));
-					fw.append(',');
-					fw.append(results.getString(1));
-					fw.append(',');
-					Calendar c = Calendar.getInstance();
-					c.setTimeInMillis(results.getLong(2));
-					fw.append(c.getTime().toString());
-				//	fw.append(Long.toString(results.getLong(2)));
-					fw.append(',');
-					fw.append(results.getString(4));
-					fw.append(',');
-					fw.append(results.getString(6));
-					fw.append(',');
-					fw.append(results.getString(7));
-					fw.append(',');
-					String id = results.getString(5);
-					fw.append(id);
-					fw.append(',');
-					if(nameMap.containsKey(id))
-						fw.append(nameMap.get(id));
-					else
-						fw.append("Unknown");
-					fw.append("\n");
-				} while(results.moveToNext());
-			}
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+			String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), 
+					activity.getResources().getString(R.string.settings_theme_default));
+			
+			if(theme.equals("Magic"))
+				themeCSVMagic(results, quest, nameMap, fw, activity);
+			else
+				themeCSV(results, quest, nameMap, fw);
 
 			fw.flush();
-			fw.append("\n");
-			fw.append("\n");
-			fw.append("Time");
-			fw.append(',');
-			fw.append("Total Sleep");
-			fw.append(',');
-			fw.append("Light Sleep");
-			fw.append(',');
-			fw.append("Sound Sleep");
-			fw.append(',');
-			fw.append("Resting HR");
-			fw.append(',');
-			fw.append("Ratings");
-			fw.append(',');
-			fw.append("User Id");
-			fw.append(',');
-			fw.append("Username");
-			fw.append("\n");
+			fw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 
-			if(quest.moveToFirst()){
-			Calendar c = Calendar.getInstance();
-				c.setTimeInMillis(quest.getLong(0));
-				fw.append(c.getTime().toString());
-				fw.append(Long.toString(quest.getLong(0)));
-				fw.append(',');
-				fw.append(quest.getString(1));
-				fw.append(',');
-				fw.append(quest.getString(2));
-				fw.append(',');
-				fw.append(quest.getString(3));
-				fw.append(',');
-				fw.append(quest.getString(7));
-				fw.append(',');
-				fw.append(quest.getString(4));
-				fw.append(',');
-				String id = quest.getString(6);
-				fw.append(id);
-				fw.append(',');
-				if(nameMap.containsKey(id))
-					fw.append(nameMap.get(id));
-				else
-					fw.append("Unknown");
-				fw.append("\n");
-			}
-			 */
+	private static void themeCSVMagic(Cursor results, Cursor quest, HashMap<String, String> nameMap,
+			FileWriter fw, Activity activity){
+		try{
 			fw.append("User Name");
 			fw.append(',');
 			fw.append("Time");
@@ -379,13 +306,110 @@ public class Results {
 				fw.append(r.getString());
 				fw.append("\n");
 			}
-
-			fw.flush();
-			fw.close();
-		} catch (Exception e) {
+		} catch(Exception e){
 			e.printStackTrace();
 		}
-		return true;
+
+	}
+
+	private static void themeCSV(Cursor results, Cursor quest, HashMap<String, String> nameMap, FileWriter fw){
+		try{
+			fw.append("Event Name");
+			fw.append(',');
+			fw.append("Score");
+			fw.append(',');
+			fw.append("Time");
+			fw.append(',');
+			fw.append("Extra Notes");
+			fw.append(',');
+			fw.append("Tries");
+			fw.append(',');
+			fw.append("All Scores");
+			fw.append(',');
+			fw.append("User Id");
+			fw.append(',');
+			fw.append("Username");
+			fw.append("\n");
+
+			if(results.moveToFirst()){
+				do{
+					Log.d(TAG, "sent =" + results.getString(3));
+					fw.append(results.getString(0));
+					fw.append(',');
+					fw.append(results.getString(1));
+					fw.append(',');
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(results.getLong(2));
+					fw.append(c.getTime().toString());
+					//	fw.append(Long.toString(results.getLong(2)));
+					fw.append(',');
+					fw.append(results.getString(4));
+					fw.append(',');
+					fw.append(results.getString(6));
+					fw.append(',');
+					fw.append(results.getString(7));
+					fw.append(',');
+					String id = results.getString(5);
+					fw.append(id);
+					fw.append(',');
+					if(nameMap.containsKey(id))
+						fw.append(nameMap.get(id));
+					else
+						fw.append("Unknown");
+					fw.append("\n");
+				} while(results.moveToNext());
+			}
+
+			fw.flush();
+			fw.append("\n");
+			fw.append("\n");
+			fw.append("Time");
+			fw.append(',');
+			fw.append("Total Sleep");
+			fw.append(',');
+			fw.append("Light Sleep");
+			fw.append(',');
+			fw.append("Sound Sleep");
+			fw.append(',');
+			fw.append("Resting HR");
+			fw.append(',');
+			fw.append("Ratings");
+			fw.append(',');
+			fw.append("User Id");
+			fw.append(',');
+			fw.append("Username");
+			fw.append("\n");
+
+			if(quest.moveToFirst()){
+				Calendar c = Calendar.getInstance();
+				c.setTimeInMillis(quest.getLong(0));
+				fw.append(c.getTime().toString());
+				fw.append(Long.toString(quest.getLong(0)));
+				fw.append(',');
+				fw.append(quest.getString(1));
+				fw.append(',');
+				fw.append(quest.getString(2));
+				fw.append(',');
+				fw.append(quest.getString(3));
+				fw.append(',');
+				fw.append(quest.getString(7));
+				fw.append(',');
+				fw.append(quest.getString(4));
+				fw.append(',');
+				String id = quest.getString(6);
+				fw.append(id);
+				fw.append(',');
+				if(nameMap.containsKey(id))
+					fw.append(nameMap.get(id));
+				else
+					fw.append("Unknown");
+				fw.append("\n");
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
 	}
 
 	private static String[] formatRatings(String s) {

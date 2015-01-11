@@ -73,7 +73,7 @@ public class MainMenuFragment extends ListFragment {
 			if(s.equals(r.getString(R.string.event_name_questionaire)))
 				addable = db.checkQuestionaire(s, userId);
 			else
-				addable = checkPreferences(s) && db.checkRecent(s, userId);
+				addable = checkPreferences(s) && db.checkRecent(s, userId, getActivity());
 			if(addable)
 				list.add(s);
 		}

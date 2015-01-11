@@ -208,6 +208,7 @@ public class MainMenuActivityTabbed extends Activity implements ActionBar.TabLis
 		menu.findItem(R.id.action_switch_user).setVisible(!single);
 		return super.onPrepareOptionsMenu(menu);
 	}
+	
 
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
