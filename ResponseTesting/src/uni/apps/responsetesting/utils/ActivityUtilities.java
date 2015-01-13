@@ -43,10 +43,10 @@ public class ActivityUtilities {
 			activity.startActivity(new Intent(activity, SettingsActivity.class));
 			return true;
 		case R.id.action_send_all:
-			Email.sendResults(activity, true);
+			Email.sendResults(activity, true, false);
 			return true;
 		case R.id.action_send_recent:
-			Email.sendResults(activity, false);
+			Email.sendResults(activity, false, false);
 			return true;
 		case R.id.action_results:
 			activity.startActivity(new Intent(activity, ResultsDisplayActivity.class));
@@ -59,6 +59,9 @@ public class ActivityUtilities {
 			return true;
 		case R.id.action_about:
 			activity.startActivity(new Intent(activity, AboutActivity.class));
+			return true;
+		case R.id.action_email_intent:
+			Email.sendResults(activity, true, true);
 			return true;
 		default:
 			return false;
@@ -344,7 +347,4 @@ public class ActivityUtilities {
 			return true;
 		}
 	}
-	
-	
-
 }

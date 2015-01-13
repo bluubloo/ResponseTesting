@@ -75,32 +75,6 @@ public class ResultsFragment extends Fragment {//implements OnItemSelectedListen
 		setUpGraph(test);
 		return view;
 	}
-
-/*	private void setUpSpinner(View view) {
-		//sets up the spinner
-		Spinner spinner = (Spinner) view.findViewById(R.id.result_dis_spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-				R.array.event_name_array_graphs, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-		spinner.setOnItemSelectedListener(this);
-	}
-	
-
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position,
-			long id) {
-		//get value
-		String value = (String) parent.getItemAtPosition(position);
-		//set up graph
-		if(value.equals("Sleep Duration")){
-			setGraphForSleep(value);
-		} else if(value.equals("Resting HR")){
-			setGraphForHR(value);
-		} else{
-			setGraphForEvent(value);
-		}
-	}*/
 	
 	private void setUpGraph(String test){
 		if(test.equals("Sleep Duration")){
@@ -188,7 +162,7 @@ public class ResultsFragment extends Fragment {//implements OnItemSelectedListen
 			update();
 		else{
 			//get values			
-			ArrayList<Number[]> data = GraphUtilities.getScores(cursor, userId);
+			ArrayList<Number[]> data = GraphUtilities.getScores(cursor, userId, value, getActivity());
 			//dates
 			Number[] dates = data.get(0);
 			data.remove(0);

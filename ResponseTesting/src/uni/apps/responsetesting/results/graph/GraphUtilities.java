@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import uni.apps.responsetesting.R;
+import android.app.Activity;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -83,7 +86,7 @@ public class GraphUtilities {
 				allNull = false;
 			}
 		}
-		
+
 		if(!allNull){
 			min -= 1000;
 			max += 1000;
@@ -220,12 +223,12 @@ public class GraphUtilities {
 	//get data
 
 	//gets data for specified events
-	public static ArrayList<Number[]> getScores(Cursor cursor, String id){
+	public static ArrayList<Number[]> getScores(Cursor cursor, String id, String testName, Activity activity){
 		//list variables
 		ArrayList<Number> dates = new ArrayList<Number>();
 		ArrayList<Number> scores = new ArrayList<Number>();
 		ArrayList<Number> times = new ArrayList<Number>();
-
+		Resources r = activity.getResources();
 		if(cursor.moveToFirst()){
 			do{
 				//checks id
@@ -240,12 +243,17 @@ public class GraphUtilities {
 					//checks scrore type
 					//adds scores to list
 					String s = cursor.getString(1);
-					int index = s.indexOf('|');
-					if(index != -1){
-						scores.add(Double.parseDouble(s.substring(0, index)));
-						times.add(Double.parseDouble(s.substring(index + 1)));
-					} else
-						scores.add(Double.parseDouble(s));
+					if(testName.equals(r.getString(R.string.event_name_appear_obj)) || 
+							testName.equals(r.getString(R.string.event_name_appear_obj_fixed))){
+						scores.add(getAverage(s));
+					} else {
+						int index = s.indexOf('|');
+						if(index != -1){
+							scores.add(Double.parseDouble(s.substring(0, index)));
+							times.add(Double.parseDouble(s.substring(index + 1)));
+						} else
+							scores.add(Double.parseDouble(s));
+					}
 				}				
 			} while(cursor.moveToNext());
 		}
@@ -277,6 +285,20 @@ public class GraphUtilities {
 			return tmp;
 		}
 		return new ArrayList<Number[]>();
+	}
+
+	private static double getAverage(String s){
+		return getScore(s) / 5;
+	}
+	
+	private static double getScore(String s) {
+		if(s.length() == 0)
+			return 0;
+		double tmp = 0;
+		int index = s.indexOf('|');
+		if(index != -1)
+			tmp += Double.parseDouble(s.substring(0, index));
+		return tmp + getScore(s.substring(index + 1));
 	}
 
 	//gets sleep durations

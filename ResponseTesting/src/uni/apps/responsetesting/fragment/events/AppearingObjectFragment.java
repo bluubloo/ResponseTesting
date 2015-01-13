@@ -245,7 +245,7 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 			String avg =  Conversion.milliToStringSeconds(average, 5);
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 			String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
-			Results.insertResult(eventName,avg,
+			Results.insertResult(eventName,getAllScores(),
 					Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 			ActivityUtilities.displayResults(getActivity(), eventName + " Test", 
 					"Average Time to Click Image = " + avg + "s");
@@ -258,6 +258,14 @@ public class AppearingObjectFragment extends Fragment implements AppearingObject
 		for(DurationInfo a: data)
 			tmp += a.getDuration();
 		return tmp / data.length;
+		
+	}
+	
+	private String getAllScores(){
+		String tmp = "";
+		for(DurationInfo a: data)
+			tmp += Double.toString(a.getDuration()) + "|";
+		return tmp;
 	}
 
 	@Override

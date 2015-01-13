@@ -93,6 +93,7 @@ public class SplashScreenActivity extends Activity {
 		menu.findItem(R.id.action_setup).setVisible(false);
 		menu.findItem(R.id.action_settings).setVisible(false);
 		menu.findItem(R.id.action_about).setVisible(false);
+		menu.findItem(R.id.action_email_intent).setVisible(false);
 		return super.onPrepareOptionsMenu(menu);
 	}
 

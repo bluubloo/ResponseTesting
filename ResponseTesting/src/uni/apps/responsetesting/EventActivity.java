@@ -122,7 +122,7 @@ public class EventActivity extends Activity implements EventInstructionsListener
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String theme = prefs.getString(getResources().getString(R.string.pref_key_theme), 
 				getResources().getString(R.string.settings_theme_default));
-		return theme.equals("Default");
+		return !theme.equals("Magic");
 	}
 
 	@Override

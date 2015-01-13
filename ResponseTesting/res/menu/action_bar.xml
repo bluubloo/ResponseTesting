@@ -20,7 +20,7 @@
         android:title="@string/action_send_all"/>
     <item
         android:id="@+id/action_send_recent"
-        android:orderInCategory="4"
+        android:orderInCategory="5"
         android:showAsAction="never"
         android:title="@string/action_send_recent"/>
     <item
@@ -68,5 +68,11 @@
         android:orderInCategory="100"
          android:showAsAction="never"
          android:title="@string/action_about"/>
+    <item 
+        android:id="@+id/action_email_intent" 
+        android:orderInCategory="4"
+         android:showAsAction="never"
+         android:title="@string/action_email_intent"/>
+    
 
 </menu>

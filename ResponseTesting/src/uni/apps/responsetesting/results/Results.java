@@ -230,6 +230,8 @@ public class Results {
 			}
 			fw.append("Total Sleep");
 			fw.append(',');
+			fw.append("Resting HR");
+			fw.append(',');
 			fw.append("Mood");
 			fw.append(',');
 			fw.append("Fatigue");
@@ -384,7 +386,7 @@ public class Results {
 				Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(quest.getLong(0));
 				fw.append(c.getTime().toString());
-				fw.append(Long.toString(quest.getLong(0)));
+				//fw.append(Long.toString(quest.getLong(0)));
 				fw.append(',');
 				fw.append(quest.getString(1));
 				fw.append(',');
