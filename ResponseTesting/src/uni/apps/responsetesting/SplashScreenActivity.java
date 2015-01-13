@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 
 public class SplashScreenActivity extends Activity {
 
-	private static final String TAG = "SplashScreenActivity";
+//	private static final String TAG = "SplashScreenActivity";
 	private Handler timerHandler = new Handler();
 	//TODO Add to manifest
 
@@ -54,8 +54,8 @@ public class SplashScreenActivity extends Activity {
 		Point p = new Point(0,0);
 		this.getWindowManager().getDefaultDisplay().getSize(p);
 		int dim = p.x;
-		if(dim > 1000)
-			dim = 1000;
+		if(dim > 2000)
+			dim = 2000;
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(dim, dim);
 		params.setMargins(10, 10, 10, 10);
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);

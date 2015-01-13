@@ -84,23 +84,6 @@ public class Email {
 		File file = new File(PATH);
 		Uri uri = Uri.fromFile(file);
 		
-		/*Intent email = new Intent(Intent.ACTION_SEND);
-		  email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
-		  //email.putExtra(Intent.EXTRA_CC, new String[]{ to});
-		  //email.putExtra(Intent.EXTRA_BCC, new String[]{to});
-		  email.putExtra(Intent.EXTRA_SUBJECT, "Test " + testName + " - Results");
-		  email.putExtra(Intent.EXTRA_TEXT, body);
-
-		  //need this to prompts email client only
-		  email.setType("message/rfc822");
-
-		  activity.startActivity(Intent.createChooser(email, "Choose an Email client :"));
-		/*try {
-		    activity.startActivity(Intent.createChooser(i, "Send mail..."));
-		} catch (android.content.ActivityNotFoundException ex) {
-		    Toast.makeText(activity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-		}*/
-		
 		Intent sendEmailIntent = new Intent(Intent.ACTION_SEND);
 		sendEmailIntent.setType("message/rfc822");
 		sendEmailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { to });                

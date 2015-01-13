@@ -415,18 +415,18 @@ public class Results {
 	}
 
 	private static String[] formatRatings(String s) {
-		String s1 = getRating(s);
-		String s2 = getRating(s1);
-		String s3 = getRating(s2);
-		return new String[]{s1, s2, s3, getRating(s3)};
+		String[] s1 = getRating(s);
+		String[] s2 = getRating(s1[1]);
+		String[] s3 = getRating(s2[1]);
+		return new String[]{s1[0], s2[0], s3[0], getRating(s3[1])[0]};
 	}
 
-	private static String getRating(String s){
+	private static String[] getRating(String s){
 		int i = s.indexOf('|');
 		if(i != -1)
-			return s.substring(0, i);
+			return new String[] {s.substring(0, i), s.substring(i + 1)};
 		else
-			return s;
+			return new String[] {s};
 	}
 
 	private static int exists(Calendar l, ArrayList<ResultsInfo> tmp, String userName) {

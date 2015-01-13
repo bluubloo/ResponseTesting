@@ -388,8 +388,7 @@ public final class R {
         public static final int about_dev_text3=0x7f070099;
         public static final int about_dev_title=0x7f070097;
         public static final int about_purpose_text=0x7f070096;
-        /**  <string name="settings_theme_default">Forestry</string> 
- About Page Strings 
+        /**  About Page Strings 
          */
         public static final int about_purpose_title=0x7f070095;
         public static final int action_about=0x7f07002b;
@@ -515,6 +514,7 @@ public final class R {
         public static final int settings_sum_user=0x7f070073;
         public static final int settings_sum_user_name=0x7f07007a;
         /**   <string name="settings_theme_default">Default</string> 
+ <string name="settings_theme_default">Magic</string>
          */
         public static final int settings_theme_default=0x7f070094;
         /**  Other Settings Strings 
