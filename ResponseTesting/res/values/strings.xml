@@ -49,7 +49,7 @@
     <string name="action_switch">Switch Users</string>
     <string name="action_home">Go to Main Menu</string>
     <string name="action_about">About</string>
-    <string name="action_email_intent">Send Results Via Email App</string>
+    <string name="action_email_intent">Send Results via Email App</string>
 
     <!-- Main Menu Strings -->
     <string name="title_section1">Attention</string>
