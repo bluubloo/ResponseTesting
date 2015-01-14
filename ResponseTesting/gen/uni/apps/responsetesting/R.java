@@ -513,8 +513,8 @@ public final class R {
         public static final int settings_sum_test=0x7f070075;
         public static final int settings_sum_user=0x7f070073;
         public static final int settings_sum_user_name=0x7f07007a;
-        /**   <string name="settings_theme_default">Default</string> 
- <string name="settings_theme_default">Magic</string>
+        /**  <string name="settings_theme_default">Default</string> 
+ <string name="settings_theme_default">Magic</string> 
          */
         public static final int settings_theme_default=0x7f070094;
         /**  Other Settings Strings 

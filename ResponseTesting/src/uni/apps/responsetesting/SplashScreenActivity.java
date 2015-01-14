@@ -11,11 +11,18 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+
+/**
+ * This class displays the splash screen and handles events related to it
+ * 
+ * 
+ * @author Mathew Andela
+ *
+ */
 public class SplashScreenActivity extends Activity {
 
 //	private static final String TAG = "SplashScreenActivity";
 	private Handler timerHandler = new Handler();
-	//TODO Add to manifest
 
 	//-----------------------------------------------------------------------------
 	//RUNNABLES
@@ -24,6 +31,7 @@ public class SplashScreenActivity extends Activity {
 
 		@Override
 		public void run() {
+			//Changes to main menu
 			Intent i = new Intent(SplashScreenActivity.this, MainMenuActivityTabbed.class);
 			startActivity(i);
 		}
@@ -34,9 +42,11 @@ public class SplashScreenActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		//changes theme
 		ActivityUtilities.changeTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		//sets splash screen image
 		FrameLayout view = (FrameLayout) findViewById(R.id.container);
 		view.setBackground(getResources().getDrawable(ActivityUtilities.getSplashIconId(this)));
 	}
@@ -44,13 +54,14 @@ public class SplashScreenActivity extends Activity {
 	@Override
 	public void onResume(){
 		super.onResume();
+		//set image info and starts timer
 		setUpImage();
 		timerHandler.postDelayed(timerRunnable, 3000);
 	}
 
 	private void setUpImage() {
+		//sets image info
 		FrameLayout view = (FrameLayout) findViewById(R.id.container);
-		//view.setBackground(getResources().getDrawable(ActivityUtilities.getThemeIconId(this)));
 		Point p = new Point(0,0);
 		this.getWindowManager().getDefaultDisplay().getSize(p);
 		int dim = p.x;

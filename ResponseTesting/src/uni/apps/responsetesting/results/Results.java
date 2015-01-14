@@ -202,7 +202,7 @@ public class Results {
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 			String theme = prefs.getString(activity.getResources().getString(R.string.pref_key_theme), 
 					activity.getResources().getString(R.string.settings_theme_default));
-			
+
 			if(theme.equals("Magic"))
 				themeCSVMagic(results, quest, nameMap, fw, activity);
 			else
