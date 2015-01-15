@@ -52,9 +52,9 @@ public class Email {
 	{
 		//gets file
 		String fileName = "";
-
+		String userName = ActivityUtilities.getName(activity);
 		try {
-			fileName = URLEncoder.encode("Results.csv", "UTF-8");
+			fileName = URLEncoder.encode(userName + "_Results.csv", "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
@@ -70,6 +70,8 @@ public class Email {
 		}
 	}
 	
+
+
 	private static void sendViaIntent(Activity activity, String PATH, String testName, String body){
 		String to = "";
 		//to addresses

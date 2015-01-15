@@ -347,4 +347,15 @@ public class ActivityUtilities {
 			return true;
 		}
 	}
+	
+	public static String getName(Activity activity) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		Resources r = activity.getResources();
+		boolean single = prefs.getBoolean(r.getString(R.string.pref_key_user), true);
+		if(single)
+			return prefs.getString(r.getString(R.string.pref_key_user_name), 
+					r.getString(R.string.setup_mode_default_user_name_single));
+		else
+			return DatabaseHelper.getInstance(activity, r).getFirstGroupName();
+	}
 }

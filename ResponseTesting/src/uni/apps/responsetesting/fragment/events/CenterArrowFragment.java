@@ -219,7 +219,6 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 			if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 				start.setEnabled(false);
 				instruct.setEnabled(false);
-				start.setVisibility(View.GONE);
 				container.setVisibility(View.VISIBLE);
 				running = true;
 				grid.setVisibility(View.VISIBLE);
@@ -308,7 +307,6 @@ public class CenterArrowFragment extends Fragment implements CenterArrowListener
 		//resets variables
 		start.setEnabled(true);
 		instruct.setEnabled(true);
-		start.setVisibility(View.VISIBLE);
 		container.setVisibility(View.GONE);
 		timerHandler.removeCallbacks(timerRunnable);
 		running = false;

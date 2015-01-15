@@ -220,7 +220,6 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 			if(ActivityUtilities.checkPlayable(eventName, playTimes, getActivity())){
 				//initalises test variables
 				results = new CorrectDurationInfo[maxTurns];
-				button.setText("");
 				button.setEnabled(false);
 				instruct.setEnabled(false);
 				counter = 0;
@@ -239,7 +238,6 @@ public class ChangingDirectionsFragment extends Fragment implements ChangingDire
 		//ends test
 		//resets test vairables
 		removeTimerCallbacks();
-		button.setText(getResources().getString(R.string.start));
 		button.setEnabled(true);
 		instruct.setEnabled(true);
 		clearImageViews();

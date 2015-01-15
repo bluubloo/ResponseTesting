@@ -418,6 +418,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		return "single";
 	}
+	
+	public String getFirstGroupName(){
+		Cursor cursor = this.getReadableDatabase().query(resources.getString(R.string.table_name_multi_settings),
+				new String[] {resources.getString(R.string.user_group)}, null, null, null, null, null, "1");
+		if(cursor.moveToFirst())
+			return cursor.getString(0);
+		return "Unassigned";
+	}
 
 
 }

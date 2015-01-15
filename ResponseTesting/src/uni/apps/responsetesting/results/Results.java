@@ -10,6 +10,7 @@ import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.models.CorrectDurationInfo;
 import uni.apps.responsetesting.models.ResultsInfo;
+import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -193,7 +194,8 @@ public class Results {
 			return false;
 
 		File root = Environment.getExternalStorageDirectory();
-		File file = new File(root, "Results.csv");
+		String name  = ActivityUtilities.getName(activity);
+		File file = new File(root, name + "_Results.csv");
 		try {
 			HashMap<String, String> nameMap = cursorToMap(DatabaseHelper.getInstance(activity,
 					activity.getResources()).getMultiUsers(), activity);
