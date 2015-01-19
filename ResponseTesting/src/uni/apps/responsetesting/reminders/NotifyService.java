@@ -1,6 +1,7 @@
 package uni.apps.responsetesting.reminders;
 
 import uni.apps.responsetesting.MainMenuActivity;
+import uni.apps.responsetesting.MainMenuActivityTabbed;
 import uni.apps.responsetesting.R;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -66,7 +67,7 @@ public class NotifyService extends Service {
 				        .setAutoCancel(true)
 				        .setDefaults(Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND);
 				// Creates an explicit intent for an Activity in your app
-				Intent resultIntent = new Intent(this, MainMenuActivity.class);
+				Intent resultIntent = new Intent(this, MainMenuActivityTabbed.class);
 				// The stack builder object will contain an artificial back stack for the
 				// started Activity.
 				// This ensures that navigating backward from the Activity leads out of

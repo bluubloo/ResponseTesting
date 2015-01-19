@@ -1,6 +1,7 @@
 package uni.apps.responsetesting.mail;
 
 import uni.apps.responsetesting.MainMenuActivity;
+import uni.apps.responsetesting.MainMenuActivityTabbed;
 import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.database.DatabaseHelper;
 import uni.apps.responsetesting.models.EmailTaskData;
@@ -98,7 +99,7 @@ public class EmailTask extends AsyncTask<EmailTaskData, Void, Boolean> {
 		        .setAutoCancel(true)
 		        .setDefaults(Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND);
 		// Creates an explicit intent for an Activity in your app
-		Intent resultIntent = new Intent(activity, MainMenuActivity.class);
+		Intent resultIntent = new Intent(activity, MainMenuActivityTabbed.class);
 		// The stack builder object will contain an artificial back stack for the
 		// started Activity.
 		// This ensures that navigating backward from the Activity leads out of
