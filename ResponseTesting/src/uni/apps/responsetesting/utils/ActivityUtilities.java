@@ -234,13 +234,13 @@ public class ActivityUtilities {
 				activity.getResources().getString(R.string.settings_theme_default));
 		int imageId = 0;
 		if(theme.equals("Default"))
-			imageId = R.drawable.ic_launcher_512;
+			imageId = R.drawable.ic_launcher_big;
 		else if(theme.equals("Magic"))
-			imageId = R.drawable.ic_magic_512;
+			imageId = R.drawable.ic_magic_big;
 		else if(theme.equals("Forestry"))
-			imageId = R.drawable.ic_forestry_512;
+			imageId = R.drawable.ic_forestry_big_2;
 		else
-			imageId = R.drawable.ic_launcher_512;
+			imageId = R.drawable.ic_launcher_big;
 		return imageId;
 	}
 	

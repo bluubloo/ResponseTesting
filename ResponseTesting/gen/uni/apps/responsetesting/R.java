@@ -143,10 +143,10 @@ public final class R {
         public static final int hand=0x7f020054;
         public static final int home=0x7f020055;
         public static final int ic_delete=0x7f020056;
-        public static final int ic_forestry_512=0x7f020057;
+        public static final int ic_forestry_big_2=0x7f020057;
         public static final int ic_launcher=0x7f020058;
-        public static final int ic_launcher_512=0x7f020059;
-        public static final int ic_magic_512=0x7f02005a;
+        public static final int ic_launcher_big=0x7f020059;
+        public static final int ic_magic_big=0x7f02005a;
         public static final int ic_menu_add=0x7f02005b;
         public static final int ic_menu_forestry=0x7f02005c;
         public static final int ic_menu_info=0x7f02005d;

@@ -3,9 +3,11 @@ package uni.apps.responsetesting;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -64,10 +66,22 @@ public class SplashScreenActivity extends Activity {
 		FrameLayout view = (FrameLayout) findViewById(R.id.container);
 		Point p = new Point(0,0);
 		this.getWindowManager().getDefaultDisplay().getSize(p);
-		int dim = p.x;
-		if(dim > 2000)
-			dim = 2000;
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(dim, dim);
+		//claculate width
+		int dimw = p.x;
+		int dimh = p.y;
+		/*if(dimw > 2250){
+			dimw = 2250;
+		}
+		//calculate height
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String theme = prefs.getString(getResources().getString(R.string.pref_key_theme), 
+				getResources().getString(R.string.settings_theme_default));
+		if(!theme.equals("Magic"))
+			dimh = (dimw / 2) * 3;
+		else
+			dimh = dimw;*/
+		
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(dimw, dimh);
 		params.setMargins(10, 10, 10, 10);
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
 		view.setLayoutParams(params);
