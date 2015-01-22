@@ -278,7 +278,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return this.getReadableDatabase().rawQuery(sql, null);
 	}
 
-
 	//All Questionaire Rows
 	public Cursor getAllQuestionaireResults() {
 		String sql = "SELECT * FROM " + resources.getString(R.string.table_name_questionaire);

@@ -384,7 +384,9 @@ public class Results {
 			fw.append("Username");
 			fw.append("\n");
 
+			Log.d(TAG, "Quest values: " + Integer.toString(quest.getCount()));
 			if(quest.moveToFirst()){
+				do{
 				Calendar c = Calendar.getInstance();
 				c.setTimeInMillis(quest.getLong(0));
 				fw.append(c.getTime().toString());
@@ -408,6 +410,7 @@ public class Results {
 				else
 					fw.append("Unknown");
 				fw.append("\n");
+				} while(quest.moveToNext());
 			}
 		}
 		catch(Exception e){

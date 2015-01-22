@@ -258,6 +258,7 @@ public class ActivityUtilities {
 			//checks if event is addable
 			if(s.equals(r.getString(R.string.event_name_questionaire)))
 				addable = db.checkQuestionaire(s, userId);
+				//addable = true;
 			else
 				if(graph)
 					addable = checkPreferences(s, r, activity, userId);
