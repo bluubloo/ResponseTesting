@@ -1,20 +1,13 @@
 package uni.apps.responsetesting.mail;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import uni.apps.responsetesting.R;
 import uni.apps.responsetesting.models.EmailTaskData;
 import uni.apps.responsetesting.results.Results;
 import uni.apps.responsetesting.utils.ActivityUtilities;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 
 /**
  * This class retrieves results from the database and sends it to the specified email address
@@ -30,17 +23,17 @@ public class Email {
 		String body = "Hi\n\nAttached is the Test Results\n\nCheers\nResponse Testing";
 		//decides what values to send
 		if(all){
-			Results.resultsToCSV(activity);
+			//Results.resultsToCSV(activity);
 			sendEmail(activity, body, "All", sendViaIntent);
 		}
 		else{
-			boolean recent = Results.resultsRecentToCSV(activity);
-			if(recent){
+			//boolean recent = Results.resultsRecentToCSV(activity);
+			//if(recent){
 				sendEmail(activity, body, "Recent", sendViaIntent);
-			}
+		/*	}
 			else
 				ActivityUtilities.displayResults(activity, "Email Attempt", "All recent results have already been sent.\n" +
-						"Please select 'Send All Results' if you still wish to send them.");
+						"Please select 'Send All Results' if you still wish to send them.");*/
 		}
 	}
 
@@ -60,19 +53,19 @@ public class Email {
 		}
 		String PATH =  Environment.getExternalStorageDirectory()+"/"+fileName.trim().toString();
 
-		if(sendViaIntent){
+		/*if(sendViaIntent){
 			sendViaIntent(activity, PATH, testName, body);
-		} else{
+		} else{*/
 			//executes email task
 			EmailTask task = new EmailTask();
-			task.execute(new EmailTaskData(new String[]{body, "Test " + testName + " - Results", PATH},
-					activity));
-		}
+			task.execute(new EmailTaskData(new String[]{body, "Test " + testName + " - Results", PATH, testName},
+					activity, sendViaIntent));
+	//	}
 	}
 	
 
 
-	private static void sendViaIntent(Activity activity, String PATH, String testName, String body){
+	/*private static void sendViaIntent(Activity activity, String PATH, String testName, String body){
 		String to = "";
 		//to addresses
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
@@ -110,5 +103,5 @@ public class Email {
 		return prefs.getString(activity.getResources().getString(R.string.pref_key_multi_email), 
 				activity.getResources().getString(R.string.setup_mode_default_email));
 	
-	}
+	}*/
 }

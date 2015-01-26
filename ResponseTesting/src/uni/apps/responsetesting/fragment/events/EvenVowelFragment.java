@@ -191,7 +191,7 @@ public class EvenVowelFragment extends Fragment {
 	//checks if vowel
 	private boolean isVowel() {
 		char l = testText.charAt(1);
-		char[] tmp = new char[] {'a','e','i','o','u'};
+		char[] tmp = new char[] {'a','e','i','o','u','A','E','I','O','U'};
 		for(char c: tmp)
 			if(c == l)
 				return true;

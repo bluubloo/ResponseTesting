@@ -12,10 +12,12 @@ public class EmailTaskData {
 
 	public String[] strings;
 	public Activity activity;
+	public boolean sendViaIntent;
 	
-	public EmailTaskData(String[] data, Activity a){
+	public EmailTaskData(String[] data, Activity a, boolean s){
 		strings = data;
 		activity = a;
+		sendViaIntent = s;
 	}
 	
 }
