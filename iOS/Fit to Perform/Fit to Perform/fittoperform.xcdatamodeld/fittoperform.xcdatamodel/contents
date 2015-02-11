@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="EventResults" representedClassName="Fit_to_Perform.EventResultsModel" syncable="YES">
+        <attribute name="allScores" attributeType="String" syncable="YES"/>
+        <attribute name="day" attributeType="Integer 32" minValueString="1" maxValueString="31" defaultValueString="1" syncable="YES"/>
+        <attribute name="eventName" attributeType="String" syncable="YES"/>
+        <attribute name="eventScore" attributeType="String" syncable="YES"/>
+        <attribute name="hour" attributeType="Integer 32" minValueString="0" maxValueString="23" defaultValueString="0" syncable="YES"/>
+        <attribute name="minute" attributeType="Integer 32" minValueString="0" maxValueString="59" defaultValueString="0" syncable="YES"/>
+        <attribute name="month" attributeType="Integer 32" minValueString="1" maxValueString="12" defaultValueString="1" syncable="YES"/>
+        <attribute name="sent" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="tries" attributeType="Integer 32" minValueString="1" maxValueString="3" defaultValueString="1" syncable="YES"/>
+        <attribute name="userId" attributeType="String" defaultValueString="single" syncable="YES"/>
+        <attribute name="year" attributeType="Integer 32" minValueString="2015" maxValueString="2100" defaultValueString="2015" syncable="YES"/>
+    </entity>
+    <entity name="MultiUserSettings" representedClassName="Fit_to_Perform.MultiUserSettingsModel" syncable="YES">
+        <attribute name="userGroup" attributeType="String" defaultValueString="Unassigned" syncable="YES"/>
+        <attribute name="userId" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="userName" attributeType="String" syncable="YES"/>
+        <attribute name="userSettings" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="QuestionnaireResults" representedClassName="Fit_to_Perform.QuestionnaireResultsModel" syncable="YES">
+        <attribute name="day" attributeType="Integer 32" minValueString="1" maxValueString="31" defaultValueString="1" syncable="YES"/>
+        <attribute name="heartRate" optional="YES" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="hour" attributeType="Integer 32" minValueString="0" maxValueString="23" defaultValueString="0" syncable="YES"/>
+        <attribute name="lightSleep" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="minute" attributeType="Integer 32" minValueString="0" maxValueString="59" defaultValueString="0" syncable="YES"/>
+        <attribute name="month" attributeType="Integer 32" minValueString="1" maxValueString="12" defaultValueString="1" syncable="YES"/>
+        <attribute name="ratings" attributeType="String" syncable="YES"/>
+        <attribute name="sent" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="soundSleep" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalSleep" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="userId" attributeType="String" defaultValueString="single" syncable="YES"/>
+        <attribute name="year" attributeType="Integer 32" minValueString="2015" maxValueString="2100" defaultValueString="2015" syncable="YES"/>
+    </entity>
+    <entity name="Settings" representedClassName="Fit_to_Perform.SettingsModel" syncable="YES">
+        <attribute name="settingsName" attributeType="String" syncable="YES"/>
+        <attribute name="settingsValue" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="EventResults" positionX="-63" positionY="-18" width="128" height="210"/>
+        <element name="MultiUserSettings" positionX="-36" positionY="90" width="128" height="105"/>
+        <element name="QuestionnaireResults" positionX="-54" positionY="45" width="128" height="225"/>
+        <element name="Settings" positionX="-18" positionY="99" width="128" height="75"/>
+    </elements>
+</model>

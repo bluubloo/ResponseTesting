@@ -20,7 +20,7 @@ public class Email {
 
 	//sends results via email
 	public static void sendResults(Activity activity, boolean all, boolean sendViaIntent){
-		String body = "Hi\n\nAttached is the Test Results\n\nCheers\nResponse Testing";
+		String body = "Hi\n\nAttached is the Test Results\n\nCheers\nFit To Perform";
 		//decides what values to send
 		if(all){
 			//Results.resultsToCSV(activity);

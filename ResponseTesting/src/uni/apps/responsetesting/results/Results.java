@@ -194,8 +194,16 @@ public class Results {
 			return false;
 
 		File root = Environment.getExternalStorageDirectory();
+		File in = Environment.getDataDirectory();
 		String name  = ActivityUtilities.getName(activity);
-		File file = new File(root, name + "_Results.csv");
+		File file;
+		Log.d(TAG, Boolean.toString(root.exists()));
+		Log.d(TAG, Boolean.toString(in.exists()));
+		if(!root.exists() && in.exists())
+			file = new File(in, name + "_Results.csv");
+		else
+			file = new File(root, name + "_Results.csv");
+		
 		try {
 			HashMap<String, String> nameMap = cursorToMap(DatabaseHelper.getInstance(activity,
 					activity.getResources()).getMultiUsers(), activity);
@@ -234,11 +242,11 @@ public class Results {
 			fw.append(',');
 			fw.append("Resting HR");
 			fw.append(',');
-			fw.append("Mood");
-			fw.append(',');
 			fw.append("Fatigue");
 			fw.append(',');
 			fw.append("Muscle soreness");
+			fw.append(',');
+			fw.append("Mood");
 			fw.append(',');
 			fw.append("Sleep Quality");
 			fw.append("\n");
