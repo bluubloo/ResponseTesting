@@ -166,13 +166,15 @@ public class ChaseTestFragment extends Fragment {
 					int position, long id) {
 				//alters test state
 				if(running){
-					if(targetPos == position){
-						endTest();
-					}else if(position != userPos){
+					if(position != userPos){
 						boolean clickable = moveable(position, userPos);
 						if(clickable){
-							moveToNext(position);
-							counter ++;
+							if(targetPos == position){
+								endTest();
+							}else{
+								moveToNext(position);
+								counter ++;
+							}
 						}
 					}
 				}
