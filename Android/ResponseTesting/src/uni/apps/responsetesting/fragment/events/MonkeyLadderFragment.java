@@ -54,7 +54,7 @@ public class MonkeyLadderFragment extends Fragment {
 	private int clickedTiles = 0;
 	private int errorCount = 0;
 	private int counter = 0;
-	private int currentMax = 0;
+	private int correct = 0;
 	private ArrayList<Integer> tileList;
 	private boolean clickable = false;
 
@@ -145,7 +145,7 @@ public class MonkeyLadderFragment extends Fragment {
 							clickedTiles ++;
 							if(clickedTiles >= tiles){
 								clickable = false;
-								currentMax ++;
+								correct ++;
 								if(counter < maxTurns - 1)
 									next(true);
 								else
@@ -181,7 +181,7 @@ public class MonkeyLadderFragment extends Fragment {
 						instruct.setEnabled(false);
 						playTimes++;
 						counter = 0;
-						currentMax = 0;
+						correct = 0;
 						tiles = 3;
 						clickedTiles = 0;
 						errorCount = 0;
@@ -220,11 +220,11 @@ public class MonkeyLadderFragment extends Fragment {
 		grid.setVisibility(View.INVISIBLE);
 		//gets results
 		String time = getResult();
-		String resultString = Integer.toString(currentMax) + " reached. " + time + " average time (s).";
+		String resultString = Integer.toString(correct) + " correct. " + time + " average time (s).";
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String userId = prefs.getString(getResources().getString(R.string.pref_key_user_id), "single");
 		//inserts and displays results
-		Results.insertResult(eventName, Integer.toString(currentMax) + "|" + time,
+		Results.insertResult(eventName, Integer.toString(correct) + "|" + time,
 				Calendar.getInstance().getTimeInMillis(), getActivity(), userId);
 		ActivityUtilities.displayResults(getActivity(), eventName, resultString);
 	}
