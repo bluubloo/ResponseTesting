@@ -284,7 +284,9 @@ public class PatternRecreationFragment extends Fragment implements PatternRecrea
 			//increase tiles
 			errorClickCount = 3;
 			tiles ++;
-			maxTilesReached ++;
+			if(tiles > maxTilesReached){
+				maxTilesReached = tiles;
+			}
 			resetTiles(false);
 		}
 	}
