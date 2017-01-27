@@ -167,14 +167,12 @@ public class ChaseTestFragment extends Fragment {
 				//alters test state
 				if(running){
 					if(position != userPos){
-						boolean clickable = moveable(position, userPos);
-						if(clickable){
-							if(targetPos == position){
-								endTest();
-							}else{
-								moveToNext(position);
-								counter ++;
-							}
+						if(validCatch(position, userPos) && position == targetPos){
+							endTest();
+						}
+						if(moveable(position, userPos)){
+							moveToNext(position);
+							counter ++;
 						}
 					}
 				}
@@ -263,6 +261,16 @@ public class ChaseTestFragment extends Fragment {
 		return false;
 	}
 
+		//Checks if the move is legal, includes corner movement. Used to check if player can catch target
+	private boolean validCatch(int position, int current){
+		if(position == current - 8 || position == current - 6 ||
+				position == current + 6 || position == current + 8 ||
+				position == current - 1 || position == current + 1 ||
+				position == current - 7 || position == current + 7)
+			return true;
+		return false;
+	}
+	
 	//ends the test
 	private void endTest(){
 		//resets test variables 
